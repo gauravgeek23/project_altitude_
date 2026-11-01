@@ -23,6 +23,9 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 REGION = sys.argv[1] if len(sys.argv) > 1 else "ladakh-himachal"
 CFG = json.load(open(f"{ROOT}/src/data/regions/{REGION}.json"))
 W, S, E, N = CFG["bbox"]
+# the shaded relief reaches further than the routes, so the map always overfills its panel
+TW, TS, TE, TN = CFG.get("terrainBbox", CFG["bbox"])
+F = 2 if "terrainBbox" in CFG else 1          # average the DEM down before shading a large extent
 Z = CFG["terrainZoom"]
 RAW = f"{ROOT}/data/raw"
 
@@ -73,8 +76,9 @@ def elev(lon, lat):
 
 
 def crop_box():
-    x0, x1 = int(math.floor(mx(W))) - MX0, int(math.ceil(mx(E))) - MX0
-    y0, y1 = int(math.floor(my(N))) - MY0, int(math.ceil(my(S))) - MY0
+    x0, x1 = int(math.floor(mx(TW))) - MX0, int(math.ceil(mx(TE))) - MX0
+    y0, y1 = int(math.floor(my(TN))) - MY0, int(math.ceil(my(TS))) - MY0
+    x1 -= (x1 - x0) % F; y1 -= (y1 - y0) % F
     return x0, x1, y0, y1
 
 
@@ -124,13 +128,13 @@ def ne_lakes_mask(shape, x0, y0):
         g = f["geometry"]
         for poly in (g["coordinates"] if g["type"] == "MultiPolygon" else [g["coordinates"]]):
             ring = poly[0]
-            if not any(inside(p) for p in ring): continue
-            pr = [(mx(x) - MX0 - x0, my(y) - MY0 - y0) for x, y in ring]
+            if not any(inside(p, 2.0) for p in ring): continue
+            pr = [((mx(x) - MX0 - x0) / F, (my(y) - MY0 - y0) / F) for x, y in ring]
             img = Image.new("L", (shape[1], shape[0]), 0)
             from PIL import ImageDraw
             ImageDraw.Draw(img).polygon(pr, fill=255)
             for h in poly[1:]:
-                ImageDraw.Draw(img).polygon([(mx(x) - MX0 - x0, my(y) - MY0 - y0) for x, y in h], fill=0)
+                ImageDraw.Draw(img).polygon([((mx(x) - MX0 - x0) / F, (my(y) - MY0 - y0) / F) for x, y in h], fill=0)
             mask |= np.asarray(img) > 0
             names.append(f["properties"].get("name") or "(unnamed)")
     return mask, names
@@ -139,12 +143,14 @@ def ne_lakes_mask(shape, x0, y0):
 def build_terrain():
     x0, x1, y0, y1 = crop_box()
     C = M[y0:y1, x0:x1].astype(np.float32)
+    if F > 1:
+        C = C.reshape(C.shape[0] // F, F, C.shape[1] // F, F).mean(axis=(1, 3))
     wm, lakes = water_mask(C)
     nm, ne_names = ne_lakes_mask(C.shape, x0, y0)
     water = wm | nm
     # multidirectional hillshade, soft and light like a printed topo map
     lat_mid = math.radians((S + N) / 2)
-    cell = 40075016.7 * math.cos(lat_mid) / (2 ** Z * 256)       # metres per pixel
+    cell = 40075016.7 * math.cos(lat_mid) / (2 ** Z * 256) * F   # metres per pixel
     gy, gx = np.gradient(C, cell)
     slope = np.arctan(np.hypot(gx, gy) * 1.6)
     aspect = np.arctan2(-gx, gy)
@@ -158,7 +164,7 @@ def build_terrain():
     v = np.clip(v, 150, 253)
     v[water] = 178
     img = Image.fromarray(v.astype(np.uint8), "L")
-    scale = 0.72
+    scale = 0.72 if F == 1 else 0.95
     img = img.resize((int(img.width * scale), int(img.height * scale)), Image.LANCZOS)
     out = f"{ROOT}/src/data/generated/{REGION}-terrain.jpg"
     img.save(out, quality=78, optimize=True, progressive=True)
@@ -166,7 +172,7 @@ def build_terrain():
     bounds = [(x0 + MX0) / (2 ** Z * 256) * 360 - 180, lat_of(y1 + MY0), (x1 + MX0) / (2 ** Z * 256) * 360 - 180, lat_of(y0 + MY0)]
     lake_pts = []
     for l in lakes:
-        lake_pts.append({"lon": (l["cj"] + x0 + MX0) / (2 ** Z * 256) * 360 - 180, "lat": lat_of(l["ci"] + y0 + MY0),
+        lake_pts.append({"lon": (l["cj"] * F + x0 + MX0) / (2 ** Z * 256) * 360 - 180, "lat": lat_of(l["ci"] * F + y0 + MY0),
                          "cells": l["cells"], "level": l["level"]})
     print("terrain", img.size, os.path.getsize(out) // 1024, "KiB", "terrain lakes", len(lakes), "NE lakes", ne_names)
     return bounds, lake_pts
@@ -174,8 +180,8 @@ def build_terrain():
 
 # ------------------------------------------------------------------ rivers (D8 on a coarse lon/lat grid)
 def build_rivers():
-    R, Cn = 700, 560
-    lats = np.linspace(N, S, R); lons = np.linspace(W, E, Cn)
+    R, Cn = (1000, 820) if F > 1 else (700, 560)
+    lats = np.linspace(TN, TS, R); lons = np.linspace(TW, TE, Cn)
     G = np.array([[elev(lo, la) for lo in lons] for la in lats], np.float64)
     G = np.nan_to_num(G, nan=0)
     rows, cols = G.shape
@@ -479,7 +485,7 @@ def boundaries():
             cls = (p.get("FEATURECLA") or p.get("featurecla") or "").replace(" (please verify)", "").replace(" (verify)", "")
             note = p.get("NOTE") or p.get("note") or p.get("NAME") or ""
             for l in ([g["coordinates"]] if g["type"] == "LineString" else g["coordinates"]):
-                for run in runs_inside(l, pad=0.4):
+                for run in runs_inside(l, pad=2.0):
                     out.append({"kind": kind, "cls": cls, "name": note, "left": p.get("ADM0_LEFT") or p.get("BRK_A3"),
                                 "right": p.get("ADM0_RIGHT"), "c": [[round(x, 4), round(y, 4)] for x, y in dp(run, 0.05)]})
     print("boundary lines", len(out), sorted({(o["kind"], o["cls"], o["name"]) for o in out}))

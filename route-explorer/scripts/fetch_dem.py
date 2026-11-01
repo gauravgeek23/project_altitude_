@@ -2,7 +2,7 @@
 import json, math, os, sys, urllib.request, concurrent.futures as cf
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 cfg = json.load(open(f"{ROOT}/src/data/regions/{sys.argv[1] if len(sys.argv) > 1 else 'ladakh-himachal'}.json"))
-W, S, E, N = cfg["bbox"]; Z = cfg["terrainZoom"]
+W, S, E, N = cfg.get("terrainBbox", cfg["bbox"]); Z = cfg["terrainZoom"]
 def tx(lon): return int((lon + 180) / 360 * 2 ** Z)
 def ty(lat):
     r = math.radians(lat); return int((1 - math.log(math.tan(r) + 1 / math.cos(r)) / math.pi) / 2 * 2 ** Z)

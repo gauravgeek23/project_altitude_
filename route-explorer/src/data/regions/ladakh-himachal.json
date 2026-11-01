@@ -3,6 +3,7 @@
   "name": "Ladakh & Himachal Pradesh",
   "bbox": [75.3, 30.3, 79.75, 35.8],
   "terrainZoom": 10,
+  "terrainBbox": [73.0, 27.6, 81.8, 38.4],
   "reference": "data/raw/reference/circuits-map-original.webp",
   "notes": "Every coordinate comes from a named dataset. A location whose source is null has no coordinate available to this build and is listed as missing, never placed by eye.",
 

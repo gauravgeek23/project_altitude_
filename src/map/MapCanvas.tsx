@@ -75,26 +75,44 @@ export const MapCanvas = forwardRef<MapHandle, Props>(function MapCanvas(props, 
     return () => ro.disconnect();
   }, []);
 
-  // Mercator fitted to the region's bbox: geographically proportionate, north up.
+  // Mercator fitted so every placed dot (with room for its label) is in view at the widest zoom.
+  // The shaded relief reaches well beyond the dots; if a panel is so wide or tall that it would
+  // still show past the relief, the projection is scaled up until the relief covers the panel.
   const project = useMemo(() => {
-    const [W, S, E, N] = region.data.bbox;
-    const pad = 12;
-    return d3.geoMercator().fitExtent([[pad, pad], [size.w - pad, size.h - pad]], { type: "MultiPoint", coordinates: [[W, S], [E, N], [W, N], [E, S]] });
+    const pts = region.data.locations.filter((l) => l.lon != null && l.lat != null && l.kind !== "via").map((l) => [l.lon!, l.lat!] as [number, number]);
+    // room for labels (they sit right of a dot, or flip left when tight) and the scale bar
+    const pad = { t: 30, r: Math.min(120, size.w * 0.12), b: 64, l: Math.min(36, size.w * 0.06) };
+    const p = d3.geoMercator().fitExtent([[pad.l, pad.t], [Math.max(pad.l + 10, size.w - pad.r), Math.max(pad.t + 10, size.h - pad.b)]], { type: "MultiPoint", coordinates: pts });
+    const [b0, b1, b2, b3] = region.data.terrain.bounds;
+    const tl = p([b0, b3])!, br = p([b2, b1])!;
+    const grow = Math.max(1, size.w / (br[0] - tl[0]), size.h / (br[1] - tl[1]));
+    if (grow > 1) p.scale(p.scale() * grow * 1.001);
+    // keep the relief over the whole panel
+    const t2 = p([b0, b3])!, b2p = p([b2, b1])!;
+    const [tx, ty] = p.translate();
+    const dx = t2[0] > 0 ? -t2[0] : b2p[0] < size.w ? size.w - b2p[0] : 0;
+    const dy = t2[1] > 0 ? -t2[1] : b2p[1] < size.h ? size.h - b2p[1] : 0;
+    return p.translate([tx + dx, ty + dy]);
   }, [region, size.w, size.h]);
+  // the relief's edges, in screen space at zoom 1: panning stops there
+  const reliefBox = useMemo(() => {
+    const [b0, b1, b2, b3] = region.data.terrain.bounds;
+    return [project([b0, b3])!, project([b2, b1])!] as [[number, number], [number, number]];
+  }, [project, region]);
   const path = useMemo(() => d3.geoPath(project), [project]);
 
   useEffect(() => {
     const svg = d3.select(svgRef.current!);
     const zoom = d3.zoom<SVGSVGElement, unknown>()
-      .scaleExtent([1, 28])
-      .translateExtent([[-size.w * 0.25, -size.h * 0.25], [size.w * 1.25, size.h * 1.25]])
+      .scaleExtent([1, 28])          // 1 = every dot in view; no zooming out past it
+      .translateExtent(reliefBox)    // never pan past the shaded relief
       .extent([[0, 0], [size.w, size.h]])
       .clickDistance(5)
       .on("zoom", (e) => setT(e.transform));
     zoomRef.current = zoom;
     svg.call(zoom).on("dblclick.zoom", null);
     return () => { svg.on(".zoom", null); };
-  }, [size.w, size.h]);
+  }, [size.w, size.h, reliefBox]);
 
   // the map is in km; report the scale so the bar stays true at any zoom
   useEffect(() => {
