@@ -14,8 +14,9 @@ A rider's field guide to Ladakh and Himachal Pradesh: four riding circuits, the 
 
 ```
 npm install
-npm run dev      # http://localhost:5173
-npm run build    # dist/project-altitude.html, one self-contained page
+npm run dev            # http://localhost:5173
+npm run build          # dist/ — what Vercel deploys (vercel.json)
+npm run build:single   # dist/project-altitude.html, one self-contained page
 ```
 
 Content lives in `src/content/` (`places.ts`, `guide.ts`) and can be edited without touching layout.
@@ -23,7 +24,6 @@ Sections marked "Draft" in the app (A note, Story, Meet the Creator, Swags, T&C)
 
 ## Known gaps
 
-* The logo in `src/components/Logo.tsx` is a stand-in until the original asset is added to `src/assets/`.
 * Route positions traced from the reference map are approximate (about 10 km); see `route-explorer/README.md`.
 
 ## Data and credits

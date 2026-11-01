@@ -24,11 +24,8 @@ a { color: inherit; }
 
 .app { display: grid; grid-template-columns: var(--nav-w) minmax(0, 1fr) minmax(0, 1fr); height: 100%; }  /* reading and map panels share the width equally */
 
-/* ---------------- logo stand-in (107 x 42 like the badge) */
-.logo { display: inline-flex; align-items: center; gap: 7px; height: 42px; width: 107px; padding: 0 9px; border-radius: 8px;
-  background: #1d2c4a; color: #fff; box-shadow: inset 0 0 0 1.5px #fff, 0 0 0 1px #1d2c4a; }
-.logo-text { display: flex; flex-direction: column; font-size: 10px; line-height: 11px; letter-spacing: 0.06em; }
-.logo-text b { font-weight: 700; color: #fff; }
+/* ---------------- logo */
+.logo { display: block; width: 107px; height: 42px; }
 
 /* ---------------- sidebar */
 .sidebar { display: flex; flex-direction: column; justify-content: space-between; padding: 40px; height: 100%; overflow-y: auto; background: var(--paper); }

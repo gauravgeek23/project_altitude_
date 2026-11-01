@@ -5,7 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc --noEmit && vite build && node scripts/inline.mjs"
+    "build": "tsc --noEmit && vite build",
+    "build:single": "tsc --noEmit && SINGLE_FILE=1 vite build && node scripts/inline.mjs",
+    "preview": "vite preview"
   },
   "dependencies": {
     "d3": "^7.9.0",
