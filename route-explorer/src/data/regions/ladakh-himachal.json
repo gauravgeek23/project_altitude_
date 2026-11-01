@@ -1,0 +1,116 @@
+{
+  "id": "ladakh-himachal",
+  "name": "Ladakh & Himachal Pradesh",
+  "bbox": [75.3, 30.3, 79.75, 35.8],
+  "terrainZoom": 10,
+  "reference": "data/raw/reference/circuits-map-original.webp",
+  "notes": "Every coordinate comes from a named dataset. A location whose source is null has no coordinate available to this build and is listed as missing, never placed by eye.",
+
+  "locations": [
+    { "id": "siachen-bc", "name": "Siachen Base Camp", "kind": "poi", "source": null },
+    { "id": "panamik", "name": "Panamik", "kind": "town", "source": null },
+    { "id": "turtuk", "name": "Turtuk", "kind": "town", "source": null },
+    { "id": "diskit", "name": "Diskit", "kind": "town", "source": { "dataset": "route-checkpoint", "key": "Diskit" } },
+    { "id": "kargil", "name": "Kargil", "kind": "town", "source": { "dataset": "route-checkpoint", "key": "Kargil" } },
+    { "id": "lamayuru", "name": "Lamayuru", "kind": "town", "source": null },
+    { "id": "khardung-la", "name": "Khardung La", "kind": "pass", "source": { "dataset": "route-checkpoint", "key": "Khardung La" } },
+    { "id": "wari-la", "name": "Wari La", "kind": "pass", "source": null },
+    { "id": "leh", "name": "Leh", "kind": "town", "source": { "dataset": "route-checkpoint", "key": "Leh" } },
+    { "id": "fotu-la", "name": "Fotu La", "kind": "pass", "source": { "dataset": "route-checkpoint", "key": "Fotu La" } },
+    { "id": "durbuk", "name": "Durbuk", "kind": "town", "source": null },
+    { "id": "satso-lake", "name": "Satso Lake", "kind": "town", "source": null },
+    { "id": "hemis", "name": "Hemis", "kind": "town", "source": null },
+    { "id": "chang-la", "name": "Chang La", "kind": "pass", "source": { "dataset": "terrain-pass", "route": "leh-pangong-umling", "between": ["Leh", "Pangong Lake"], "rank": 1, "skipKm": 15 } },
+    { "id": "pangong-tso", "name": "Pangong Tso", "kind": "lake", "source": { "dataset": "route-checkpoint", "key": "Pangong Lake" } },
+    { "id": "pensi-la", "name": "Pensi La", "kind": "pass", "source": { "dataset": "terrain-pass", "route": "zanskar-valley", "between": ["Rangdum", "Padum"], "rank": 1 } },
+    { "id": "maan", "name": "Maan", "kind": "town", "source": null },
+    { "id": "zangla", "name": "Zangla", "kind": "town", "source": null },
+    { "id": "taglang-la", "name": "Taglang La", "kind": "pass", "source": { "dataset": "route-checkpoint", "key": "Tanglang La" } },
+    { "id": "padum", "name": "Padum", "kind": "town", "source": { "dataset": "route-checkpoint", "key": "Padum" } },
+    { "id": "lachalung-la", "name": "Lachalung La", "kind": "pass", "source": { "dataset": "terrain-pass", "route": "manali-leh", "between": ["Sarchu", "Tanglang La"], "order": 2, "of": 2, "skipEndKm": 12 } },
+    { "id": "nyoma", "name": "Nyoma", "kind": "town", "source": { "dataset": "osm-settlement", "osm_id": 915239099 } },
+    { "id": "nakee-la", "name": "Nakee La", "kind": "pass", "source": { "dataset": "terrain-pass", "route": "manali-leh", "between": ["Sarchu", "Tanglang La"], "order": 1, "of": 2, "skipEndKm": 12 } },
+    { "id": "tso-kar", "name": "Tso Kar", "kind": "lake", "source": null },
+    { "id": "karzok", "name": "Karzok", "kind": "town", "source": { "dataset": "osm-settlement", "osm_id": 342114958 } },
+    { "id": "photi-la", "name": "Photi La", "kind": "pass", "source": null },
+    { "id": "umling-la", "name": "Umling La", "kind": "pass", "accent": true, "source": { "dataset": "route-checkpoint", "key": "Umling La" } },
+    { "id": "gombo-ranjan", "name": "Gombo Ranjan", "kind": "poi", "source": null },
+    { "id": "shinku-la", "name": "Shinku La", "kind": "pass", "aka": "Sinchu La", "source": { "dataset": "route-checkpoint", "key": "Shinku La" } },
+    { "id": "baralacha-la", "name": "Baralacha La", "kind": "pass", "source": { "dataset": "route-checkpoint", "key": "Baralacha La" } },
+    { "id": "suraj-tal", "name": "Suraj Tal", "kind": "lake", "source": null },
+    { "id": "tso-moriri", "name": "Tso Moriri", "kind": "lake", "source": { "dataset": "route-checkpoint", "key": "Tso Moriri" } },
+    { "id": "hanle", "name": "Hanle", "kind": "town", "source": { "dataset": "route-checkpoint", "key": "Hanle" } },
+    { "id": "demchok", "name": "Demchok", "kind": "town", "source": null },
+    { "id": "darcha", "name": "Darcha", "kind": "town", "source": { "dataset": "route-checkpoint", "key": "Darcha" } },
+    { "id": "chandratal", "name": "Chandratal", "kind": "lake", "source": { "dataset": "route-checkpoint", "key": "Chandratal" } },
+    { "id": "nurbula", "name": "Nurbula", "kind": "pass", "source": null },
+    { "id": "atal-tunnel", "name": "Atal Tunnel", "kind": "poi", "source": { "dataset": "osm-road", "key": "Atal Tunnel" } },
+    { "id": "komik", "name": "Komik", "kind": "town", "source": null },
+    { "id": "kaza", "name": "Kaza", "kind": "town", "source": { "dataset": "route-checkpoint", "key": "Kaza" } },
+    { "id": "gue", "name": "Gue", "kind": "town", "source": { "dataset": "osm-settlement", "osm_id": 3004260144 } },
+    { "id": "manali", "name": "Manali", "kind": "town", "source": { "dataset": "route-checkpoint", "key": "Manali" } },
+    { "id": "tabo", "name": "Tabo", "kind": "town", "source": { "dataset": "route-checkpoint", "key": "Tabo" } },
+    { "id": "mandi", "name": "Mandi", "kind": "town", "source": { "dataset": "geonames", "key": "Mandi", "admin1": "Himachal Pradesh" } },
+    { "id": "jibhi", "name": "Jibhi", "kind": "town", "source": { "dataset": "route-checkpoint", "key": "Jibhi" } },
+    { "id": "kalpa", "name": "Kalpa", "kind": "town", "source": { "dataset": "osm-settlement", "osm_id": 299636580 } },
+    { "id": "nako", "name": "Nako", "kind": "town", "source": { "dataset": "route-checkpoint", "key": "Nako" } },
+    { "id": "sarahan", "name": "Sarahan", "kind": "town", "source": { "dataset": "osm-settlement", "osm_id": 4621873673 } },
+    { "id": "shimla", "name": "Shimla", "kind": "town", "source": { "dataset": "route-checkpoint", "key": "Shimla" } },
+    { "id": "narkanda", "name": "Narkanda", "kind": "town", "source": { "dataset": "route-checkpoint", "key": "Narkanda" } },
+    { "id": "chitkul", "name": "Chitkul", "kind": "town", "source": { "dataset": "route-checkpoint", "key": "Chitkul" } },
+    { "id": "solan", "name": "Solan", "kind": "town", "source": { "dataset": "route-checkpoint", "key": "Solan" } },
+    { "id": "chandigarh", "name": "Chandigarh", "kind": "town", "source": { "dataset": "route-checkpoint", "key": "Chandigarh" } },
+
+    { "id": "sankoo", "name": "Sankoo", "kind": "via", "source": { "dataset": "route-checkpoint", "key": "Sankoo" } },
+    { "id": "rangdum", "name": "Rangdum", "kind": "via", "source": { "dataset": "route-checkpoint", "key": "Rangdum" } },
+    { "id": "aut", "name": "Aut", "kind": "via", "source": { "dataset": "route-checkpoint", "key": "Aut" } },
+    { "id": "loma", "name": "Loma", "kind": "via", "source": { "dataset": "osm-settlement", "osm_id": 1288092597 } },
+    { "id": "mahe", "name": "Mahe Bridge", "kind": "via", "source": { "dataset": "route-checkpoint", "key": "Mahe Bridge" } }
+  ],
+
+  "circuits": [
+    {
+      "id": "nubra", "name": "Nubra & Siachen", "color": "#9b2fd1",
+      "legs": [
+        ["leh", "khardung-la", "diskit"],
+        ["diskit", "turtuk"],
+        ["diskit", "panamik", "siachen-bc"],
+        ["diskit", "wari-la", "hemis"],
+        ["hemis", "leh"]
+      ]
+    },
+    {
+      "id": "changthang", "name": "Manali–Leh & Changthang", "color": "#e3241b",
+      "legs": [
+        ["darcha", "baralacha-la", "nakee-la", "lachalung-la", "taglang-la", "leh"],
+        ["leh", "chang-la", "durbuk", "pangong-tso"],
+        ["pangong-tso", "maan", "hanle"],
+        ["hanle", "photi-la", "umling-la", "demchok"],
+        ["hanle", "nurbula", "demchok"],
+        ["taglang-la", "tso-kar", "nyoma"],
+        ["nyoma", "mahe", "tso-moriri", "karzok"]
+      ]
+    },
+    {
+      "id": "zanskar", "name": "Kargil, Zanskar & Manali", "color": "#1f3fe0",
+      "legs": [
+        ["leh", "lamayuru", "fotu-la", "kargil"],
+        ["kargil", "sankoo", "satso-lake", "rangdum", "pensi-la", "padum"],
+        ["padum", "zangla"],
+        ["padum", "gombo-ranjan", "shinku-la", "darcha"],
+        ["darcha", "atal-tunnel", "manali", "mandi", "chandigarh"]
+      ]
+    },
+    {
+      "id": "spiti", "name": "Kinnaur & Spiti", "color": "#1e9a4b",
+      "legs": [
+        ["chandigarh", "solan", "shimla", "narkanda", "sarahan", "kalpa"],
+        ["kalpa", "chitkul"],
+        ["kalpa", "nako", "tabo", "kaza", "chandratal", "atal-tunnel"],
+        ["tabo", "gue"],
+        ["kaza", "komik"],
+        ["narkanda", "jibhi", "aut"]
+      ]
+    }
+  ]
+}

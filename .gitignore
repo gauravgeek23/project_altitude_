@@ -1,0 +1,10 @@
+node_modules/
+dist/
+shots/
+*.tsbuildinfo
+route-explorer/data/raw/*
+!route-explorer/data/raw/reference/
+ride-map/data/
+ride-map/vendor/
+ride-map/ride-map.html
+__pycache__/

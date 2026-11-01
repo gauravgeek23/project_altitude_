@@ -1,0 +1,57 @@
+/* base layers */
+.base image { image-rendering: auto; }
+.road { fill: none; stroke: var(--road); stroke-width: 0.6; vector-effect: non-scaling-stroke; stroke-linejoin: round; stroke-linecap: round; opacity: .55; }
+.road.trunk { stroke-width: 0.8; opacity: .7; }
+.road.route { stroke: var(--road-strong); stroke-width: 0.9; opacity: .75; }
+.river { fill: none; stroke: var(--river); vector-effect: non-scaling-stroke; stroke-linecap: round; opacity: .7; }
+.river.w0 { stroke-width: .5; } .river.w1 { stroke-width: .8; } .river.w2 { stroke-width: 1.1; } .river.w3 { stroke-width: 1.5; }
+.boundary { fill: none; vector-effect: non-scaling-stroke; stroke-linejoin: round; }
+.boundary.casing { stroke: #ffffff; stroke-width: 4; opacity: .75; }
+.boundary.international { stroke: var(--boundary); stroke-width: 1.6; }
+.boundary.contested { stroke: var(--boundary); stroke-width: 1.4; stroke-dasharray: 6 3; }
+.boundary.contested.casing { stroke: #ffffff; stroke-dasharray: none; stroke-width: 3.6; }
+.boundary.claim { stroke: var(--boundary); stroke-width: 1.2; stroke-dasharray: 1 3.5; stroke-linecap: round; opacity: .85; }
+
+/* circuits */
+.circuit path { fill: none; vector-effect: non-scaling-stroke; stroke-linejoin: round; stroke-linecap: round; }
+.circuit .casing { stroke: #ffffff; stroke-width: 5; opacity: .85; }
+.circuit .line { stroke: var(--c); stroke-width: 2.8; }
+.circuit .hit { stroke: transparent; stroke-width: 16; pointer-events: stroke; cursor: pointer; }
+.routes.has-active .circuit:not(.active) .line { opacity: .28; }
+.routes.has-active .circuit:not(.active) .casing { opacity: .25; }
+.circuit.active .line { stroke-width: 4.2; }
+.circuit.active .casing { stroke-width: 7.5; opacity: 1; }
+.circuit path { transition: opacity .18s ease, stroke-width .18s ease; }
+@media (prefers-reduced-motion: reduce) { .circuit path { transition: none; } }
+
+/* places */
+.loc { cursor: pointer; }
+.loc .dot { fill: #ffffff; stroke: var(--ink); stroke-width: 1.3; }
+.loc .halo { fill: none; stroke: var(--ink); stroke-width: 1.5; opacity: .9; }
+.loc .target { fill: transparent; }
+.loc .label rect { fill: var(--town); stroke: rgba(0,0,0,.12); stroke-width: .6; }
+.loc .label text { font-family: var(--display); font-weight: 600; font-size: 11.5px; letter-spacing: .01em; fill: var(--ink); dominant-baseline: middle; }
+.loc.pass .label rect { fill: var(--pass); stroke: none; }
+.loc.pass .label text { fill: #ffffff; }
+.loc.lake .label rect { fill: var(--lake); }
+.loc.accent .label rect { fill: var(--accent); }
+.loc.accent .label text { fill: #ffffff; }
+.loc.accent .dot { stroke: var(--accent); stroke-width: 2; }
+.locations.has-active .loc:not(.on-active):not(.selected) { opacity: .35; }
+.loc.off:not(.selected) { opacity: .55; }
+.loc.selected .dot { fill: var(--ink); }
+.loc.selected .label rect { stroke: var(--ink); stroke-width: 1.6; }
+.loc:hover .dot { stroke-width: 2; }
+
+/* controls */
+.map-controls { position: absolute; top: max(14px, env(safe-area-inset-top, 0px)); right: 14px; display: flex; flex-direction: column; gap: 6px; }
+.map-controls button { width: 36px; height: 36px; border: 1px solid var(--rule); background: #ffffff; border-radius: 8px; font-size: 18px; line-height: 1; cursor: pointer; color: var(--ink);
+  box-shadow: 0 1px 2px rgba(0,0,0,.06); }
+.map-controls button.reset { font-size: 11px; font-family: var(--display); font-weight: 600; letter-spacing: .04em; text-transform: uppercase; }
+.map-controls button:hover { border-color: var(--road); }
+.scale-bar { position: absolute; left: 14px; bottom: 30px; display: flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: 11px; color: var(--ink);
+  background: rgba(255,255,255,.82); padding: 5px 8px; border-radius: 6px; pointer-events: none; }
+.scale-bar span { display: block; height: 6px; border: 1.5px solid var(--ink); border-top: 0; }
+.scale-bar b { font-weight: 500; }
+.attribution { position: absolute; left: 14px; right: 60px; bottom: 6px; margin: 0; font-size: 10.5px; color: var(--muted); pointer-events: none; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
