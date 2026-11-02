@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { ALL_PLACES, BY_ID, CIRCUIT_META, CIRCUIT_ORDER, PASSES, PEAKS, PLACES, PRACTICAL_LABEL, TYPE_LABEL } from "../content/places";
-import { PlaceIcon } from "./icons";
+import { MapIcon, PlaceIcon, RefreshIcon, SatelliteIcon, type IconKind } from "./icons";
+import "../map/map.css";
 import { PlacePhoto } from "./PlacePhoto";
 import type { CircuitId, PlaceRecord, Practical } from "../content/types";
 import * as G from "../content/guide";
@@ -171,7 +172,7 @@ function PlaceCard({ p, open, onPlace, innerRef }: { p: PlaceRecord; open: boole
         {p.access && <span className="access-flag"><Badge kind="warn">Access</Badge> Restrictions apply</span>}
       </summary>
       <div className="card-body">
-        {isOpen && <PlacePhoto id={p.id} alt={p.name} />}
+        {isOpen && <PlacePhoto id={p.id} alt={p.name} query={`${p.name} ${p.region} India`} />}
         {p.why && <p><b>Why stop.</b> {p.why}</p>}
         {p.access && <p className="warn-text"><b>Access.</b> {p.access}</p>}
         <Practicals p={p} />
@@ -261,7 +262,7 @@ function Food() {
       <Section title="Dishes of the region">
         <div className="dishes">{G.DISHES.map((d) => (
           <article key={d.id} className="card dish">
-            <PlacePhoto id={d.id} alt={d.name} className="place-photo dish-photo" />
+            <PlacePhoto id={d.id} alt={d.name} query={`${d.name} Himalayan food`} className="place-photo dish-photo" />
             <p className="card-title"><span className="type-icon food"><PlaceIcon kind="food" size={14} /></span>{d.name}</p>
             <p className="muted">{d.where}</p>
             <p>{d.body}</p>
@@ -533,7 +534,111 @@ function Terms() {
   );
 }
 
+
+/* ------------------------------------------------------------------ Legend */
+const Tag = ({ cls, kind, label, w }: { cls: string; kind: IconKind; label: string; w?: number }) => {
+  const width = w ?? label.length * 6.6 + 36;
+  return (
+    <svg className="legend-svg" width={width + 26} height={28} viewBox={`0 0 ${width + 26} 28`} aria-hidden="true">
+      <g className={`loc ${cls}`}>
+        <circle className="ring" cx={10} cy={14} r={8} />
+        <circle className="dot" cx={10} cy={14} r={4} />
+        <g className="label">
+          <rect x={22} y={4} width={width} height={20} rx={10} />
+          <MapIcon kind={kind} x={29} y={8} size={12} />
+          <text x={22 + 15 + (width - 15) / 2} y={14.5}>{label}</text>
+        </g>
+      </g>
+    </svg>
+  );
+};
+const LineSample = ({ cls, color, dash, width = 2.8, casing }: { cls?: string; color: string; dash?: string; width?: number; casing?: boolean }) => (
+  <svg className="legend-svg line" width={64} height={18} viewBox="0 0 64 18" aria-hidden="true">
+    {casing && <line x1={4} y1={9} x2={60} y2={9} className="legend-casing" strokeWidth={width + 2.5} strokeLinecap="round" />}
+    <line x1={4} y1={9} x2={60} y2={9} className={cls} stroke={color} strokeWidth={width} strokeDasharray={dash} strokeLinecap={dash ? "butt" : "round"} />
+  </svg>
+);
+const Row = ({ sample, title, children }: { sample: ReactNode; title: string; children?: ReactNode }) => (
+  <div className="legend-row"><div className="legend-sample">{sample}</div><div><b>{title}</b>{children && <p>{children}</p>}</div></div>
+);
+function Legend() {
+  return (
+    <div className="legend">
+      <Head eyebrow="Map legend" title="How to read the map">
+        <p className="lead">Every colour, line, icon and control on the map and in the guide, in one place.</p>
+      </Head>
+
+      <Section title="Circuits">
+        <p className="para muted">Each circuit has one colour, on the map, in the filter bar and on every card. Pick one in the filter bar or click its line to show it alone; click empty map to bring all four back.</p>
+        <div className="legend-grid">{CIRCUIT_ORDER.map((c) => (
+          <Row key={c} sample={<LineSample color={CIRCUIT_META[c].color} casing />} title={`${CIRCUIT_META[c].name} · about ${fmt(circuitKm[c])} km`}>{CIRCUIT_META[c].character}</Row>
+        ))}</div>
+      </Section>
+
+      <Section title="Places">
+        <p className="para muted">One icon per kind of place, used on map tags, search results, the map card and the guide's cards.</p>
+        <div className="legend-grid">
+          <Row sample={<Tag cls="town hub" kind="town" label="Leh" w={58} />} title="Hub">Leh, Manali and Chandigarh: where circuits start, end and resupply. Always shown.</Row>
+          <Row sample={<Tag cls="town" kind="town" label="Kargil" />} title="Town">A larger settlement with more services.</Row>
+          <Row sample={<Tag cls="town" kind="village" label="Hunder" />} title="Village">A village or small settlement.</Row>
+          <Row sample={<Tag cls="pass" kind="pass" label="Khardung La" />} title="Pass">A mountain pass on the route.</Row>
+          <Row sample={<Tag cls="pass accent" kind="pass" label="Umling La" />} title="Highlight">A headline objective, shown in red.</Row>
+          <Row sample={<Tag cls="peak" kind="peak" label="Stok Kangri" />} title="Peak">A summit you can see from the road. Not a riding objective.</Row>
+          <Row sample={<Tag cls="lake" kind="lake" label="Tso Moriri" />} title="Lake">A lake, on or near the route.</Row>
+          <Row sample={<Tag cls="poi" kind="landmark" label="Atal Tunnel" />} title="Landmark">Monasteries, tunnels, camps and other landmarks.</Row>
+          <Row sample={<span className="type-icon food"><PlaceIcon kind="food" size={15} /></span>} title="Food">Dishes and, later, handpicked places to eat.</Row>
+        </div>
+      </Section>
+
+      <Section title="Markers and zoom">
+        <div className="legend-grid">
+          <Row sample={<Tag cls="town selected" kind="village" label="Selected" />} title="Selected place">Dark tag with a pulse; its card opens at the bottom of the map.</Row>
+          <Row sample={<span className="legend-fade"><Tag cls="town" kind="village" label="Faded" /></span>} title="Not on the picked circuit">Places on other circuits fade when one circuit is picked.</Row>
+          <Row sample={<span className="legend-chip">1 · 2 · 3</span>} title="Places appear as you zoom">Main stops show at every zoom; smaller villages and peaks appear as you zoom in. Tags that would overlap are hidden until there is room.</Row>
+        </div>
+      </Section>
+
+      <Section title="Lines and areas">
+        <div className="legend-grid">
+          <Row sample={<LineSample cls="boundary international" color="var(--boundary)" width={1.6} />} title="International boundary">India's boundary as the Government of India shows it, with Gilgit-Baltistan, Aksai Chin and the area administered by Pakistan inside India.</Row>
+          <Row sample={<LineSample cls="boundary state" color="#7d838d" dash="6 4" width={1.2} />} title="State or union-territory line">Between Ladakh, Jammu and Kashmir, Himachal Pradesh, Punjab and neighbours.</Row>
+          <Row sample={<span className="legend-area ladakh" />} title="Ladakh">Hover anywhere in Ladakh to tint it.</Row>
+          <Row sample={<span className="legend-area himachal" />} title="Himachal Pradesh">Hover anywhere in Himachal to tint it.</Row>
+          <Row sample={<LineSample color="var(--road)" width={0.9} />} title="Other roads">Roads from OpenStreetMap and the route data, for context.</Row>
+          <Row sample={<LineSample color="var(--river)" width={1.4} />} title="Rivers">From the terrain model.</Row>
+          <Row sample={<span className="legend-relief" />} title="Terrain or satellite">Shaded relief by default; the globe button switches to satellite imagery (Esri).</Row>
+        </div>
+      </Section>
+
+      <Section title="Map controls">
+        <div className="legend-grid">
+          <Row sample={<span className="legend-key">+ −</span>} title="Zoom">Zoom out far enough to see the whole north, from Gilgit-Baltistan to Aksai Chin.</Row>
+          <Row sample={<span className="legend-key"><RefreshIcon size={15} /></span>} title="Reset">Back to the view with every stop, all circuits shown.</Row>
+          <Row sample={<span className="legend-key"><SatelliteIcon size={15} /></span>} title="Satellite">Switch between terrain and satellite imagery.</Row>
+          <Row sample={<span className="legend-key compass-key">N</span>} title="Compass">North is always up; the map does not rotate.</Row>
+          <Row sample={<span className="legend-key sos-key">SOS</span>} title="Emergency">Opens emergency numbers and what to do.</Row>
+          <Row sample={<span className="legend-key">Layers</span>} title="Layers">Show or hide villages, passes, peaks, lakes and landmarks.</Row>
+        </div>
+      </Section>
+
+      <Section title="Labels on cards">
+        <div className="legend-grid">
+          <Row sample={<Badge kind="ok">Verified</Badge>} title="Verified">Checked on the ground.</Row>
+          <Row sample={<Badge kind="ok">From published sources</Badge>} title="From published sources">Found in official pages, news or rider guides, with links; not field-checked.</Row>
+          <Row sample={<Badge kind="editorial">Editorial</Badge>} title="Editorial">Our description, not a factual claim.</Row>
+          <Row sample={<Badge kind="verify">Needs verification</Badge>} title="Needs verification">Not checked yet: confirm before relying on it.</Row>
+          <Row sample={<Badge kind="warn">Access</Badge>} title="Access restrictions">Permits or restricted areas apply.</Row>
+          <Row sample={<span className="unknown">Not verified</span>} title="Not verified">A field we have no checked information for. Never filled with guesses.</Row>
+          <Row sample={<span className="legend-chip">≈ 4,522 m</span>} title="Terrain-model height">Read from the elevation model, not an official figure.</Row>
+          <Row sample={<span className="legend-chip">preview image</span>} title="Preview image">Borrowed for layout until the creator's own photos replace it. Click any photo for the full-screen gallery.</Row>
+        </div>
+      </Section>
+    </div>
+  );
+}
+
 export const TABS: Record<TabId, (p: TabProps) => JSX.Element> = {
+  legend: Legend,
   note: Note, story: Story, how: HowTo, credits: Credits,
   villages: Villages, passes: Passes, food: Food, stays: Stays, emergency: Emergency, packing: Packing, commute: Commute, circuits: Circuits, gems: Gems,
   swags: Swags, creator: Creator, terms: Terms,

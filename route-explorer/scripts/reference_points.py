@@ -53,7 +53,7 @@ CONTROL = ["kargil", "leh", "chandigarh", "padum", "darcha", "karzok", "hanle", 
 
 # The circuits as drawn: each list is a run of stops along one stroke of the line.
 DRAWN = {
-    "nubra": [["leh", "khardung-la", "diskit"], ["diskit", "panamik", "siachen-bc"], ["diskit", "turtuk"],
+    "nubra": [["leh", "khardung-la", "diskit"], ["diskit", "sumur", "panamik", "siachen-bc"], ["diskit", "hunder", "turtuk"],
               ["diskit", "wari-la", "hemis"], ["hemis", "karu", "thiksey", "shey", "leh"]],
     "changthang": [["leh", "shey", "thiksey", "karu", "hemis", "chang-la", "durbuk", "maan", "loma"],
                    ["loma", "hanle", "nurbula", "demchok"],
@@ -70,4 +70,4 @@ DRAWN = {
 
 # Legs with neither road data nor a usable stroke on the drawing (the drawn line there
 # was read onto the wrong road). They follow the valleys of the terrain model instead.
-TERRAIN_LEGS = {("diskit", "wari-la"), ("zangla", "chilling"), ("chilling", "nimmu"), ("loma", "hanle"), ("hanle", "photi-la"), ("photi-la", "umling-la")}
+TERRAIN_LEGS = {("diskit", "wari-la"), ("diskit", "sumur"), ("sumur", "panamik"), ("panamik", "siachen-bc"), ("diskit", "hunder"), ("hunder", "turtuk"), ("zangla", "chilling"), ("chilling", "nimmu"), ("loma", "hanle"), ("hanle", "photi-la"), ("photi-la", "umling-la")}

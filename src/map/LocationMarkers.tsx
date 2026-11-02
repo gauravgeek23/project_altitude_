@@ -10,7 +10,7 @@ const TYPE_OF: Record<string, IconKind> = Object.fromEntries(ALL_PLACES.filter((
 export const iconOf = (l: MapLocation): IconKind =>
   TYPE_OF[l.id] ?? ({ town: "village", pass: "pass", peak: "peak", lake: "lake", poi: "landmark", via: "landmark" } as const)[l.kind];
 /** zoom at which each tier of places appears */
-const TIER_ZOOM = [0, 1, 2.2, 4];
+const TIER_ZOOM = [0, 0, 2.2, 4];
 
 interface Props {
   region: RegionData;

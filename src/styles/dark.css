@@ -1,0 +1,129 @@
+/* Dark theme. Tokens flip; a few surfaces that are not plain tokens get their own rules.
+   Applies when the reader picks Dark, or when the system is dark and they have not picked Light. */
+:root[data-theme="dark"] {
+  --ink: #eceef2;
+  --grey: #9aa3ae;
+  --paper: #0d0f12;
+  --panel: #13161a;
+  --rule: #272c33;
+  --card: #1a1e24;
+  --soft: #20252c;
+  --accent: #ff4b3e;
+  --float: rgba(22, 25, 30, .92);
+  --on-ink: #0d0f12;
+  --map-bg: #0b0d10;
+  --shadow: rgba(0,0,0,.55);
+  color-scheme: dark;
+}
+:root[data-theme="dark"] .map-col, :root[data-theme="dark"] .legend {
+  --casing: #0b0d10; --halo: rgba(8,9,12,.85); --road: #5c626b; --road-strong: #8a9099; --river: #3d6489;
+  --boundary: #e9ebef; --muted: #8a9099;
+}
+/* ---------- surfaces that are not plain tokens */
+:root[data-theme="dark"] .divider { border-top-color: #2e343c; }
+:root[data-theme="dark"] .unknown { color: #6f7883; }
+:root[data-theme="dark"] .warn-text, .access-flag, .map-card-warn { color: #ff8a73; }
+:root[data-theme="dark"] details.card[open] { border-color: #3a414b; }
+:root[data-theme="dark"] .badge.verify { background: rgba(255, 196, 61, .14); color: #ffd277; }
+:root[data-theme="dark"] .badge.editorial { background: rgba(255,255,255,.07); color: #b5bdc7; }
+:root[data-theme="dark"] .badge.warn { background: rgba(255, 92, 70, .14); color: #ff9a87; }
+:root[data-theme="dark"] .badge.ok { background: rgba(60, 200, 120, .13); color: #79dda2; }
+:root[data-theme="dark"] .draft-note { background: rgba(255, 196, 61, .12); color: #ffd277; }
+:root[data-theme="dark"] .empty-state { border-color: #333a43; }
+:root[data-theme="dark"] .check input:checked + span, .stops li:not(:last-child)::after { text-decoration-color: #4b525c; color: inherit; }
+:root[data-theme="dark"] .type-icon.village, .type-icon.town { background: rgba(255, 224, 58, .16); color: #ffe03a; }
+:root[data-theme="dark"] .type-icon.pass { background: #eceef2; color: #0d0f12; }
+:root[data-theme="dark"] .type-icon.peak { background: rgba(255,255,255,.08); color: #dfe4ea; box-shadow: inset 0 0 0 1px rgba(255,255,255,.12); }
+:root[data-theme="dark"] .type-icon.lake { background: rgba(79, 227, 239, .14); color: #6fe9f3; }
+:root[data-theme="dark"] .type-icon.landmark { background: rgba(240, 160, 100, .15); color: #f2b07f; }
+:root[data-theme="dark"] .type-icon.food { background: rgba(255, 92, 70, .15); color: #ff8a73; }
+:root[data-theme="dark"] .sos { box-shadow: 0 0 0 4px rgba(255, 75, 62, .18), 0 6px 20px rgba(0,0,0,.6); }
+:root[data-theme="dark"] .topbar { background: rgba(13, 15, 18, .9) !important; }
+:root[data-theme="dark"] .drawer { box-shadow: 8px 0 30px rgba(0,0,0,.6); }
+:root[data-theme="dark"] .switcher { background: #eceef2 !important; }
+:root[data-theme="dark"] .switcher button { color: #5c636d !important; }
+:root[data-theme="dark"] .switcher button[aria-selected="true"] { background: #0d0f12 !important; color: #eceef2 !important; }
+:root[data-theme="dark"] .logo { filter: drop-shadow(0 2px 3px rgba(0,0,0,.6)) drop-shadow(0 8px 18px rgba(0,0,0,.5)); }
+/* map */
+:root[data-theme="dark"] .map-area .base > image { filter: invert(1) hue-rotate(180deg) brightness(.72) contrast(1.18) saturate(.55); }
+:root[data-theme="dark"] .region-area.ladakh:hover { fill: rgba(255, 190, 90, .10); }
+:root[data-theme="dark"] .region-area.himachal:hover { fill: rgba(90, 220, 140, .10); }
+:root[data-theme="dark"] .boundary.state { stroke: #8a929c; }
+:root[data-theme="dark"] .states text { fill: #c8ced6; }
+:root[data-theme="dark"] .states text.on { fill: #ffffff; }
+:root[data-theme="dark"] .countries text { fill: #a9b0b9; }
+:root[data-theme="dark"] .compass-face { stroke: rgba(255,255,255,.1); }
+:root[data-theme="dark"] .loc .label rect { stroke: rgba(0,0,0,.5); }
+:root[data-theme="dark"] .loc.peak .label rect { fill: #e9ecf0; }
+:root[data-theme="dark"] .loc.pass:not(.accent):not(.selected) .label rect { fill: #3a404a; stroke: rgba(255,255,255,.28); }
+:root[data-theme="dark"] .loc.hub:not(.selected) .label rect { stroke-width: 2; }
+:root[data-theme="dark"] .map-controls button:hover { border-color: #5c626b; }
+@media (prefers-color-scheme: dark) {
+:root:not([data-theme="light"]) {
+  --ink: #eceef2;
+  --grey: #9aa3ae;
+  --paper: #0d0f12;
+  --panel: #13161a;
+  --rule: #272c33;
+  --card: #1a1e24;
+  --soft: #20252c;
+  --accent: #ff4b3e;
+  --float: rgba(22, 25, 30, .92);
+  --on-ink: #0d0f12;
+  --map-bg: #0b0d10;
+  --shadow: rgba(0,0,0,.55);
+  color-scheme: dark;
+}
+:root:not([data-theme="light"]) .map-col, :root:not([data-theme="light"]) .legend {
+  --casing: #0b0d10; --halo: rgba(8,9,12,.85); --road: #5c626b; --road-strong: #8a9099; --river: #3d6489;
+  --boundary: #e9ebef; --muted: #8a9099;
+}
+/* ---------- surfaces that are not plain tokens */
+:root:not([data-theme="light"]) .divider { border-top-color: #2e343c; }
+:root:not([data-theme="light"]) .unknown { color: #6f7883; }
+:root:not([data-theme="light"]) .warn-text, .access-flag, .map-card-warn { color: #ff8a73; }
+:root:not([data-theme="light"]) details.card[open] { border-color: #3a414b; }
+:root:not([data-theme="light"]) .badge.verify { background: rgba(255, 196, 61, .14); color: #ffd277; }
+:root:not([data-theme="light"]) .badge.editorial { background: rgba(255,255,255,.07); color: #b5bdc7; }
+:root:not([data-theme="light"]) .badge.warn { background: rgba(255, 92, 70, .14); color: #ff9a87; }
+:root:not([data-theme="light"]) .badge.ok { background: rgba(60, 200, 120, .13); color: #79dda2; }
+:root:not([data-theme="light"]) .draft-note { background: rgba(255, 196, 61, .12); color: #ffd277; }
+:root:not([data-theme="light"]) .empty-state { border-color: #333a43; }
+:root:not([data-theme="light"]) .check input:checked + span, .stops li:not(:last-child)::after { text-decoration-color: #4b525c; color: inherit; }
+:root:not([data-theme="light"]) .type-icon.village, .type-icon.town { background: rgba(255, 224, 58, .16); color: #ffe03a; }
+:root:not([data-theme="light"]) .type-icon.pass { background: #eceef2; color: #0d0f12; }
+:root:not([data-theme="light"]) .type-icon.peak { background: rgba(255,255,255,.08); color: #dfe4ea; box-shadow: inset 0 0 0 1px rgba(255,255,255,.12); }
+:root:not([data-theme="light"]) .type-icon.lake { background: rgba(79, 227, 239, .14); color: #6fe9f3; }
+:root:not([data-theme="light"]) .type-icon.landmark { background: rgba(240, 160, 100, .15); color: #f2b07f; }
+:root:not([data-theme="light"]) .type-icon.food { background: rgba(255, 92, 70, .15); color: #ff8a73; }
+:root:not([data-theme="light"]) .sos { box-shadow: 0 0 0 4px rgba(255, 75, 62, .18), 0 6px 20px rgba(0,0,0,.6); }
+:root:not([data-theme="light"]) .topbar { background: rgba(13, 15, 18, .9) !important; }
+:root:not([data-theme="light"]) .drawer { box-shadow: 8px 0 30px rgba(0,0,0,.6); }
+:root:not([data-theme="light"]) .switcher { background: #eceef2 !important; }
+:root:not([data-theme="light"]) .switcher button { color: #5c636d !important; }
+:root:not([data-theme="light"]) .switcher button[aria-selected="true"] { background: #0d0f12 !important; color: #eceef2 !important; }
+:root:not([data-theme="light"]) .logo { filter: drop-shadow(0 2px 3px rgba(0,0,0,.6)) drop-shadow(0 8px 18px rgba(0,0,0,.5)); }
+/* map */
+:root:not([data-theme="light"]) .map-area .base > image { filter: invert(1) hue-rotate(180deg) brightness(.72) contrast(1.18) saturate(.55); }
+:root:not([data-theme="light"]) .region-area.ladakh:hover { fill: rgba(255, 190, 90, .10); }
+:root:not([data-theme="light"]) .region-area.himachal:hover { fill: rgba(90, 220, 140, .10); }
+:root:not([data-theme="light"]) .boundary.state { stroke: #8a929c; }
+:root:not([data-theme="light"]) .states text { fill: #c8ced6; }
+:root:not([data-theme="light"]) .states text.on { fill: #ffffff; }
+:root:not([data-theme="light"]) .countries text { fill: #a9b0b9; }
+:root:not([data-theme="light"]) .compass-face { stroke: rgba(255,255,255,.1); }
+:root:not([data-theme="light"]) .loc .label rect { stroke: rgba(0,0,0,.5); }
+:root:not([data-theme="light"]) .loc.peak .label rect { fill: #e9ecf0; }
+:root:not([data-theme="light"]) .loc.pass:not(.accent):not(.selected) .label rect { fill: #3a404a; stroke: rgba(255,255,255,.28); }
+:root:not([data-theme="light"]) .loc.hub:not(.selected) .label rect { stroke-width: 2; }
+:root:not([data-theme="light"]) .map-controls button:hover { border-color: #5c626b; }
+}
+/* a soft cross-fade when the theme is switched */
+:root.theme-switching *, :root.theme-switching *::before { transition: background-color .3s ease, color .3s ease, border-color .3s ease, fill .3s ease, stroke .3s ease !important; }
+/* the toggle */
+.theme-btn { display: inline-flex; align-items: center; gap: 8px; height: 30px; padding: 0 10px 0 8px; border-radius: 999px; border: 1px solid var(--rule); background: var(--card); color: var(--grey); font-size: 12.5px; cursor: pointer; transition: color .15s, border-color .15s; }
+.theme-btn:hover { color: var(--ink); border-color: var(--grey); }
+.theme-btn svg { transition: transform .5s cubic-bezier(.2,.8,.2,1); }
+.theme-btn:hover svg { transform: rotate(-25deg); }
+.topbar .theme-btn { padding: 0; width: 36px; justify-content: center; border: 0; background: none; }
+.topbar .theme-btn span { display: none; }

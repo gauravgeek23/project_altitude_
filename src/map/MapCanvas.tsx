@@ -71,7 +71,7 @@ function Compass({ x, y }: { x: number; y: number }) {
 /** Country names, each set well inside territory that is not in dispute. */
 const COUNTRIES: { name: string; at: [number, number] }[] = [
   { name: "INDIA", at: [76.2, 31.5] },        // Kangra and Hamirpur hills
-  { name: "PAKISTAN", at: [74.85, 32.35] },   // Pakistani Punjab, near Narowal
+  { name: "PAKISTAN", at: [73.9, 31.95] },    // Pakistani Punjab, near Gujranwala
   { name: "CHINA", at: [79.95, 32.2] },       // Ngari, Tibet
 ];
 
@@ -161,11 +161,16 @@ export const MapCanvas = forwardRef<MapHandle, Props>(function MapCanvas(props, 
     return [project([b0, b3])!, project([b2, b1])!] as [[number, number], [number, number]];
   }, [project, region]);
   const path = useMemo(() => d3.geoPath(project), [project]);
+  // the widest view: the whole northern crown of India, Gilgit-Baltistan to Aksai Chin
+  const minK = useMemo(() => {
+    const [x0, y0] = project([72.3, 37.2])!, [x1, y1] = project([80.6, 32.0])!;
+    return Math.min(1, 0.96 * Math.min(size.w / (x1 - x0), size.h / (y1 - y0)));
+  }, [project, size.w, size.h]);
 
   useEffect(() => {
     const svg = d3.select(svgRef.current!);
     const zoom = d3.zoom<SVGSVGElement, unknown>()
-      .scaleExtent([1, 28])          // 1 = every dot in view; no zooming out past it
+      .scaleExtent([minK, 28])       // 1 = every dot in view; zoom out further to see the whole crown
       .translateExtent(reliefBox)    // never pan past the shaded relief
       .extent([[0, 0], [size.w, size.h]])
       .clickDistance(5)
@@ -173,7 +178,7 @@ export const MapCanvas = forwardRef<MapHandle, Props>(function MapCanvas(props, 
     zoomRef.current = zoom;
     svg.call(zoom).on("dblclick.zoom", null);
     return () => { svg.on(".zoom", null); };
-  }, [size.w, size.h, reliefBox]);
+  }, [size.w, size.h, reliefBox, minK]);
 
   // the map is in km; report the scale so the bar stays true at any zoom
   useEffect(() => {

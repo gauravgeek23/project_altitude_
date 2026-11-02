@@ -1,3 +1,4 @@
+import { ThemeToggle, useTheme } from "./components/ThemeToggle";
 import { useEffect, useRef, useState } from "react";
 import { Sidebar } from "./components/Sidebar";
 import { MapPanel } from "./components/MapPanel";
@@ -38,18 +39,20 @@ export default function App() {
   const showOnMap = (id: string) => { setSelected(id); if (mobile()) setView("map"); };
   const openPlace = (id: string) => { setSelected(id); go(BY_ID[id]?.type === "pass" || BY_ID[id]?.type === "peak" ? "passes" : "villages"); };
 
+  const [theme, toggleTheme] = useTheme();
   const Tab = TABS[tab];
   return (
     <div className="app" data-view={view}>
       <header className="topbar">
         <a href="#note" onClick={(e) => { e.preventDefault(); go("note"); }} aria-label="Project Altitude, home"><Logo /></a>
         <span className="topbar-title">{view === "map" ? "Map" : labelOf(tab)}</span>
+        <ThemeToggle theme={theme} onToggle={toggleTheme} />
         <button type="button" className="icon-btn menu" onClick={() => setDrawer(true)} aria-label="Open menu" aria-expanded={drawer}>
           <span /><span /><span />
         </button>
       </header>
 
-      <Sidebar tab={tab} onTab={go} />
+      <Sidebar tab={tab} onTab={go} footer={<ThemeToggle theme={theme} onToggle={toggleTheme} />} />
       {drawer && (
         <div className="drawer-wrap" onClick={() => setDrawer(false)}>
           <div className="drawer" role="dialog" aria-modal="true" aria-label="Menu" onClick={(e) => e.stopPropagation()}>

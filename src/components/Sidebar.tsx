@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { FOOTER_NAV, NAV, type TabId } from "../nav";
 import { Logo } from "./Logo";
 
@@ -7,9 +8,10 @@ interface Props {
   /** the mobile drawer shows group titles and a close button */
   variant?: "rail" | "drawer";
   onClose?(): void;
+  footer?: ReactNode;
 }
 
-export function Sidebar({ tab, onTab, variant = "rail", onClose }: Props) {
+export function Sidebar({ tab, onTab, variant = "rail", onClose, footer }: Props) {
   const Item = ({ id, label }: { id: TabId; label: string }) => (
     <li>
       <a href={`#${id}`} className={"nav-item" + (tab === id ? " active" : "")} aria-current={tab === id ? "page" : undefined}
@@ -31,7 +33,10 @@ export function Sidebar({ tab, onTab, variant = "rail", onClose }: Props) {
           </div>
         ))}
       </div>
-      <ul className="nav-footer">{FOOTER_NAV.map((i) => <Item key={i.id} {...i} />)}</ul>
+      <div className="nav-bottom">
+        <ul className="nav-footer">{FOOTER_NAV.map((i) => <Item key={i.id} {...i} />)}</ul>
+        {footer && <div className="nav-theme">{footer}</div>}
+      </div>
     </nav>
   );
 }

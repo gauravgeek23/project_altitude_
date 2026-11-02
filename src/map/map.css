@@ -6,15 +6,15 @@
 .river { fill: none; stroke: var(--river); vector-effect: non-scaling-stroke; stroke-linecap: round; opacity: .7; }
 .river.w0 { stroke-width: .5; } .river.w1 { stroke-width: .8; } .river.w2 { stroke-width: 1.1; } .river.w3 { stroke-width: 1.5; }
 .boundary { fill: none; vector-effect: non-scaling-stroke; stroke-linejoin: round; }
-.boundary.casing { stroke: #ffffff; stroke-width: 4; opacity: .75; }
+.boundary.casing { stroke: var(--casing); stroke-width: 4; opacity: .75; }
 .boundary.international { stroke: var(--boundary); stroke-width: 1.6; }
 .boundary.contested { stroke: var(--boundary); stroke-width: 1.6; }
-.boundary.contested.casing { stroke: #ffffff; stroke-width: 4; }
+.boundary.contested.casing { stroke: var(--casing); stroke-width: 4; }
 .boundary.claim { stroke: var(--boundary); stroke-width: 1.3; opacity: .9; }
 
 /* circuits */
 .circuit path { fill: none; vector-effect: non-scaling-stroke; stroke-linejoin: round; stroke-linecap: round; }
-.circuit .casing { stroke: #ffffff; stroke-width: 5; opacity: .85; }
+.circuit .casing { stroke: var(--casing); stroke-width: 5; opacity: .85; }
 .circuit .line { stroke: var(--c); stroke-width: 2.8; }
 .circuit .hit { stroke: transparent; stroke-width: 16; pointer-events: stroke; cursor: pointer; }
 .routes.has-active .circuit:not(.active) .line { opacity: .28; }
@@ -28,10 +28,10 @@
 .loc { cursor: pointer; outline: none; }
 .loc .target { fill: transparent; }
 .loc .dot, .loc .ring, .loc .label { transform-box: fill-box; transform-origin: center; transition: transform .18s cubic-bezier(.2,.8,.2,1), opacity .18s ease, fill .18s ease, stroke .18s ease; }
-.loc .dot { fill: #ffffff; stroke: var(--ink); stroke-width: 1.6; }
-.loc .ring { fill: none; stroke: var(--ink); stroke-width: 1.5; opacity: 0; transform: scale(.5); }
+.loc .dot { fill: #ffffff; stroke: var(--tag-ink); stroke-width: 1.6; }
+.loc .ring { fill: none; stroke: var(--tag-ink); stroke-width: 1.5; opacity: 0; transform: scale(.5); }
 .loc .label rect { fill: var(--town); stroke: rgba(0,0,0,.14); stroke-width: .75; filter: url(#tag-shadow); transition: fill .18s ease, filter .18s ease; }
-.loc .label text { font-family: var(--display); font-weight: 600; font-size: 11.5px; letter-spacing: .015em; fill: var(--ink); text-anchor: middle; dominant-baseline: middle; transition: fill .18s ease; pointer-events: none; }
+.loc .label text { font-family: var(--display); font-weight: 600; font-size: 11.5px; letter-spacing: .015em; fill: var(--tag-ink); text-anchor: middle; dominant-baseline: middle; transition: fill .18s ease; pointer-events: none; }
 .loc.pass .label rect { fill: var(--pass); stroke: rgba(255,255,255,.18); }
 .loc.pass .label text { fill: #ffffff; }
 .loc.lake .label rect { fill: var(--lake); }
@@ -45,31 +45,31 @@
 .loc:hover .ring, .loc:focus-visible .ring { opacity: .9; transform: scale(1); }
 /* selected: the tag inverts to ink, the dot fills and pulses */
 .loc.selected .label { transform: translateY(-2px) scale(1.08); }
-.loc.selected .label rect { fill: var(--ink); stroke: var(--ink); filter: url(#tag-shadow-lift); }
+.loc.selected .label rect { fill: var(--tag-ink); stroke: var(--tag-ink); filter: url(#tag-shadow-lift); }
 .loc.selected .label text { fill: var(--town); }
-.loc.selected.pass .label rect { fill: #ffffff; stroke: var(--ink); stroke-width: 1.5; }
-.loc.selected.pass .label text { fill: var(--ink); }
+.loc.selected.pass .label rect { fill: #ffffff; stroke: var(--tag-ink); stroke-width: 1.5; }
+.loc.selected.pass .label text { fill: var(--tag-ink); }
 .loc.selected.lake .label text { fill: var(--lake); }
 .loc.selected.accent .label text { fill: #ff8a84; }
-.loc.selected .dot { fill: var(--ink); transform: scale(1.35); }
+.loc.selected .dot { fill: var(--tag-ink); transform: scale(1.35); }
 .loc.selected .ring { opacity: 1; transform: scale(1); stroke-width: 2; }
-.loc .pulse { fill: var(--ink); opacity: 0; transform-box: fill-box; transform-origin: center; animation: loc-pulse 1.8s ease-out infinite; pointer-events: none; }
+.loc .pulse { fill: var(--tag-ink); opacity: 0; transform-box: fill-box; transform-origin: center; animation: loc-pulse 1.8s ease-out infinite; pointer-events: none; }
 @keyframes loc-pulse { 0% { opacity: .35; transform: scale(1); } 100% { opacity: 0; transform: scale(3.6); } }
 @media (prefers-reduced-motion: reduce) { .loc .pulse { animation: none; } .loc .dot, .loc .ring, .loc .label { transition: none; } }
 /* while a circuit is highlighted, other places step back without going unreadable */
 .locations.has-active .loc:not(.on-active):not(.selected) { opacity: .45; }
 .loc.off:not(.selected) { opacity: .6; }
 /* icons inside the name tags take the tag's text colour */
-.loc .label .map-icon { fill: none; stroke: var(--ink); stroke-width: 2.1; stroke-linecap: round; stroke-linejoin: round; transition: stroke .18s ease; pointer-events: none; }
+.loc .label .map-icon { fill: none; stroke: var(--tag-ink); stroke-width: 2.1; stroke-linecap: round; stroke-linejoin: round; transition: stroke .18s ease; pointer-events: none; }
 .loc.pass .label .map-icon, .loc.accent .label .map-icon { stroke: #ffffff; }
 .loc.selected .label .map-icon { stroke: var(--town); }
-.loc.selected.pass .label .map-icon { stroke: var(--ink); }
+.loc.selected.pass .label .map-icon { stroke: var(--tag-ink); }
 .loc.selected.lake .label .map-icon { stroke: var(--lake); }
 .loc.selected.accent .label .map-icon { stroke: #ff8a84; }
 /* peaks: white tags, a triangle-ish dot */
 .loc.peak .label rect { fill: #ffffff; stroke: rgba(0,0,0,.18); }
-.loc.peak .dot { fill: var(--ink); stroke: #fff; }
-.loc.selected.peak .label rect { fill: var(--ink); }
+.loc.peak .dot { fill: var(--tag-ink); stroke: #fff; }
+.loc.selected.peak .label rect { fill: var(--tag-ink); }
 .loc.selected.peak .label text { fill: #fff; }
 .loc.selected.peak .label .map-icon { stroke: #fff; }
 /* places revealed by zooming fade in */
@@ -86,22 +86,22 @@
 .states text { transition: opacity .2s ease, fill .2s ease; }
 .states text.on { opacity: 1; fill: #111; }
 .states text { font-family: var(--display); font-weight: 600; font-size: 11.5px; letter-spacing: .32em; fill: #2f3a4e; opacity: .62; text-anchor: middle;
-  paint-order: stroke; stroke: rgba(255,255,255,.8); stroke-width: 3px; stroke-linejoin: round; pointer-events: none; }
+  paint-order: stroke; stroke: var(--halo); stroke-width: 3px; stroke-linejoin: round; pointer-events: none; }
 /* country names */
 .countries text { font-family: var(--display); font-weight: 600; font-size: 13px; letter-spacing: .42em; fill: #5d6066; opacity: .78; text-anchor: middle;
-  paint-order: stroke; stroke: rgba(255,255,255,.85); stroke-width: 3px; stroke-linejoin: round; pointer-events: none; }
+  paint-order: stroke; stroke: var(--halo); stroke-width: 3px; stroke-linejoin: round; pointer-events: none; }
 
 /* controls */
 .map-controls { position: absolute; top: max(14px, env(safe-area-inset-top, 0px)); right: 14px; display: flex; flex-direction: column; gap: 6px; }
-.map-controls button { width: 36px; height: 36px; border: 1px solid var(--rule); background: #ffffff; border-radius: 8px; font-size: 18px; line-height: 1; cursor: pointer; color: var(--ink);
+.map-controls button { width: 36px; height: 36px; border: 1px solid var(--rule); background: var(--card); border-radius: 8px; font-size: 18px; line-height: 1; cursor: pointer; color: var(--ink);
   box-shadow: 0 1px 2px rgba(0,0,0,.06); }
 .map-controls button.reset, .map-controls button.sat { display: grid; place-items: center; padding: 0; }
 .map-controls button.reset svg { transition: transform .45s cubic-bezier(.2,.8,.2,1); }
 .map-controls button.reset:hover svg { transform: rotate(-180deg); }
-.map-controls button.sat.on { background: var(--ink); color: #fff; border-color: var(--ink); }
+.map-controls button.sat.on { background: var(--ink); color: var(--on-ink); border-color: var(--ink); }
 /* compass */
 .compass { pointer-events: none; }
-.compass-face { fill: rgba(255,255,255,.94); stroke: rgba(0,0,0,.1); filter: drop-shadow(0 1px 2px rgba(0,0,0,.12)); }
+.compass-face { fill: var(--float); stroke: rgba(0,0,0,.1); filter: drop-shadow(0 1px 2px rgba(0,0,0,.12)); }
 .compass .needle-n { fill: var(--accent); }
 .compass .needle-s { fill: #9aa0a8; }
 .compass text { font-family: var(--display); font-size: 8.5px; font-weight: 600; text-anchor: middle; dominant-baseline: middle; fill: var(--grey); }
@@ -112,18 +112,18 @@
 .sat-tiles image { image-rendering: auto; }
 .map-controls button:hover { border-color: var(--road); }
 .scale-bar { position: absolute; left: 14px; bottom: 30px; display: flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: 11px; color: var(--ink);
-  background: rgba(255,255,255,.82); padding: 5px 8px; border-radius: 6px; pointer-events: none; }
+  background: var(--float); padding: 5px 8px; border-radius: 6px; pointer-events: none; }
 .scale-bar span { display: block; height: 6px; border: 1.5px solid var(--ink); border-top: 0; }
 .scale-bar b { font-weight: 500; }
 .attribution { position: absolute; left: 14px; right: 60px; bottom: 6px; margin: 0; font-size: 10.5px; color: var(--muted); pointer-events: none; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
 
 /* hubs: Leh, Manali, Chandigarh */
-.loc.hub .label rect { fill: var(--ink); stroke: var(--town); stroke-width: 1.5; }
+.loc.hub .label rect { fill: var(--tag-ink); stroke: var(--town); stroke-width: 1.5; }
 .loc.hub .label text { fill: var(--town); font-size: 12.5px; font-weight: 700; letter-spacing: .03em; }
 .loc.hub .label .map-icon { stroke: var(--town); }
-.loc.hub .dot { fill: var(--town); stroke: var(--ink); stroke-width: 2.2; }
-.loc.hub .ring { opacity: .55; transform: scale(1.15); stroke: var(--ink); }
-.loc.hub.selected .label rect { fill: var(--town); stroke: var(--ink); }
-.loc.hub.selected .label text { fill: var(--ink); }
-.loc.hub.selected .label .map-icon { stroke: var(--ink); }
+.loc.hub .dot { fill: var(--town); stroke: var(--tag-ink); stroke-width: 2.2; }
+.loc.hub .ring { opacity: .55; transform: scale(1.15); stroke: var(--tag-ink); }
+.loc.hub.selected .label rect { fill: var(--town); stroke: var(--tag-ink); }
+.loc.hub.selected .label text { fill: var(--tag-ink); }
+.loc.hub.selected .label .map-icon { stroke: var(--tag-ink); }

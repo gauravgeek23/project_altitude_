@@ -3,18 +3,20 @@ import { galleryFor, photoFor, type Photo } from "../content/images";
 import { Lightbox } from "./Lightbox";
 
 /** A place's photo with its credit; renders nothing until one is found. A click opens the gallery. */
-export function PlacePhoto({ id, alt, className = "place-photo" }: { id: string; alt: string; className?: string }) {
+/** `query` is what the search sources look for, e.g. "Pangong Tso Ladakh"; it defaults to the alt text. */
+export function PlacePhoto({ id, alt, query, className = "place-photo" }: { id: string; alt: string; query?: string; className?: string }) {
+  const q = query ?? alt;
   const [p, setP] = useState<Photo | null>(null);
   const [loaded, setLoaded] = useState(false);
   const [gallery, setGallery] = useState<Photo[] | null>(null);
   useEffect(() => {
     let live = true;
     setP(null); setLoaded(false); setGallery(null);
-    photoFor(id).then((x) => { if (live) setP(x); });
+    photoFor(id, q).then((x) => { if (live) setP(x); });
     return () => { live = false; };
-  }, [id]);
+  }, [id, q]);
   if (!p) return null;
-  const open = () => { setGallery([p]); galleryFor(id, p).then((g) => setGallery((cur) => (cur ? g : cur))); };
+  const open = () => { setGallery([p]); galleryFor(id, p, q).then((g) => setGallery((cur) => (cur ? g : cur))); };
   return (
     <>
       <figure className={className + (loaded ? " loaded" : "")}>

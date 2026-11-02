@@ -6,6 +6,7 @@ A rider's field guide to Ladakh and Himachal Pradesh: four riding circuits, the 
 
 | Folder | What it is |
 |---|---|
+| `docs/SPEC.md` | Full specification and handover: architecture, data pipeline, content model, design system, how-tos. Start here. |
 | `/` (root) | The guide web app: nav rail, guide content (villages, food, stays, emergency, packing, commute, circuits, gems) and the interactive route map. React + TypeScript + Vite. Responsive: three panels on desktop, Guide/Map switch on phones. |
 | `route-explorer/` | The data pipeline and standalone app for the route map (terrain, roads, boundaries, circuits traced from the reference map). Its generated data is copied into `src/map/data/generated/` for the guide. |
 | `ride-map/` | The 3D relief ride map (Three.js) where a rider marks the roads they rode or imports GPX/KML. |
