@@ -418,3 +418,24 @@ details.practicals .facts-grid { padding: 0 14px 12px; margin: 0; }
 .legend-area.himachal { background: rgba(34, 128, 74, .16); }
 .legend-relief { display: block; width: 64px; height: 28px; border-radius: 6px; background: linear-gradient(135deg, #e9e7e2, #b9b6ae 45%, #f2f1ed 60%, #a8a59d); }
 @media (max-width: 560px) { .legend-row { grid-template-columns: 1fr; gap: 6px; } }
+
+/* ---------------- reading panel type scale: two paragraph sizes only
+   16px: main reading text. 14px: secondary text (meta, notes, sources, facts, captions in cards).
+   Titles (26px), small uppercase labels and badges keep their own sizes. */
+.content { font-size: 16px; line-height: 28px; }
+.content .para, .content .lead, .content .tldr p, .content .card p, .content .card-title, .content .summary-text,
+.content .bullets li, .content .steps li, .content .numbered p, .content .numbered h3, .content .block h2, .content .tldr h1:not(.page-title),
+.content .rule-line, .content .lead-sm, .content .number .num.text, .content .card-body > p, .content details.practicals > summary > span:first-child,
+.content .dish p, .content .two-col li, .content .table dd, .content .table dt, .content .itinerary li, .content blockquote {
+  font-size: 16px !important; line-height: 28px;
+}
+.content .meta, .content .fine, .content .muted, .content .count-line, .content .facts-grid dd, .content .near, .content .sources-line,
+.content .callout, .content .empty-state, .content .number small, .content .itinerary small, .content .legend-row p, .content .access-flag,
+.content .where, .content .tip, .content .sequence, .content .practicals-count, .content .form-grid label, .content .form-grid input,
+.content .filters input, .content .chip, .content .seg button, .content .block h3, .content .warn-text, .content .unknown,
+.content .card.dish .muted, .content .verify-line, .content .text-btn, .content .place-link, .content .check span, .content .numbered .num,
+.content .legend-chip, .content .legend-key {
+  font-size: 14px !important; line-height: 22px;
+}
+.content .chip, .content .seg button, .content .legend-key { line-height: 1; }
+.content .card p.muted, .content p.muted { line-height: 22px; }
