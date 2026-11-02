@@ -188,7 +188,8 @@ export const MapCanvas = forwardRef<MapHandle, Props>(function MapCanvas(props, 
   // the widest view: the whole northern crown of India, Gilgit-Baltistan to Aksai Chin
   const minK = useMemo(() => {
     const [x0, y0] = project([72.3, 37.2])!, [x1, y1] = project([80.6, 32.0])!;
-    return Math.min(1, 0.96 * Math.min(size.w / (x1 - x0), size.h / (y1 - y0)));
+    // leave room for the search box and filter bar on top and the scale bar below
+    return Math.min(1, 0.92 * Math.min(size.w / (x1 - x0), Math.max(200, size.h - 180) / (y1 - y0)));
   }, [project, size.w, size.h]);
 
   useEffect(() => {
@@ -215,7 +216,20 @@ export const MapCanvas = forwardRef<MapHandle, Props>(function MapCanvas(props, 
   const svgSel = () => d3.select(svgRef.current!);
   useImperativeHandle(ref, () => ({
     zoomIn: () => svgSel().transition().duration(ms(300)).call(zoomRef.current!.scaleBy, 1.6),
-    zoomOut: () => svgSel().transition().duration(ms(300)).call(zoomRef.current!.scaleBy, 1 / 1.6),
+    zoomOut: () => {
+      // the last step out frames the whole crown, below the search box and filter bar
+      if (t.k / 1.6 <= minK * 1.02) {
+        const [x0, y0] = project([72.3, 37.2])!, [x1, y1] = project([80.6, 32.0])!;
+        const cx = (x0 + x1) / 2, cy = (y0 + y1) / 2;
+        // centre the crown a little below the middle, but never show past the relief's edges
+        const [[rx0, ry0], [rx1, ry1]] = reliefBox;
+        const clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v));
+        const tx = clamp(size.w / 2 - minK * cx, size.w - minK * rx1, -minK * rx0);
+        const ty = clamp(size.h / 2 + 45 - minK * cy, size.h - minK * ry1, -minK * ry0);
+        const next = d3.zoomIdentity.translate(tx, ty).scale(minK);
+        svgSel().transition().duration(ms(400)).call(zoomRef.current!.transform, next);
+      } else svgSel().transition().duration(ms(300)).call(zoomRef.current!.scaleBy, 1 / 1.6);
+    },
     reset: () => svgSel().transition().duration(ms(450)).call(zoomRef.current!.transform, d3.zoomIdentity),
     fitTo: ([[w, s], [e, n]], maxScale = 10) => {
       const [x0, y1] = project([w, s])!, [x1, y0] = project([e, n])!;
@@ -223,7 +237,7 @@ export const MapCanvas = forwardRef<MapHandle, Props>(function MapCanvas(props, 
       const next = d3.zoomIdentity.translate(size.w / 2, size.h / 2).scale(k).translate(-(x0 + x1) / 2, -(y0 + y1) / 2);
       svgSel().transition().duration(ms(550)).call(zoomRef.current!.transform, next);
     },
-  }), [project, size]);
+  }), [project, size, t, minK, reliefBox]);
 
   return (
     <div className="map-canvas" ref={wrap}>

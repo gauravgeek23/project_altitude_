@@ -601,7 +601,7 @@ def _official_india():
     from shapely.ops import unary_union
     india = next(shape(f["geometry"]) for f in json.load(open(f"{RAW}/ne-admin1/countries_ind.geojson"))["features"]
                  if f["properties"]["ADM0_A3"] == "IND")
-    clip = box(W - 3, S - 3, E + 3, N + 3)
+    clip = box(W - 4.5, S - 3, E + 3, N + 3)
     india = india.intersection(clip)
     a1 = {}
     for f in json.load(open(f"{RAW}/ne-admin1/admin1.geojson"))["features"]:
@@ -634,9 +634,18 @@ def boundaries():
         if geom.geom_type == "LineString": return [list(geom.coords)]
         if geom.geom_type in ("MultiLineString", "GeometryCollection"): return [c for g in geom.geoms for c in lines_of(g)]
         return []
-    outline = india.boundary
+    from shapely.geometry import box as _box
+    # the outline, less the edges of the clipping box (those are not borders)
+    clip_edge = _box(W - 4.5, S - 3, E + 3, N + 3).exterior.buffer(0.002)
+    outline = india.boundary.difference(clip_edge)
+    def split_closed(run):
+        # a closed ring would collapse under simplification: cut it in two
+        if len(run) > 3 and run[0] == run[-1]:
+            h = len(run) // 2
+            return [run[:h + 1], run[h:]]
+        return [run]
     for l in lines_of(outline):
-        for run in runs_inside(l, pad=2.0):
+        for run in (r for raw in runs_inside(l, pad=4.5) for r in split_closed(raw)):
             if len(run) > 1:
                 out.append({"kind": "land", "cls": "International boundary", "name": "India (official boundary)", "left": "IND", "right": "",
                             "c": [[round(x, 4), round(y, 4)] for x, y in dp(run, 0.02)]})
@@ -650,7 +659,7 @@ def boundaries():
             merged = linemerge(shared) if shared.geom_type == "MultiLineString" else shared
             for l in lines_of(merged):
                 if LineString(l).length < 0.05: continue
-                for run in runs_inside(l, pad=2.0):
+                for run in runs_inside(l, pad=4.5):
                     if len(run) > 1:
                         out.append({"kind": "state", "cls": "Admin-1 boundary", "name": f"{a} | {b}", "left": a, "right": b,
                                     "c": [[round(x, 4), round(y, 4)] for x, y in dp(run, 0.02)]})
