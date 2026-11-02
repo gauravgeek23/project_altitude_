@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { FOOTER_NAV, NAV, type TabId } from "../nav";
 import { Logo } from "./Logo";
+import { PrayerFlags } from "./PrayerFlags";
 
 interface Props {
   tab: TabId;
@@ -21,6 +22,7 @@ export function Sidebar({ tab, onTab, variant = "rail", onClose, footer }: Props
   return (
     <nav className={`sidebar ${variant}`} aria-label="Sections">
       <div className="sidebar-top">
+        <div className="flags-rail" aria-hidden="true"><PrayerFlags /></div>
         <div className="sidebar-head">
           <a href="#note" onClick={(e) => { e.preventDefault(); onTab("note"); }} aria-label="Project Altitude, home"><Logo /></a>
           {variant === "drawer" && <button type="button" className="icon-btn" onClick={onClose} aria-label="Close menu">✕</button>}

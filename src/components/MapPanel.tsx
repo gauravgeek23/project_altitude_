@@ -3,7 +3,8 @@ import { MapCanvas, type MapHandle } from "../map/MapCanvas";
 import { MapControls } from "../map/MapControls";
 import { DEFAULT_REGION, REGIONS } from "../map/data/regions";
 import { ALL_PLACES, BY_ID, CIRCUIT_META, CIRCUIT_ORDER, TYPE_LABEL } from "../content/places";
-import { PlaceIcon } from "./icons";
+import { FilterIcon, PlaceIcon } from "./icons";
+import { FUEL_AT } from "../content/fuel";
 import { BASEMAPS, BASEMAP_BY_ID, googleSessionToken, type BasemapId } from "../map/basemaps";
 import { PlacePhoto } from "./PlacePhoto";
 import type { CircuitId } from "../content/types";
@@ -23,7 +24,7 @@ const terrain = Object.fromEntries(region.data.locations.filter((l) => l.elev !=
 const placed = new Set(region.data.locations.filter((l) => l.lon != null).map((l) => l.id));
 const searchable = ALL_PLACES.filter((p) => p.mapId && placed.has(p.mapId));
 const CATEGORIES: { id: string; label: string }[] = [
-  { id: "town", label: "Villages & towns" }, { id: "pass", label: "Passes" }, { id: "peak", label: "Peaks" }, { id: "lake", label: "Lakes" }, { id: "poi", label: "Landmarks" },
+  { id: "town", label: "Villages & towns" }, { id: "pass", label: "Passes" }, { id: "peak", label: "Peaks" }, { id: "lake", label: "Lakes" }, { id: "poi", label: "Landmarks" }, { id: "monastery", label: "Monasteries" },
 ];
 const fmt = (n: number) => n.toLocaleString("en-IN");
 const ALL_CIRCUITS = new Set(region.data.circuits.map((c) => c.id));
@@ -42,6 +43,7 @@ export function MapPanel({ selected, circuit, onCircuit, onSelect, onOpenPlace, 
   const [kinds, setKinds] = useState<Set<string>>(() => new Set(CATEGORIES.map((c) => c.id)));
   const [q, setQ] = useState("");
   const [panel, setPanel] = useState(false);
+  const [fuel, setFuel] = useState(false);
   const [base, setBase] = useState<BasemapId>("terrain");
   const [lastSat, setLastSat] = useState<BasemapId>("esri");
   const [session, setSession] = useState<string | null>(null);
@@ -91,7 +93,7 @@ export function MapPanel({ selected, circuit, onCircuit, onSelect, onOpenPlace, 
   return (
     <div className={"map-area" + (satellite ? " sat" : "")}>
       <MapCanvas ref={map} region={region} visible={visible} activeCircuit={circuit ?? hover} selectedLocation={selected}
-        showClaims={false} onHoverCircuit={setHover} onSelectCircuit={(id) => { if (id !== circuit) pick(id as CircuitId); }} kinds={kinds}
+        showClaims={false} onHoverCircuit={setHover} onSelectCircuit={(id) => { if (id !== circuit) pick(id as CircuitId); }} kinds={kinds} fuel={fuel}
         onSelectLocation={onSelect} onScale={setKmPerPx}
         onBackground={() => { if (circuit) pick(null); }} basemap={satellite && (base !== "google" || session) ? "satellite" : "terrain"} imagery={imagery} />
 
@@ -111,7 +113,8 @@ export function MapPanel({ selected, circuit, onCircuit, onSelect, onOpenPlace, 
           <input id="map-search" type="search" placeholder="Search villages, passes, lakes" value={q} onChange={(e) => setQ(e.target.value)}
             aria-label="Search the map" autoComplete="off"
             onKeyDown={(e) => { if (e.key === "Enter" && results[0]) { onSelect(results[0].mapId); setQ(""); } }} />
-          <button type="button" className={"filter-btn" + (panel ? " on" : "")} aria-expanded={panel} onClick={() => setPanel(!panel)}>Layers</button>
+          <button type="button" className={"sq-btn" + (panel ? " on" : "")} aria-expanded={panel} aria-label="Filters" title="Filters" onClick={() => setPanel(!panel)}><FilterIcon size={17} /></button>
+          <button type="button" className={"sq-btn" + (fuel ? " on" : "")} aria-pressed={fuel} aria-label="Petrol pumps" title={fuel ? "Hide petrol pumps" : "Show petrol pumps"} onClick={() => setFuel(!fuel)}><PlaceIcon kind="fuel" size={17} /></button>
         </div>
         {results.length > 0 && (
           <ul className="search-results" role="listbox" aria-label="Places">
@@ -135,7 +138,7 @@ export function MapPanel({ selected, circuit, onCircuit, onSelect, onOpenPlace, 
               <button key={c.id} type="button" className={"chip" + (kinds.has(c.id) ? " on" : "")} aria-pressed={kinds.has(c.id)}
                 onClick={() => toggle(kinds, c.id, setKinds)}>{c.label}</button>
             ))}</div>
-            <p className="layers-note">Food, stays, fuel and medical layers will appear once listings are verified.</p>
+            <p className="layers-note">The pump button beside Filters shows the petrol pumps. Food, stays and medical layers will appear once listings are verified.</p>
           </div>
         )}
       </div>
@@ -157,6 +160,9 @@ export function MapPanel({ selected, circuit, onCircuit, onSelect, onOpenPlace, 
           </p>
           <p className="map-card-circuits">{sel.circuits.map((c) => <span key={c} className="chip mini" style={{ ["--c" as string]: CIRCUIT_META[c].color }}><span className="dot" />{CIRCUIT_META[c].name}</span>)}</p>
           <p className="map-card-text">{sel.summary}</p>
+          {(sel.practical.fuel || FUEL_AT.has(sel.id)) && (
+            <p className="map-card-fuel"><span className="type-icon fuel"><PlaceIcon kind="fuel" size={13} /></span><span>{sel.practical.fuel ?? FUEL_AT.get(sel.id)!.note}</span></p>
+          )}
           {sel.access && <p className="map-card-warn">Access restrictions apply. Check before planning.</p>}
           <button type="button" className="text-btn" onClick={() => onOpenPlace(sel.id)}>Open the full entry →</button>
         </div>

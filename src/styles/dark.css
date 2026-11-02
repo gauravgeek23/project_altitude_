@@ -52,6 +52,8 @@
 :root[data-theme="dark"] .states text { fill: #c8ced6; }
 :root[data-theme="dark"] .states text.on { fill: #ffffff; }
 :root[data-theme="dark"] .countries text { fill: #a9b0b9; }
+:root[data-theme="dark"] .loc.peak .peak-name { fill: #d3d8e0; }
+:root[data-theme="dark"] .legend-peak { color: #d3d8e0; }
 :root[data-theme="dark"] .prayer-flags { --rope: #cfc6ae; --rope-edge: rgba(0,0,0,.55); }
 :root[data-theme="dark"] .cities text { fill: #c3c9d1; stroke: rgba(8,9,12,.85); }
 :root[data-theme="dark"] .cities circle { fill: #0d0f12; stroke: #c3c9d1; }
@@ -114,6 +116,8 @@
 :root:not([data-theme="light"]) .states text { fill: #c8ced6; }
 :root:not([data-theme="light"]) .states text.on { fill: #ffffff; }
 :root:not([data-theme="light"]) .countries text { fill: #a9b0b9; }
+:root:not([data-theme="light"]) .loc.peak .peak-name { fill: #d3d8e0; }
+:root:not([data-theme="light"]) .legend-peak { color: #d3d8e0; }
 :root:not([data-theme="light"]) .prayer-flags { --rope: #cfc6ae; --rope-edge: rgba(0,0,0,.55); }
 :root:not([data-theme="light"]) .cities text { fill: #c3c9d1; stroke: rgba(8,9,12,.85); }
 :root:not([data-theme="light"]) .cities circle { fill: #0d0f12; stroke: #c3c9d1; }

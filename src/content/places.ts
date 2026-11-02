@@ -45,7 +45,7 @@ export const PLACES: PlaceRecord[] = [
     "An easy side trip from Padum into Zanskar's history.", { near: ["padum"] }),
   P("gombo-ranjan", "Gombo Ranjan", "landmark", ["zanskar"], "Zanskar–Lahaul", "A striking, sacred rock peak beside the road between Padum and Shinku La.",
     "One of the most dramatic mountains you can see from the saddle.", { notes: "The road here is new and can be soft in places.", near: ["padum", "shinku-la"] }),
-  P("lamayuru", "Lamayuru", "village", ["zanskar"], "Srinagar–Leh road", "One of Ladakh's oldest monasteries, above eroded 'moonland' formations.",
+  P("lamayuru", "Lamayuru", "monastery", ["zanskar"], "Srinagar–Leh road", "One of Ladakh's oldest monasteries, above eroded 'moonland' formations.",
     "The moonland view at dusk is unlike anything else on the road.", { near: ["kargil", "leh"] }),
   P("darcha", "Darcha", "village", ["zanskar", "changthang"], "Lahaul", "The village on the Bhaga river where the Shinku La road leaves the Manali–Leh highway.",
     "A checkpoint and crossroads for the Leh and Zanskar roads.", { notes: "Keep documents handy for the check post.", near: ["shinku-la", "baralacha-la", "atal-tunnel"] }),
@@ -75,7 +75,7 @@ export const PLACES: PlaceRecord[] = [
   // ------------------------------------------------------------ Changthang
   P("karu", "Karu", "village", ["changthang"], "Indus valley", "An important junction east of Leh where the Pangong road leaves the Indus valley.",
     "A resupply-planning point before Chang La.", { near: ["leh", "sakti"], map: null }),
-  P("hemis", "Hemis", "village", ["changthang", "nubra"], "Indus valley", "Home of Hemis Monastery and gateway to Hemis National Park.",
+  P("hemis", "Hemis", "monastery", ["changthang", "nubra"], "Indus valley", "Home of Hemis Monastery and gateway to Hemis National Park.",
     "One of the great monasteries of Ladakh, a short detour from the highway.", { near: ["karu", "leh"] }),
   P("sakti", "Sakti", "village", ["changthang"], "Chang La route", "A village on the climb towards Chang La.",
     "A last village stop before the pass.", { near: ["karu", "chang-la"], map: null }),
@@ -120,7 +120,7 @@ export const PLACES: PlaceRecord[] = [
   P("nako", "Nako", "village", ["spiti"], "Kinnaur", "A high stone village around a small lake.", "A gentle halt between Kinnaur's gorges and Spiti.", { near: ["reckong-peo", "tabo"] }),
   P("gue", "Gue", "village", ["spiti"], "Spiti", "A village known for the naturally preserved mummy of a meditating monk.", "A strange, quiet place off the main road.", { near: ["tabo"] }),
   P("tabo", "Tabo", "village", ["spiti"], "Spiti", "A historic monastery founded in 996 CE, with remarkable murals.", "Over a thousand years of continuous practice.", { notes: "Photography is not allowed inside the old halls.", near: ["nako", "dhankar"] }),
-  P("dhankar", "Dhankar", "village", ["spiti"], "Spiti", "A monastery and village on a ridge above the Spiti and Pin confluence.", "The setting is as remarkable as the architecture.", { near: ["tabo", "kaza"] }),
+  P("dhankar", "Dhankar", "monastery", ["spiti"], "Spiti", "A monastery and village on a ridge above the Spiti and Pin confluence.", "The setting is as remarkable as the architecture.", { near: ["tabo", "kaza"] }),
   P("kaza", "Kaza", "town", ["spiti"], "Spiti", "The main settlement and practical base for Spiti.", "The base for the high villages around it.", { near: ["dhankar", "kibber", "langza"] }),
   P("kibber", "Kibber", "village", ["spiti"], "Spiti", "A high village above Kaza, a base for wildlife-oriented excursions.", "High-altitude village life.", { near: ["kaza", "chicham"] }),
   P("chicham", "Chicham", "village", ["spiti"], "Spiti", "A village across a high bridge over a deep gorge near Kibber.", "The bridge viewpoint.", { near: ["kibber"] }),
@@ -136,16 +136,34 @@ export const PLACES: PlaceRecord[] = [
   P("jibhi", "Jibhi", "village", ["spiti"], "Tirthan valley", "A wooden village in the Tirthan valley below Jalori Pass.", "A green, slow break between the plains and the high desert.", { notes: "Jalori Pass is steep and narrow.", near: ["narkanda"] }),
   P("chandigarh", "Chandigarh", "town", ["spiti"], "Plains", "A starting point with rail and air connections for the Himachal approaches.", "Collect the motorcycle and last supplies here.", { near: ["solan", "shimla"] }),
   P("solan", "Solan", "town", ["spiti"], "Shimla hills", "A hill town between Chandigarh and Shimla.", "A quick stop on the way up.", { near: ["chandigarh", "shimla"] }),
+  // ------------------------------------------------------------ monasteries along the circuits (icon-only on the map)
+  P("stakna", "Stakna Monastery", "monastery", ["changthang"], "Indus valley", "A small Drukpa monastery on a rock above the Indus opposite Thiksey, reached by a bridge from the Leh–Upshi road.", "", { near: ["thiksey", "matho"] }),
+  P("matho", "Matho Monastery", "monastery", ["changthang"], "Indus valley", "The only Sakya monastery in Ladakh, above Matho village across the Indus from Stakna; known for its festival of oracles.", "", { near: ["stakna", "hemis"] }),
+  P("spituk", "Spituk Monastery", "monastery", ["nubra", "changthang", "zanskar"], "Leh", "A Gelugpa monastery on a hill at the end of Leh's runway, with the Indus below.", "", { near: ["leh", "shanti-stupa"] }),
+  P("shanti-stupa", "Shanti Stupa", "monastery", ["nubra", "changthang", "zanskar"], "Leh", "The white stupa on the hill above Changspa, with Leh spread out below it.", "", { near: ["leh", "spituk"] }),
+  P("phyang", "Phyang Monastery", "monastery", ["zanskar"], "Srinagar–Leh road", "A Drikung Kagyu monastery in Phyang village, 16 km west of Leh.", "", { near: ["leh", "nimmu"] }),
+  P("rizong", "Rizong Monastery", "monastery", ["zanskar"], "Srinagar–Leh road", "A Gelugpa monastery at the head of a side valley west of Alchi, known for its strict discipline, with a nunnery below it.", "", { near: ["alchi", "khalsi"] }),
+  P("chemrey", "Chemrey Monastery", "monastery", ["changthang"], "Chang La road", "A Drukpa monastery stacked up a hill near Sakti, on the way to Chang La.", "", { near: ["sakti", "takthok"] }),
+  P("takthok", "Takthok Monastery", "monastery", ["changthang"], "Chang La road", "A Nyingma monastery built around a cave at Sakti, the only one of its school in Ladakh.", "", { near: ["sakti", "chemrey"] }),
+  P("samstanling", "Samstanling Monastery", "monastery", ["nubra"], "Nubra valley", "A Gelugpa monastery above Sumur, looking down the Nubra valley.", "", { near: ["sumur", "panamik"] }),
+  P("karsha", "Karsha Monastery", "monastery", ["zanskar"], "Zanskar", "The largest monastery in Zanskar, climbing a hillside across the valley from Padum.", "", { near: ["padum", "stongdey"] }),
+  P("stongdey", "Stongdey Monastery", "monastery", ["zanskar"], "Zanskar", "A Gelugpa monastery high above the Zangla road, 18 km from Padum, with wide views over the valley.", "", { near: ["padum", "zangla"] }),
+  P("sani", "Sani Monastery", "monastery", ["zanskar"], "Zanskar", "One of the oldest religious sites in Zanskar, on the plain west of Padum beside the Kanika chorten.", "", { near: ["padum", "karsha"] }),
+  P("bardan", "Bardan Monastery", "monastery", ["zanskar"], "Lungnak valley", "A Drukpa monastery on a rock above the Lungnak river, 12 km south of Padum on the Shinku La road.", "", { near: ["padum", "phuktal"] }),
+  P("thukje", "Thukje Monastery", "monastery", ["changthang"], "Tso Kar", "The small monastery on a hill above Thukje, the village at Tso Kar.", "", { near: ["tso-kar"] }),
+  P("kungri", "Kungri Monastery", "monastery", ["spiti"], "Pin valley", "A Nyingma monastery in the Pin valley, the oldest in Spiti after Tabo, known for its sword dance.", "", { near: ["mudh", "kaza"] }),
+  P("lhalung", "Lhalung Monastery", "monastery", ["spiti"], "Lingti valley", "An early monastery of the Lingti valley above Dhankar, said to date from the 10th century.", "", { near: ["dhankar", "kaza"] }),
+  P("kardang", "Kardang Monastery", "monastery", ["changthang"], "Lahaul", "The largest monastery in Lahaul, across the Bhaga from Keylong.", "", { near: ["keylong"] }),
   // ------------------------------------------------------------ more stops on the circuits
-  P("phuktal", "Phuktal Monastery", "landmark", ["zanskar"], "Lungnak valley", "A monastery built into the mouth of a cave high on a cliff above the Tsarap river, reached on foot from the Padum–Shinku La road.", "One of the most remarkable buildings in Zanskar; allow a few hours for the walk.", { aka: "Phugtal", near: ["padum", "gombo-ranjan"] }),
-  P("likir", "Likir", "landmark", ["zanskar"], "Srinagar–Leh road", "Likir Monastery, a large Gelugpa gompa on a hill a few kilometres off the Srinagar–Leh road between Khalsi and Nimmu, with a tall gilded Maitreya.", "An easy detour on the way into Leh.", { near: ["alchi", "basgo"] }),
+  P("phuktal", "Phuktal Monastery", "monastery", ["zanskar"], "Lungnak valley", "A monastery built into the mouth of a cave high on a cliff above the Tsarap river, reached on foot from the Padum–Shinku La road.", "One of the most remarkable buildings in Zanskar; allow a few hours for the walk.", { aka: "Phugtal", near: ["padum", "gombo-ranjan"] }),
+  P("likir", "Likir", "monastery", ["zanskar"], "Srinagar–Leh road", "Likir Monastery, a large Gelugpa gompa on a hill a few kilometres off the Srinagar–Leh road between Khalsi and Nimmu, with a tall gilded Maitreya.", "An easy detour on the way into Leh.", { near: ["alchi", "basgo"] }),
   P("basgo", "Basgo", "landmark", ["zanskar"], "Srinagar–Leh road", "The mud-brick fort and temples of Basgo on crags above the highway, a capital of Ladakh in the 16th century.", "Visible from the road; a short climb to the temples.", { near: ["likir", "nimmu"] }),
   P("hunderman", "Hunderman", "landmark", ["zanskar"], "Kargil", "An abandoned village on the Line of Control 10 km north of Kargil, now kept as a museum of memories.", "A quiet half-day from Kargil.", { near: ["kargil"], notes: "Close to the Line of Control: check the current rules before visiting." }),
   P("chilling", "Chilling", "village", ["zanskar"], "Zanskar gorge", "A village in the Zanskar gorge on the new road between Nimmu and Padum.", "", { near: ["nimmu", "zangla"] }),
   P("nimmu", "Nimmu", "village", ["zanskar"], "Indus valley", "Where the Zanskar meets the Indus; the new Zanskar highway to Padum leaves the Srinagar–Leh road here.", "", { near: ["leh", "chilling"] }),
-  P("thiksey", "Thiksey", "village", ["nubra", "changthang"], "Indus valley", "A village below Thiksey Monastery, on the road east of Leh.", "", { near: ["shey", "karu"] }),
+  P("thiksey", "Thiksey", "monastery", ["nubra", "changthang"], "Indus valley", "A village below Thiksey Monastery, on the road east of Leh.", "", { near: ["shey", "karu"] }),
   P("shey", "Shey", "village", ["nubra", "changthang"], "Indus valley", "The old summer capital of Ladakh, with Shey Palace above the Indus.", "", { near: ["leh", "thiksey"] }),
-  P("alchi", "Alchi", "village", ["zanskar"], "Srinagar–Leh road", "A village a short way off the Srinagar–Leh road, known for the 11th-century murals of the Alchi Choskor.", "", { near: ["khalsi", "leh"] }),
+  P("alchi", "Alchi", "monastery", ["zanskar"], "Srinagar–Leh road", "A village a short way off the Srinagar–Leh road, known for the 11th-century murals of the Alchi Choskor.", "", { near: ["khalsi", "leh"] }),
   P("khalsi", "Khalsi", "village", ["zanskar"], "Srinagar–Leh road", "A village where the Srinagar–Leh road meets the Indus below Lamayuru.", "", { near: ["lamayuru", "alchi"] }),
   P("mulbekh", "Mulbekh", "village", ["zanskar"], "Srinagar–Leh road", "A village known for its rock-carved Maitreya, on the road between Kargil and Namika La.", "", { near: ["kargil", "namika-la"] }),
   P("upshi", "Upshi", "village", ["changthang"], "Indus valley", "Where the Manali–Leh road meets the Indus.", "", { near: ["karu", "rumtse"] }),
@@ -157,7 +175,7 @@ export const PLACES: PlaceRecord[] = [
   P("sissu", "Sissu", "village", ["changthang"], "Lahaul", "A village in the Chandra valley just north of the Atal Tunnel.", "", { near: ["atal-tunnel", "tandi"] }),
   P("tandi", "Tandi", "village", ["changthang"], "Lahaul", "Where the Chandra and Bhaga meet below Keylong.", "", { near: ["sissu", "keylong"] }),
   P("rampur", "Rampur", "town", ["spiti"], "Sutlej valley", "A Sutlej town on the road from Shimla into Kinnaur.", "", { near: ["narkanda", "sarahan"] }),
-  P("ki-monastery", "Key Monastery", "landmark", ["spiti"], "Spiti", "Spiti's largest monastery, on a hill above the road from Kaza to Kibber.", "", { near: ["kaza", "kibber"] }),
+  P("ki-monastery", "Key Monastery", "monastery", ["spiti"], "Spiti", "Spiti's largest monastery, on a hill above the road from Kaza to Kibber.", "", { near: ["kaza", "kibber"] }),
 ];
 
 /** Passes are records too; their official elevations stay null until verified. */
@@ -198,6 +216,15 @@ export const PEAKS: PlaceRecord[] = [
   peak("mulkila", "Mulkila", ["changthang"], "Lahaul", "A high summit of Lahaul above the Bhaga valley, seen on the road between Keylong and Darcha.", ["keylong", "darcha"]),
   peak("deo-tibba", "Deo Tibba", ["spiti"], "Pir Panjal", "A snow summit of the Pir Panjal above the Kullu valley.", ["manali", "hamta-pass"]),
   peak("kinnaur-kailash", "Kinnaur Kailash range", ["spiti"], "Kinnaur", "The sacred range that faces Kalpa across the Sutlej.", ["kalpa", "reckong-peo"]),
+  peak("cckn", "Chau Chau Kang Nilda", ["spiti"], "Spiti", "The peak that fills the view from Langza, 13 km north-east of Kaza.", ["langza", "kaza"]),
+  peak("kanamo", "Kanamo", ["spiti"], "Spiti", "A trekking summit above Kibber.", ["kibber", "shilla"]),
+  peak("shilla", "Shilla", ["spiti"], "Spiti", "A peak north of Kaza, once thought to be far higher than it is.", ["kibber", "langza"]),
+  peak("manirang", "Manirang", ["spiti"], "Kinnaur–Spiti", "A peak on the Kinnaur–Spiti divide above the Manirang pass, seen from the road near Nako and Tabo.", ["nako", "tabo"]),
+  peak("hanuman-tibba", "Hanuman Tibba", ["spiti", "changthang"], "Pir Panjal", "The highest of the Pir Panjal near Manali, above Solang.", ["manali", "friendship-peak"]),
+  peak("friendship-peak", "Friendship Peak", ["spiti", "changthang"], "Pir Panjal", "A trekking summit above Beas Kund near Manali.", ["manali", "hanuman-tibba"]),
+  peak("lungser-kangri", "Lungser Kangri", ["changthang"], "Rupshu", "The highest peak of the Rupshu plateau, east of Tso Moriri.", ["chamser-kangri", "karzok"]),
+  peak("chamser-kangri", "Chamser Kangri", ["changthang"], "Rupshu", "A summit east of Tso Moriri, climbed from Karzok.", ["lungser-kangri", "karzok"]),
+  peak("mentok-kangri", "Mentok Kangri", ["changthang"], "Rupshu", "The peaks west of Tso Moriri, above Korzok.", ["karzok", "tso-moriri"]),
   peak("reo-purgyil", "Reo Purgyil", ["spiti"], "Kinnaur–Spiti", "The highest peak in Himachal Pradesh, rising above Nako.", ["nako"]),
 ];
 
@@ -213,7 +240,7 @@ for (const r of [...PLACES, ...PASSES, ...PEAKS]) {
 export const ALL_PLACES = [...PLACES, ...PASSES, ...PEAKS];
 export const BY_ID: Record<string, PlaceRecord> = Object.fromEntries(ALL_PLACES.map((p) => [p.id, p]));
 
-export const TYPE_LABEL: Record<PlaceType, string> = { village: "Village", town: "Town", pass: "Pass", peak: "Peak", lake: "Lake", landmark: "Landmark" };
+export const TYPE_LABEL: Record<PlaceType, string> = { village: "Village", town: "Town", pass: "Pass", peak: "Peak", lake: "Lake", landmark: "Landmark", monastery: "Monastery" };
 export const PRACTICAL_LABEL: Record<keyof Practical, string> = {
   fuel: "Fuel", food: "Food", stay: "Stay", network: "Network", medical: "Medical help", bestTime: "Best time", riderNotes: "Rider notes",
 };

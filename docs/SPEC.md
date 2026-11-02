@@ -42,6 +42,7 @@ These come from the content blueprint and are not negotiable:
 ├── vercel.json           framework vite, npm run build, output dist/
 ├── scripts/inline.mjs    inlines CSS and JS into dist/project-altitude.html (React from cdnjs)
 ├── scripts/photos.py     lists the shared album, makes contact sheets, builds public/photos and the manifest
+├── scripts/icons.cjs     renders public/icon.svg to the PNG icons and the social-preview image public/og.png
 ├── scripts/photo-selection.json  which album photos go with which place, with captions
 ├── public/photos/        the photos, two sizes each (served as /photos/...)
 ├── docs/SPEC.md          this file
@@ -54,7 +55,7 @@ These come from the content blueprint and are not negotiable:
 │   │   ├── MapPanel.tsx      map overlays: search, circuit filter, layers, place card, SOS
 │   │   ├── icons.tsx         the icon language (one SVG path per kind of place)
 │   │   ├── PlacePhoto.tsx    a place's photo with a count; click opens the gallery
-│   │   ├── PrayerFlags.tsx   the prayer flags in the wind at the top of the reading panel (canvas)
+│   │   ├── PrayerFlags.tsx   the prayer flags hung above the logo in the rail (canvas)
 │   │   ├── Lightbox.tsx      full-screen gallery: arrows, swipe, thumbnails, Esc
 │   │   ├── ThemeToggle.tsx   light/dark: system default, reader's pick saved
 │   │   └── Logo.tsx
@@ -62,6 +63,7 @@ These come from the content blueprint and are not negotiable:
 │   │   ├── types.ts      PlaceRecord, Practical, Verification, ContactRecord
 │   │   ├── places.ts     PLACES, PASSES, PEAKS, CIRCUIT_META, labels
 │   │   ├── facts.ts      sourced practical facts (fuel, medical, network, stay) with links
+│   │   ├── fuel.ts       the petrol pumps on the circuits, for the fuel layer
 │   │   ├── guide.ts      all page copy: story, food, dishes, stays, emergency, packing…
 │   │   ├── images.ts     photos from the ride, by place (reads photos.json)
 │   │   └── photos.json   generated manifest of the photos (see §7)
@@ -205,7 +207,10 @@ PlaceRecord {
 | Zoom tiers | `LocationMarkers.tsx` `TIER_ZOOM = [0, 1, 2.2, 4]` | Tier 1 always shows; tier 2 appears from 2.2×, tier 3 from 4×. The selected place always shows. |
 | Labels | `LocationMarkers.tsx` | Screen-space pills with the type icon. Placed by priority (selected, then hub, then highlight, then on the active circuit). Hidden when they collide, or fall under the search box, filter bar, controls or scale bar. |
 | Circuit filter | `MapPanel.tsx` | All · Zanskar · Nubra · Changthang · Spiti. Picking a circuit, or clicking its line, shows it alone and frames it. A click on empty map, "All", the same circuit again, or Reset shows all four. |
-| Layers | `MapPanel.tsx` | Show or hide villages and towns, passes, peaks, lakes and landmarks. |
+| Filters | `MapPanel.tsx` | A square button beside the search box: the map source, and which kinds of place to show (villages and towns, passes, peaks, lakes, landmarks, monasteries). |
+| Petrol pumps | `MapPanel.tsx`, `content/fuel.ts` | The pump button beside Filters marks every pump in `FUEL_STOPS` with a green badge under the place's dot (amber where reports disagree). The card shows the fuel note. |
+| Monasteries | `LocationMarkers.tsx` | Map kind `monastery`: an icon on its own, no tag; the name appears on hover, the card on a click. Tier 2 or 3, so they appear as you zoom in. |
+| Peaks | `LocationMarkers.tsx` | Map kind `peak`: the name in plain text (▲ Name) with no marker, placed where it does not collide; clickable. Tier 2 for the famous summits, 3 for the rest. |
 | States | `MapCanvas.tsx` `.region-area` | Hovering Ladakh or Himachal tints it 10% and darkens its name. |
 | Satellite | `MapCanvas.tsx` `SatelliteTiles` | Hybrid view, like Google's: Esri World Imagery, the relief multiplied on top for mountain shading, Esri's road overlay (roads only, no boundaries), city names, and India's official boundaries in white. Tiles load in the reader's browser; attribution switches with it. |
 | Orientation cities | `MapCanvas.tsx` `CITIES` | Srinagar, Jammu, Gilgit, Skardu, Dharamshala, Amritsar, Lahore and others, as plain labels for orientation. Not stops, not clickable. |
@@ -266,6 +271,10 @@ Google strips location data from photos shared by link, so the first selection w
 | `--on-ink` | `#fff` | `#0d0f12` | Text on an `--ink` surface |
 
 **Map-only tokens** (on `.map-col` and `.legend`): `--town #ffe03a`, `--pass #17181a`, `--lake #4fe3ef`, `--boundary`, `--road`, `--river`, and `--tag-ink`. The tag ink stays dark in both themes, because tags keep their colours.
+
+### Icons and metadata
+- `public/icon.svg` is the site mark (redrawn as vector from the original icon). `node scripts/icons.cjs` renders `icon-512.png`, `icon-192.png`, `icon-32.png`, `apple-touch-icon.png` and the 1200×630 social preview `og.png`.
+- `index.html` links the icons and sets Open Graph tags; `og:image` needs an absolute URL: `vite.config.ts` fills in `VITE_SITE_URL`, which defaults to `https://project-altitude.vercel.app`; set it in Vercel to the real domain.
 
 ### Dark mode
 - **Toggle:** in the nav footer, and in the mobile top bar.

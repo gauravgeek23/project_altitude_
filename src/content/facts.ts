@@ -9,7 +9,7 @@ export const CHECKED_ON = "2026-11-02";
 
 export interface Source { label: string; url: string }
 
-const S = {
+export const SOURCES = {
   fuel: { label: "Discover with Dheeraj: fuel availability in Ladakh", url: "https://discoverwithdheeraj.com/fuel-availability-in-leh-ladakh-ladakh-self-drive-tips" },
   spareFuel: { label: "Vargis Khan: spare fuel for a Ladakh trip", url: "https://vargiskhan.com/log/?p=7641" },
   spitiFuel: { label: "TravelSetu: fuel and pit stops in Spiti", url: "https://travelsetu.com/apps/blog/fuel-and-pit-stops-a-guide-to-eating-and-sleeping-in-spiti-valley" },
@@ -31,6 +31,8 @@ const S = {
   langza: { label: "Responsible Tourism India: Langza homestay", url: "https://www.responsibletourismindia.com/stay/langza-homestaylaras-homestay/368" },
   ladakhHomestays: { label: "Leh Ladakh Taxis: homestays in Ladakh", url: "https://lehladakhtaxis.com/best-hotels-leh-ladakh/homestays-in-ladakh" },
 };
+
+const S = SOURCES;
 
 type Fact = Partial<Practical> & { sources: Source[] };
 

@@ -1,13 +1,14 @@
 import { useEffect, useRef } from "react";
 
 /**
- * A line of Ladakhi prayer flags moving in the wind, drawn on a canvas.
+ * A short string of Ladakhi prayer flags hanging in the wind, drawn on a canvas.
  *
- * Each flag is a small texture (its colour, the mantra syllable, a hem) drawn as narrow vertical
- * strips. Every strip is sheared by the wind, stretched by the lift of the free bottom edge and
+ * The string sags between its two ends and the flags hang from it, each turned a little to follow
+ * the curve. Each flag is a small texture (its colour, the mantra syllable, a hem) drawn as narrow
+ * vertical strips; every strip is sheared by the wind, stretched by the lift of the free hem and
  * shaded by the fold it sits on, so the cloth ripples, swings and catches the light. Gusts breathe
- * slowly and travel along the line from left to right, so the flags answer one after another.
- * Stops drawing when scrolled out of view, and draws a single still frame for reduced motion.
+ * slowly and travel along the string. Stops drawing when scrolled out of view, and draws a single
+ * still frame for reduced motion.
  */
 const FLAGS = [
   { bg: "#2a5bd0", hem: "#5d86e6", ink: "#ffffff", tib: "ༀ", lat: "OM" },
@@ -17,7 +18,7 @@ const FLAGS = [
   { bg: "#f3b818", hem: "#ffd863", ink: "#2a5bd0", tib: "ཧཱུྃ", lat: "HUM" },
 ];
 const TIBETAN = `"Noto Serif Tibetan", "Noto Sans Tibetan", Kailasa, "Microsoft Himalaya", Jomolhari, "Tibetan Machine Uni", "DDC Uchen", serif`;
-const FW = 34, FH = 44, COLS = 14, TS = 3;   // flag size in CSS px, strips per flag, texture scale
+const FW = 34, FH = 44, TS = 3;   // flag size at full scale (CSS px) and texture scale
 
 /** whether this browser has a font for the Tibetan syllables (else the flags carry the Latin ones) */
 function canDrawTibetan(): boolean {
@@ -57,7 +58,7 @@ function makeTexture(f: (typeof FLAGS)[number], tibetan: boolean): HTMLCanvasEle
   for (let k = -1; k <= 1; k++) { const cx = w / 2 + k * 6.5 * TS, cy = h * 0.84; x.moveTo(cx - 3 * TS, cy); x.arc(cx, cy, 3 * TS, Math.PI, 0, false); }
   x.stroke();
   x.beginPath(); x.moveTo(w * 0.22, h * 0.9); x.lineTo(w * 0.78, h * 0.9); x.stroke();
-  // ambient occlusion where the cloth hangs from the rope
+  // ambient occlusion where the cloth hangs from the string
   const g = x.createLinearGradient(0, 0, 0, h * 0.3); g.addColorStop(0, "rgba(0,0,0,.26)"); g.addColorStop(1, "rgba(0,0,0,0)");
   x.globalAlpha = 1; x.fillStyle = g; x.fillRect(0, 0, w, h * 0.3);
   return c;
@@ -72,7 +73,7 @@ function makeShadow(): HTMLCanvasElement {
   return c;
 }
 
-export function PrayerFlags({ height = 88 }: { height?: number }) {
+export function PrayerFlags({ height = 66, flags = 5 }: { height?: number; flags?: number }) {
   const ref = useRef<HTMLCanvasElement>(null);
   useEffect(() => {
     const canvas = ref.current!;
@@ -92,7 +93,7 @@ export function PrayerFlags({ height = 88 }: { height?: number }) {
     };
     const resize = () => {
       dpr = Math.min(2, window.devicePixelRatio || 1);
-      w = canvas.getBoundingClientRect().width || 400;
+      w = canvas.getBoundingClientRect().width || 140;
       canvas.width = Math.round(w * dpr); canvas.height = Math.round(height * dpr);
       readColours();
       if (reduce) draw(3.2);
@@ -105,51 +106,62 @@ export function PrayerFlags({ height = 88 }: { height?: number }) {
     function draw(t: number) {
       ctx!.setTransform(dpr, 0, 0, dpr, 0, 0);
       ctx!.clearRect(0, 0, w, height);
-      const n = Math.max(5, Math.min(10, Math.floor(w / 46)));
-      const sag = Math.min(12, w * 0.03), ropeY = 9;
-      const ropeAt = (x: number) => { const u = x / w; return ropeY + sag * 4 * u * (1 - u) + 0.7 * Math.sin(t * 0.8 + u * 3.1); };
+      const n = flags;
+      // flags sized to the string: five of them fit a narrow rail
+      const sc = Math.min(1, (w - 8) / (n * 44));
+      const fw = FW * sc, fh = FH * sc, cols = sc < 0.75 ? 10 : 14;
+      // the string sags between its two ends, like one hung between two walls
+      const sag = Math.min(fh * 0.75, w * 0.14), ropeY = 5;
+      const ropeAt = (x: number) => { const u = x / w; return ropeY + sag * 4 * u * (1 - u) + 0.6 * sc * Math.sin(t * 0.8 + u * 3.1); };
+      const slopeAt = (x: number) => (ropeAt(x + 2) - ropeAt(x - 2)) / 4;
+      // each flag hangs from its spot on the curve, turned a little to follow it
+      const inset = fw * 0.55;
+      const centre = (i: number) => inset + ((w - 2 * inset) * (i + 0.5)) / n;
 
       // shadows, cast on the panel behind
       for (let i = 0; i < n; i++) {
-        const cx = (w * (i + 0.5)) / n, g = gustAt(t, cx / w);
+        const cx = centre(i), g = gustAt(t, cx / w);
         const shear = 0.1 + 0.45 * g;
-        ctx!.globalAlpha = 0.11 + 0.08 * g;
-        ctx!.drawImage(shadow, cx - FW / 2 - 8 + shear * FH * 0.5, ropeAt(cx) + 10, FW + 16, FH + 10);
+        ctx!.globalAlpha = 0.1 + 0.08 * g;
+        ctx!.drawImage(shadow, cx - fw / 2 - 6 * sc + shear * fh * 0.5, ropeAt(cx) + 8 * sc, fw + 12 * sc, fh + 8 * sc);
       }
       ctx!.globalAlpha = 1;
 
-      // the rope, with a darker line beneath it for depth
+      // the string, with a darker line beneath it for depth
       ctx!.lineCap = "round";
       ctx!.beginPath();
-      for (let x = 0; x <= w + 4; x += 6) { const y = ropeAt(Math.min(x, w)); x === 0 ? ctx!.moveTo(x, y) : ctx!.lineTo(x, y); }
-      ctx!.lineWidth = 2.6; ctx!.strokeStyle = ropeEdge; ctx!.stroke();
-      ctx!.lineWidth = 1.6; ctx!.strokeStyle = rope; ctx!.stroke();
+      for (let x = 0; x <= w + 4; x += 4) { const y = ropeAt(Math.min(x, w)); x === 0 ? ctx!.moveTo(x, y) : ctx!.lineTo(x, y); }
+      ctx!.lineWidth = 2.2; ctx!.strokeStyle = ropeEdge; ctx!.stroke();
+      ctx!.lineWidth = 1.3; ctx!.strokeStyle = rope; ctx!.stroke();
 
       // the flags
       for (let i = 0; i < n; i++) {
-        const cx = (w * (i + 0.5)) / n, u = cx / w, g = gustAt(t, u);
+        const cx = centre(i), u = cx / w, g = gustAt(t, u);
         const f = tex[i % FLAGS.length];
-        const x0 = cx - FW / 2;
-        // the free edge swings downwind, and sways
-        const shear = 0.1 + 0.42 * g + 0.1 * g * Math.sin(t * 2.3 + i * 1.7);
-        const sw = f.width / COLS, dw = FW / COLS;
-        for (let c = 0; c < COLS; c++) {
-          const v = (c + 0.5) / COLS;
+        const tilt = Math.atan(slopeAt(cx)) * 0.6;
+        // the free hem swings downwind, and sways
+        const shear = 0.08 + 0.4 * g + 0.1 * g * Math.sin(t * 2.3 + i * 1.7);
+        const sw = f.width / cols, dw = fw / cols;
+        ctx!.save();
+        ctx!.translate(cx, ropeAt(cx) + 0.5);
+        ctx!.rotate(tilt);
+        for (let c = 0; c < cols; c++) {
+          const v = (c + 0.5) / cols;
           const ph = v * 9.5 - t * (5 + 7 * g) + i * 1.1;   // a ripple travelling across the cloth
-          const x = x0 + c * dw + 1.1 * g * Math.sin(ph);   // threads bunch on the folds
-          const top = ropeAt(x + dw / 2) + 0.6;
+          const x = -fw / 2 + c * dw + 1.1 * sc * g * Math.sin(ph);   // threads bunch on the folds
           const lift = 1 - 0.07 * g - 0.08 * g * (0.5 + 0.5 * Math.sin(ph * 0.8 + 0.9));   // the hem waves up
-          const hh = FH * lift;
+          const hh = fh * lift;
           ctx!.save();
-          ctx!.transform(1, 0, shear, 1, x, top);
+          ctx!.transform(1, 0, shear, 1, x, 0);
           ctx!.drawImage(f, c * sw, 0, sw + 1, f.height, 0, 0, dw + 0.7, hh);
           const light = Math.cos(ph) * 0.2 * g;   // the side of a fold that faces the light
           ctx!.fillStyle = light > 0 ? `rgba(255,255,255,${light.toFixed(3)})` : `rgba(0,0,0,${(-light * 0.9).toFixed(3)})`;
           ctx!.fillRect(0, 0, dw + 0.7, hh);
           ctx!.restore();
         }
+        ctx!.restore();
         // the knot
-        ctx!.beginPath(); ctx!.arc(cx, ropeAt(cx), 1.9, 0, Math.PI * 2); ctx!.fillStyle = rope; ctx!.fill();
+        ctx!.beginPath(); ctx!.arc(cx, ropeAt(cx), 1.6 * sc + 0.4, 0, Math.PI * 2); ctx!.fillStyle = rope; ctx!.fill();
         ctx!.lineWidth = 0.8; ctx!.strokeStyle = ropeEdge; ctx!.stroke();
       }
     }
@@ -170,6 +182,6 @@ export function PrayerFlags({ height = 88 }: { height?: number }) {
     io.observe(canvas);
     if (!reduce) raf = requestAnimationFrame(frame);
     return () => { ro.disconnect(); io.disconnect(); if (raf) cancelAnimationFrame(raf); };
-  }, [height]);
+  }, [height, flags]);
   return <canvas ref={ref} className="prayer-flags" style={{ height }} aria-hidden="true" />;
 }

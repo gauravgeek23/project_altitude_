@@ -21,6 +21,7 @@ export const KIND_LABEL: Record<MapLocation["kind"], string> = {
   town: "Town or village",
   pass: "Mountain pass",
   peak: "Peak",
+  monastery: "Monastery",
   lake: "Lake",
   poi: "Landmark",
   via: "Routing point",

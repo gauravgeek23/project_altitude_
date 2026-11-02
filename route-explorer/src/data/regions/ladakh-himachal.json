@@ -1313,6 +1313,324 @@
         "lat": 34.616,
         "cite": "Wikipedia, Hunderman"
       }
+    },
+    {
+      "id": "stakna",
+      "name": "Stakna Monastery",
+      "kind": "monastery",
+      "tier": 2,
+      "source": {
+        "dataset": "published",
+        "lon": 77.68472,
+        "lat": 34.005,
+        "cite": "Wikipedia, Stakna Monastery"
+      }
+    },
+    {
+      "id": "matho",
+      "name": "Matho Monastery",
+      "kind": "monastery",
+      "tier": 3,
+      "source": {
+        "dataset": "approx",
+        "lon": 77.63,
+        "lat": 33.985,
+        "snap": "none",
+        "radius": 0
+      }
+    },
+    {
+      "id": "spituk",
+      "name": "Spituk Monastery",
+      "kind": "monastery",
+      "tier": 2,
+      "source": {
+        "dataset": "published",
+        "lon": 77.526278,
+        "lat": 34.1255,
+        "cite": "Wikipedia, Spituk Monastery"
+      }
+    },
+    {
+      "id": "phyang",
+      "name": "Phyang Monastery",
+      "kind": "monastery",
+      "tier": 3,
+      "source": {
+        "dataset": "published",
+        "lon": 77.48944,
+        "lat": 34.18639,
+        "cite": "Wikipedia, Phyang Monastery"
+      }
+    },
+    {
+      "id": "rizong",
+      "name": "Rizong Monastery",
+      "kind": "monastery",
+      "tier": 3,
+      "source": {
+        "dataset": "published",
+        "lon": 77.10722,
+        "lat": 34.26917,
+        "cite": "Wikipedia, Rizong Monastery"
+      }
+    },
+    {
+      "id": "chemrey",
+      "name": "Chemrey Monastery",
+      "kind": "monastery",
+      "tier": 2,
+      "source": {
+        "dataset": "published",
+        "lon": 77.8,
+        "lat": 33.967,
+        "cite": "Wikipedia, Chemrey Monastery"
+      }
+    },
+    {
+      "id": "takthok",
+      "name": "Takthok Monastery",
+      "kind": "monastery",
+      "tier": 3,
+      "source": {
+        "dataset": "published",
+        "lon": 77.8203,
+        "lat": 34.0053,
+        "cite": "Wikipedia, Takthok Monastery"
+      }
+    },
+    {
+      "id": "samstanling",
+      "name": "Samstanling Monastery",
+      "kind": "monastery",
+      "tier": 2,
+      "source": {
+        "dataset": "published",
+        "lon": 77.625252,
+        "lat": 34.6316817,
+        "cite": "Treasury of Lives, Samstanling"
+      }
+    },
+    {
+      "id": "karsha",
+      "name": "Karsha Monastery",
+      "kind": "monastery",
+      "tier": 2,
+      "source": {
+        "dataset": "published",
+        "lon": 76.907,
+        "lat": 33.5344,
+        "cite": "Wikipedia, Karsha Monastery"
+      }
+    },
+    {
+      "id": "stongdey",
+      "name": "Stongdey Monastery",
+      "kind": "monastery",
+      "tier": 3,
+      "source": {
+        "dataset": "published",
+        "lon": 76.9882,
+        "lat": 33.5193,
+        "cite": "Wikipedia, Stongdey Monastery"
+      }
+    },
+    {
+      "id": "sani",
+      "name": "Sani Monastery",
+      "kind": "monastery",
+      "tier": 3,
+      "source": {
+        "dataset": "approx",
+        "lon": 76.845,
+        "lat": 33.498,
+        "snap": "route",
+        "radius": 3
+      }
+    },
+    {
+      "id": "bardan",
+      "name": "Bardan Monastery",
+      "kind": "monastery",
+      "tier": 3,
+      "source": {
+        "dataset": "published",
+        "lon": 76.9193,
+        "lat": 33.3983,
+        "cite": "Wikipedia, Bardan Monastery"
+      }
+    },
+    {
+      "id": "thukje",
+      "name": "Thukje Monastery",
+      "kind": "monastery",
+      "tier": 3,
+      "source": {
+        "dataset": "published",
+        "lon": 78.0248,
+        "lat": 33.3616,
+        "cite": "Wikivoyage, Changthang Western Lakes"
+      }
+    },
+    {
+      "id": "kungri",
+      "name": "Kungri Monastery",
+      "kind": "monastery",
+      "tier": 2,
+      "source": {
+        "dataset": "published",
+        "lon": 78.075,
+        "lat": 32.044,
+        "cite": "Wikipedia, Kungri Monastery"
+      }
+    },
+    {
+      "id": "lhalung",
+      "name": "Lhalung Monastery",
+      "kind": "monastery",
+      "tier": 3,
+      "source": {
+        "dataset": "published",
+        "lon": 78.235,
+        "lat": 32.146,
+        "cite": "Wikipedia, Lhalung Monastery"
+      }
+    },
+    {
+      "id": "kardang",
+      "name": "Kardang Monastery",
+      "kind": "monastery",
+      "tier": 2,
+      "source": {
+        "dataset": "published",
+        "lon": 77.022,
+        "lat": 32.563,
+        "cite": "Wikipedia, Kardang Monastery"
+      }
+    },
+    {
+      "id": "shanti-stupa",
+      "name": "Shanti Stupa",
+      "kind": "monastery",
+      "tier": 2,
+      "source": {
+        "dataset": "published",
+        "lon": 77.57472,
+        "lat": 34.17361,
+        "cite": "Wikipedia, Shanti Stupa, Ladakh"
+      }
+    },
+    {
+      "id": "cckn",
+      "name": "Chau Chau Kang Nilda",
+      "kind": "peak",
+      "tier": 2,
+      "source": {
+        "dataset": "published",
+        "lon": 78.15,
+        "lat": 32.31,
+        "cite": "Wikipedia, Chau Chau Kang Nilda"
+      }
+    },
+    {
+      "id": "kanamo",
+      "name": "Kanamo",
+      "kind": "peak",
+      "tier": 3,
+      "source": {
+        "dataset": "approx",
+        "lon": 78.0801,
+        "lat": 32.3267,
+        "snap": "peak",
+        "radius": 2.5
+      }
+    },
+    {
+      "id": "shilla",
+      "name": "Shilla",
+      "kind": "peak",
+      "tier": 3,
+      "source": {
+        "dataset": "published",
+        "lon": 78.2004,
+        "lat": 32.4058,
+        "cite": "Wikipedia, Shilla (mountain)"
+      }
+    },
+    {
+      "id": "manirang",
+      "name": "Manirang",
+      "kind": "peak",
+      "tier": 3,
+      "source": {
+        "dataset": "published",
+        "lon": 78.36667,
+        "lat": 31.95333,
+        "cite": "Wikipedia, Manirang"
+      }
+    },
+    {
+      "id": "hanuman-tibba",
+      "name": "Hanuman Tibba",
+      "kind": "peak",
+      "tier": 3,
+      "source": {
+        "dataset": "approx",
+        "lon": 77.04,
+        "lat": 32.34,
+        "snap": "peak",
+        "radius": 3
+      }
+    },
+    {
+      "id": "friendship-peak",
+      "name": "Friendship Peak",
+      "kind": "peak",
+      "tier": 3,
+      "source": {
+        "dataset": "approx",
+        "lon": 77.095,
+        "lat": 32.33,
+        "snap": "peak",
+        "radius": 2.5
+      }
+    },
+    {
+      "id": "lungser-kangri",
+      "name": "Lungser Kangri",
+      "kind": "peak",
+      "tier": 3,
+      "source": {
+        "dataset": "published",
+        "lon": 78.4568,
+        "lat": 32.93147,
+        "cite": "SummitPost, Lungser Kangri"
+      }
+    },
+    {
+      "id": "chamser-kangri",
+      "name": "Chamser Kangri",
+      "kind": "peak",
+      "tier": 2,
+      "source": {
+        "dataset": "published",
+        "lon": 78.442686,
+        "lat": 32.962458,
+        "cite": "PeakVisor, Chamser Kangri"
+      }
+    },
+    {
+      "id": "mentok-kangri",
+      "name": "Mentok Kangri",
+      "kind": "peak",
+      "tier": 2,
+      "source": {
+        "dataset": "approx",
+        "lon": 78.2,
+        "lat": 32.93,
+        "snap": "peak",
+        "radius": 4
+      }
     }
   ],
   "circuits": [

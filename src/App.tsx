@@ -1,5 +1,4 @@
 import { ThemeToggle, useTheme } from "./components/ThemeToggle";
-import { PrayerFlags } from "./components/PrayerFlags";
 import { useEffect, useRef, useState } from "react";
 import { Sidebar } from "./components/Sidebar";
 import { MapPanel } from "./components/MapPanel";
@@ -63,7 +62,6 @@ export default function App() {
       )}
 
       <main className="content" ref={content} id="content">
-        <div className="flags-band" aria-hidden="true"><PrayerFlags /></div>
         <div className="content-inner" key={tab}>
           <Tab selected={selected} onPlace={showOnMap} onCircuit={setCircuit} onTab={go} />
         </div>

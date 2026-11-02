@@ -442,10 +442,21 @@ details.practicals .facts-grid { padding: 0 14px 12px; margin: 0; }
 .lightbox .lb-text { display: flex; flex-direction: column; align-items: center; gap: 2px; text-align: center; }
 .lightbox .lb-text b { color: #fff; font-weight: 500; }
 
-/* ---------------- prayer flags at the top of the reading panel */
-.flags-band { position: sticky; top: 0; z-index: 6; display: flex; justify-content: center; padding: 2px 16px 0; background: var(--panel); pointer-events: none; }
-.flags-band::after { content: ""; position: absolute; left: 0; right: 0; top: 100%; height: 12px; background: linear-gradient(var(--panel), transparent); }
-.prayer-flags { display: block; width: min(100%, 500px); --rope: #e3dcc9; --rope-edge: rgba(0,0,0,.3); }
-.content-inner { padding-top: 20px; }
-@media (max-width: 899px) { .flags-band { top: 60px; } }
+/* ---------------- prayer flags: a short string hung above the logo in the rail */
+.flags-rail { margin: -22px 0 -8px; pointer-events: none; }
+.prayer-flags { display: block; width: 100%; --rope: #d8d0bc; --rope-edge: rgba(0,0,0,.32); }
+.drawer .flags-rail { margin-top: -8px; }
+
+/* ---------------- square buttons beside the search box */
+.sq-btn { width: 38px; height: 38px; flex: none; display: grid; place-items: center; border-radius: 10px; border: 1px solid rgba(0,0,0,.08); background: var(--float); color: var(--ink); cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,.12); transition: background .15s, color .15s; }
+.sq-btn:hover { color: var(--accent); }
+.sq-btn.on { background: var(--ink); color: var(--on-ink); }
+.sq-btn.on:hover { color: var(--on-ink); }
+.map-card-fuel { display: flex; gap: 8px; align-items: flex-start; margin: 0 0 8px; font-size: 13px; line-height: 20px; color: var(--ink); }
+.map-card-fuel .type-icon { width: 20px; height: 20px; border-radius: 6px; flex: none; }
+.type-icon.monastery { background: #f7e4ea; color: #8a1f3f; }
+.type-icon.fuel { background: #dff3ea; color: #0f7a52; }
+.legend-peak { font-family: var(--display); font-size: 11px; font-weight: 600; letter-spacing: .04em; color: #4a4f5a; }
+.legend-badge { display: inline-grid; place-items: center; width: 20px; height: 20px; border-radius: 50%; background: #fff; border: 1.4px solid #8a1f3f; color: #8a1f3f; }
+.legend-key.fuel-key { background: #0f8f5f; color: #fff; border: 0; }
 .photo-row .count { display: none; }

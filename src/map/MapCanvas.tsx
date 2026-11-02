@@ -25,6 +25,8 @@ interface Props {
   onBackground?(): void;
   onScale?(kmPerPx: number): void;
   kinds?: Set<string>;
+  /** show the petrol pumps */
+  fuel?: boolean;
   /** terrain: the shaded relief; satellite: Esri World Imagery tiles */
   basemap?: "terrain" | "satellite";
   /** which imagery to use in satellite mode (default Esri) */
@@ -287,7 +289,7 @@ export const MapCanvas = forwardRef<MapHandle, Props>(function MapCanvas(props, 
         <Compass x={size.w - 32} y={216} />
         <LocationMarkers region={region.data} project={project} transform={t} size={size}
           selected={props.selectedLocation} activeCircuit={props.activeCircuit} visible={props.visible}
-          onSelect={props.onSelectLocation} kinds={props.kinds} />
+          onSelect={props.onSelectLocation} kinds={props.kinds} fuel={props.fuel} />
       </svg>
     </div>
   );

@@ -1,6 +1,6 @@
 export type Coord = [number, number]; // [lon, lat]
 
-export type LocationKind = "town" | "pass" | "peak" | "lake" | "poi" | "via";
+export type LocationKind = "town" | "pass" | "peak" | "lake" | "poi" | "monastery" | "via";
 
 export interface MapLocation {
   id: string;

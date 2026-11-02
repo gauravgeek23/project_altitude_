@@ -140,3 +140,26 @@
   paint-order: stroke; stroke: rgba(255,255,255,.88); stroke-width: 3px; stroke-linejoin: round; }
 .map-col .map-area.sat .cities text { fill: #ffffff; stroke: rgba(0,0,0,.75); }
 .map-col .map-area.sat .states text, .map-col .map-area.sat .countries text { fill: #ffffff; stroke: rgba(0,0,0,.6); opacity: .9; }
+
+/* monasteries: an icon on its own; the name on hover, the card on a click */
+.loc.monastery .badge { fill: #ffffff; stroke: #8a1f3f; stroke-width: 1.4; filter: url(#tag-shadow); transform-box: fill-box; transform-origin: center; transition: transform .18s cubic-bezier(.2,.8,.2,1), fill .18s ease; }
+.loc.monastery > .map-icon { fill: none; stroke: #8a1f3f; stroke-width: 2.1; stroke-linecap: round; stroke-linejoin: round; pointer-events: none; transition: stroke .18s ease; }
+.loc.monastery:hover .badge, .loc.monastery:focus-visible .badge { transform: scale(1.22); }
+.loc.monastery.selected .badge { fill: #8a1f3f; }
+.loc.monastery.selected > .map-icon { stroke: #ffffff; }
+.loc.monastery .label rect { fill: #ffffff; stroke: #8a1f3f; stroke-width: 1; }
+.loc.monastery .label text { fill: #8a1f3f; }
+.loc.monastery .label .map-icon { stroke: #8a1f3f; }
+.loc.monastery .pulse { fill: #8a1f3f; }
+.hover-label { pointer-events: none; }
+.hover-label .label rect { filter: url(#tag-shadow-lift); }
+/* peaks: a name in plain text, nothing else */
+.loc.peak .target { fill: transparent; }
+.loc.peak .peak-name { font-family: var(--display); font-size: 11px; font-weight: 600; letter-spacing: .04em; fill: #4a4f5a; text-anchor: middle; dominant-baseline: middle;
+  paint-order: stroke; stroke: var(--halo); stroke-width: 3px; stroke-linejoin: round; transition: fill .15s ease, font-size .15s ease; }
+.loc.peak:hover .peak-name, .loc.peak:focus-visible .peak-name { fill: var(--tag-ink); }
+.loc.peak.selected .peak-name { fill: var(--accent); font-size: 12px; }
+/* petrol pumps */
+.fuel-badge circle { fill: #0f8f5f; stroke: #ffffff; stroke-width: 1.5; filter: url(#tag-shadow); }
+.fuel-badge .map-icon { fill: none; stroke: #ffffff; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; pointer-events: none; }
+.fuel-badge.unsure circle { fill: #b7791f; }

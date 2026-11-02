@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { ALL_PLACES, BY_ID, CIRCUIT_META, CIRCUIT_ORDER, PASSES, PEAKS, PLACES, PRACTICAL_LABEL, TYPE_LABEL } from "../content/places";
-import { MapIcon, PlaceIcon, RefreshIcon, SatelliteIcon, type IconKind } from "./icons";
+import { FilterIcon, MapIcon, PlaceIcon, RefreshIcon, SatelliteIcon, type IconKind } from "./icons";
 import "../map/map.css";
 import { PlacePhoto } from "./PlacePhoto";
 import type { CircuitId, PlaceRecord, Practical } from "../content/types";
@@ -226,7 +226,7 @@ function Villages({ selected, onPlace }: TabProps) {
   return (
     <>
       <Head eyebrow="Villages" title="Settlements along the circuits">
-        <p className="lead">A searchable index of the villages, towns, lakes and landmarks along the four circuits. Each card keeps the same fields; anything not yet checked says "Not verified" instead of guessing.</p>
+        <p className="lead">A searchable index of the villages, towns, lakes, landmarks and monasteries along the four circuits. Each card keeps the same fields; anything not yet checked says "Not verified" instead of guessing.</p>
       </Head>
       <Directory records={PLACES} selected={selected} onPlace={onPlace} label="places" />
       <Section title="Route notes">
@@ -585,9 +585,10 @@ function Legend() {
           <Row sample={<Tag cls="town" kind="village" label="Hunder" />} title="Village">A village or small settlement.</Row>
           <Row sample={<Tag cls="pass" kind="pass" label="Khardung La" />} title="Pass">A mountain pass on the route.</Row>
           <Row sample={<Tag cls="pass accent" kind="pass" label="Umling La" />} title="Highlight">A headline objective, shown in red.</Row>
-          <Row sample={<Tag cls="peak" kind="peak" label="Stok Kangri" />} title="Peak">A summit you can see from the road. Not a riding objective.</Row>
+          <Row sample={<span className="legend-peak">▲ Stok Kangri</span>} title="Peak">A name in plain text and nothing else, like the towns around the circuits. Click it for the card. More summits appear as you zoom in.</Row>
           <Row sample={<Tag cls="lake" kind="lake" label="Tso Moriri" />} title="Lake">A lake, on or near the route.</Row>
           <Row sample={<Tag cls="poi" kind="landmark" label="Atal Tunnel" />} title="Landmark">Monasteries, tunnels, camps and other landmarks.</Row>
+          <Row sample={<span className="legend-badge"><PlaceIcon kind="monastery" size={12} /></span>} title="Monastery">An icon on its own. Hover for the name, click for the card. Shown as you zoom in.</Row>
           <Row sample={<span className="type-icon food"><PlaceIcon kind="food" size={15} /></span>} title="Food">Dishes and, later, handpicked places to eat.</Row>
         </div>
       </Section>
@@ -619,7 +620,8 @@ function Legend() {
           <Row sample={<span className="legend-key"><SatelliteIcon size={15} /></span>} title="Satellite">Switch between terrain and satellite imagery.</Row>
           <Row sample={<span className="legend-key compass-key">N</span>} title="Compass">North is always up; the map does not rotate.</Row>
           <Row sample={<span className="legend-key sos-key">SOS</span>} title="Emergency">Opens emergency numbers and what to do.</Row>
-          <Row sample={<span className="legend-key">Layers</span>} title="Layers">Show or hide villages, passes, peaks, lakes and landmarks.</Row>
+          <Row sample={<span className="legend-key"><FilterIcon size={15} /></span>} title="Filters">The map source, and which kinds of place to show: villages and towns, passes, peaks, lakes, landmarks, monasteries.</Row>
+          <Row sample={<span className="legend-key fuel-key"><PlaceIcon kind="fuel" size={15} /></span>} title="Petrol pumps">Marks every pump we know of on the circuits; amber where reports disagree. The card says what is known about it. Ladakh has long stretches with none.</Row>
         </div>
       </Section>
 
