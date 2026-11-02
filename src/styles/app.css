@@ -432,3 +432,20 @@ details.practicals .facts-grid { padding: 0 14px 12px; margin: 0; }
 .content :is(.block p, .bullets, .callout, .card p, .check, .chev, .chip, .count-line, .empty, .empty-state, .fine, .form-grid label, .itinerary small, .legend-chip, .legend-row p, .link-list, .meta, .muted, .number small, .numbered .num, .numbered p, .para, .practicals-count, .seg button, .sources-line, .sources-line a, .steps, .stops li, .table dd, .table small, .tldr p, .verify-line, details.card .summary-text) { font-size: 14px !important; line-height: 22px; }
 .content :is(.block h2, .block h3, .card-title, .coords output, .facts-grid dd, .lead, .lead-sm, .legend-row b, .number .num.text, .number .who b, .numbered h3, .page-title, .place-link, .place-plain, .rule-line, .stats dd, .table dt, .text-btn, .tldr h1, b, details.practicals > summary) { font-size: 16px !important; line-height: 26px; }
 .content .page-title, .content .tldr h1.page-title { font-size: 16px !important; line-height: 26px !important; margin-bottom: 6px; }
+
+/* ---------------- photos from the ride */
+.photo-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 18px 0 10px; }
+.photo-row.three { grid-template-columns: repeat(3, 1fr); }
+.photo-row .place-photo { margin: 0; aspect-ratio: 4 / 3; }
+.photo-row .place-photo figcaption { display: none; }
+@media (max-width: 560px) { .photo-row.three { grid-template-columns: 1fr 1fr; } .photo-row.three .place-photo:last-child { grid-column: 1 / -1; aspect-ratio: 16 / 9; } }
+.lightbox .lb-text { display: flex; flex-direction: column; align-items: center; gap: 2px; text-align: center; }
+.lightbox .lb-text b { color: #fff; font-weight: 500; }
+
+/* ---------------- prayer flags at the top of the reading panel */
+.flags-band { position: sticky; top: 0; z-index: 6; display: flex; justify-content: center; padding: 2px 16px 0; background: var(--panel); pointer-events: none; }
+.flags-band::after { content: ""; position: absolute; left: 0; right: 0; top: 100%; height: 12px; background: linear-gradient(var(--panel), transparent); }
+.prayer-flags { display: block; width: min(100%, 500px); --rope: #e3dcc9; --rope-edge: rgba(0,0,0,.3); }
+.content-inner { padding-top: 20px; }
+@media (max-width: 899px) { .flags-band { top: 60px; } }
+.photo-row .count { display: none; }

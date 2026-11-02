@@ -58,7 +58,7 @@ export const CREDITS = {
     { name: "scroll-route-demo by Aditya Sharma", use: "Road-following route lines and checkpoints", licence: "MIT", link: "https://github.com/adisharma29/scroll-route-demo" },
   ],
   research: ["Official tourism departments and district administrations.", "Local businesses and accommodation providers.", "Riders and travellers who share their experiences.", "Local residents whose knowledge makes these journeys possible."],
-  project: "Route curation, interface, writing, and product direction: Project Altitude.",
+  project: "Route curation, interface, writing, photography, and product direction: Project Altitude. All photographs are from the ride.",
   disclaimer: "This guide is an independent travel-planning project, not an official government publication. Map data, route geometry, and travel information may contain errors or become outdated. If you notice something that needs correcting, please get in touch.",
 };
 

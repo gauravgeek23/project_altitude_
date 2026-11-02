@@ -100,6 +100,7 @@ function Story() {
     <>
       <Head eyebrow="Story" title={G.STORY.title}><p className="lead">{G.STORY.lead}</p></Head>
       <Stats />
+      <div className="photo-row three">{[0, 1, 2].map((i) => <PlacePhoto key={i} id="story" alt="From the ride" index={i} />)}</div>
       <Paras items={G.STORY.body} />
       <Rule>{G.STORY.signoff}</Rule>
     </>
@@ -172,7 +173,7 @@ function PlaceCard({ p, open, onPlace, innerRef }: { p: PlaceRecord; open: boole
         {p.access && <span className="access-flag"><Badge kind="warn">Access</Badge> Restrictions apply</span>}
       </summary>
       <div className="card-body">
-        {isOpen && <PlacePhoto id={p.id} alt={p.name} query={`${p.name} ${p.region} India`} />}
+        {isOpen && <PlacePhoto id={p.id} alt={p.name} />}
         {p.why && <p><b>Why stop.</b> {p.why}</p>}
         {p.access && <p className="warn-text"><b>Access.</b> {p.access}</p>}
         <Practicals p={p} />
@@ -262,7 +263,7 @@ function Food() {
       <Section title="Dishes of the region">
         <div className="dishes">{G.DISHES.map((d) => (
           <article key={d.id} className="card dish">
-            <PlacePhoto id={d.id} alt={d.name} query={`${d.name} Himalayan food`} className="place-photo dish-photo" />
+            <PlacePhoto id={d.id} alt={d.name} className="place-photo dish-photo" />
             <p className="card-title"><span className="type-icon food"><PlaceIcon kind="food" size={14} /></span>{d.name}</p>
             <p className="muted">{d.where}</p>
             <p>{d.body}</p>
@@ -519,7 +520,8 @@ function Creator() {
       <Stats />
       <Paras items={G.CREATOR.body} />
       <Rule>{G.CREATOR.signoff}</Rule>
-      <p className="draft-note">To add: a photo with the motorcycle, one from Umling La, a portfolio link and a contact address.</p>
+      <div className="photo-row"><PlacePhoto id="creator" alt="Gaurav with the motorcycle" index={0} /><PlacePhoto id="creator" alt="Gaurav at Umling La" index={1} /></div>
+      <p className="draft-note">To add: a portfolio link and a contact address.</p>
     </>
   );
 }
@@ -630,7 +632,7 @@ function Legend() {
           <Row sample={<Badge kind="warn">Access</Badge>} title="Access restrictions">Permits or restricted areas apply.</Row>
           <Row sample={<span className="unknown">Not verified</span>} title="Not verified">A field we have no checked information for. Never filled with guesses.</Row>
           <Row sample={<span className="legend-chip">≈ 4,522 m</span>} title="Terrain-model height">Read from the elevation model, not an official figure.</Row>
-          <Row sample={<span className="legend-chip">preview image</span>} title="Preview image">Borrowed for layout until the creator's own photos replace it. Click any photo for the full-screen gallery.</Row>
+          <Row sample={<span className="legend-chip">6 photos</span>} title="Photos">Photographs from the ride, by Gaurav. Click any photo to see all of a place's photos full screen; the arrows, a swipe or the ← → keys move between them.</Row>
         </div>
       </Section>
     </div>

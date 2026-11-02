@@ -41,6 +41,9 @@ These come from the content blueprint and are not negotiable:
 ├── vite.config.ts        normal build for Vercel; SINGLE_FILE=1 builds one inlined page
 ├── vercel.json           framework vite, npm run build, output dist/
 ├── scripts/inline.mjs    inlines CSS and JS into dist/project-altitude.html (React from cdnjs)
+├── scripts/photos.py     lists the shared album, makes contact sheets, builds public/photos and the manifest
+├── scripts/photo-selection.json  which album photos go with which place, with captions
+├── public/photos/        the photos, two sizes each (served as /photos/...)
 ├── docs/SPEC.md          this file
 ├── src/
 │   ├── App.tsx           layout, tab routing (#hash), selected place / circuit state, theme
@@ -50,7 +53,8 @@ These come from the content blueprint and are not negotiable:
 │   │   ├── Tabs.tsx          every guide page, including the Map legend
 │   │   ├── MapPanel.tsx      map overlays: search, circuit filter, layers, place card, SOS
 │   │   ├── icons.tsx         the icon language (one SVG path per kind of place)
-│   │   ├── PlacePhoto.tsx    a place's photo; click opens the gallery
+│   │   ├── PlacePhoto.tsx    a place's photo with a count; click opens the gallery
+│   │   ├── PrayerFlags.tsx   the prayer flags in the wind at the top of the reading panel (canvas)
 │   │   ├── Lightbox.tsx      full-screen gallery: arrows, swipe, thumbnails, Esc
 │   │   ├── ThemeToggle.tsx   light/dark: system default, reader's pick saved
 │   │   └── Logo.tsx
@@ -59,7 +63,8 @@ These come from the content blueprint and are not negotiable:
 │   │   ├── places.ts     PLACES, PASSES, PEAKS, CIRCUIT_META, labels
 │   │   ├── facts.ts      sourced practical facts (fuel, medical, network, stay) with links
 │   │   ├── guide.ts      all page copy: story, food, dishes, stays, emergency, packing…
-│   │   └── images.ts     photo sources (own photos, Wikipedia, Commons, Openverse, Google)
+│   │   ├── images.ts     photos from the ride, by place (reads photos.json)
+│   │   └── photos.json   generated manifest of the photos (see §7)
 │   ├── map/
 │   │   ├── MapCanvas.tsx       projection, zoom, terrain/satellite, boundaries, labels, compass
 │   │   ├── RouteLayer.tsx      circuit lines
@@ -90,7 +95,6 @@ npm run build:single   # dist/project-altitude.html: one self-contained page
 
 - **Vercel:** builds from `main` using `vercel.json`. Pushing to `main` deploys.
 - **Optional environment variables** (Vercel → Project Settings → Environment Variables):
-  - `VITE_GOOGLE_CSE_KEY` and `VITE_GOOGLE_CSE_CX` turn on Google image results; see §7.
   - `VITE_MAPTILER_KEY`, `VITE_MAPBOX_TOKEN` and `VITE_GOOGLE_MAPS_KEY` add those satellite sources; see §6.1.
 
 ---
@@ -226,25 +230,23 @@ Keyed sources stay hidden until their key is set. Each source shows its attribut
 
 ---
 
-## 7. Photos (`src/content/images.ts`)
+## 7. Photos (`scripts/photos.py`, `scripts/photo-selection.json`, `src/content/images.ts`)
 
-**Order of preference for the card photo:**
-1. **Your own photos:** `PHOTOS[id]`.
-2. **The Wikipedia lead image** for the titles in `WIKI[id]`.
-3. **The first search hit:** Google (if configured), then Wikimedia Commons, then Openverse.
+All photographs are the creator's own, from the ride: the shared Google Photos album "Project Altitude" (1,544 items, 23 June to 31 August 2026).
 
-**Gallery:** clicking any photo opens the full-screen gallery. It shows the lead image, then the article's other images, then Google, Commons and Openverse results for the place's name and region. Duplicates are removed, up to 30 images.
+- **Files:** `public/photos/<place>-<n>.jpg` (1,600 px on the long side) and `<place>-<n>-s.jpg` (640 px), served by the site itself. About 230 photos.
+- **Manifest:** `src/content/photos.json`, generated. For each place id: file paths, the album URL, size, date and caption.
+- **Selection:** `scripts/photo-selection.json`. For each key, the album items (Google media id, URL, size, time) with captions. Keys are place ids, dish ids (`dish-momo`…), and `story` and `creator` for those pages.
+- **In the app:** `photosFor(id)` returns a place's photos. `PlacePhoto` shows the lead photo (or the one at `index`) with a count; a click opens `Lightbox` with all of them (arrows, swipe, thumbnails, Esc). A place without a photo shows no image: nothing is borrowed from other sites.
+- **Single-file page:** it cannot carry the images, so it loads the same pictures from the album (`=w1600-h1600-no`). That needs the album to stay shared by link.
 
-**Google images** need two values, then a rebuild:
-1. Create a Programmable Search Engine with image search turned on, and note its engine id (the CX).
-2. Create a Custom Search JSON API key.
-3. Set `VITE_GOOGLE_CSE_KEY` and `VITE_GOOGLE_CSE_CX` in Vercel and rebuild.
+### Adding or changing photos
+1. `python3 scripts/photos.py list <share link>` lists the album into `scripts/album-items.json`. The album must be shared by link.
+2. `python3 scripts/photos.py sheets` makes numbered contact sheets in `/tmp/altitude-sheets` to choose from.
+3. Edit `scripts/photo-selection.json`: under the place id, add entries copied from `album-items.json` (`id`, `url`, `w`, `h`, `ts`, `tz`) with a `caption`. Up to about six per place keeps pages light.
+4. `python3 scripts/photos.py build` downloads both sizes and rewrites the manifest. Commit `public/photos/` and `src/content/photos.json`.
 
-**Licensing:**
-- Every photo shows its source and a "preview image" note.
-- Google and Openverse results can be copyrighted or need attribution.
-- **Before release,** replace previews with your own photos (`PHOTOS`), or check each licence.
-- The browser caches results in `localStorage` (`altitude-photo-cache-v3`); change the key to refresh.
+Google strips location data from photos shared by link, so the first selection was matched by time and by recognising the places. The creator should check the captions, and the few placements made by inference (listed in the commit that added them).
 
 ---
 
@@ -319,7 +321,7 @@ Keyed sources stay hidden until their key is set. Each source shows its attribut
 - **Approximate geometry:** the Nimmu–Padum road and the Nubra valley legs follow valley floors on the terrain model, not surveyed road lines. Replace them when road data is available.
 - **Practical fields:** about 35 places have sourced fuel, medical, network or stay facts; the rest show "Not verified".
 - **Restaurants:** "Handpicked places" on Eat & Drink is waiting for the creator's picks.
-- **Photos:** previews only; see §7 before release.
+- **Photos:** places without a photo from the ride show none. Captions and a few inferred placements are for the creator to check (§7).
 
 ---
 
@@ -331,5 +333,5 @@ Keyed sources stay hidden until their key is set. Each source shows its attribut
 - Natural Earth (public domain): India point-of-view boundary, states and lakes.
 - GeoNames (CC BY 4.0).
 - Esri World Imagery: the satellite view (Esri, Maxar, Earthstar Geographics).
-- Wikipedia and Wikimedia Commons, Openverse, and Google Programmable Search: preview images. Each shows its credit.
+- Photographs: Gaurav Kumar, from the ride (§7).
 - Place coordinates: each location's `source` text cites its origin (Wikipedia articles, route checkpoints, the ASI list of monuments, Wikivoyage, PeakVisor).

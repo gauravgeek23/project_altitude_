@@ -8,6 +8,8 @@ const single = process.env.SINGLE_FILE === "1";
 
 export default defineConfig({
   plugins: [react()],
+  // the single-file page loads photos from the shared album instead of public/photos
+  define: { __SINGLE__: JSON.stringify(single) },
   build: single
     ? {
         assetsInlineLimit: 16 * 1024 * 1024,

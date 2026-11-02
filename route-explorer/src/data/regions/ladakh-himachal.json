@@ -1264,6 +1264,55 @@
         "lat": 34.0667,
         "cite": "Wikipedia, Chiling (Zanskar–Indus confluence)"
       }
+    },
+    {
+      "id": "phuktal",
+      "name": "Phuktal Monastery",
+      "kind": "poi",
+      "tier": 2,
+      "source": {
+        "dataset": "published",
+        "lon": 77.18,
+        "lat": 33.268,
+        "cite": "Wikipedia, Phugtal Monastery (marked imprecise there)"
+      }
+    },
+    {
+      "id": "likir",
+      "name": "Likir",
+      "kind": "poi",
+      "tier": 2,
+      "source": {
+        "dataset": "published",
+        "lon": 77.21511,
+        "lat": 34.29319,
+        "cite": "ASI list of monuments, Likir Monastery"
+      }
+    },
+    {
+      "id": "basgo",
+      "name": "Basgo",
+      "kind": "poi",
+      "tier": 2,
+      "source": {
+        "dataset": "published",
+        "lon": 77.295,
+        "lat": 34.2125,
+        "cite": "TU Graz archaeological survey, Basgo temple ruin",
+        "snap": "route"
+      }
+    },
+    {
+      "id": "hunderman",
+      "name": "Hunderman",
+      "kind": "poi",
+      "tier": 2,
+      "source": {
+        "dataset": "published",
+        "lon": 76.13,
+        "lat": 34.616,
+        "cite": "Wikipedia, Hunderman"
+      }
     }
   ],
   "circuits": [

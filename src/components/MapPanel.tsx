@@ -150,7 +150,7 @@ export function MapPanel({ selected, circuit, onCircuit, onSelect, onOpenPlace, 
             <p className="map-card-kind"><span className={`type-icon ${sel.type}`}><PlaceIcon kind={sel.type} size={13} /></span>{TYPE_LABEL[sel.type]} · {sel.region}</p>
             <button type="button" className="close" onClick={() => onSelect(null)} aria-label="Close">✕</button>
           </div>
-          <PlacePhoto id={sel.id} alt={sel.name} query={`${sel.name} ${sel.region} India`} className="place-photo map-photo" />
+          <PlacePhoto id={sel.id} alt={sel.name} className="place-photo map-photo" />
           <p className="map-card-name">{sel.name}{sel.aka && <small> {sel.aka}</small>}</p>
           <p className="map-card-meta">
             {elev != null ? <>≈ {fmt(elev)} m · {fmt(Math.round(elev * 3.28084))} ft <small>terrain model</small></> : "Elevation not verified"}
