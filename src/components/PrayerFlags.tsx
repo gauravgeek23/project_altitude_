@@ -3,7 +3,7 @@ import { useEffect, useRef } from "react";
 /**
  * A short string of Ladakhi prayer flags hanging in the wind, drawn on a canvas.
  *
- * The string sags between its two ends and the flags hang from it, each turned a little to follow
+ * The string is pinned at the top edge of the panel, sags a little between its two ends, and the flags hang from it, each turned a little to follow
  * the curve. Each flag is a small texture (its colour, the mantra syllable, a hem) drawn as narrow
  * vertical strips; every strip is sheared by the wind, stretched by the lift of the free hem and
  * shaded by the fold it sits on, so the cloth ripples, swings and catches the light. Gusts breathe
@@ -73,7 +73,7 @@ function makeShadow(): HTMLCanvasElement {
   return c;
 }
 
-export function PrayerFlags({ height = 66, flags = 5 }: { height?: number; flags?: number }) {
+export function PrayerFlags({ height = 58, flags = 5 }: { height?: number; flags?: number }) {
   const ref = useRef<HTMLCanvasElement>(null);
   useEffect(() => {
     const canvas = ref.current!;
@@ -107,11 +107,11 @@ export function PrayerFlags({ height = 66, flags = 5 }: { height?: number; flags
       ctx!.setTransform(dpr, 0, 0, dpr, 0, 0);
       ctx!.clearRect(0, 0, w, height);
       const n = flags;
-      // flags sized to the string: five of them fit a narrow rail
-      const sc = Math.min(1, (w - 8) / (n * 44));
+      // flags sized to the string: five of them fit a narrow rail, and the lowest hem stays inside the canvas
+      const sc = Math.min(1, (w - 8) / (n * 44), (height - 4) / (FH * 1.6));
       const fw = FW * sc, fh = FH * sc, cols = sc < 0.75 ? 10 : 14;
-      // the string sags between its two ends, like one hung between two walls
-      const sag = Math.min(fh * 0.75, w * 0.14), ropeY = 5;
+      // the string is pinned at the top edge and sags a little between its two ends
+      const sag = Math.min(fh * 0.55, w * 0.11), ropeY = 1.4;
       const ropeAt = (x: number) => { const u = x / w; return ropeY + sag * 4 * u * (1 - u) + 0.6 * sc * Math.sin(t * 0.8 + u * 3.1); };
       const slopeAt = (x: number) => (ropeAt(x + 2) - ropeAt(x - 2)) / 4;
       // each flag hangs from its spot on the curve, turned a little to follow it
@@ -133,6 +133,11 @@ export function PrayerFlags({ height = 66, flags = 5 }: { height?: number; flags
       for (let x = 0; x <= w + 4; x += 4) { const y = ropeAt(Math.min(x, w)); x === 0 ? ctx!.moveTo(x, y) : ctx!.lineTo(x, y); }
       ctx!.lineWidth = 2.2; ctx!.strokeStyle = ropeEdge; ctx!.stroke();
       ctx!.lineWidth = 1.3; ctx!.strokeStyle = rope; ctx!.stroke();
+      // the pins that hold it to the top edge
+      for (const px of [1.6, w - 1.6]) {
+        ctx!.beginPath(); ctx!.arc(px, ropeY + 0.4, 1.7, 0, Math.PI * 2); ctx!.fillStyle = ropeEdge; ctx!.fill();
+        ctx!.beginPath(); ctx!.arc(px - 0.4, ropeY, 0.6, 0, Math.PI * 2); ctx!.fillStyle = "rgba(255,255,255,.7)"; ctx!.fill();
+      }
 
       // the flags
       for (let i = 0; i < n; i++) {

@@ -176,6 +176,7 @@ fieldset.card legend .meta { margin: 0; }
 @media (max-width: 1279px) {
   :root { --nav-w: 190px; }
   .sidebar { padding: 32px 28px; }
+  .flags-rail { margin-top: -32px; }
   .content-inner { padding: 32px; }
 }
 
@@ -445,9 +446,10 @@ details.practicals .facts-grid { padding: 0 14px 12px; margin: 0; }
 .lightbox .lb-text b { color: #fff; font-weight: 500; }
 
 /* ---------------- prayer flags: a short string hung above the logo in the rail */
-.flags-rail { margin: -22px 0 -8px; pointer-events: none; }
+/* the string is pinned at the panel's top edge: the rail cancels the sidebar's top padding */
+.flags-rail { margin: -40px 0 -8px; pointer-events: none; }
 .prayer-flags { display: block; width: 100%; --rope: #d8d0bc; --rope-edge: rgba(0,0,0,.32); }
-.drawer .flags-rail { margin-top: -8px; }
+.drawer .flags-rail { margin-top: -20px; }
 
 /* ---------------- square buttons beside the search box */
 .sq-btn { width: 38px; height: 38px; flex: none; display: grid; place-items: center; border-radius: 10px; border: 1px solid rgba(0,0,0,.08); background: var(--float); color: var(--ink); cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,.12); transition: background .15s, color .15s; }
