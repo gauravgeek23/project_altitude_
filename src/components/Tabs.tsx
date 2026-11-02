@@ -3,6 +3,7 @@ import { ALL_PLACES, BY_ID, CIRCUIT_META, CIRCUIT_ORDER, PASSES, PEAKS, PLACES, 
 import { FilterIcon, MapIcon, PlaceIcon, RefreshIcon, SatelliteIcon, type IconKind } from "./icons";
 import "../map/map.css";
 import { PlacePhoto } from "./PlacePhoto";
+import { hasPhotos } from "../content/images";
 import type { CircuitId, PlaceRecord, Practical } from "../content/types";
 import * as G from "../content/guide";
 import { REGIONS, DEFAULT_REGION } from "../map/data/regions";
@@ -158,18 +159,22 @@ function Practicals({ p }: { p: PlaceRecord }) {
 function PlaceCard({ p, open, onPlace, innerRef }: { p: PlaceRecord; open: boolean; onPlace(id: string): void; innerRef?: (el: HTMLDetailsElement | null) => void }) {
   const [isOpen, setOpen] = useState(open);
   useEffect(() => { if (open) setOpen(true); }, [open]);
+  // a card with a photo shows the photo while closed, and its context once opened; one without shows the context
+  const photo = hasPhotos(p.id);
   return (
-    <details ref={innerRef} className={"card place" + (open ? " selected" : "")} id={`place-${p.id}`} open={open || undefined}
+    <details ref={innerRef} className={"card place" + (open ? " selected" : "") + (photo ? " with-photo" : "")} id={`place-${p.id}`} open={open || undefined}
       onToggle={(e) => setOpen((e.currentTarget as HTMLDetailsElement).open)}>
       <summary>
         <span className="card-title">{p.name}{p.aka && <small className="muted"> {p.aka}</small>}</span>
-        <span className="card-marks"><span className={`type-icon ${p.type}`} title={TYPE_LABEL[p.type]}><PlaceIcon kind={p.type} size={15} title={TYPE_LABEL[p.type]} /></span><Dots ids={p.circuits} /></span>
+        <span className="card-marks"><span className={`type-icon ${p.type}`} title={TYPE_LABEL[p.type]}><PlaceIcon kind={p.type} size={15} title={TYPE_LABEL[p.type]} /></span><Dots ids={p.circuits} /><span className="card-chev" aria-hidden="true"><ChevronIcon /></span></span>
         <span className="meta">{TYPE_LABEL[p.type]} · {p.region}</span>
-        <span className="summary-text">{p.summary}</span>
+        {photo
+          ? <span className="card-photo" onClick={(e) => { if (isOpen) e.preventDefault(); }}><PlacePhoto id={p.id} alt={p.name} interactive={isOpen} /></span>
+          : <span className="summary-text">{p.summary}</span>}
         {p.access && <span className="access-flag"><Badge kind="warn">Access</Badge> Restrictions apply</span>}
       </summary>
       <div className="card-body">
-        {isOpen && <PlacePhoto id={p.id} alt={p.name} />}
+        {photo && <p className="muted">{p.summary}</p>}
         {p.why && <p><b>Why stop.</b> {p.why}</p>}
         {p.access && <p className="warn-text"><b>Access.</b> {p.access}</p>}
         <Practicals p={p} />
@@ -181,6 +186,7 @@ function PlaceCard({ p, open, onPlace, innerRef }: { p: PlaceRecord; open: boole
     </details>
   );
 }
+const ChevronIcon = () => <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="M6 9l6 6 6-6" /></svg>;
 function Directory({ records, selected, onPlace, label }: { records: PlaceRecord[]; selected: string | null; onPlace(id: string): void; label: string }) {
   const [q, setQ] = useState("");
   const [c, setC] = useState<CircuitId | "all">("all");

@@ -23,7 +23,7 @@ const FW = 34, FH = 44, TS = 3;   // flag size at full scale (CSS px) and textur
 /** whether this browser has a font for the Tibetan syllables (else the flags carry the Latin ones) */
 function canDrawTibetan(): boolean {
   const c = document.createElement("canvas"); c.width = c.height = 40;
-  const x = c.getContext("2d");
+  const x = c.getContext("2d", { willReadFrequently: true });
   if (!x) return false;
   const draw = (s: string) => { x.clearRect(0, 0, 40, 40); x.font = `28px ${TIBETAN}`; x.fillText(s, 4, 32); return x.getImageData(0, 0, 40, 40).data; };
   const a = draw("ༀ"), b = draw("");

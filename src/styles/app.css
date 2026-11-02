@@ -83,6 +83,13 @@ details.card .card-title { grid-column: 1; }
 details.card .meta { grid-column: 1; }
 details.card .circuit-dots { grid-column: 2; grid-row: 1; display: flex; gap: 4px; align-self: center; }
 details.card .summary-text { grid-column: 1 / -1; color: var(--grey); }
+details.card .card-photo { grid-column: 1 / -1; display: block; margin-top: 2px; }
+details.card .card-photo .place-photo { margin: 0; }
+.place-photo.static img { cursor: pointer; }
+/* the hint that the card opens: a small chevron that turns when it does */
+.card-chev { display: inline-grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: var(--soft); color: var(--ink); transition: transform .2s, background .15s; }
+details.card summary:hover .card-chev { background: var(--ink); color: var(--on-ink); }
+details.card[open] .card-chev { transform: rotate(180deg); }
 details.card .card-body { margin-top: 12px; }
 details.card.selected { background: var(--card-selected); }
 .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--c, var(--grey)); display: inline-block; flex: none; }

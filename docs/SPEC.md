@@ -323,8 +323,8 @@ The reading panel separates things by colour, not by lines: the panel is `--pane
 | Footer | Meet the Creator, T&C |
 
 - **Place cards:**
-  - Type icon and circuit dots in the header.
-  - The photo loads only when a card is opened.
+  - Type icon, circuit dots and a chevron (the hint that the card opens; it turns when it does) in the header.
+  - A card with a photo shows the photo while closed (the 640 px version, lazy-loaded) instead of its context line; the context appears at the top of the body once the card is open. A click on the closed card, photo included, opens it; on an open card a click on the photo opens the full-screen view. A card without a photo shows its context line while closed, as before.
   - **"Practical details"** is folded away by default, with a count of filled fields.
   - "Show on map →" at the foot (or a note that the place has no sourced position yet). Status and sources stay in the record but are not displayed.
 - **Storage:** packing lists, trip plan and km/day are kept in `localStorage`, with every access wrapped in try/catch.
