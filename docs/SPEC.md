@@ -287,10 +287,10 @@ Keyed sources stay hidden until their key is set. Each source shows its attribut
 
 ### Typography
 - **Font:** Helvetica Neue / system sans throughout.
-- **Reading panel:** two sizes only, set at the end of `app.css`.
-  - **16 px:** titles and headings: page titles, section headings and card titles.
-  - **14 px / 24 px:** all paragraph and body text.
-  - **Unchanged:** small uppercase labels (11–13 px) and badges keep their own sizes.
+- **Reading panel: size follows colour.** Black (`--ink`) text is **16 px** (26 px line height) and grey (`--grey`) text is **14 px** (22 px line height).
+  - **How it works:** every element in the panel inherits its size. The rules at the end of `app.css` give each ink-coloured or grey-coloured class its matching size; they were generated from the colour rules in the same file.
+  - **Adding a class with a new text colour:** add it to the matching list.
+  - **Unchanged:** small uppercase labels, badges, chips and toggle buttons, photo captions and legend samples keep their own sizes. Page titles are 16 px.
 - **Nav:** 14 px items, 7 px apart, with 22 px between groups.
 
 ---

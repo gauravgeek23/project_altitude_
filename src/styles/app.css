@@ -419,23 +419,16 @@ details.practicals .facts-grid { padding: 0 14px 12px; margin: 0; }
 .legend-relief { display: block; width: 64px; height: 28px; border-radius: 6px; background: linear-gradient(135deg, #e9e7e2, #b9b6ae 45%, #f2f1ed 60%, #a8a59d); }
 @media (max-width: 560px) { .legend-row { grid-template-columns: 1fr; gap: 6px; } }
 
-/* ---------------- reading panel type scale: two sizes only
-   16px: titles and headings (page titles, section headings, card titles).
-   14px: all paragraph and body text.
-   Small uppercase labels and badges keep their own sizes. */
-.content { font-size: 14px; line-height: 24px; }
-.content .page-title, .content .tldr h1, .content .tldr h1.page-title, .content .card-title, .content .block h2,
-.content .numbered h3, .content .lead-sm, .content .number .num {
-  font-size: 16px !important; line-height: 24px !important;
-}
-.content .page-title { margin-bottom: 8px; }
-.content p, .content li, .content dd, .content .para, .content .lead, .content .tldr p, .content .summary-text, .content .meta,
-.content .fine, .content .muted, .content .count-line, .content .near, .content .sources-line, .content .callout, .content .empty-state,
-.content .number small, .content .number .num.text, .content .itinerary small, .content .legend-row p, .content .access-flag, .content .where,
-.content .tip, .content .sequence, .content .practicals-count, .content .form-grid label, .content .form-grid input, .content .filters input,
-.content .chip, .content .seg button, .content .block h3, .content .warn-text, .content .unknown, .content .verify-line, .content .text-btn,
-.content .place-link, .content .check span, .content .numbered .num, .content .legend-chip, .content .legend-key, .content .rule-line,
-.content blockquote, .content details.practicals > summary, .content .table dt {
-  font-size: 14px !important; line-height: 24px;
-}
-.content .chip, .content .seg button, .content .legend-key { line-height: 1; }
+/* titles inside cards are black, not the grey of card paragraphs */
+.card p.card-title, .block .lead-sm, .card .lead-sm { color: var(--ink); }
+
+/* ---------------- reading panel type scale: size follows colour
+   Black (ink) text is 16px and grey text is 14px. Every element inherits its size, and each rule that
+   colours text ink or grey sets the matching size (generated from the colour rules above).
+   Kept as they are: small uppercase labels, badges, chips, photo captions and legend samples. */
+.content { font-size: 16px; line-height: 26px; }
+.content *:not(.eyebrow-sm, .group-title, .badge, .badge *, .stats dt, .facts-grid dt, .type-icon, .type-icon *, figcaption, figcaption *, .legend-svg, .legend-svg *, .legend-key, .legend-key *, .chip, .chip *, .seg button, .legend-chip) { font-size: inherit !important; line-height: inherit; }
+.content .chip, .content .seg button, .content .legend-chip { font-size: 13px !important; }
+.content :is(.block p, .bullets, .callout, .card p, .check, .chev, .chip, .count-line, .empty, .empty-state, .fine, .form-grid label, .itinerary small, .legend-chip, .legend-row p, .link-list, .meta, .muted, .number small, .numbered .num, .numbered p, .para, .practicals-count, .seg button, .sources-line, .sources-line a, .steps, .stops li, .table dd, .table small, .tldr p, .verify-line, details.card .summary-text) { font-size: 14px !important; line-height: 22px; }
+.content :is(.block h2, .block h3, .card-title, .coords output, .facts-grid dd, .lead, .lead-sm, .legend-row b, .number .num.text, .number .who b, .numbered h3, .page-title, .place-link, .place-plain, .rule-line, .stats dd, .table dt, .text-btn, .tldr h1, b, details.practicals > summary) { font-size: 16px !important; line-height: 26px; }
+.content .page-title, .content .tldr h1.page-title { font-size: 16px !important; line-height: 26px !important; margin-bottom: 6px; }
