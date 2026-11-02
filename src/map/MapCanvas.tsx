@@ -24,6 +24,13 @@ interface Props {
   onScale?(kmPerPx: number): void;
 }
 
+/** Country names, each set well inside territory that is not in dispute. */
+const COUNTRIES: { name: string; at: [number, number] }[] = [
+  { name: "INDIA", at: [76.2, 31.5] },        // Kangra and Hamirpur hills
+  { name: "PAKISTAN", at: [74.85, 32.35] },   // Pakistani Punjab, near Narowal
+  { name: "CHINA", at: [79.95, 32.2] },       // Ngari, Tibet
+];
+
 const reduceMotion = typeof matchMedia !== "undefined" && matchMedia("(prefers-reduced-motion: reduce)").matches;
 const ms = (t: number) => (reduceMotion ? 0 : t);
 
@@ -144,6 +151,15 @@ export const MapCanvas = forwardRef<MapHandle, Props>(function MapCanvas(props, 
           <BaseLayers region={region} path={path} project={project} showClaims={props.showClaims} />
           <RouteLayer circuits={region.data.circuits} path={path} visible={props.visible} active={props.activeCircuit}
             onHover={props.onHoverCircuit} onSelect={props.onSelectCircuit} />
+        </g>
+        <g className="countries" aria-hidden="true">
+          {COUNTRIES.map((c) => {
+            const [x, y] = t.apply(project(c.at)!);
+            // slide a little to stay inside the panel; never far from the country itself
+            const half = c.name.length * 6.8, cx = Math.min(Math.max(x, half + 10), size.w - half - 10);
+            if (Math.abs(cx - x) > 70 || y < 20 || y > size.h - 50) return null;
+            return <text key={c.name} x={cx} y={y}>{c.name}</text>;
+          })}
         </g>
         <LocationMarkers region={region.data} project={project} transform={t} size={size}
           selected={props.selectedLocation} activeCircuit={props.activeCircuit} visible={props.visible}

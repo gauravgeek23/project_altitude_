@@ -151,7 +151,7 @@ def trace_circuits(cfg, locs, road, hav, dp):
                     if ib in dist: px_path = [tuple(P[k]) for k in path_to(prev, ia, ib)]
                 if px_path:
                     sm = dp_px(px_path, 1.2)
-                    ll = warp(sm); ll[0], ll[-1] = A, B
+                    ll = bend_to(warp(sm), A, B, hav)
                 else:
                     ll = [A, B]
                 drawn_km = sum(hav(p, q) for p, q in zip(ll, ll[1:]))
@@ -168,8 +168,15 @@ def trace_circuits(cfg, locs, road, hav, dp):
                         head = [A] if da < 1.0 else []; tail = [B] if db < 1.0 else []
                         geom, source, km = head + rp + tail, "road", rkm
                 if geom is None:
-                    geom = dp(ll, 0.05)
-                    if not px_path: source = "gap"
+                    matched = map_match(ll, pos, gadj, nearest_node, shortest, hav)
+                    if matched:
+                        geom, km = matched
+                        if hav(geom[0], A) < 2.5: geom = [A] + geom
+                        if hav(geom[-1], B) < 2.5: geom = geom + [B]
+                        source = "road"
+                    else:
+                        geom = dp(chaikin(ll, 3), 0.03)
+                        if not px_path: source = "gap"
                 segs.append({"from": "" if a.startswith("@") else a, "to": "" if b.startswith("@") else b,
                              "status": "ok", "source": source, "km": round(km, 1),
                              "coords": [[round(x, 5), round(y, 5)] for x, y in geom]})
@@ -192,3 +199,84 @@ def dp_px(pts, tol):
             if d > best: best, k = d, m
         if best > tol: keep[k] = True; st += [(i, k), (k, j)]
     return [p for p, f in zip(pts, keep) if f]
+
+
+def chaikin(pts, n=2):
+    """Corner-cutting smoothing that keeps both ends."""
+    for _ in range(n):
+        if len(pts) < 3: break
+        out = [pts[0]]
+        for (ax, ay), (bx, by) in zip(pts, pts[1:]):
+            out += [(0.75 * ax + 0.25 * bx, 0.75 * ay + 0.25 * by), (0.25 * ax + 0.75 * bx, 0.25 * ay + 0.75 * by)]
+        out.append(pts[-1]); pts = out
+    return pts
+
+
+def map_match(ll, pos, gadj, nearest_node, shortest, hav, step=1.5, radius=10.0, min_share=0.25):
+    """Snap a hand-drawn line onto the road network, piece by piece.
+
+    The line is sampled every `step` km and each sample snaps to the nearest road node within
+    `radius` km. Runs of snapped samples are joined along the roads (a join that detours is
+    refused and treated as unsnapped); between runs the drawing itself is kept, smoothed.
+    Loops created by back-and-forth snapping are cut. Returns (coords, km), or None when
+    less than `min_share` of the line found a road.
+    """
+    dense = [ll[0]]
+    for a, b in zip(ll, ll[1:]):
+        n = max(1, int(hav(a, b) / step))
+        dense += [(a[0] + (b[0] - a[0]) * i / n, a[1] + (b[1] - a[1]) * i / n) for i in range(1, n + 1)]
+    snaps = [nearest_node(pos, p, radius)[0] for p in dense]
+    if len(dense) < 2 or sum(s_ is not None for s_ in snaps) < max(2, min_share * len(dense)):
+        return None
+    out, prev_node, loose = [], None, []        # loose: drawn points waiting between road runs
+    def flush_loose():
+        if loose: out.extend(chaikin(loose, 2))
+        loose.clear()
+    for p, s_ in zip(dense, snaps):
+        if s_ is None:
+            prev_node = None; loose.append(p); continue
+        if prev_node is None:
+            if loose: loose.append(pos[s_])
+            flush_loose(); out.append(pos[s_]); prev_node = s_; continue
+        if s_ == prev_node: continue
+        path, km = shortest(pos, gadj, prev_node, s_)
+        if not path or km > 3 * hav(pos[prev_node], pos[s_]) + 3:
+            out.append(p); prev_node = None; continue
+        out.extend(path[1:]); prev_node = s_
+    flush_loose()
+    # cut loops: when a point comes back, drop everything since its first visit
+    res, where = [], {}
+    for q in out:
+        key = (round(q[0], 5), round(q[1], 5))
+        if key in where:
+            del res[where[key] + 1:]
+            where = {(round(r[0], 5), round(r[1], 5)): i for i, r in enumerate(res)}
+            continue
+        where[key] = len(res); res.append(q)
+    km = sum(hav(a, b) for a, b in zip(res, res[1:]))
+    return res, km
+
+
+def _path_keys(pos, path):
+    # shortest() returns coordinates; map them back to node keys
+    inv = _path_keys.inv if hasattr(_path_keys, "inv") and _path_keys.n == len(pos) else None
+    if inv is None:
+        inv = {v: k for k, v in pos.items()}; _path_keys.inv = inv; _path_keys.n = len(pos)
+    return [inv[p] for p in path]
+
+
+def bend_to(ll, A, B, hav, reach=0.35):
+    """Move the ends of a warped line onto its true end points smoothly: the correction fades
+    out over the first and last `reach` of the line instead of a straight jump."""
+    if len(ll) < 2: return [A, B]
+    cum = [0.0]
+    for a, b in zip(ll, ll[1:]): cum.append(cum[-1] + hav(a, b))
+    L = cum[-1] or 1.0
+    da = (A[0] - ll[0][0], A[1] - ll[0][1]); db = (B[0] - ll[-1][0], B[1] - ll[-1][1])
+    out = []
+    for (x, y), c in zip(ll, cum):
+        t = c / L
+        wa = max(0.0, 1 - t / reach) ** 2; wb = max(0.0, 1 - (1 - t) / reach) ** 2
+        out.append((x + da[0] * wa + db[0] * wb, y + da[1] * wa + db[1] * wb))
+    out[0], out[-1] = A, B
+    return out

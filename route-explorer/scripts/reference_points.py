@@ -59,6 +59,7 @@ DRAWN = {
                    ["@changthang-fork", "photi-la", "umling-la", "demchok"],
                    ["@changthang-fork", "hanle", "nurbula", "demchok"],
                    ["taglang-la", "@tso-kar-fork", "nyoma", "@changthang-fork"], ["@tso-kar-fork", "karzok"],
+                   ["taglang-la", "hemis"],
                    ["taglang-la", "lachalung-la", "nakee-la", "baralacha-la", "darcha", "atal-tunnel", "manali"]],
     "zanskar": [["leh", "fotu-la", "kargil", "satso-lake", "pensi-la", "padum"], ["padum", "zangla"],
                 ["padum", "gombo-ranjan", "shinku-la", "darcha", "atal-tunnel", "manali", "mandi", "chandigarh"]],

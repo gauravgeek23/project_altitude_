@@ -22,7 +22,7 @@ button, input { font: inherit; color: inherit; letter-spacing: inherit; }
 a { color: inherit; }
 :focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; border-radius: 4px; }
 
-.app { display: grid; grid-template-columns: var(--nav-w) minmax(0, 1fr) minmax(0, 1fr); height: 100%; }  /* reading and map panels share the width equally */
+.app { display: grid; grid-template-columns: var(--nav-w) minmax(0, 1fr) 50%; height: 100%; }  /* the map takes half the screen; nav and reading share the other half */
 
 /* ---------------- logo */
 .logo { display: block; width: 107px; height: 42px; }
@@ -203,7 +203,7 @@ fieldset.card legend .meta { margin: 0; }
 @media (prefers-reduced-motion: reduce) { .drawer, .drawer-wrap { animation: none; } }
 
 /* ---------------- route map tokens (from the route explorer) */
-.map-col { --road: #8d8f94; --road-strong: #6b6d72; --river: #9aa6b8; --boundary: #26272b; --town: #ffe03a; --pass: #17181a;
+.map-col { --road: #8d8f94; --road-strong: #6b6d72; --river: #9aa6b8; --boundary: #141518; --town: #ffe03a; --pass: #17181a;
   --lake: #4fe3ef; --muted: #85868c; --gap: #b4271f;
   --display: "Helvetica Neue", Helvetica, Arial, sans-serif; --mono: ui-monospace, Menlo, Consolas, monospace; }
 .map-area { position: absolute; inset: 0; overflow: hidden; background: #fafaf9; }

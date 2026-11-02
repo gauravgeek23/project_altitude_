@@ -14,7 +14,7 @@ interface Props {
   onSelect(id: string): void;
 }
 
-const CHAR_W = 6.6, LABEL_H = 17;
+const CHAR_W = 6.5, LABEL_H = 20;
 
 /**
  * Markers and labels live in screen space so they keep one size at every zoom.
@@ -38,7 +38,7 @@ export function LocationMarkers({ region, project, transform, size, selected, ac
   const placed: [number, number, number, number][] = [[0, size.h - 62, 190, size.h], [size.w - 64, 0, size.w, 150]];
   const shown = new Set<string>();
   for (const i of [...items].sort((a, b) => b.priority - a.priority)) {
-    const w = i.l.name.length * CHAR_W + 14;
+    const w = i.l.name.length * CHAR_W + 20;
     // try right, then left, then above
     for (const [dx, dy] of [[8, -LABEL_H / 2], [-8 - w, -LABEL_H / 2], [-w / 2, -LABEL_H - 8], [-w / 2, 8]]) {
       const box: [number, number, number, number] = [i.x + dx, i.y + dy, i.x + dx + w, i.y + dy + LABEL_H];
@@ -51,6 +51,14 @@ export function LocationMarkers({ region, project, transform, size, selected, ac
 
   return (
     <g className={"locations" + (activeCircuit ? " has-active" : "")}>
+      <defs>
+        <filter id="tag-shadow" x="-20%" y="-40%" width="140%" height="190%">
+          <feDropShadow dx="0" dy="1" stdDeviation="1.2" floodColor="#000" floodOpacity="0.22" />
+        </filter>
+        <filter id="tag-shadow-lift" x="-20%" y="-60%" width="140%" height="230%">
+          <feDropShadow dx="0" dy="3" stdDeviation="3" floodColor="#000" floodOpacity="0.28" />
+        </filter>
+      </defs>
       {items.map((i) => {
         const box = (i as typeof i & { box?: number[] }).box;
         const sel = i.l.id === selected;
@@ -60,15 +68,16 @@ export function LocationMarkers({ region, project, transform, size, selected, ac
             role="button" tabIndex={0} aria-label={`${i.l.name}, ${kindWord(i.l)}`} aria-pressed={sel}
             onClick={(e) => { e.stopPropagation(); onSelect(i.l.id); }}
             onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onSelect(i.l.id); } }}>
-            {sel && <circle className="halo" cx={i.x} cy={i.y} r={11} />}
-            <circle className="dot" cx={i.x} cy={i.y} r={sel ? 5.5 : 4} />
+            {sel && <circle className="pulse" cx={i.x} cy={i.y} r={6} />}
+            <circle className="ring" cx={i.x} cy={i.y} r={8} />
+            <circle className="dot" cx={i.x} cy={i.y} r={4} />
             {box && (
               <g className="label">
-                <rect x={box[0]} y={box[1]} width={box[2]} height={LABEL_H} rx={2.5} />
-                <text x={box[0] + 7} y={box[1] + LABEL_H / 2 + 0.5}>{i.l.name}</text>
+                <rect x={box[0]} y={box[1]} width={box[2]} height={LABEL_H} rx={LABEL_H / 2} />
+                <text x={box[0] + box[2] / 2} y={box[1] + LABEL_H / 2 + 0.5}>{i.l.name}</text>
               </g>
             )}
-            <circle className="target" cx={i.x} cy={i.y} r={11} />
+            <circle className="target" cx={i.x} cy={i.y} r={12} />
           </g>
         );
       })}
