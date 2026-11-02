@@ -1,4 +1,5 @@
 import type { CircuitId, PlaceRecord, PlaceType, Practical } from "./types";
+import { CHECKED_ON, FACTS } from "./facts";
 export type { CircuitId } from "./types";
 
 export const CIRCUIT_META: Record<CircuitId, { name: string; short: string; color: string; character: string }> = {
@@ -159,6 +160,15 @@ export const PASSES: PlaceRecord[] = [
   pass("shinku-la", "Shinku La", ["zanskar"], "Zanskar–Lahaul", "The pass between Lahaul and Zanskar, crossed by the newer road from Darcha.", ["darcha", "padum"], { aka: "Sinchu La", notes: "Snow can linger into summer." }),
   pass("kunzum-la", "Kunzum Pass", ["spiti"], "Spiti–Lahaul", "The seasonal high-altitude connection between Spiti and Lahaul.", ["losar", "batal"], { aka: "Kunzum La", map: null, notes: "Seasonal: check whether the pass is open before planning the Kaza–Manali connection." }),
 ];
+
+// merge published-source facts into the records
+for (const r of [...PLACES, ...PASSES]) {
+  const f = FACTS[r.id];
+  if (!f) continue;
+  const { sources, ...fields } = f;
+  for (const [k, v] of Object.entries(fields)) if (v) (r.practical as unknown as Record<string, string>)[k] = v as string;
+  r.sources = sources; r.status = "sourced"; r.last_verified = CHECKED_ON;
+}
 
 export const ALL_PLACES = [...PLACES, ...PASSES];
 export const BY_ID: Record<string, PlaceRecord> = Object.fromEntries(ALL_PLACES.map((p) => [p.id, p]));

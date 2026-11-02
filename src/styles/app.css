@@ -317,3 +317,6 @@ fieldset.card legend .meta { margin: 0; }
 .number .num { white-space: nowrap; min-width: 132px; }
 .map-card.docked { bottom: 76px; }
 @media (max-width: 560px) { .number { flex-wrap: wrap; } }
+
+.sources-line { margin: 8px 0 0; font-size: 12px; line-height: 18px; color: var(--grey); }
+.sources-line a { color: var(--grey); }

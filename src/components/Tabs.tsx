@@ -143,6 +143,10 @@ function Practicals({ p }: { p: PlaceRecord }) {
     </dl>
   );
 }
+const STATUS = {
+  verified: { kind: "ok", label: "Verified" }, sourced: { kind: "ok", label: "From published sources" },
+  editorial: { kind: "editorial", label: "Editorial" }, needs_verification: { kind: "verify", label: "Needs verification" },
+} as const;
 function PlaceCard({ p, open, onPlace, innerRef }: { p: PlaceRecord; open: boolean; onPlace(id: string): void; innerRef?: (el: HTMLDetailsElement | null) => void }) {
   return (
     <details ref={innerRef} className={"card place" + (open ? " selected" : "")} id={`place-${p.id}`} open={open || undefined}>
@@ -160,8 +164,11 @@ function PlaceCard({ p, open, onPlace, innerRef }: { p: PlaceRecord; open: boole
         {p.neighbours.length > 0 && <p className="near"><b>Nearby stops.</b> {p.neighbours.map((n, i) => <span key={n}>{i > 0 && " · "}<PlaceLink id={n} onPlace={onPlace} /></span>)}</p>}
         <div className="card-foot">
           {p.mapId ? <button type="button" className="text-btn" onClick={() => onPlace(p.mapId!)}>Show on map →</button> : <span className="muted">Not on the map yet: position to be sourced</span>}
-          <span className="verify-line"><Badge kind={p.status === "verified" ? "ok" : p.status === "editorial" ? "editorial" : "verify"}>{p.status === "verified" ? "Verified" : p.status === "editorial" ? "Editorial" : "Needs verification"}</Badge> Last verified: {p.last_verified ?? "not yet"}</span>
+          <span className="verify-line"><Badge kind={STATUS[p.status].kind}>{STATUS[p.status].label}</Badge> {p.status === "sourced" ? `Checked online ${p.last_verified}` : `Last verified: ${p.last_verified ?? "not yet"}`}</span>
         </div>
+        {p.sources.length > 0 && (
+          <p className="sources-line">Sources: {p.sources.map((s, i) => <span key={s.url}>{i > 0 && " · "}<a href={s.url} target="_blank" rel="noreferrer">{s.label}</a></span>)}. Not field-verified; confirm locally.</p>
+        )}
       </div>
     </details>
   );

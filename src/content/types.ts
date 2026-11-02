@@ -7,8 +7,8 @@
  */
 export type CircuitId = "zanskar" | "nubra" | "changthang" | "spiti";
 
-/** verified: checked against a named source · editorial: our own description, not a factual claim · needs_verification: not checked yet */
-export type Verification = "verified" | "editorial" | "needs_verification";
+/** verified: field-checked · sourced: found in published sources, not field-checked · editorial: our own description, not a factual claim · needs_verification: not checked yet */
+export type Verification = "verified" | "sourced" | "editorial" | "needs_verification";
 
 export type PlaceType = "village" | "town" | "pass" | "lake" | "landmark";
 
@@ -41,7 +41,7 @@ export interface PlaceRecord {
   mapId: string | null;
   neighbours: string[];
   status: Verification;
-  sources: string[];
+  sources: { label: string; url: string }[];
   last_verified: string | null;
 }
 
