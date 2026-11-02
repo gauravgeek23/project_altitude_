@@ -127,3 +127,16 @@
 .loc.hub.selected .label rect { fill: var(--town); stroke: var(--tag-ink); }
 .loc.hub.selected .label text { fill: var(--tag-ink); }
 .loc.hub.selected .label .map-icon { stroke: var(--tag-ink); }
+
+/* satellite: relief shading over the imagery, roads on top, like a hybrid map */
+.on-satellite .base > image.relief-overlay { mix-blend-mode: multiply; opacity: .42; filter: none !important; }
+.sat-roads image { opacity: .85; }
+.on-satellite .boundary.international { stroke: #ffffff; }
+.on-satellite .boundary.casing { stroke: rgba(0,0,0,.45); }
+/* orientation cities */
+.cities { pointer-events: none; }
+.cities circle { fill: #ffffff; stroke: #2d2d2d; stroke-width: 1.2; }
+.cities text { font-family: var(--display); font-size: 11px; font-weight: 500; fill: #3b3f46; dominant-baseline: middle;
+  paint-order: stroke; stroke: rgba(255,255,255,.88); stroke-width: 3px; stroke-linejoin: round; }
+.map-col .map-area.sat .cities text { fill: #ffffff; stroke: rgba(0,0,0,.75); }
+.map-col .map-area.sat .states text, .map-col .map-area.sat .countries text { fill: #ffffff; stroke: rgba(0,0,0,.6); opacity: .9; }

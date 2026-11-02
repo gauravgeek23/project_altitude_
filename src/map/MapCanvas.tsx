@@ -31,9 +31,29 @@ interface Props {
 
 /** Esri World Imagery (free to display with attribution). Tiles are fetched by the reader's browser. */
 const TILE = (z: number, x: number, y: number) => `https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/${z}/${y}/${x}`;
+/** Esri's road overlay: roads and road names only (no boundaries, so India's official lines stay ours). */
+const ROADS_TILE = (z: number, x: number, y: number) => `https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Transportation/MapServer/tile/${z}/${y}/${x}`;
+
+/** Cities around the circuits, for orientation (as on Google's map). Not stops; not clickable.
+ *  Positions: route checkpoints (scroll-route-demo) where available, else Wikipedia. */
+const CITIES: { name: string; at: [number, number]; rank: 1 | 2 }[] = [
+  { name: "Srinagar", at: [74.7973, 34.0837], rank: 1 }, { name: "Jammu", at: [74.857, 32.7266], rank: 1 },
+  { name: "Gilgit", at: [74.3144, 35.9208], rank: 1 }, { name: "Skardu", at: [75.6333, 35.2971], rank: 1 },
+  { name: "Muzaffarabad", at: [73.4711, 34.37], rank: 2 }, { name: "Baramulla", at: [74.3636, 34.198], rank: 2 },
+  { name: "Gulmarg", at: [74.3805, 34.0484], rank: 2 }, { name: "Pahalgam", at: [75.315, 34.0161], rank: 2 },
+  { name: "Sonamarg", at: [75.2931, 34.3032], rank: 2 }, { name: "Anantnag", at: [75.1487, 33.7311], rank: 2 },
+  { name: "Dras", at: [75.7587, 34.4319], rank: 2 }, { name: "Kishtwar", at: [75.7662, 33.3116], rank: 2 },
+  { name: "Kathua", at: [75.5254, 32.3693], rank: 2 }, { name: "Pathankot", at: [75.6421, 32.2643], rank: 1 },
+  { name: "Chamba", at: [76.1258, 32.5534], rank: 2 }, { name: "Dharamshala", at: [76.3234, 32.219], rank: 1 },
+  { name: "Kullu", at: [77.1095, 31.9578], rank: 2 }, { name: "Mandi", at: [76.932, 31.7087], rank: 2 },
+  { name: "Hamirpur", at: [76.5213, 31.6862], rank: 2 }, { name: "Amritsar", at: [74.8723, 31.634], rank: 1 },
+  { name: "Lahore", at: [74.3587, 31.5204], rank: 1 }, { name: "Sialkot", at: [74.5229, 32.4945], rank: 2 },
+  { name: "Jalandhar", at: [75.5762, 31.326], rank: 2 }, { name: "Ludhiana", at: [75.8573, 30.901], rank: 1 },
+  { name: "Dehradun", at: [78.0322, 30.3165], rank: 1 }, { name: "Uttarkashi", at: [78.4437, 30.7306], rank: 2 },
+];
 
 /** Web Mercator tiles covering the panel at the current zoom, placed in screen space. */
-function SatelliteTiles({ project, t, size }: { project: d3.GeoProjection; t: d3.ZoomTransform; size: { w: number; h: number } }) {
+function SatelliteTiles({ project, t, size, url = TILE, className = "sat-tiles" }: { project: d3.GeoProjection; t: d3.ZoomTransform; size: { w: number; h: number }; url?: (z: number, x: number, y: number) => string; className?: string }) {
   // the projection's world is 2*pi*scale px wide; a tile zoom z world is 256 * 2^z px
   const world = 2 * Math.PI * project.scale() * t.k;
   const z = Math.max(1, Math.min(17, Math.ceil(Math.log2(world / 256) + 0.3)));
@@ -50,9 +70,9 @@ function SatelliteTiles({ project, t, size }: { project: d3.GeoProjection; t: d3
   for (let x = x0; x <= x1; x++) for (let y = y0; y <= y1; y++) {
     const [ax, ay] = t.apply(project([lonOf(x), latOf(y)])!), [bx, by] = t.apply(project([lonOf(x + 1), latOf(y + 1)])!);
     // half a pixel of overlap hides seams between tiles
-    tiles.push(<image key={`${z}/${x}/${y}`} href={TILE(z, x, y)} x={ax - 0.25} y={ay - 0.25} width={bx - ax + 0.5} height={by - ay + 0.5} preserveAspectRatio="none" />);
+    tiles.push(<image key={`${z}/${x}/${y}`} href={url(z, x, y)} x={ax - 0.25} y={ay - 0.25} width={bx - ax + 0.5} height={by - ay + 0.5} preserveAspectRatio="none" />);
   }
-  return <g className="sat-tiles">{tiles}</g>;
+  return <g className={className}>{tiles}</g>;
 }
 
 /** A fixed compass: the map is never rotated, so north is always up. */
@@ -104,7 +124,8 @@ const BaseLayers = memo(function BaseLayers({ region, path, project, showClaims,
   const areas = useMemo(() => (data.regions ?? []).map((r) => ({ id: r.id, d: path({ type: "MultiPolygon", coordinates: r.c }) ?? "" })), [path]);
   return (
     <g className="base">
-      {!satellite && <image href={region.terrainUrl} x={tl[0]} y={tl[1]} width={br[0] - tl[0]} height={br[1] - tl[1]} preserveAspectRatio="none" />}
+      {/* on satellite, the relief is laid over the imagery (multiply) for Google-like mountain shading */}
+      <image className={satellite ? "relief-overlay" : undefined} href={region.terrainUrl} x={tl[0]} y={tl[1]} width={br[0] - tl[0]} height={br[1] - tl[1]} preserveAspectRatio="none" />
       {!satellite && rivers.map((d, w) => <path key={w} className={`river w${w}`} d={d} />)}
       <path className="road primary" d={roads.primary} />
       <path className="road trunk" d={roads.trunk} />
@@ -214,6 +235,20 @@ export const MapCanvas = forwardRef<MapHandle, Props>(function MapCanvas(props, 
           <BaseLayers region={region} path={path} project={project} showClaims={props.showClaims} satellite={props.basemap === "satellite"} onRegion={setHoverRegion} />
           <RouteLayer circuits={region.data.circuits} path={path} visible={props.visible} active={props.activeCircuit}
             onHover={props.onHoverCircuit} onSelect={props.onSelectCircuit} />
+        </g>
+        {props.basemap === "satellite" && <SatelliteTiles project={project} t={t} size={size} url={ROADS_TILE} className="sat-tiles sat-roads" />}
+        <g className="cities" aria-hidden="true">
+          {(() => {
+            const boxes: number[][] = [];
+            return CITIES.filter((c) => c.rank === 1 || t.k >= 0.9).map((c) => {
+              const [x, y] = t.apply(project(c.at)!);
+              const w = c.name.length * 6.4 + 10;
+              if (x < 8 || x > size.w - w - 8 || y < 110 || y > size.h - 60) return null;
+              if (boxes.some((b) => x < b[0] + b[2] && x + w > b[0] && Math.abs(y - b[1]) < 14)) return null;
+              boxes.push([x, y, w]);
+              return <g key={c.name}><circle cx={x} cy={y} r={2.4} /><text x={x + 6} y={y + 0.5}>{c.name}</text></g>;
+            });
+          })()}
         </g>
         <g className="states" aria-hidden="true">
           {STATES.map((c) => {

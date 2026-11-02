@@ -202,7 +202,8 @@ PlaceRecord {
 | Circuit filter | `MapPanel.tsx` | All · Zanskar · Nubra · Changthang · Spiti. Picking a circuit, or clicking its line, shows it alone and frames it. A click on empty map, "All", the same circuit again, or Reset shows all four. |
 | Layers | `MapPanel.tsx` | Show or hide villages and towns, passes, peaks, lakes and landmarks. |
 | States | `MapCanvas.tsx` `.region-area` | Hovering Ladakh or Himachal tints it 10% and darkens its name. |
-| Satellite | `MapCanvas.tsx` `SatelliteTiles` | Esri World Imagery tiles, loaded in the reader's browser. Attribution switches with it. |
+| Satellite | `MapCanvas.tsx` `SatelliteTiles` | Hybrid view, like Google's: Esri World Imagery, the relief multiplied on top for mountain shading, Esri's road overlay (roads only, no boundaries), city names, and India's official boundaries in white. Tiles load in the reader's browser; attribution switches with it. |
+| Orientation cities | `MapCanvas.tsx` `CITIES` | Srinagar, Jammu, Gilgit, Skardu, Dharamshala, Amritsar, Lahore and others, as plain labels for orientation. Not stops, not clickable. |
 | Compass | `MapCanvas.tsx` `Compass` | Fixed; north is always up. |
 | Search | `MapPanel.tsx` | Names that start with the query, then names containing it, then region matches. Enter picks the first result. |
 | Place card | `MapPanel.tsx` | Type icon, photo, terrain-model height (m and ft), circuits, summary, access warning, "Open the full entry". |

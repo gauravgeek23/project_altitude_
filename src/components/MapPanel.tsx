@@ -77,7 +77,7 @@ export function MapPanel({ selected, circuit, onCircuit, onSelect, onOpenPlace, 
   const sel = selected ? BY_ID[selected] : null;
   const elev = selected ? terrain[selected] : undefined;
   return (
-    <div className="map-area">
+    <div className={"map-area" + (satellite ? " sat" : "")}>
       <MapCanvas ref={map} region={region} visible={visible} activeCircuit={circuit ?? hover} selectedLocation={selected}
         showClaims={false} onHoverCircuit={setHover} onSelectCircuit={(id) => { if (id !== circuit) pick(id as CircuitId); }} kinds={kinds}
         onSelectLocation={onSelect} onScale={setKmPerPx}

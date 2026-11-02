@@ -52,6 +52,8 @@
 :root[data-theme="dark"] .states text { fill: #c8ced6; }
 :root[data-theme="dark"] .states text.on { fill: #ffffff; }
 :root[data-theme="dark"] .countries text { fill: #a9b0b9; }
+:root[data-theme="dark"] .cities text { fill: #c3c9d1; stroke: rgba(8,9,12,.85); }
+:root[data-theme="dark"] .cities circle { fill: #0d0f12; stroke: #c3c9d1; }
 :root[data-theme="dark"] .compass-face { stroke: rgba(255,255,255,.1); }
 :root[data-theme="dark"] .loc .label rect { stroke: rgba(0,0,0,.5); }
 :root[data-theme="dark"] .loc.peak .label rect { fill: #e9ecf0; }
@@ -111,6 +113,8 @@
 :root:not([data-theme="light"]) .states text { fill: #c8ced6; }
 :root:not([data-theme="light"]) .states text.on { fill: #ffffff; }
 :root:not([data-theme="light"]) .countries text { fill: #a9b0b9; }
+:root:not([data-theme="light"]) .cities text { fill: #c3c9d1; stroke: rgba(8,9,12,.85); }
+:root:not([data-theme="light"]) .cities circle { fill: #0d0f12; stroke: #c3c9d1; }
 :root:not([data-theme="light"]) .compass-face { stroke: rgba(255,255,255,.1); }
 :root:not([data-theme="light"]) .loc .label rect { stroke: rgba(0,0,0,.5); }
 :root:not([data-theme="light"]) .loc.peak .label rect { fill: #e9ecf0; }
