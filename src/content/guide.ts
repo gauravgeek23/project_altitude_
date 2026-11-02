@@ -91,7 +91,7 @@ export const ROUTE_NOTES: Record<CircuitId, string[]> = {
 
 /* ------------------------------------------------------------------ Food */
 export const FOOD = {
-  title: "Food along the way",
+  title: "Eat and drink along the way",
   body: [
     "Some of the best meals on a Himalayan ride aren't planned. They're the hot plate of momos you find after a long day, the thukpa that gets you through a cold evening, or the simple meal prepared by a family running a homestay.",
     "This guide is about finding food when you need it and discovering local dishes along the way.",
@@ -113,6 +113,20 @@ export const FOOD = {
     { circuit: "spiti" as CircuitId, base: "Shimla, Reckong Peo, Kaza", advice: "More options in larger towns; verify availability in smaller villages and on high passes." },
   ],
 };
+
+/** Regional dishes: general descriptions, not claims about any one kitchen. Ids match the preview photos. */
+export const DISHES = [
+  { id: "dish-thukpa", name: "Thukpa", where: "Ladakh, Spiti, Kinnaur", body: "Noodle soup with vegetables or meat. The standard warm-up after a cold riding day." },
+  { id: "dish-momo", name: "Momos", where: "Everywhere on the circuits", body: "Steamed or fried dumplings, usually with a chilli sauce. The easiest snack to find in towns." },
+  { id: "dish-thenthuk", name: "Thenthuk", where: "Ladakh, Spiti", body: "A soup of hand-pulled flat noodles, heartier than thukpa." },
+  { id: "dish-skyu", name: "Skyu", where: "Ladakh", body: "A Ladakhi stew of thumb-pressed wheat pasta with vegetables. Most often found in homes and homestays." },
+  { id: "dish-tingmo", name: "Tingmo", where: "Ladakh, Spiti", body: "Soft steamed bread, eaten with curries or soup." },
+  { id: "dish-khambir", name: "Khambir", where: "Ladakh", body: "A thick round Ladakhi bread, often with butter tea in the morning." },
+  { id: "dish-butter-tea", name: "Butter tea (gur gur cha)", where: "Ladakh, Spiti", body: "Salted tea churned with butter. An acquired taste, and welcome at altitude." },
+  { id: "dish-chhurpi", name: "Chhurpi", where: "Changthang, Spiti", body: "Dried cheese from yak or cow milk. Hard enough to chew for a long time on the bike." },
+  { id: "dish-siddu", name: "Siddu", where: "Kullu, Manali", body: "Steamed wheat bread with a sweet or savoury filling, served with ghee." },
+  { id: "dish-apricot", name: "Apricots", where: "Nubra, Kargil, Kinnaur", body: "Fresh in late summer, dried the rest of the year. Ladakh's apricots are a riding snack in themselves." },
+];
 
 /* ------------------------------------------------------------------ Stays */
 export const STAYS = {

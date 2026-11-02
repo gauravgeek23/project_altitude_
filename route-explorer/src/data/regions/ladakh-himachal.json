@@ -1,116 +1,1356 @@
 {
   "id": "ladakh-himachal",
   "name": "Ladakh & Himachal Pradesh",
-  "bbox": [75.3, 30.3, 79.75, 35.8],
+  "bbox": [
+    75.3,
+    30.3,
+    79.75,
+    35.8
+  ],
   "terrainZoom": 10,
-  "terrainBbox": [73.0, 27.6, 81.8, 38.4],
+  "terrainBbox": [
+    73.0,
+    27.6,
+    81.8,
+    38.4
+  ],
   "reference": "data/raw/reference/circuits-map-original.webp",
   "notes": "Every coordinate comes from a named dataset. A location whose source is null has no coordinate available to this build and is listed as missing, never placed by eye.",
-
   "locations": [
-    { "id": "siachen-bc", "name": "Siachen Base Camp", "kind": "poi", "source": null },
-    { "id": "panamik", "name": "Panamik", "kind": "town", "source": null },
-    { "id": "turtuk", "name": "Turtuk", "kind": "town", "source": null },
-    { "id": "diskit", "name": "Diskit", "kind": "town", "source": { "dataset": "route-checkpoint", "key": "Diskit" } },
-    { "id": "kargil", "name": "Kargil", "kind": "town", "source": { "dataset": "route-checkpoint", "key": "Kargil" } },
-    { "id": "lamayuru", "name": "Lamayuru", "kind": "town", "source": null },
-    { "id": "khardung-la", "name": "Khardung La", "kind": "pass", "source": { "dataset": "route-checkpoint", "key": "Khardung La" } },
-    { "id": "wari-la", "name": "Wari La", "kind": "pass", "source": { "dataset": "terrain-saddle", "between": "Sakti and the Shyok at Agham", "from": [77.8209, 33.97244], "to": [77.6239, 34.5326] } },
-    { "id": "leh", "name": "Leh", "kind": "town", "source": { "dataset": "route-checkpoint", "key": "Leh" } },
-    { "id": "fotu-la", "name": "Fotu La", "kind": "pass", "source": { "dataset": "route-checkpoint", "key": "Fotu La" } },
-    { "id": "durbuk", "name": "Durbuk", "kind": "town", "source": null },
-    { "id": "satso-lake", "name": "Satso Lake", "kind": "town", "source": null },
-    { "id": "hemis", "name": "Hemis", "kind": "town", "source": null },
-    { "id": "chang-la", "name": "Chang La", "kind": "pass", "source": { "dataset": "terrain-pass", "route": "leh-pangong-umling", "between": ["Leh", "Pangong Lake"], "rank": 1, "skipKm": 15 } },
-    { "id": "pangong-tso", "name": "Pangong Tso", "kind": "lake", "source": { "dataset": "route-checkpoint", "key": "Pangong Lake" } },
-    { "id": "pensi-la", "name": "Pensi La", "kind": "pass", "source": { "dataset": "terrain-pass", "route": "zanskar-valley", "between": ["Rangdum", "Padum"], "rank": 1 } },
-    { "id": "maan", "name": "Maan", "kind": "town", "source": null },
-    { "id": "zangla", "name": "Zangla", "kind": "town", "source": null },
-    { "id": "taglang-la", "name": "Taglang La", "kind": "pass", "source": { "dataset": "route-checkpoint", "key": "Tanglang La" } },
-    { "id": "padum", "name": "Padum", "kind": "town", "source": { "dataset": "route-checkpoint", "key": "Padum" } },
-    { "id": "lachalung-la", "name": "Lachalung La", "kind": "pass", "source": { "dataset": "terrain-pass", "route": "manali-leh", "between": ["Sarchu", "Tanglang La"], "order": 2, "of": 2, "skipEndKm": 12 } },
-    { "id": "nyoma", "name": "Nyoma", "kind": "town", "source": { "dataset": "osm-settlement", "osm_id": 915239099 } },
-    { "id": "nakee-la", "name": "Nakee La", "kind": "pass", "source": { "dataset": "terrain-pass", "route": "manali-leh", "between": ["Sarchu", "Tanglang La"], "order": 1, "of": 2, "skipEndKm": 12 } },
-    { "id": "tso-kar", "name": "Tso Kar", "kind": "lake", "source": null },
-    { "id": "karzok", "name": "Karzok", "kind": "town", "source": { "dataset": "osm-settlement", "osm_id": 342114958 } },
-    { "id": "photi-la", "name": "Photi La", "kind": "pass", "source": { "dataset": "published", "lon": 79.100516, "lat": 32.760341, "cite": "PeakVisor, Photi La (peakvisor.com/poi/photi-la.html)" } },
-    { "id": "umling-la", "name": "Umling La", "kind": "pass", "accent": true, "source": { "dataset": "route-checkpoint", "key": "Umling La" } },
-    { "id": "gombo-ranjan", "name": "Gombo Ranjan", "kind": "poi", "source": null },
-    { "id": "shinku-la", "name": "Shinku La", "kind": "pass", "aka": "Sinchu La", "source": { "dataset": "route-checkpoint", "key": "Shinku La" } },
-    { "id": "baralacha-la", "name": "Baralacha La", "kind": "pass", "source": { "dataset": "route-checkpoint", "key": "Baralacha La" } },
-    { "id": "suraj-tal", "name": "Suraj Tal", "kind": "lake", "source": null },
-    { "id": "tso-moriri", "name": "Tso Moriri", "kind": "lake", "source": { "dataset": "route-checkpoint", "key": "Tso Moriri" } },
-    { "id": "hanle", "name": "Hanle", "kind": "town", "source": { "dataset": "route-checkpoint", "key": "Hanle" } },
-    { "id": "demchok", "name": "Demchok", "kind": "town", "source": null },
-    { "id": "darcha", "name": "Darcha", "kind": "town", "source": { "dataset": "route-checkpoint", "key": "Darcha" } },
-    { "id": "chandratal", "name": "Chandratal", "kind": "lake", "source": { "dataset": "route-checkpoint", "key": "Chandratal" } },
-    { "id": "nurbula", "name": "Nurbula", "kind": "pass", "source": null },
-    { "id": "atal-tunnel", "name": "Atal Tunnel", "kind": "poi", "source": { "dataset": "osm-road", "key": "Atal Tunnel" } },
-    { "id": "komik", "name": "Komik", "kind": "town", "source": null },
-    { "id": "kaza", "name": "Kaza", "kind": "town", "source": { "dataset": "route-checkpoint", "key": "Kaza" } },
-    { "id": "gue", "name": "Gue", "kind": "town", "source": { "dataset": "osm-settlement", "osm_id": 3004260144 } },
-    { "id": "manali", "name": "Manali", "kind": "town", "source": { "dataset": "route-checkpoint", "key": "Manali" } },
-    { "id": "tabo", "name": "Tabo", "kind": "town", "source": { "dataset": "route-checkpoint", "key": "Tabo" } },
-    { "id": "mandi", "name": "Mandi", "kind": "town", "source": { "dataset": "geonames", "key": "Mandi", "admin1": "Himachal Pradesh" } },
-    { "id": "jibhi", "name": "Jibhi", "kind": "town", "source": { "dataset": "route-checkpoint", "key": "Jibhi" } },
-    { "id": "kalpa", "name": "Kalpa", "kind": "town", "source": { "dataset": "osm-settlement", "osm_id": 299636580 } },
-    { "id": "nako", "name": "Nako", "kind": "town", "source": { "dataset": "route-checkpoint", "key": "Nako" } },
-    { "id": "sarahan", "name": "Sarahan", "kind": "town", "source": { "dataset": "osm-settlement", "osm_id": 4621873673 } },
-    { "id": "shimla", "name": "Shimla", "kind": "town", "source": { "dataset": "route-checkpoint", "key": "Shimla" } },
-    { "id": "narkanda", "name": "Narkanda", "kind": "town", "source": { "dataset": "route-checkpoint", "key": "Narkanda" } },
-    { "id": "chitkul", "name": "Chitkul", "kind": "town", "source": { "dataset": "route-checkpoint", "key": "Chitkul" } },
-    { "id": "solan", "name": "Solan", "kind": "town", "source": { "dataset": "route-checkpoint", "key": "Solan" } },
-    { "id": "chandigarh", "name": "Chandigarh", "kind": "town", "source": { "dataset": "route-checkpoint", "key": "Chandigarh" } },
-
-    { "id": "sankoo", "name": "Sankoo", "kind": "via", "source": { "dataset": "route-checkpoint", "key": "Sankoo" } },
-    { "id": "rangdum", "name": "Rangdum", "kind": "via", "source": { "dataset": "route-checkpoint", "key": "Rangdum" } },
-    { "id": "aut", "name": "Aut", "kind": "via", "source": { "dataset": "route-checkpoint", "key": "Aut" } },
-    { "id": "loma", "name": "Loma", "kind": "via", "source": { "dataset": "osm-settlement", "osm_id": 1288092597 } },
-    { "id": "mahe", "name": "Mahe Bridge", "kind": "via", "source": { "dataset": "route-checkpoint", "key": "Mahe Bridge" } }
+    {
+      "id": "siachen-bc",
+      "name": "Siachen Base Camp",
+      "kind": "poi",
+      "source": null
+    },
+    {
+      "id": "panamik",
+      "name": "Panamik",
+      "kind": "town",
+      "source": null
+    },
+    {
+      "id": "turtuk",
+      "name": "Turtuk",
+      "kind": "town",
+      "source": null
+    },
+    {
+      "id": "diskit",
+      "name": "Diskit",
+      "kind": "town",
+      "source": {
+        "dataset": "route-checkpoint",
+        "key": "Diskit"
+      }
+    },
+    {
+      "id": "kargil",
+      "name": "Kargil",
+      "kind": "town",
+      "source": {
+        "dataset": "route-checkpoint",
+        "key": "Kargil"
+      }
+    },
+    {
+      "id": "lamayuru",
+      "name": "Lamayuru",
+      "kind": "town",
+      "source": null
+    },
+    {
+      "id": "khardung-la",
+      "name": "Khardung La",
+      "kind": "pass",
+      "source": {
+        "dataset": "route-checkpoint",
+        "key": "Khardung La"
+      }
+    },
+    {
+      "id": "wari-la",
+      "name": "Wari La",
+      "kind": "pass",
+      "source": {
+        "dataset": "terrain-saddle",
+        "between": "Sakti and the Shyok at Agham",
+        "from": [
+          77.8209,
+          33.97244
+        ],
+        "to": [
+          77.6239,
+          34.5326
+        ]
+      }
+    },
+    {
+      "id": "leh",
+      "name": "Leh",
+      "kind": "town",
+      "source": {
+        "dataset": "route-checkpoint",
+        "key": "Leh"
+      }
+    },
+    {
+      "id": "fotu-la",
+      "name": "Fotu La",
+      "kind": "pass",
+      "source": {
+        "dataset": "route-checkpoint",
+        "key": "Fotu La"
+      }
+    },
+    {
+      "id": "durbuk",
+      "name": "Durbuk",
+      "kind": "town",
+      "source": null
+    },
+    {
+      "id": "satso-lake",
+      "name": "Satso Lake",
+      "kind": "town",
+      "source": null
+    },
+    {
+      "id": "hemis",
+      "name": "Hemis",
+      "kind": "town",
+      "source": null
+    },
+    {
+      "id": "chang-la",
+      "name": "Chang La",
+      "kind": "pass",
+      "source": {
+        "dataset": "terrain-pass",
+        "route": "leh-pangong-umling",
+        "between": [
+          "Leh",
+          "Pangong Lake"
+        ],
+        "rank": 1,
+        "skipKm": 15
+      }
+    },
+    {
+      "id": "pangong-tso",
+      "name": "Pangong Tso",
+      "kind": "lake",
+      "source": {
+        "dataset": "route-checkpoint",
+        "key": "Pangong Lake"
+      }
+    },
+    {
+      "id": "pensi-la",
+      "name": "Pensi La",
+      "kind": "pass",
+      "source": {
+        "dataset": "terrain-pass",
+        "route": "zanskar-valley",
+        "between": [
+          "Rangdum",
+          "Padum"
+        ],
+        "rank": 1
+      }
+    },
+    {
+      "id": "maan",
+      "name": "Maan",
+      "kind": "town",
+      "source": null
+    },
+    {
+      "id": "zangla",
+      "name": "Zangla",
+      "kind": "town",
+      "source": null
+    },
+    {
+      "id": "taglang-la",
+      "name": "Taglang La",
+      "kind": "pass",
+      "source": {
+        "dataset": "route-checkpoint",
+        "key": "Tanglang La"
+      }
+    },
+    {
+      "id": "padum",
+      "name": "Padum",
+      "kind": "town",
+      "source": {
+        "dataset": "route-checkpoint",
+        "key": "Padum"
+      }
+    },
+    {
+      "id": "lachalung-la",
+      "name": "Lachalung La",
+      "kind": "pass",
+      "source": {
+        "dataset": "terrain-pass",
+        "route": "manali-leh",
+        "between": [
+          "Sarchu",
+          "Tanglang La"
+        ],
+        "order": 2,
+        "of": 2,
+        "skipEndKm": 12
+      }
+    },
+    {
+      "id": "nyoma",
+      "name": "Nyoma",
+      "kind": "town",
+      "source": {
+        "dataset": "osm-settlement",
+        "osm_id": 915239099
+      }
+    },
+    {
+      "id": "nakee-la",
+      "name": "Nakee La",
+      "kind": "pass",
+      "source": {
+        "dataset": "terrain-pass",
+        "route": "manali-leh",
+        "between": [
+          "Sarchu",
+          "Tanglang La"
+        ],
+        "order": 1,
+        "of": 2,
+        "skipEndKm": 12
+      }
+    },
+    {
+      "id": "tso-kar",
+      "name": "Tso Kar",
+      "kind": "lake",
+      "source": null
+    },
+    {
+      "id": "karzok",
+      "name": "Karzok",
+      "kind": "town",
+      "source": {
+        "dataset": "osm-settlement",
+        "osm_id": 342114958
+      }
+    },
+    {
+      "id": "photi-la",
+      "name": "Photi La",
+      "kind": "pass",
+      "source": {
+        "dataset": "published",
+        "lon": 79.100516,
+        "lat": 32.760341,
+        "cite": "PeakVisor, Photi La (peakvisor.com/poi/photi-la.html)"
+      }
+    },
+    {
+      "id": "umling-la",
+      "name": "Umling La",
+      "kind": "pass",
+      "accent": true,
+      "source": {
+        "dataset": "route-checkpoint",
+        "key": "Umling La"
+      }
+    },
+    {
+      "id": "gombo-ranjan",
+      "name": "Gombo Ranjan",
+      "kind": "poi",
+      "source": null
+    },
+    {
+      "id": "shinku-la",
+      "name": "Shinku La",
+      "kind": "pass",
+      "aka": "Sinchu La",
+      "source": {
+        "dataset": "route-checkpoint",
+        "key": "Shinku La"
+      }
+    },
+    {
+      "id": "baralacha-la",
+      "name": "Baralacha La",
+      "kind": "pass",
+      "source": {
+        "dataset": "route-checkpoint",
+        "key": "Baralacha La"
+      }
+    },
+    {
+      "id": "suraj-tal",
+      "name": "Suraj Tal",
+      "kind": "lake",
+      "source": null
+    },
+    {
+      "id": "tso-moriri",
+      "name": "Tso Moriri",
+      "kind": "lake",
+      "source": {
+        "dataset": "route-checkpoint",
+        "key": "Tso Moriri"
+      }
+    },
+    {
+      "id": "hanle",
+      "name": "Hanle",
+      "kind": "town",
+      "source": {
+        "dataset": "route-checkpoint",
+        "key": "Hanle"
+      }
+    },
+    {
+      "id": "demchok",
+      "name": "Demchok",
+      "kind": "town",
+      "source": null
+    },
+    {
+      "id": "darcha",
+      "name": "Darcha",
+      "kind": "town",
+      "source": {
+        "dataset": "route-checkpoint",
+        "key": "Darcha"
+      }
+    },
+    {
+      "id": "chandratal",
+      "name": "Chandratal",
+      "kind": "lake",
+      "source": {
+        "dataset": "route-checkpoint",
+        "key": "Chandratal"
+      }
+    },
+    {
+      "id": "nurbula",
+      "name": "Nurbula",
+      "kind": "pass",
+      "source": null
+    },
+    {
+      "id": "atal-tunnel",
+      "name": "Atal Tunnel",
+      "kind": "poi",
+      "source": {
+        "dataset": "osm-road",
+        "key": "Atal Tunnel"
+      }
+    },
+    {
+      "id": "komik",
+      "name": "Komik",
+      "kind": "town",
+      "source": null
+    },
+    {
+      "id": "kaza",
+      "name": "Kaza",
+      "kind": "town",
+      "source": {
+        "dataset": "route-checkpoint",
+        "key": "Kaza"
+      }
+    },
+    {
+      "id": "gue",
+      "name": "Gue",
+      "kind": "town",
+      "source": {
+        "dataset": "osm-settlement",
+        "osm_id": 3004260144
+      }
+    },
+    {
+      "id": "manali",
+      "name": "Manali",
+      "kind": "town",
+      "source": {
+        "dataset": "route-checkpoint",
+        "key": "Manali"
+      }
+    },
+    {
+      "id": "tabo",
+      "name": "Tabo",
+      "kind": "town",
+      "source": {
+        "dataset": "route-checkpoint",
+        "key": "Tabo"
+      }
+    },
+    {
+      "id": "mandi",
+      "name": "Mandi",
+      "kind": "town",
+      "source": {
+        "dataset": "geonames",
+        "key": "Mandi",
+        "admin1": "Himachal Pradesh"
+      }
+    },
+    {
+      "id": "jibhi",
+      "name": "Jibhi",
+      "kind": "town",
+      "source": {
+        "dataset": "route-checkpoint",
+        "key": "Jibhi"
+      }
+    },
+    {
+      "id": "kalpa",
+      "name": "Kalpa",
+      "kind": "town",
+      "source": {
+        "dataset": "osm-settlement",
+        "osm_id": 299636580
+      }
+    },
+    {
+      "id": "nako",
+      "name": "Nako",
+      "kind": "town",
+      "source": {
+        "dataset": "route-checkpoint",
+        "key": "Nako"
+      }
+    },
+    {
+      "id": "sarahan",
+      "name": "Sarahan",
+      "kind": "town",
+      "source": {
+        "dataset": "osm-settlement",
+        "osm_id": 4621873673
+      }
+    },
+    {
+      "id": "shimla",
+      "name": "Shimla",
+      "kind": "town",
+      "source": {
+        "dataset": "route-checkpoint",
+        "key": "Shimla"
+      }
+    },
+    {
+      "id": "narkanda",
+      "name": "Narkanda",
+      "kind": "town",
+      "source": {
+        "dataset": "route-checkpoint",
+        "key": "Narkanda"
+      }
+    },
+    {
+      "id": "chitkul",
+      "name": "Chitkul",
+      "kind": "town",
+      "source": {
+        "dataset": "route-checkpoint",
+        "key": "Chitkul"
+      }
+    },
+    {
+      "id": "solan",
+      "name": "Solan",
+      "kind": "town",
+      "source": {
+        "dataset": "route-checkpoint",
+        "key": "Solan"
+      }
+    },
+    {
+      "id": "chandigarh",
+      "name": "Chandigarh",
+      "kind": "town",
+      "source": {
+        "dataset": "route-checkpoint",
+        "key": "Chandigarh"
+      }
+    },
+    {
+      "id": "sankoo",
+      "name": "Sankoo",
+      "kind": "via",
+      "source": {
+        "dataset": "route-checkpoint",
+        "key": "Sankoo"
+      }
+    },
+    {
+      "id": "rangdum",
+      "name": "Rangdum",
+      "kind": "via",
+      "source": {
+        "dataset": "route-checkpoint",
+        "key": "Rangdum"
+      }
+    },
+    {
+      "id": "aut",
+      "name": "Aut",
+      "kind": "via",
+      "source": {
+        "dataset": "route-checkpoint",
+        "key": "Aut"
+      }
+    },
+    {
+      "id": "loma",
+      "name": "Loma",
+      "kind": "via",
+      "source": {
+        "dataset": "osm-settlement",
+        "osm_id": 1288092597
+      }
+    },
+    {
+      "id": "mahe",
+      "name": "Mahe Bridge",
+      "kind": "via",
+      "source": {
+        "dataset": "route-checkpoint",
+        "key": "Mahe Bridge"
+      }
+    },
+    {
+      "id": "panikhar",
+      "name": "Panikhar",
+      "kind": "town",
+      "tier": 3,
+      "source": {
+        "dataset": "approx",
+        "lon": 75.98,
+        "lat": 34.08,
+        "snap": "route",
+        "radius": 6
+      }
+    },
+    {
+      "id": "khalsar",
+      "name": "Khalsar",
+      "kind": "town",
+      "tier": 2,
+      "source": {
+        "dataset": "approx",
+        "lon": 77.68,
+        "lat": 34.51,
+        "snap": "route",
+        "radius": 4
+      }
+    },
+    {
+      "id": "hunder",
+      "name": "Hunder",
+      "kind": "town",
+      "tier": 2,
+      "source": {
+        "dataset": "approx",
+        "lon": 77.48,
+        "lat": 34.58,
+        "snap": "route",
+        "radius": 6
+      }
+    },
+    {
+      "id": "thang",
+      "name": "Thang",
+      "kind": "town",
+      "tier": 3,
+      "source": {
+        "dataset": "approx",
+        "lon": 76.8,
+        "lat": 34.88,
+        "snap": "route",
+        "radius": 6
+      }
+    },
+    {
+      "id": "sumur",
+      "name": "Sumur",
+      "kind": "town",
+      "tier": 2,
+      "source": {
+        "dataset": "approx",
+        "lon": 77.62,
+        "lat": 34.62,
+        "snap": "route",
+        "radius": 6
+      }
+    },
+    {
+      "id": "karu",
+      "name": "Karu",
+      "kind": "town",
+      "tier": 2,
+      "source": {
+        "dataset": "approx",
+        "lon": 77.72,
+        "lat": 33.93,
+        "snap": "route",
+        "radius": 4
+      }
+    },
+    {
+      "id": "sakti",
+      "name": "Sakti",
+      "kind": "town",
+      "tier": 3,
+      "source": {
+        "dataset": "approx",
+        "lon": 77.8,
+        "lat": 34.04,
+        "snap": "route",
+        "radius": 6
+      }
+    },
+    {
+      "id": "tangtse",
+      "name": "Tangtse",
+      "kind": "town",
+      "tier": 2,
+      "source": {
+        "dataset": "approx",
+        "lon": 78.17,
+        "lat": 34.03,
+        "snap": "route",
+        "radius": 4
+      }
+    },
+    {
+      "id": "lukung",
+      "name": "Lukung",
+      "kind": "town",
+      "tier": 3,
+      "source": {
+        "dataset": "approx",
+        "lon": 78.4,
+        "lat": 33.97,
+        "snap": "route",
+        "radius": 4
+      }
+    },
+    {
+      "id": "spangmik",
+      "name": "Spangmik",
+      "kind": "town",
+      "tier": 2,
+      "source": {
+        "dataset": "approx",
+        "lon": 78.46,
+        "lat": 33.89,
+        "snap": "route",
+        "radius": 4
+      }
+    },
+    {
+      "id": "merak",
+      "name": "Merak",
+      "kind": "town",
+      "tier": 3,
+      "source": {
+        "dataset": "approx",
+        "lon": 78.63,
+        "lat": 33.8,
+        "snap": "route",
+        "radius": 4
+      }
+    },
+    {
+      "id": "chushul",
+      "name": "Chushul",
+      "kind": "town",
+      "tier": 2,
+      "source": {
+        "dataset": "approx",
+        "lon": 78.65,
+        "lat": 33.59,
+        "snap": "route",
+        "radius": 5
+      }
+    },
+    {
+      "id": "sangla",
+      "name": "Sangla",
+      "kind": "town",
+      "tier": 2,
+      "source": {
+        "dataset": "approx",
+        "lon": 78.27,
+        "lat": 31.42,
+        "snap": "route",
+        "radius": 4
+      }
+    },
+    {
+      "id": "rakchham",
+      "name": "Rakchham",
+      "kind": "town",
+      "tier": 3,
+      "source": {
+        "dataset": "approx",
+        "lon": 78.36,
+        "lat": 31.39,
+        "snap": "route",
+        "radius": 4
+      }
+    },
+    {
+      "id": "reckong-peo",
+      "name": "Reckong Peo",
+      "kind": "town",
+      "tier": 2,
+      "source": {
+        "dataset": "approx",
+        "lon": 78.27,
+        "lat": 31.54,
+        "snap": "route",
+        "radius": 4
+      }
+    },
+    {
+      "id": "dhankar",
+      "name": "Dhankar",
+      "kind": "town",
+      "tier": 2,
+      "source": {
+        "dataset": "approx",
+        "lon": 78.215,
+        "lat": 32.089,
+        "snap": "none",
+        "radius": 0
+      }
+    },
+    {
+      "id": "kibber",
+      "name": "Kibber",
+      "kind": "town",
+      "tier": 2,
+      "source": {
+        "dataset": "approx",
+        "lon": 78.01,
+        "lat": 32.33,
+        "snap": "none",
+        "radius": 0
+      }
+    },
+    {
+      "id": "chicham",
+      "name": "Chicham",
+      "kind": "town",
+      "tier": 3,
+      "source": {
+        "dataset": "approx",
+        "lon": 77.99,
+        "lat": 32.35,
+        "snap": "none",
+        "radius": 0
+      }
+    },
+    {
+      "id": "langza",
+      "name": "Langza",
+      "kind": "town",
+      "tier": 2,
+      "source": {
+        "dataset": "approx",
+        "lon": 78.08,
+        "lat": 32.27,
+        "snap": "none",
+        "radius": 0
+      }
+    },
+    {
+      "id": "hikkim",
+      "name": "Hikkim",
+      "kind": "town",
+      "tier": 3,
+      "source": {
+        "dataset": "approx",
+        "lon": 78.09,
+        "lat": 32.25,
+        "snap": "none",
+        "radius": 0
+      }
+    },
+    {
+      "id": "mudh",
+      "name": "Mudh",
+      "kind": "town",
+      "tier": 3,
+      "source": {
+        "dataset": "approx",
+        "lon": 78.03,
+        "lat": 31.96,
+        "snap": "none",
+        "radius": 0
+      }
+    },
+    {
+      "id": "losar",
+      "name": "Losar",
+      "kind": "town",
+      "tier": 2,
+      "source": {
+        "dataset": "approx",
+        "lon": 77.75,
+        "lat": 32.44,
+        "snap": "route",
+        "radius": 4
+      }
+    },
+    {
+      "id": "batal",
+      "name": "Batal",
+      "kind": "poi",
+      "tier": 2,
+      "source": {
+        "dataset": "approx",
+        "lon": 77.62,
+        "lat": 32.36,
+        "snap": "route",
+        "radius": 4
+      }
+    },
+    {
+      "id": "thiksey",
+      "name": "Thiksey",
+      "kind": "town",
+      "tier": 3,
+      "source": {
+        "dataset": "approx",
+        "lon": 77.67,
+        "lat": 34.06,
+        "snap": "none",
+        "radius": 0
+      }
+    },
+    {
+      "id": "shey",
+      "name": "Shey",
+      "kind": "town",
+      "tier": 3,
+      "source": {
+        "dataset": "approx",
+        "lon": 77.63,
+        "lat": 34.07,
+        "snap": "route",
+        "radius": 3
+      }
+    },
+    {
+      "id": "alchi",
+      "name": "Alchi",
+      "kind": "town",
+      "tier": 3,
+      "source": {
+        "dataset": "approx",
+        "lon": 77.18,
+        "lat": 34.22,
+        "snap": "none",
+        "radius": 0
+      }
+    },
+    {
+      "id": "khalsi",
+      "name": "Khalsi",
+      "kind": "town",
+      "tier": 3,
+      "source": {
+        "dataset": "approx",
+        "lon": 76.88,
+        "lat": 34.32,
+        "snap": "route",
+        "radius": 4
+      }
+    },
+    {
+      "id": "mulbekh",
+      "name": "Mulbekh",
+      "kind": "town",
+      "tier": 3,
+      "source": {
+        "dataset": "approx",
+        "lon": 76.36,
+        "lat": 34.38,
+        "snap": "route",
+        "radius": 6
+      }
+    },
+    {
+      "id": "upshi",
+      "name": "Upshi",
+      "kind": "town",
+      "tier": 3,
+      "source": {
+        "dataset": "approx",
+        "lon": 77.81,
+        "lat": 33.83,
+        "snap": "route",
+        "radius": 4
+      }
+    },
+    {
+      "id": "rumtse",
+      "name": "Rumtse",
+      "kind": "town",
+      "tier": 3,
+      "source": {
+        "dataset": "approx",
+        "lon": 77.75,
+        "lat": 33.73,
+        "snap": "route",
+        "radius": 5
+      }
+    },
+    {
+      "id": "pang",
+      "name": "Pang",
+      "kind": "town",
+      "tier": 2,
+      "source": {
+        "dataset": "approx",
+        "lon": 77.8,
+        "lat": 33.08,
+        "snap": "route",
+        "radius": 8
+      }
+    },
+    {
+      "id": "sarchu",
+      "name": "Sarchu",
+      "kind": "town",
+      "tier": 2,
+      "source": {
+        "dataset": "approx",
+        "lon": 77.56,
+        "lat": 32.91,
+        "snap": "route",
+        "radius": 6
+      }
+    },
+    {
+      "id": "keylong",
+      "name": "Keylong",
+      "kind": "town",
+      "tier": 2,
+      "source": {
+        "dataset": "approx",
+        "lon": 77.03,
+        "lat": 32.57,
+        "snap": "route",
+        "radius": 4
+      }
+    },
+    {
+      "id": "jispa",
+      "name": "Jispa",
+      "kind": "town",
+      "tier": 3,
+      "source": {
+        "dataset": "approx",
+        "lon": 77.18,
+        "lat": 32.64,
+        "snap": "route",
+        "radius": 4
+      }
+    },
+    {
+      "id": "sissu",
+      "name": "Sissu",
+      "kind": "town",
+      "tier": 3,
+      "source": {
+        "dataset": "approx",
+        "lon": 77.12,
+        "lat": 32.48,
+        "snap": "route",
+        "radius": 4
+      }
+    },
+    {
+      "id": "tandi",
+      "name": "Tandi",
+      "kind": "town",
+      "tier": 3,
+      "source": {
+        "dataset": "approx",
+        "lon": 76.98,
+        "lat": 32.55,
+        "snap": "route",
+        "radius": 4
+      }
+    },
+    {
+      "id": "rampur",
+      "name": "Rampur",
+      "kind": "town",
+      "tier": 3,
+      "source": {
+        "dataset": "approx",
+        "lon": 77.63,
+        "lat": 31.45,
+        "snap": "route",
+        "radius": 4
+      }
+    },
+    {
+      "id": "ki-monastery",
+      "name": "Key Monastery",
+      "kind": "poi",
+      "tier": 2,
+      "source": {
+        "dataset": "approx",
+        "lon": 78.01,
+        "lat": 32.3,
+        "snap": "none",
+        "radius": 0
+      }
+    },
+    {
+      "id": "namika-la",
+      "name": "Namika La",
+      "kind": "pass",
+      "tier": 2,
+      "source": {
+        "dataset": "approx",
+        "lon": 76.52,
+        "lat": 34.38,
+        "snap": "pass",
+        "radius": 10
+      }
+    },
+    {
+      "id": "kunzum-la",
+      "name": "Kunzum La",
+      "kind": "pass",
+      "tier": 1,
+      "source": {
+        "dataset": "approx",
+        "lon": 77.637,
+        "lat": 32.398,
+        "snap": "pass",
+        "radius": 6
+      }
+    },
+    {
+      "id": "tsaga-la",
+      "name": "Tsaga La",
+      "kind": "pass",
+      "tier": 2,
+      "source": {
+        "dataset": "approx",
+        "lon": 78.75,
+        "lat": 33.4,
+        "snap": "pass",
+        "radius": 15
+      }
+    },
+    {
+      "id": "hamta-pass",
+      "name": "Hamta Pass",
+      "kind": "pass",
+      "tier": 2,
+      "source": {
+        "dataset": "approx",
+        "lon": 77.367,
+        "lat": 32.272,
+        "snap": "none",
+        "radius": 0
+      }
+    },
+    {
+      "id": "nun",
+      "name": "Nun",
+      "kind": "peak",
+      "tier": 2,
+      "source": {
+        "dataset": "approx",
+        "lon": 76.02,
+        "lat": 33.98,
+        "snap": "peak",
+        "radius": 3
+      }
+    },
+    {
+      "id": "kun",
+      "name": "Kun",
+      "kind": "peak",
+      "tier": 3,
+      "source": {
+        "dataset": "approx",
+        "lon": 76.05,
+        "lat": 34.0,
+        "snap": "peak",
+        "radius": 2
+      }
+    },
+    {
+      "id": "stok-kangri",
+      "name": "Stok Kangri",
+      "kind": "peak",
+      "tier": 2,
+      "source": {
+        "dataset": "approx",
+        "lon": 77.45,
+        "lat": 33.98,
+        "snap": "peak",
+        "radius": 4
+      }
+    },
+    {
+      "id": "kang-yatse",
+      "name": "Kang Yatse",
+      "kind": "peak",
+      "tier": 2,
+      "source": {
+        "dataset": "approx",
+        "lon": 77.57,
+        "lat": 33.78,
+        "snap": "peak",
+        "radius": 5
+      }
+    },
+    {
+      "id": "saser-kangri",
+      "name": "Saser Kangri",
+      "kind": "peak",
+      "tier": 2,
+      "source": {
+        "dataset": "approx",
+        "lon": 77.75,
+        "lat": 34.87,
+        "snap": "peak",
+        "radius": 5
+      }
+    },
+    {
+      "id": "deo-tibba",
+      "name": "Deo Tibba",
+      "kind": "peak",
+      "tier": 3,
+      "source": {
+        "dataset": "approx",
+        "lon": 77.38,
+        "lat": 32.2,
+        "snap": "peak",
+        "radius": 4
+      }
+    },
+    {
+      "id": "mulkila",
+      "name": "Mulkila",
+      "kind": "peak",
+      "tier": 3,
+      "source": {
+        "dataset": "approx",
+        "lon": 77.42,
+        "lat": 32.55,
+        "snap": "peak",
+        "radius": 4
+      }
+    },
+    {
+      "id": "kinnaur-kailash",
+      "name": "Kinnaur Kailash range",
+      "kind": "peak",
+      "tier": 2,
+      "source": {
+        "dataset": "approx",
+        "lon": 78.37,
+        "lat": 31.49,
+        "snap": "peak",
+        "radius": 3
+      }
+    },
+    {
+      "id": "reo-purgyil",
+      "name": "Reo Purgyil",
+      "kind": "peak",
+      "tier": 2,
+      "source": {
+        "dataset": "approx",
+        "lon": 78.73,
+        "lat": 31.88,
+        "snap": "peak",
+        "radius": 4
+      }
+    }
   ],
-
   "circuits": [
     {
-      "id": "nubra", "name": "Nubra & Siachen", "color": "#9b2fd1",
+      "id": "nubra",
+      "name": "Nubra & Siachen",
+      "color": "#9b2fd1",
       "legs": [
-        ["leh", "khardung-la", "diskit"],
-        ["diskit", "turtuk"],
-        ["diskit", "panamik", "siachen-bc"],
-        ["diskit", "wari-la", "hemis"],
-        ["hemis", "leh"]
+        [
+          "leh",
+          "khardung-la",
+          "diskit"
+        ],
+        [
+          "diskit",
+          "turtuk"
+        ],
+        [
+          "diskit",
+          "panamik",
+          "siachen-bc"
+        ],
+        [
+          "diskit",
+          "wari-la",
+          "hemis"
+        ],
+        [
+          "hemis",
+          "leh"
+        ]
       ]
     },
     {
-      "id": "changthang", "name": "Manali–Leh & Changthang", "color": "#e3241b",
+      "id": "changthang",
+      "name": "Manali–Leh & Changthang",
+      "color": "#e3241b",
       "legs": [
-        ["darcha", "baralacha-la", "nakee-la", "lachalung-la", "taglang-la", "leh"],
-        ["leh", "chang-la", "durbuk", "pangong-tso"],
-        ["pangong-tso", "maan", "hanle"],
-        ["hanle", "photi-la", "umling-la", "demchok"],
-        ["hanle", "nurbula", "demchok"],
-        ["taglang-la", "tso-kar", "nyoma"],
-        ["nyoma", "mahe", "tso-moriri", "karzok"]
+        [
+          "darcha",
+          "baralacha-la",
+          "nakee-la",
+          "lachalung-la",
+          "taglang-la",
+          "leh"
+        ],
+        [
+          "leh",
+          "chang-la",
+          "durbuk",
+          "pangong-tso"
+        ],
+        [
+          "pangong-tso",
+          "maan",
+          "hanle"
+        ],
+        [
+          "hanle",
+          "photi-la",
+          "umling-la",
+          "demchok"
+        ],
+        [
+          "hanle",
+          "nurbula",
+          "demchok"
+        ],
+        [
+          "taglang-la",
+          "tso-kar",
+          "nyoma"
+        ],
+        [
+          "nyoma",
+          "mahe",
+          "tso-moriri",
+          "karzok"
+        ]
       ]
     },
     {
-      "id": "zanskar", "name": "Kargil, Zanskar & Manali", "color": "#1f3fe0",
+      "id": "zanskar",
+      "name": "Kargil, Zanskar & Manali",
+      "color": "#1f3fe0",
       "legs": [
-        ["leh", "lamayuru", "fotu-la", "kargil"],
-        ["kargil", "sankoo", "satso-lake", "rangdum", "pensi-la", "padum"],
-        ["padum", "zangla"],
-        ["padum", "gombo-ranjan", "shinku-la", "darcha"],
-        ["darcha", "atal-tunnel", "manali", "mandi", "chandigarh"]
+        [
+          "leh",
+          "lamayuru",
+          "fotu-la",
+          "kargil"
+        ],
+        [
+          "kargil",
+          "sankoo",
+          "satso-lake",
+          "rangdum",
+          "pensi-la",
+          "padum"
+        ],
+        [
+          "padum",
+          "zangla"
+        ],
+        [
+          "padum",
+          "gombo-ranjan",
+          "shinku-la",
+          "darcha"
+        ],
+        [
+          "darcha",
+          "atal-tunnel",
+          "manali",
+          "mandi",
+          "chandigarh"
+        ]
       ]
     },
     {
-      "id": "spiti", "name": "Kinnaur & Spiti", "color": "#1e9a4b",
+      "id": "spiti",
+      "name": "Kinnaur & Spiti",
+      "color": "#1e9a4b",
       "legs": [
-        ["chandigarh", "solan", "shimla", "narkanda", "sarahan", "kalpa"],
-        ["kalpa", "chitkul"],
-        ["kalpa", "nako", "tabo", "kaza", "chandratal", "atal-tunnel"],
-        ["tabo", "gue"],
-        ["kaza", "komik"],
-        ["narkanda", "jibhi", "aut"]
+        [
+          "chandigarh",
+          "solan",
+          "shimla",
+          "narkanda",
+          "sarahan",
+          "kalpa"
+        ],
+        [
+          "kalpa",
+          "chitkul"
+        ],
+        [
+          "kalpa",
+          "nako",
+          "tabo",
+          "kaza",
+          "chandratal",
+          "atal-tunnel"
+        ],
+        [
+          "tabo",
+          "gue"
+        ],
+        [
+          "kaza",
+          "komik"
+        ],
+        [
+          "narkanda",
+          "jibhi",
+          "aut"
+        ]
       ]
     }
   ]

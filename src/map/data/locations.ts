@@ -13,12 +13,14 @@ export function missingLocations(region: RegionData) {
 }
 
 export function circuitsAt(region: RegionData, id: string): Circuit[] {
-  return region.circuits.filter((c) => c.legs.some((leg) => leg.waypoints.includes(id)));
+  const near = region.locations.find((l) => l.id === id)?.near ?? [];
+  return region.circuits.filter((c) => near.includes(c.id) || c.legs.some((leg) => leg.waypoints.includes(id)));
 }
 
 export const KIND_LABEL: Record<MapLocation["kind"], string> = {
   town: "Town or village",
   pass: "Mountain pass",
+  peak: "Peak",
   lake: "Lake",
   poi: "Landmark",
   via: "Routing point",

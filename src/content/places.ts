@@ -112,24 +112,24 @@ export const PLACES: PlaceRecord[] = [
   P("shimla", "Shimla", "town", ["spiti"], "Shimla hills", "The gateway for the Kinnaur approach to Spiti.", "A good overnight to break the climb from the plains.", { near: ["narkanda"] }),
   P("narkanda", "Narkanda", "town", ["spiti"], "Shimla hills", "A ridge town of orchards and deodar forest on the road to Kinnaur.", "A mountain stop with Hatu Peak above.", { near: ["shimla", "sarahan"] }),
   P("sarahan", "Sarahan", "village", ["spiti"], "Kinnaur gateway", "Home of the Bhimakali temple, in Himachal's wood-and-stone style.", "A cultural stop and possible overnight halt.", { near: ["narkanda", "sangla"] }),
-  P("sangla", "Sangla", "village", ["spiti"], "Baspa valley", "The base for exploring the Baspa Valley.", "Orchards, river and the road to Chitkul.", { near: ["sarahan", "rakchham"], map: null }),
-  P("rakchham", "Rakchham", "village", ["spiti"], "Baspa valley", "A village of wooden houses in the upper Baspa Valley.", "Village scenery and short walks.", { near: ["sangla", "chitkul"], map: null }),
+  P("sangla", "Sangla", "village", ["spiti"], "Baspa valley", "The base for exploring the Baspa Valley.", "Orchards, river and the road to Chitkul.", { near: ["sarahan", "rakchham"] }),
+  P("rakchham", "Rakchham", "village", ["spiti"], "Baspa valley", "A village of wooden houses in the upper Baspa Valley.", "Village scenery and short walks.", { near: ["sangla", "chitkul"] }),
   P("chitkul", "Chitkul", "village", ["spiti"], "Baspa valley", "The end-of-road village in the Baspa Valley.", "Wooden houses, a temple and the river in a green valley.", { notes: "Subject to current access.", near: ["rakchham"] }),
   P("kalpa", "Kalpa", "village", ["spiti"], "Kinnaur", "Orchards above Reckong Peo facing the Kinnaur Kailash range.", "Sunrise on the peaks and village stays.", { near: ["reckong-peo"] }),
-  P("reckong-peo", "Reckong Peo", "town", ["spiti"], "Kinnaur", "The district headquarters of Kinnaur and a major service centre.", "An onward-planning stop before the high desert.", { near: ["kalpa", "nako"], map: null }),
+  P("reckong-peo", "Reckong Peo", "town", ["spiti"], "Kinnaur", "The district headquarters of Kinnaur and a major service centre.", "An onward-planning stop before the high desert.", { near: ["kalpa", "nako"] }),
   P("nako", "Nako", "village", ["spiti"], "Kinnaur", "A high stone village around a small lake.", "A gentle halt between Kinnaur's gorges and Spiti.", { near: ["reckong-peo", "tabo"] }),
   P("gue", "Gue", "village", ["spiti"], "Spiti", "A village known for the naturally preserved mummy of a meditating monk.", "A strange, quiet place off the main road.", { near: ["tabo"] }),
   P("tabo", "Tabo", "village", ["spiti"], "Spiti", "A historic monastery founded in 996 CE, with remarkable murals.", "Over a thousand years of continuous practice.", { notes: "Photography is not allowed inside the old halls.", near: ["nako", "dhankar"] }),
-  P("dhankar", "Dhankar", "village", ["spiti"], "Spiti", "A monastery and village on a ridge above the Spiti and Pin confluence.", "The setting is as remarkable as the architecture.", { near: ["tabo", "kaza"], map: null }),
+  P("dhankar", "Dhankar", "village", ["spiti"], "Spiti", "A monastery and village on a ridge above the Spiti and Pin confluence.", "The setting is as remarkable as the architecture.", { near: ["tabo", "kaza"] }),
   P("kaza", "Kaza", "town", ["spiti"], "Spiti", "The main settlement and practical base for Spiti.", "The base for the high villages around it.", { near: ["dhankar", "kibber", "langza"] }),
-  P("kibber", "Kibber", "village", ["spiti"], "Spiti", "A high village above Kaza, a base for wildlife-oriented excursions.", "High-altitude village life.", { near: ["kaza", "chicham"], map: null }),
-  P("chicham", "Chicham", "village", ["spiti"], "Spiti", "A village across a high bridge over a deep gorge near Kibber.", "The bridge viewpoint.", { near: ["kibber"], map: null }),
-  P("langza", "Langza", "village", ["spiti"], "Spiti", "A high village known for fossils and a large Buddha statue facing the valley.", "Fossils, mountain scenery and village life.", { near: ["kaza", "hikkim"], map: null }),
-  P("hikkim", "Hikkim", "village", ["spiti"], "Spiti", "A small village with one of the world's highest post offices.", "Send a postcard from it.", { near: ["langza", "komik"], map: null }),
+  P("kibber", "Kibber", "village", ["spiti"], "Spiti", "A high village above Kaza, a base for wildlife-oriented excursions.", "High-altitude village life.", { near: ["kaza", "chicham"] }),
+  P("chicham", "Chicham", "village", ["spiti"], "Spiti", "A village across a high bridge over a deep gorge near Kibber.", "The bridge viewpoint.", { near: ["kibber"] }),
+  P("langza", "Langza", "village", ["spiti"], "Spiti", "A high village known for fossils and a large Buddha statue facing the valley.", "Fossils, mountain scenery and village life.", { near: ["kaza", "hikkim"] }),
+  P("hikkim", "Hikkim", "village", ["spiti"], "Spiti", "A small village with one of the world's highest post offices.", "Send a postcard from it.", { near: ["langza", "komik"] }),
   P("komik", "Komic", "village", ["spiti"], "Spiti", "A high-altitude village and monastery near Langza and Hikkim.", "The surrounding high landscapes.", { aka: "Komik", near: ["hikkim"] }),
-  P("mudh", "Pin Valley / Mudh", "village", ["spiti"], "Pin Valley", "The Pin Valley and its last village, Mudh.", "Valley exploration and village stays.", { near: ["dhankar"], map: null }),
-  P("losar", "Losar", "village", ["spiti"], "Spiti", "The last village on the Spiti side before Kunzum Pass.", "An important stop towards the pass.", { near: ["kaza", "kunzum-la"], map: null }),
-  P("batal", "Batal", "landmark", ["spiti"], "Lahaul", "A remote road junction and stop on the Kunzum approach, with the turning for Chandra Taal.", "A riders' halt between Kunzum and Lahaul.", { near: ["kunzum-la", "chandratal"], map: null }),
+  P("mudh", "Pin Valley / Mudh", "village", ["spiti"], "Pin Valley", "The Pin Valley and its last village, Mudh.", "Valley exploration and village stays.", { near: ["dhankar"] }),
+  P("losar", "Losar", "village", ["spiti"], "Spiti", "The last village on the Spiti side before Kunzum Pass.", "An important stop towards the pass.", { near: ["kaza", "kunzum-la"] }),
+  P("batal", "Batal", "landmark", ["spiti"], "Lahaul", "A remote road junction and stop on the Kunzum approach, with the turning for Chandra Taal.", "A riders' halt between Kunzum and Lahaul.", { near: ["kunzum-la", "chandratal"] }),
   P("chandratal", "Chandra Taal", "lake", ["spiti"], "Lahaul", "A crescent-shaped high-altitude lake below Kunzum Pass.", "One of the most beautiful lakes in the Himalaya.", { aka: "Chandratal", notes: "Access and camping conditions vary; use designated sites.", near: ["batal"] }),
   P("atal-tunnel", "Atal Tunnel", "landmark", ["spiti", "zanskar", "changthang"], "Manali–Lahaul", "A road tunnel of about 9 km under the Rohtang ridge, opened in 2020.", "It links Manali and Lahaul without crossing Rohtang Pass.", { notes: "Weather can be completely different at the two ends.", near: ["manali", "darcha"] }),
   P("manali", "Manali", "town", ["spiti", "zanskar", "changthang"], "Kullu valley", "A major transport, accommodation, repair and supply centre at the head of the Kullu valley.", "Get the motorcycle serviced before the high roads.", { near: ["atal-tunnel", "mandi"] }),
@@ -137,6 +137,22 @@ export const PLACES: PlaceRecord[] = [
   P("mandi", "Mandi", "town", ["zanskar"], "Beas valley", "A temple town on the Beas.", "A halt between the plains and the Kullu valley.", { near: ["manali", "chandigarh"] }),
   P("chandigarh", "Chandigarh", "town", ["zanskar", "spiti"], "Plains", "A starting point with rail and air connections for the Himachal approaches.", "Collect the motorcycle and last supplies here.", { near: ["solan", "mandi"] }),
   P("solan", "Solan", "town", ["spiti"], "Shimla hills", "A hill town between Chandigarh and Shimla.", "A quick stop on the way up.", { near: ["chandigarh", "shimla"] }),
+  // ------------------------------------------------------------ more stops on the circuits (positions approximate)
+  P("thiksey", "Thiksey", "village", ["nubra", "changthang"], "Indus valley", "A village below Thiksey Monastery, on the road east of Leh.", "", { near: ["shey", "karu"] }),
+  P("shey", "Shey", "village", ["nubra", "changthang"], "Indus valley", "The old summer capital of Ladakh, with Shey Palace above the Indus.", "", { near: ["leh", "thiksey"] }),
+  P("alchi", "Alchi", "village", ["zanskar"], "Srinagar–Leh road", "A village a short way off the Srinagar–Leh road, known for the 11th-century murals of the Alchi Choskor.", "", { near: ["khalsi", "leh"] }),
+  P("khalsi", "Khalsi", "village", ["zanskar"], "Srinagar–Leh road", "A village where the Srinagar–Leh road meets the Indus below Lamayuru.", "", { near: ["lamayuru", "alchi"] }),
+  P("mulbekh", "Mulbekh", "village", ["zanskar"], "Srinagar–Leh road", "A village known for its rock-carved Maitreya, on the road between Kargil and Namika La.", "", { near: ["kargil", "namika-la"] }),
+  P("upshi", "Upshi", "village", ["changthang"], "Indus valley", "Where the Manali–Leh road meets the Indus.", "", { near: ["karu", "rumtse"] }),
+  P("rumtse", "Rumtse", "village", ["changthang"], "Manali–Leh road", "The first village on the Leh side after Taglang La.", "", { near: ["upshi", "taglang-la"] }),
+  P("pang", "Pang", "landmark", ["changthang"], "Manali–Leh road", "A seasonal camp stop on the Manali–Leh road below the More plains.", "", { near: ["lachalung-la", "taglang-la"] }),
+  P("sarchu", "Sarchu", "landmark", ["changthang"], "Manali–Leh road", "A seasonal camp area on the Manali–Leh road near the Himachal–Ladakh border.", "", { near: ["baralacha-la", "nakee-la"] }),
+  P("keylong", "Keylong", "town", ["zanskar", "changthang"], "Lahaul", "The headquarters of Lahaul, on the Bhaga above Tandi.", "", { near: ["tandi", "jispa"] }),
+  P("jispa", "Jispa", "village", ["zanskar", "changthang"], "Lahaul", "A riverside stop on the Bhaga between Keylong and Darcha.", "", { near: ["keylong", "darcha"] }),
+  P("sissu", "Sissu", "village", ["zanskar", "changthang"], "Lahaul", "A village in the Chandra valley just north of the Atal Tunnel.", "", { near: ["atal-tunnel", "tandi"] }),
+  P("tandi", "Tandi", "village", ["zanskar", "changthang"], "Lahaul", "Where the Chandra and Bhaga meet below Keylong.", "", { near: ["sissu", "keylong"] }),
+  P("rampur", "Rampur", "town", ["spiti"], "Sutlej valley", "A Sutlej town on the road from Shimla into Kinnaur.", "", { near: ["narkanda", "sarahan"] }),
+  P("ki-monastery", "Key Monastery", "landmark", ["spiti"], "Spiti", "Spiti's largest monastery, on a hill above the road from Kaza to Kibber.", "", { near: ["kaza", "kibber"] }),
 ];
 
 /** Passes are records too; their official elevations stay null until verified. */
@@ -158,11 +174,30 @@ export const PASSES: PlaceRecord[] = [
   pass("fotu-la", "Fotu La", ["zanskar"], "Srinagar–Leh road", "The highest pass on the Srinagar–Leh highway, between Lamayuru and Kargil.", ["lamayuru", "kargil"]),
   pass("pensi-la", "Pensi La", ["zanskar"], "Zanskar", "The high pass connecting the Suru and Zanskar regions, overlooking the Drang-Drung glacier.", ["rangdum", "padum"], { notes: "The descent towards Padum is rough." }),
   pass("shinku-la", "Shinku La", ["zanskar"], "Zanskar–Lahaul", "The pass between Lahaul and Zanskar, crossed by the newer road from Darcha.", ["darcha", "padum"], { aka: "Sinchu La", notes: "Snow can linger into summer." }),
-  pass("kunzum-la", "Kunzum Pass", ["spiti"], "Spiti–Lahaul", "The seasonal high-altitude connection between Spiti and Lahaul.", ["losar", "batal"], { aka: "Kunzum La", map: null, notes: "Seasonal: check whether the pass is open before planning the Kaza–Manali connection." }),
+  pass("namika-la", "Namika La", ["zanskar"], "Srinagar–Leh road", "A pass on the Srinagar–Leh road between Mulbekh and Fotu La.", ["mulbekh", "fotu-la"]),
+  pass("tsaga-la", "Tsaga La", ["changthang"], "Chushul–Loma road", "A pass on the road between Chushul and the upper Indus near Loma, along the eastern edge of Ladakh.", ["chushul", "nyoma"], { access: PERMIT }),
+  pass("hamta-pass", "Hamta Pass", ["spiti"], "Kullu–Lahaul", "A trekking pass between the Kullu valley and the Chandra valley in Lahaul. Walked, not ridden.", ["manali", "chandratal"], { notes: "A trek, not a road: there is no riding route over it." }),
+  pass("kunzum-la", "Kunzum Pass", ["spiti"], "Spiti–Lahaul", "The seasonal high-altitude connection between Spiti and Lahaul.", ["losar", "batal"], { aka: "Kunzum La", notes: "Seasonal: check whether the pass is open before planning the Kaza–Manali connection." }),
+];
+
+/** Summaries only: heights shown are the terrain model's reading until official figures are verified. */
+const peak = (id: string, name: string, circuits: CircuitId[], region: string, summary: string, near: string[]) =>
+  P(id, name, "peak", circuits, region, summary, "", { near });
+
+export const PEAKS: PlaceRecord[] = [
+  peak("nun", "Nun", ["zanskar"], "Nun Kun massif", "The highest summit of the Nun Kun massif, which towers over the Suru valley road towards Rangdum.", ["kun", "panikhar"]),
+  peak("kun", "Kun", ["zanskar"], "Nun Kun massif", "Nun's twin across the snow plateau of the Nun Kun massif.", ["nun", "parkachik"]),
+  peak("stok-kangri", "Stok Kangri", ["nubra", "changthang"], "Stok range", "A popular trekking summit across the Indus from Leh, the white peak on Leh's southern skyline.", ["leh", "shey"]),
+  peak("kang-yatse", "Kang Yatse", ["changthang"], "Markha valley", "A summit above the Markha valley in Hemis National Park.", ["hemis"]),
+  peak("saser-kangri", "Saser Kangri", ["nubra"], "Saser Muztagh", "The highest summit of the Saser Muztagh range, east of the Nubra valley.", ["sumur", "panamik"]),
+  peak("mulkila", "Mulkila", ["zanskar", "changthang"], "Lahaul", "A high summit of Lahaul above the Bhaga valley, seen on the road between Keylong and Darcha.", ["keylong", "darcha"]),
+  peak("deo-tibba", "Deo Tibba", ["spiti"], "Pir Panjal", "A snow summit of the Pir Panjal above the Kullu valley.", ["manali", "hamta-pass"]),
+  peak("kinnaur-kailash", "Kinnaur Kailash range", ["spiti"], "Kinnaur", "The sacred range that faces Kalpa across the Sutlej.", ["kalpa", "reckong-peo"]),
+  peak("reo-purgyil", "Reo Purgyil", ["spiti"], "Kinnaur–Spiti", "The highest peak in Himachal Pradesh, rising above Nako.", ["nako"]),
 ];
 
 // merge published-source facts into the records
-for (const r of [...PLACES, ...PASSES]) {
+for (const r of [...PLACES, ...PASSES, ...PEAKS]) {
   const f = FACTS[r.id];
   if (!f) continue;
   const { sources, ...fields } = f;
@@ -170,10 +205,10 @@ for (const r of [...PLACES, ...PASSES]) {
   r.sources = sources; r.status = "sourced"; r.last_verified = CHECKED_ON;
 }
 
-export const ALL_PLACES = [...PLACES, ...PASSES];
+export const ALL_PLACES = [...PLACES, ...PASSES, ...PEAKS];
 export const BY_ID: Record<string, PlaceRecord> = Object.fromEntries(ALL_PLACES.map((p) => [p.id, p]));
 
-export const TYPE_LABEL: Record<PlaceType, string> = { village: "Village", town: "Town", pass: "Pass", lake: "Lake", landmark: "Landmark" };
+export const TYPE_LABEL: Record<PlaceType, string> = { village: "Village", town: "Town", pass: "Pass", peak: "Peak", lake: "Lake", landmark: "Landmark" };
 export const PRACTICAL_LABEL: Record<keyof Practical, string> = {
   fuel: "Fuel", food: "Food", stay: "Stay", network: "Network", medical: "Medical help", bestTime: "Best time", riderNotes: "Rider notes",
 };

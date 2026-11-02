@@ -59,6 +59,24 @@
 /* while a circuit is highlighted, other places step back without going unreadable */
 .locations.has-active .loc:not(.on-active):not(.selected) { opacity: .45; }
 .loc.off:not(.selected) { opacity: .6; }
+/* icons inside the name tags take the tag's text colour */
+.loc .label .map-icon { fill: none; stroke: var(--ink); stroke-width: 2.1; stroke-linecap: round; stroke-linejoin: round; transition: stroke .18s ease; pointer-events: none; }
+.loc.pass .label .map-icon, .loc.accent .label .map-icon { stroke: #ffffff; }
+.loc.selected .label .map-icon { stroke: var(--town); }
+.loc.selected.pass .label .map-icon { stroke: var(--ink); }
+.loc.selected.lake .label .map-icon { stroke: var(--lake); }
+.loc.selected.accent .label .map-icon { stroke: #ff8a84; }
+/* peaks: white tags, a triangle-ish dot */
+.loc.peak .label rect { fill: #ffffff; stroke: rgba(0,0,0,.18); }
+.loc.peak .dot { fill: var(--ink); stroke: #fff; }
+.loc.selected.peak .label rect { fill: var(--ink); }
+.loc.selected.peak .label text { fill: #fff; }
+.loc.selected.peak .label .map-icon { stroke: #fff; }
+/* places revealed by zooming fade in */
+.loc { animation: loc-in .25s ease both; }
+@keyframes loc-in { from { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .loc { animation: none; } }
+
 /* state and union-territory lines and names */
 .boundary.state { stroke: #232c40; stroke-width: 1.4px; opacity: .9; }
 .boundary.state.casing { stroke: #3b5b9a; stroke-width: 7px; opacity: .16; }
@@ -72,7 +90,22 @@
 .map-controls { position: absolute; top: max(14px, env(safe-area-inset-top, 0px)); right: 14px; display: flex; flex-direction: column; gap: 6px; }
 .map-controls button { width: 36px; height: 36px; border: 1px solid var(--rule); background: #ffffff; border-radius: 8px; font-size: 18px; line-height: 1; cursor: pointer; color: var(--ink);
   box-shadow: 0 1px 2px rgba(0,0,0,.06); }
-.map-controls button.reset { font-size: 11px; font-family: var(--display); font-weight: 600; letter-spacing: .04em; text-transform: uppercase; }
+.map-controls button.reset, .map-controls button.sat { display: grid; place-items: center; padding: 0; }
+.map-controls button.reset svg { transition: transform .45s cubic-bezier(.2,.8,.2,1); }
+.map-controls button.reset:hover svg { transform: rotate(-180deg); }
+.map-controls button.sat.on { background: var(--ink); color: #fff; border-color: var(--ink); }
+/* compass */
+.compass { pointer-events: none; }
+.compass-face { fill: rgba(255,255,255,.94); stroke: rgba(0,0,0,.1); filter: drop-shadow(0 1px 2px rgba(0,0,0,.12)); }
+.compass .needle-n { fill: var(--accent); }
+.compass .needle-s { fill: #9aa0a8; }
+.compass text { font-family: var(--display); font-size: 8.5px; font-weight: 600; text-anchor: middle; dominant-baseline: middle; fill: var(--grey); }
+.compass text.n { fill: var(--accent); font-size: 9.5px; }
+/* on satellite imagery, lines and boundaries need more contrast */
+.on-satellite .road { opacity: .35; }
+.on-satellite .boundary.state { stroke: #ffffff; opacity: .9; }
+.on-satellite .boundary.state.casing { stroke: #000; opacity: .35; }
+.sat-tiles image { image-rendering: auto; }
 .map-controls button:hover { border-color: var(--road); }
 .scale-bar { position: absolute; left: 14px; bottom: 30px; display: flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: 11px; color: var(--ink);
   background: rgba(255,255,255,.82); padding: 5px 8px; border-radius: 6px; pointer-events: none; }

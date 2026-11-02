@@ -2,6 +2,15 @@ import { useMemo } from "react";
 import type * as d3 from "d3";
 import type { MapLocation, RegionData } from "./data/types";
 import { circuitsAt, mapLocations } from "./data/locations";
+import { ALL_PLACES } from "../content/places";
+import { MapIcon, type IconKind } from "../components/icons";
+
+/** the guide's type of each place decides its icon; map-only places fall back on their map kind */
+const TYPE_OF: Record<string, IconKind> = Object.fromEntries(ALL_PLACES.filter((p) => p.mapId).map((p) => [p.mapId!, p.type]));
+export const iconOf = (l: MapLocation): IconKind =>
+  TYPE_OF[l.id] ?? ({ town: "village", pass: "pass", peak: "peak", lake: "lake", poi: "landmark", via: "landmark" } as const)[l.kind];
+/** zoom at which each tier of places appears */
+const TIER_ZOOM = [0, 1, 2.2, 4];
 
 interface Props {
   region: RegionData;
@@ -16,7 +25,7 @@ interface Props {
   kinds?: Set<string>;
 }
 
-const CHAR_W = 6.5, LABEL_H = 20;
+const CHAR_W = 6.5, LABEL_H = 20, ICON = 12, ICON_GAP = 15;
 
 /**
  * Markers and labels live in screen space so they keep one size at every zoom.
@@ -27,7 +36,7 @@ export function LocationMarkers({ region, project, transform, size, selected, ac
     l, xy: project([l.lon!, l.lat!])!, on: circuitsAt(region, l.id).map((c) => c.id),
   })), [region, project, kinds, selected]);
 
-  const items = locs.map(({ l, xy, on }) => {
+  const items = locs.filter(({ l }) => l.id === selected || transform.k >= TIER_ZOOM[l.tier ?? 1]).map(({ l, xy, on }) => {
     const [x, y] = transform.apply(xy);
     const onVisible = on.some((id) => visible.has(id));
     const onActive = activeCircuit ? on.includes(activeCircuit) : false;
@@ -38,10 +47,10 @@ export function LocationMarkers({ region, project, transform, size, selected, ac
 
   // keep labels clear of the scale bar (bottom left) and the zoom buttons (top right)
   // keep labels clear of the search box (top left) too
-  const placed: [number, number, number, number][] = [[0, size.h - 62, 190, size.h], [size.w - 64, 0, size.w, 150], [0, 0, Math.min(430, size.w - 70), 60], [0, 60, Math.min(480, size.w - 64), 104]];
+  const placed: [number, number, number, number][] = [[0, size.h - 62, 190, size.h], [size.w - 64, 0, size.w, 290], [0, 0, Math.min(430, size.w - 70), 60], [0, 60, Math.min(480, size.w - 64), 104]];
   const shown = new Set<string>();
   for (const i of [...items].sort((a, b) => b.priority - a.priority)) {
-    const w = i.l.name.length * CHAR_W + 20;
+    const w = i.l.name.length * CHAR_W + 20 + ICON_GAP;
     // try right, then left, then above
     for (const [dx, dy] of [[8, -LABEL_H / 2], [-8 - w, -LABEL_H / 2], [-w / 2, -LABEL_H - 8], [-w / 2, 8]]) {
       const box: [number, number, number, number] = [i.x + dx, i.y + dy, i.x + dx + w, i.y + dy + LABEL_H];
@@ -66,7 +75,7 @@ export function LocationMarkers({ region, project, transform, size, selected, ac
         const box = (i as typeof i & { box?: number[] }).box;
         const sel = i.l.id === selected;
         return (
-          <g key={i.l.id} className={`loc ${i.l.kind}` + (i.l.accent ? " accent" : "") + (sel ? " selected" : "") +
+          <g key={i.l.id} className={`loc ${i.l.kind} t-${iconOf(i.l)}` + (i.l.accent ? " accent" : "") + (sel ? " selected" : "") +
             (i.onActive ? " on-active" : "") + (i.onVisible ? "" : " off")}
             role="button" tabIndex={0} aria-label={`${i.l.name}, ${kindWord(i.l)}`} aria-pressed={sel}
             onClick={(e) => { e.stopPropagation(); onSelect(i.l.id); }}
@@ -77,7 +86,8 @@ export function LocationMarkers({ region, project, transform, size, selected, ac
             {box && (
               <g className="label">
                 <rect x={box[0]} y={box[1]} width={box[2]} height={LABEL_H} rx={LABEL_H / 2} />
-                <text x={box[0] + box[2] / 2} y={box[1] + LABEL_H / 2 + 0.5}>{i.l.name}</text>
+                <MapIcon kind={iconOf(i.l)} x={box[0] + 7} y={box[1] + (LABEL_H - ICON) / 2} size={ICON} />
+                <text x={box[0] + ICON_GAP + (box[2] - ICON_GAP) / 2} y={box[1] + LABEL_H / 2 + 0.5}>{i.l.name}</text>
               </g>
             )}
             <circle className="target" cx={i.x} cy={i.y} r={12} />
@@ -88,4 +98,4 @@ export function LocationMarkers({ region, project, transform, size, selected, ac
   );
 }
 
-const kindWord = (l: MapLocation) => ({ town: "town", pass: "pass", lake: "lake", poi: "landmark", via: "point" })[l.kind];
+const kindWord = (l: MapLocation) => ({ town: "town", pass: "pass", peak: "peak", lake: "lake", poi: "landmark", via: "point" })[l.kind];

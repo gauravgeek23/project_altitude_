@@ -3,6 +3,8 @@ import { MapCanvas, type MapHandle } from "../map/MapCanvas";
 import { MapControls } from "../map/MapControls";
 import { DEFAULT_REGION, REGIONS } from "../map/data/regions";
 import { ALL_PLACES, BY_ID, CIRCUIT_META, CIRCUIT_ORDER, TYPE_LABEL } from "../content/places";
+import { PlaceIcon } from "./icons";
+import { PlacePhoto } from "./PlacePhoto";
 import type { CircuitId } from "../content/types";
 import "../map/map.css";
 
@@ -17,9 +19,10 @@ interface Props {
 
 const region = REGIONS[DEFAULT_REGION];
 const terrain = Object.fromEntries(region.data.locations.filter((l) => l.elev != null).map((l) => [l.id, l.elev as number]));
-const searchable = ALL_PLACES.filter((p) => p.mapId);
+const placed = new Set(region.data.locations.filter((l) => l.lon != null).map((l) => l.id));
+const searchable = ALL_PLACES.filter((p) => p.mapId && placed.has(p.mapId));
 const CATEGORIES: { id: string; label: string }[] = [
-  { id: "town", label: "Villages & towns" }, { id: "pass", label: "Passes" }, { id: "lake", label: "Lakes" }, { id: "poi", label: "Landmarks" },
+  { id: "town", label: "Villages & towns" }, { id: "pass", label: "Passes" }, { id: "peak", label: "Peaks" }, { id: "lake", label: "Lakes" }, { id: "poi", label: "Landmarks" },
 ];
 const fmt = (n: number) => n.toLocaleString("en-IN");
 const ALL_CIRCUITS = new Set(region.data.circuits.map((c) => c.id));
@@ -38,6 +41,7 @@ export function MapPanel({ selected, circuit, onCircuit, onSelect, onOpenPlace, 
   const [kinds, setKinds] = useState<Set<string>>(() => new Set(CATEGORIES.map((c) => c.id)));
   const [q, setQ] = useState("");
   const [panel, setPanel] = useState(false);
+  const [satellite, setSatellite] = useState(false);
 
   // zoom to a place picked anywhere in the guide
   useEffect(() => {
@@ -77,7 +81,7 @@ export function MapPanel({ selected, circuit, onCircuit, onSelect, onOpenPlace, 
       <MapCanvas ref={map} region={region} visible={visible} activeCircuit={circuit ?? hover} selectedLocation={selected}
         showClaims={false} onHoverCircuit={setHover} onSelectCircuit={(id) => { if (id !== circuit) pick(id as CircuitId); }} kinds={kinds}
         onSelectLocation={onSelect} onScale={setKmPerPx}
-        onBackground={() => { if (circuit) pick(null); }} />
+        onBackground={() => { if (circuit) pick(null); }} basemap={satellite ? "satellite" : "terrain"} />
 
       <div className="circuit-filter" role="toolbar" aria-label="Show circuits" onPointerDown={(e) => e.stopPropagation()}>
         <button type="button" className={"cf" + (!circuit ? " on" : "")} aria-pressed={!circuit} onClick={() => pick(null)}>All</button>
@@ -101,7 +105,8 @@ export function MapPanel({ selected, circuit, onCircuit, onSelect, onOpenPlace, 
           <ul className="search-results" role="listbox" aria-label="Places">
             {results.map((p) => (
               <li key={p.id}><button type="button" onClick={() => { onSelect(p.mapId); setQ(""); }}>
-                <span>{p.name}</span><small>{TYPE_LABEL[p.type]} · {p.region}</small>
+                <span className={`type-icon ${p.type}`}><PlaceIcon kind={p.type} size={14} /></span>
+                <span className="sr-name">{p.name}<small>{TYPE_LABEL[p.type]} · {p.region}</small></span>
               </button></li>
             ))}
           </ul>
@@ -118,16 +123,17 @@ export function MapPanel({ selected, circuit, onCircuit, onSelect, onOpenPlace, 
         )}
       </div>
 
-      <MapControls kmPerPx={kmPerPx} onZoomIn={() => map.current?.zoomIn()} onZoomOut={() => map.current?.zoomOut()}
+      <MapControls kmPerPx={kmPerPx} satellite={satellite} onSatellite={() => setSatellite(!satellite)} onZoomIn={() => map.current?.zoomIn()} onZoomOut={() => map.current?.zoomOut()}
         onReset={() => { map.current?.reset(); onSelect(null); onCircuit(null); }} />
       <button type="button" className="sos" onClick={onEmergency} aria-label="Emergency information">SOS</button>
 
       {sel && (
         <div className="map-card docked" role="dialog" aria-label={sel.name}>
           <div className="map-card-top">
-            <p className="map-card-kind">{TYPE_LABEL[sel.type]} · {sel.region}</p>
+            <p className="map-card-kind"><span className={`type-icon ${sel.type}`}><PlaceIcon kind={sel.type} size={13} /></span>{TYPE_LABEL[sel.type]} · {sel.region}</p>
             <button type="button" className="close" onClick={() => onSelect(null)} aria-label="Close">✕</button>
           </div>
+          <PlacePhoto id={sel.id} alt={sel.name} className="place-photo map-photo" />
           <p className="map-card-name">{sel.name}{sel.aka && <small> {sel.aka}</small>}</p>
           <p className="map-card-meta">
             {elev != null ? <>≈ {fmt(elev)} m · {fmt(Math.round(elev * 3.28084))} ft <small>terrain model</small></> : "Elevation not verified"}
@@ -139,7 +145,7 @@ export function MapPanel({ selected, circuit, onCircuit, onSelect, onOpenPlace, 
         </div>
       )}
       <p className="route-note">Routes are drawn for planning, not live road status.</p>
-      <p className="attribution">Terrain: AWS Terrain Tiles · Roads © OpenStreetMap contributors · Boundaries: Natural Earth</p>
+      <p className="attribution">{satellite ? "Imagery: Esri, Maxar, Earthstar Geographics · " : "Terrain: AWS Terrain Tiles · "}Roads © OpenStreetMap contributors · Boundaries: Natural Earth</p>
     </div>
   );
 }

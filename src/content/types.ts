@@ -10,7 +10,7 @@ export type CircuitId = "zanskar" | "nubra" | "changthang" | "spiti";
 /** verified: field-checked · sourced: found in published sources, not field-checked · editorial: our own description, not a factual claim · needs_verification: not checked yet */
 export type Verification = "verified" | "sourced" | "editorial" | "needs_verification";
 
-export type PlaceType = "village" | "town" | "pass" | "lake" | "landmark";
+export type PlaceType = "village" | "town" | "pass" | "peak" | "lake" | "landmark";
 
 export interface Practical {
   fuel: string | null;

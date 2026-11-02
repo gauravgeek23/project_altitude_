@@ -155,7 +155,7 @@ fieldset.card legend .meta { margin: 0; }
 @media (prefers-reduced-motion: reduce) { .pin.on::after { animation: none; } }
 .map-card { position: absolute; transform: translate(-50%, -100%); background: #fff; border-radius: 10px; padding: 10px 14px; box-shadow: 0 6px 24px rgba(0,0,0,.14), 0 0 0 1px rgba(0,0,0,.05); width: 240px; line-height: 20px; z-index: 3; cursor: default; }
 .map-card[data-above] { transform: translate(-50%, 0); }
-.map-card-kind { margin: 0; font-size: 12px; color: var(--grey); text-transform: capitalize; }
+.map-card-kind { margin: 0; font-size: 12px; color: var(--grey); text-transform: capitalize; display: flex; align-items: center; gap: 6px; }
 .map-card-name { margin: 2px 0 6px; font-size: 16px; font-weight: 500; }
 .map-card .text-btn { font-size: 14px; }
 .map-tools { position: absolute; right: max(16px, env(safe-area-inset-right, 0px)); top: 16px; display: flex; flex-direction: column; gap: 6px; z-index: 2; }
@@ -287,9 +287,9 @@ fieldset.card legend .meta { margin: 0; }
 .filter-btn { height: 38px; padding: 0 12px; border-radius: 10px; border: 1px solid rgba(0,0,0,.08); background: rgba(255,255,255,.96); font-size: 13px; font-weight: 500; cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,.12); }
 .filter-btn.on { background: var(--ink); color: #fff; }
 .search-results { list-style: none; margin: 0; padding: 4px; background: #fff; border-radius: 10px; box-shadow: 0 8px 24px rgba(0,0,0,.14), 0 0 0 1px rgba(0,0,0,.05); }
-.search-results button { display: grid; width: 100%; text-align: left; border: 0; background: none; padding: 7px 10px; border-radius: 7px; cursor: pointer; line-height: 20px; }
+.search-results button { display: grid; grid-template-columns: 26px 1fr; align-items: center; gap: 8px; width: 100%; text-align: left; border: 0; background: none; padding: 7px 10px; border-radius: 7px; cursor: pointer; line-height: 20px; }
 .search-results button:hover, .search-results button:focus-visible { background: var(--soft); }
-.search-results small { color: var(--grey); font-size: 12px; }
+.search-results small { display: block; color: var(--grey); font-size: 12px; }
 .layers { background: #fff; border-radius: 12px; padding: 10px 12px 12px; box-shadow: 0 8px 24px rgba(0,0,0,.14), 0 0 0 1px rgba(0,0,0,.05); }
 .layers-title { margin: 6px 0 6px; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--grey); line-height: 16px; }
 .layers .chips { gap: 5px; }
@@ -336,3 +336,30 @@ fieldset.card legend .meta { margin: 0; }
 .cf.on .dot { background: #fff; box-shadow: none; }
 @media (max-width: 899px) { .circuit-filter { top: 60px; } }
 @media (prefers-reduced-motion: reduce) { .cf, .cf .dot { transition: none; } }
+
+/* ---------------- icon language: one glyph per kind of place, in a tinted tile */
+.type-icon { display: inline-grid; place-items: center; width: 24px; height: 24px; border-radius: 7px; flex: none; color: var(--ink); background: #fff3c4; }
+.type-icon.village, .type-icon.town { background: #fff1b8; color: #6b4f00; }
+.type-icon.pass { background: #1f232b; color: #fff; }
+.type-icon.peak { background: #eef1f5; color: #2b3445; box-shadow: inset 0 0 0 1px #d9dee6; }
+.type-icon.lake { background: #d8f4fb; color: #0b6f86; }
+.type-icon.landmark { background: #f6e7dc; color: #8a4a1d; }
+.type-icon.food { background: #fde3e1; color: #b3261e; }
+.map-card-kind .type-icon { width: 20px; height: 20px; border-radius: 6px; }
+.card-marks { display: inline-flex; align-items: center; gap: 8px; }
+.card-title .type-icon { margin-right: 8px; vertical-align: -6px; }
+.place-icon { display: block; }
+
+/* ---------------- preview photos */
+.place-photo { margin: 0 0 14px; border-radius: 10px; overflow: hidden; background: var(--soft); position: relative; aspect-ratio: 16 / 9; }
+.place-photo img { display: block; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity .3s ease; }
+.place-photo.loaded img { opacity: 1; }
+.place-photo figcaption { position: absolute; left: 0; right: 0; bottom: 0; padding: 14px 10px 5px; font-size: 10.5px; line-height: 14px; color: #fff;
+  background: linear-gradient(transparent, rgba(0,0,0,.55)); }
+.place-photo figcaption a { color: #fff; }
+.map-photo { margin: 8px 0 8px; aspect-ratio: 16 / 8; }
+.dishes { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr)); gap: 12px; margin-top: 18px; }
+.card.dish { padding: 12px; }
+.card.dish .card-title { display: flex; align-items: center; }
+.card.dish p { margin: 4px 0 0; line-height: 22px; }
+.dish-photo { margin: 0 0 10px; aspect-ratio: 4 / 3; }

@@ -1,6 +1,6 @@
 export type Coord = [number, number]; // [lon, lat]
 
-export type LocationKind = "town" | "pass" | "lake" | "poi" | "via";
+export type LocationKind = "town" | "pass" | "peak" | "lake" | "poi" | "via";
 
 export interface MapLocation {
   id: string;
@@ -18,6 +18,10 @@ export interface MapLocation {
   /** where the coordinate came from */
   source: string | null;
   missing?: string;
+  /** 1 (default): shown at every zoom; 2 and 3: revealed as you zoom in */
+  tier?: number;
+  /** circuits whose line passes within 3 km, for places that are not stops */
+  near?: string[];
 }
 
 export type SegmentStatus = "ok" | "missing-location" | "missing-road";

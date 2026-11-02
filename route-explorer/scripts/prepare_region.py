@@ -407,6 +407,38 @@ def terrain_lake(name, lake_pts, near_ll):
     return (l["lon"], l["lat"]), f"Derived: centre of the flat water body nearest Puga (OSM) on the terrain model; identified as {name}, verify"
 
 
+ROADPOS = {}
+
+
+def approx(src):
+    """A position from published descriptions, refined on the data this build has:
+    route -> nearest road point; pass -> highest road point nearby; peak -> summit nearby;
+    lake -> lowest point nearby; none -> as given."""
+    p = (src["lon"], src["lat"]); r = src.get("radius", 0); how = src["snap"]
+    note = "Approximate position from published descriptions"
+    if how == "route":
+        n, d = nearest_node(ROADPOS, p, r)
+        if n is not None: return ROADPOS[n], note + f", moved {d:.1f} km onto the mapped road; verify"
+    elif how == "pass":
+        cand = [q for q in ROADPOS.values() if abs(q[0] - p[0]) < r / 80 and abs(q[1] - p[1]) < r / 100 and hav(p, q) <= r]
+        if cand:
+            q = max(cand, key=lambda c: elev(*c))
+            return q, note + f"; the highest point of the mapped road within {r} km ({round(elev(*q))} m); verify"
+    elif how in ("peak", "lake"):
+        i0, j0 = _pix(p[0] - r / 90, p[1] + r / 110); i1, j1 = _pix(p[0] + r / 90, p[1] - r / 110)
+        sub = M[i0:i1, j0:j1]
+        best = None
+        for (i, j), z in np.ndenumerate(sub):
+            q = _ll(i + i0, j + j0)
+            if hav(p, q) > r: continue
+            key = z if how == "peak" else -z
+            if best is None or key > best[0]: best = (key, q)
+        if best:
+            what = "summit" if how == "peak" else "lowest point"
+            return best[1], note + f"; the {what} of the terrain model within {r} km; verify"
+    return p, note + "; verify"
+
+
 def resolve_locations(lake_pts):
     out = []
     for L in CFG["locations"]:
@@ -419,11 +451,13 @@ def resolve_locations(lake_pts):
             elif ds == "geonames": coord, label = geonames(s["key"], s["admin1"])
             elif ds == "terrain-pass": coord, label = terrain_pass(s)
             elif ds == "terrain-saddle": coord, label = terrain_saddle(s)
+            elif ds == "approx": coord, label = approx(s)
             elif ds == "published": coord, label = (s["lon"], s["lat"]), f"Published position: {s['cite']}"
             elif ds == "terrain-lake":
                 puga, _ = osm_settlement(342114939)
                 coord, label = terrain_lake(L["name"], lake_pts, puga)
         rec = {k: v for k, v in L.items() if k != "source"}
+        if s and s["dataset"] == "approx" and s["snap"] == "route": rec["_snap"] = (s["lon"], s["lat"], s["radius"])
         if coord and inside(coord):
             rec.update({"lon": round(coord[0], 5), "lat": round(coord[1], 5), "elev": round(elev(*coord)), "source": label})
         else:
@@ -573,6 +607,7 @@ def main():
     rivers = build_rivers()
     lines = all_road_lines()
     pos, adj = build_graph(lines)
+    ROADPOS.update(pos)
     locs = resolve_locations(lake_pts)
     warp_info = None
     if CFG.get("reference"):
@@ -583,6 +618,41 @@ def main():
             if l["lon"] is not None and l["elev"] is None: l["elev"] = round(elev(l["lon"], l["lat"]))
     else:
         circuits = route_circuits(locs, pos, adj)
+    # villages on a circuit sit on its drawn line, which is simplified: put them on it
+    def on_line_of(c, p, r):
+        return on_line(p, r, [c])
+
+    def on_line(p, r, cs=None):
+        best = None
+        for c in cs or circuits:
+            for leg in c["legs"]:
+                for sg in leg["segments"]:
+                    pts = sg.get("coords") or []
+                    for a, b in zip(pts, pts[1:]):
+                        if min(a[0], b[0]) - 0.1 > p[0] or max(a[0], b[0]) + 0.1 < p[0] or min(a[1], b[1]) - 0.1 > p[1] or max(a[1], b[1]) + 0.1 < p[1]: continue
+                        k = math.cos(math.radians(p[1]))
+                        ax, ay, bx, by_ = a[0] * k, a[1], b[0] * k, b[1]
+                        dx, dy = bx - ax, by_ - ay
+                        t = 0 if dx == dy == 0 else max(0, min(1, ((p[0] * k - ax) * dx + (p[1] - ay) * dy) / (dx * dx + dy * dy)))
+                        q = (a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t)
+                        d = hav(p, q)
+                        if d <= r and (best is None or d < best[0]): best = (d, q)
+        return best
+    for l in locs:
+        snap = l.pop("_snap", None)
+        if not snap: continue
+        hit = on_line(snap[:2], min(snap[2], 2.5))
+        if hit:
+            l["lon"], l["lat"] = round(hit[1][0], 5), round(hit[1][1], 5)
+            # a village sits on the valley floor; the simplified line may cut across a slope
+            l["elev"] = round(min(elev(l["lon"] + dx / 100, l["lat"] + dy / 110) for dx in (-1, 0, 1) for dy in (-1, 0, 1)))
+            l["source"] = f"Approximate position from published descriptions, placed on the circuit line ({hit[0]:.1f} km); verify"
+    # places that are not stops of a circuit but sit on its line (within 3 km) belong to it too
+    seg_pts = {c["id"]: [p for leg in c["legs"] for sg in leg["segments"] for p in (sg.get("coords") or [])] for c in circuits}
+    for l in locs:
+        if l["lon"] is None or any(l["id"] in leg["waypoints"] for c in circuits for leg in c["legs"]): continue
+        near = [c["id"] for c in circuits if on_line_of(c, (l["lon"], l["lat"]), 3.0)]
+        if near: l["near"] = near
     roads = {"route": [], "trunk": [], "primary": []}
     for pts, cls in lines:
         s = dp(pts, 0.04)

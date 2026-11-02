@@ -36,7 +36,7 @@ export default function App() {
     setTab(id); setDrawer(false); setView("guide");
   };
   const showOnMap = (id: string) => { setSelected(id); if (mobile()) setView("map"); };
-  const openPlace = (id: string) => { setSelected(id); go(BY_ID[id]?.type === "pass" ? "passes" : "villages"); };
+  const openPlace = (id: string) => { setSelected(id); go(BY_ID[id]?.type === "pass" || BY_ID[id]?.type === "peak" ? "passes" : "villages"); };
 
   const Tab = TABS[tab];
   return (

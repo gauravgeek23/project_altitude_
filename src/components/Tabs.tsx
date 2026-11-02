@@ -1,5 +1,7 @@
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
-import { ALL_PLACES, BY_ID, CIRCUIT_META, CIRCUIT_ORDER, PASSES, PLACES, PRACTICAL_LABEL, TYPE_LABEL } from "../content/places";
+import { ALL_PLACES, BY_ID, CIRCUIT_META, CIRCUIT_ORDER, PASSES, PEAKS, PLACES, PRACTICAL_LABEL, TYPE_LABEL } from "../content/places";
+import { PlaceIcon } from "./icons";
+import { PlacePhoto } from "./PlacePhoto";
 import type { CircuitId, PlaceRecord, Practical } from "../content/types";
 import * as G from "../content/guide";
 import { REGIONS, DEFAULT_REGION } from "../map/data/regions";
@@ -15,6 +17,7 @@ export interface TabProps {
 /* ------------------------------------------------------------------ shared helpers */
 const region = REGIONS[DEFAULT_REGION].data;
 const terrain = Object.fromEntries(region.locations.filter((l) => l.elev != null).map((l) => [l.id, l.elev as number]));
+const onMap = new Set(region.locations.filter((l) => l.lon != null).map((l) => l.id));
 const circuitKm = Object.fromEntries(region.circuits.map((c) => [c.id, c.km]));
 const fmt = (n: number) => n.toLocaleString("en-IN");
 const ft = (m: number) => Math.round(m * 3.28084);
@@ -148,22 +151,26 @@ const STATUS = {
   editorial: { kind: "editorial", label: "Editorial" }, needs_verification: { kind: "verify", label: "Needs verification" },
 } as const;
 function PlaceCard({ p, open, onPlace, innerRef }: { p: PlaceRecord; open: boolean; onPlace(id: string): void; innerRef?: (el: HTMLDetailsElement | null) => void }) {
+  const [isOpen, setOpen] = useState(open);
+  useEffect(() => { if (open) setOpen(true); }, [open]);
   return (
-    <details ref={innerRef} className={"card place" + (open ? " selected" : "")} id={`place-${p.id}`} open={open || undefined}>
+    <details ref={innerRef} className={"card place" + (open ? " selected" : "")} id={`place-${p.id}`} open={open || undefined}
+      onToggle={(e) => setOpen((e.currentTarget as HTMLDetailsElement).open)}>
       <summary>
         <span className="card-title">{p.name}{p.aka && <small className="muted"> {p.aka}</small>}</span>
-        <Dots ids={p.circuits} />
+        <span className="card-marks"><span className={`type-icon ${p.type}`} title={TYPE_LABEL[p.type]}><PlaceIcon kind={p.type} size={15} title={TYPE_LABEL[p.type]} /></span><Dots ids={p.circuits} /></span>
         <span className="meta">{TYPE_LABEL[p.type]} · {p.region}</span>
         <span className="summary-text">{p.summary}</span>
         {p.access && <span className="access-flag"><Badge kind="warn">Access</Badge> Restrictions apply</span>}
       </summary>
       <div className="card-body">
+        {isOpen && <PlacePhoto id={p.id} alt={p.name} />}
         {p.why && <p><b>Why stop.</b> {p.why}</p>}
         {p.access && <p className="warn-text"><b>Access.</b> {p.access}</p>}
         <Practicals p={p} />
         {p.neighbours.length > 0 && <p className="near"><b>Nearby stops.</b> {p.neighbours.map((n, i) => <span key={n}>{i > 0 && " · "}<PlaceLink id={n} onPlace={onPlace} /></span>)}</p>}
         <div className="card-foot">
-          {p.mapId ? <button type="button" className="text-btn" onClick={() => onPlace(p.mapId!)}>Show on map →</button> : <span className="muted">Not on the map yet: position to be sourced</span>}
+          {p.mapId && onMap.has(p.mapId) ? <button type="button" className="text-btn" onClick={() => onPlace(p.mapId!)}>Show on map →</button> : <span className="muted">Not on the map yet: position to be sourced</span>}
           <span className="verify-line"><Badge kind={STATUS[p.status].kind}>{STATUS[p.status].label}</Badge> {p.status === "sourced" ? `Checked online ${p.last_verified}` : `Last verified: ${p.last_verified ?? "not yet"}`}</span>
         </div>
         {p.sources.length > 0 && (
@@ -224,11 +231,15 @@ function Villages({ selected, onPlace }: TabProps) {
 function Passes({ selected, onPlace }: TabProps) {
   return (
     <>
-      <Head eyebrow="Passes" title="The passes that define the ride">
+      <Head eyebrow="Passes & peaks" title="The passes that define the ride">
         <p className="lead">High passes are the backbone of Project Altitude. Official elevations are shown only once verified; until then, the card gives the terrain model's reading, in metres and feet, clearly marked.</p>
       </Head>
       <p className="callout"><b>Road status: unknown here.</b> Nothing on this page is live. Check official advisories for the current status of every pass before you ride it.</p>
       <Directory records={PASSES} selected={selected} onPlace={onPlace} label="passes" />
+      <Section title="Peaks">
+        <p className="para muted">The big summits you see from the road. Not riding objectives: they are here so you can name what's on the skyline. Heights are the terrain model's reading; positions are approximate.</p>
+        <Directory records={PEAKS} selected={selected} onPlace={onPlace} label="peaks" />
+      </Section>
     </>
   );
 }
@@ -237,9 +248,19 @@ function Passes({ selected, onPlace }: TabProps) {
 function Food() {
   return (
     <>
-      <Head eyebrow="Food" title={G.FOOD.title} />
+      <Head eyebrow="Eat & drink" title={G.FOOD.title} />
       <Paras items={G.FOOD.body} />
       <Rule>{G.FOOD.rule}</Rule>
+      <Section title="Dishes of the region">
+        <div className="dishes">{G.DISHES.map((d) => (
+          <article key={d.id} className="card dish">
+            <PlacePhoto id={d.id} alt={d.name} className="place-photo dish-photo" />
+            <p className="card-title"><span className="type-icon food"><PlaceIcon kind="food" size={14} /></span>{d.name}</p>
+            <p className="muted">{d.where}</p>
+            <p>{d.body}</p>
+          </article>
+        ))}</div>
+      </Section>
       <Section title="What to look for">
         <div className="cards grid">{G.FOOD.categories.map((c) => <article key={c.name} className="card"><p className="card-title">{c.name}</p><p>{c.body}</p></article>)}</div>
       </Section>
@@ -247,8 +268,8 @@ function Food() {
         <div className="table">{G.FOOD.byCircuit.map((r) => <div key={r.circuit}><dt><Dots ids={[r.circuit]} /> {CIRCUIT_META[r.circuit].name}</dt><dd><b>{r.base}.</b> {r.advice}</dd></div>)}</div>
         <p className="fine">Planning guidelines, not guarantees of food availability.</p>
       </Section>
-      <Section title="Listings">
-        <p className="empty-state">Verified eateries will appear here with their location, dishes, opening hours, "last confirmed open" date and a way to report changes. None are listed yet: Project Altitude doesn't publish places it hasn't confirmed.</p>
+      <Section title="Handpicked places">
+        <p className="empty-state">Restaurants, cafés and dhabas picked from the rides will appear here, with their location, what to order, opening season and when they were last confirmed open. None are listed yet: Project Altitude doesn't publish places it hasn't eaten at.</p>
       </Section>
     </>
   );
@@ -273,42 +294,6 @@ function Stays() {
 }
 
 /* ------------------------------------------------------------------ Emergency */
-const CARD_KEY = "altitude-emergency-card-v1";
-const CARD_FIELDS = [
-  ["name", "Rider name"], ["contact", "Emergency contact (name and number)"], ["reg", "Motorcycle registration"], ["blood", "Blood group (optional)"],
-  ["medical", "Medical information (optional)"], ["circuit", "Current circuit and planned overnight stop"], ["insurance", "Insurance and roadside assistance"],
-] as const;
-function EmergencyCard() {
-  const [card, setCard] = useState<Record<string, string>>(() => store.get(CARD_KEY, {}));
-  const [coords, setCoords] = useState<string>("");
-  useEffect(() => store.set(CARD_KEY, card), [card]);
-  const locate = () => {
-    if (!navigator.geolocation) { setCoords("Location is not available in this browser."); return; }
-    setCoords("Finding your position…");
-    navigator.geolocation.getCurrentPosition(
-      (p) => setCoords(`${p.coords.latitude.toFixed(5)}, ${p.coords.longitude.toFixed(5)} (±${Math.round(p.coords.accuracy)} m)`),
-      () => setCoords("Couldn't get your position. Check location permission, or read coordinates from your phone's maps app."),
-      { enableHighAccuracy: true, timeout: 15000 });
-  };
-  const copy = async () => { try { await navigator.clipboard.writeText(coords); } catch { /* select manually */ } };
-  return (
-    <div className="card form-card">
-      <p className="card-title">Your emergency card</p>
-      <p className="muted">Saved only in this browser on this device. Nothing here is sent anywhere.</p>
-      <div className="form-grid">
-        {CARD_FIELDS.map(([k, label]) => (
-          <label key={k} htmlFor={`ec-${k}`}><span>{label}</span>
-            <input id={`ec-${k}`} value={card[k] ?? ""} onChange={(e) => setCard({ ...card, [k]: e.target.value })} autoComplete="off" />
-          </label>
-        ))}
-      </div>
-      <div className="coords">
-        <button type="button" className="ghost" onClick={locate}>Get my coordinates</button>
-        {coords && <><output>{coords}</output>{/^-?\d/.test(coords) && <button type="button" className="text-btn" onClick={copy}>Copy</button>}</>}
-      </div>
-    </div>
-  );
-}
 function Emergency() {
   return (
     <>
@@ -334,7 +319,6 @@ function Emergency() {
       <Section title="Weather and road emergencies"><ul className="bullets">{G.EMERGENCY.weather.map((s) => <li key={s}>{s}</li>)}</ul>
         <p className="para">Official road-status sources: {G.EMERGENCY.roadStatus.map((r, i) => <span key={r.link}>{i > 0 && " · "}<a href={r.link} target="_blank" rel="noreferrer">{r.name}</a></span>)}</p>
       </Section>
-      <Section title="Emergency card"><EmergencyCard /></Section>
       <p className="callout">{G.EMERGENCY.disclaimer}</p>
     </>
   );

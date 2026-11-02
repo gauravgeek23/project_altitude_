@@ -25,6 +25,47 @@ interface Props {
   onBackground?(): void;
   onScale?(kmPerPx: number): void;
   kinds?: Set<string>;
+  /** terrain: the shaded relief; satellite: Esri World Imagery tiles */
+  basemap?: "terrain" | "satellite";
+}
+
+/** Esri World Imagery (free to display with attribution). Tiles are fetched by the reader's browser. */
+const TILE = (z: number, x: number, y: number) => `https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/${z}/${y}/${x}`;
+
+/** Web Mercator tiles covering the panel at the current zoom, placed in screen space. */
+function SatelliteTiles({ project, t, size }: { project: d3.GeoProjection; t: d3.ZoomTransform; size: { w: number; h: number } }) {
+  // the projection's world is 2*pi*scale px wide; a tile zoom z world is 256 * 2^z px
+  const world = 2 * Math.PI * project.scale() * t.k;
+  const z = Math.max(1, Math.min(17, Math.ceil(Math.log2(world / 256) + 0.3)));
+  const n = 2 ** z;
+  const inv = (sx: number, sy: number) => project.invert!(t.invert([sx, sy]))!;
+  const [w0, n0] = inv(0, 0), [e0, s0] = inv(size.w, size.h);
+  const tx = (lon: number) => Math.floor(((lon + 180) / 360) * n);
+  const ty = (lat: number) => { const r = (lat * Math.PI) / 180; return Math.floor(((1 - Math.log(Math.tan(r) + 1 / Math.cos(r)) / Math.PI) / 2) * n); };
+  const lonOf = (x: number) => (x / n) * 360 - 180;
+  const latOf = (y: number) => (Math.atan(Math.sinh(Math.PI * (1 - (2 * y) / n))) * 180) / Math.PI;
+  const tiles: JSX.Element[] = [];
+  const x0 = Math.max(0, tx(w0)), x1 = Math.min(n - 1, tx(e0)), y0 = Math.max(0, ty(n0)), y1 = Math.min(n - 1, ty(s0));
+  if ((x1 - x0 + 1) * (y1 - y0 + 1) > 120) return null;
+  for (let x = x0; x <= x1; x++) for (let y = y0; y <= y1; y++) {
+    const [ax, ay] = t.apply(project([lonOf(x), latOf(y)])!), [bx, by] = t.apply(project([lonOf(x + 1), latOf(y + 1)])!);
+    // half a pixel of overlap hides seams between tiles
+    tiles.push(<image key={`${z}/${x}/${y}`} href={TILE(z, x, y)} x={ax - 0.25} y={ay - 0.25} width={bx - ax + 0.5} height={by - ay + 0.5} preserveAspectRatio="none" />);
+  }
+  return <g className="sat-tiles">{tiles}</g>;
+}
+
+/** A fixed compass: the map is never rotated, so north is always up. */
+function Compass({ x, y }: { x: number; y: number }) {
+  return (
+    <g className="compass" transform={`translate(${x} ${y})`} aria-label="Compass: north is up" role="img">
+      <circle r={21} className="compass-face" />
+      <path d="M0 -14 L4 0 L0 -2.5 L-4 0 Z" className="needle-n" />
+      <path d="M0 14 L4 0 L0 2.5 L-4 0 Z" className="needle-s" />
+      <text y={-16.5} className="n">N</text><text y={20} className="dir">S</text>
+      <text x={18} y={0.5} className="dir">E</text><text x={-18} y={0.5} className="dir">W</text>
+    </g>
+  );
 }
 
 /** Country names, each set well inside territory that is not in dispute. */
@@ -44,8 +85,8 @@ const reduceMotion = typeof matchMedia !== "undefined" && matchMedia("(prefers-r
 const ms = (t: number) => (reduceMotion ? 0 : t);
 
 /** Static layers: terrain, rivers, roads, boundaries. Re-rendered only on resize. */
-const BaseLayers = memo(function BaseLayers({ region, path, project, showClaims }: {
-  region: Region; path: d3.GeoPath; project: d3.GeoProjection; showClaims: boolean;
+const BaseLayers = memo(function BaseLayers({ region, path, project, showClaims, satellite }: {
+  region: Region; path: d3.GeoPath; project: d3.GeoProjection; showClaims: boolean; satellite: boolean;
 }) {
   const { data } = region;
   const [b0, b1, b2, b3] = data.terrain.bounds;
@@ -62,8 +103,8 @@ const BaseLayers = memo(function BaseLayers({ region, path, project, showClaims 
   }, [path]);
   return (
     <g className="base">
-      <image href={region.terrainUrl} x={tl[0]} y={tl[1]} width={br[0] - tl[0]} height={br[1] - tl[1]} preserveAspectRatio="none" />
-      {rivers.map((d, w) => <path key={w} className={`river w${w}`} d={d} />)}
+      {!satellite && <image href={region.terrainUrl} x={tl[0]} y={tl[1]} width={br[0] - tl[0]} height={br[1] - tl[1]} preserveAspectRatio="none" />}
+      {!satellite && rivers.map((d, w) => <path key={w} className={`river w${w}`} d={d} />)}
       <path className="road primary" d={roads.primary} />
       <path className="road trunk" d={roads.trunk} />
       <path className="road route" d={roads.route} />
@@ -97,7 +138,7 @@ export const MapCanvas = forwardRef<MapHandle, Props>(function MapCanvas(props, 
   // The shaded relief reaches well beyond the dots; if a panel is so wide or tall that it would
   // still show past the relief, the projection is scaled up until the relief covers the panel.
   const project = useMemo(() => {
-    const pts = region.data.locations.filter((l) => l.lon != null && l.lat != null && l.kind !== "via").map((l) => [l.lon!, l.lat!] as [number, number]);
+    const pts = region.data.locations.filter((l) => l.lon != null && l.lat != null && l.kind !== "via" && (l.tier ?? 1) === 1).map((l) => [l.lon!, l.lat!] as [number, number]);
     // room for labels (they sit right of a dot, or flip left when tight) and the scale bar
     const pad = { t: 30, r: Math.min(120, size.w * 0.12), b: 64, l: Math.min(36, size.w * 0.06) };
     const p = d3.geoMercator().fitExtent([[pad.l, pad.t], [Math.max(pad.l + 10, size.w - pad.r), Math.max(pad.t + 10, size.h - pad.b)]], { type: "MultiPoint", coordinates: pts });
@@ -159,10 +200,11 @@ export const MapCanvas = forwardRef<MapHandle, Props>(function MapCanvas(props, 
         aria-label={`Map of ${region.data.name} with riding circuits`}
         onClick={(e) => {
           const el = e.target as Element;
-          if (el === svgRef.current || el.tagName === "image" || el.closest(".base")) { props.onSelectLocation(null); props.onBackground?.(); }
+          if (el === svgRef.current || el.tagName === "image" || el.closest(".base") || el.closest(".sat-tiles")) { props.onSelectLocation(null); props.onBackground?.(); }
         }}>
-        <g transform={t.toString()}>
-          <BaseLayers region={region} path={path} project={project} showClaims={props.showClaims} />
+        {props.basemap === "satellite" && <SatelliteTiles project={project} t={t} size={size} />}
+        <g transform={t.toString()} className={props.basemap === "satellite" ? "on-satellite" : undefined}>
+          <BaseLayers region={region} path={path} project={project} showClaims={props.showClaims} satellite={props.basemap === "satellite"} />
           <RouteLayer circuits={region.data.circuits} path={path} visible={props.visible} active={props.activeCircuit}
             onHover={props.onHoverCircuit} onSelect={props.onSelectCircuit} />
         </g>
@@ -182,6 +224,7 @@ export const MapCanvas = forwardRef<MapHandle, Props>(function MapCanvas(props, 
             return <text key={c.name} x={cx} y={y}>{c.name}</text>;
           })}
         </g>
+        <Compass x={size.w - 32} y={216} />
         <LocationMarkers region={region.data} project={project} transform={t} size={size}
           selected={props.selectedLocation} activeCircuit={props.activeCircuit} visible={props.visible}
           onSelect={props.onSelectLocation} kinds={props.kinds} />
