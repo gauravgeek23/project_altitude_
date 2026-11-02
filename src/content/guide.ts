@@ -245,7 +245,7 @@ export interface CircuitPage {
 }
 export const CIRCUITS: CircuitPage[] = [
   { id: "zanskar", idea: "Follow the Suru Valley towards one of the more remote inhabited regions of the western Himalayas.", base: "Kargil / Padum", window: "5–7 days",
-    sequence: "Kargil → Sankoo → Panikhar → Parkachik → Rangdum → Pensi La → Padum → Zangla → return via the confirmed road route",
+    sequence: "Kargil → Sankoo → Panikhar → Parkachik → Rangdum → Pensi La → Padum → Zangla → back to Leh on the new Zanskar highway via Chilling and Nimmu, or over Shinku La to Darcha",
     stops: ["kargil", "sankoo", "panikhar", "parkachik", "rangdum", "pensi-la", "padum", "zangla"],
     days: [
       { day: "1", plan: "Arrive in Kargil", objective: "Check the motorcycle, arrange supplies, and confirm the road situation" },

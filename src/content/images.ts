@@ -50,10 +50,10 @@ export const WIKI: Record<string, string[]> = {
   "dish-butter-tea": ["Butter tea"], "dish-chhurpi": ["Chhurpi"], "dish-siddu": ["Siddu"], "dish-khambir": ["Khambir"], "dish-apricot": ["Apricot"],
 };
 
-export interface Photo { src: string; credit: string; link: string }
+export interface Photo { src: string; credit: string; link: string; title?: string }
 
 const cache = new Map<string, Promise<Photo | null>>();
-const KEY = "altitude-photo-cache-v1";
+const KEY = "altitude-photo-cache-v2";
 let saved: Record<string, Photo | null> = {};
 try { saved = JSON.parse(localStorage.getItem(KEY) ?? "{}"); } catch { saved = {}; }
 const remember = (id: string, p: Photo | null) => {
@@ -69,7 +69,7 @@ async function fromWikipedia(title: string): Promise<Photo | null> {
   if (!t || j.type === "disambiguation") return null;
   // ask for a wider rendition of the same file
   const src = t.replace(/\/(\d+)px-/, "/960px-");
-  return { src, credit: `Wikipedia: ${j.title}`, link: j.content_urls?.desktop?.page ?? `https://en.wikipedia.org/wiki/${encodeURIComponent(title)}` };
+  return { src, credit: `Wikipedia: ${j.title}`, link: j.content_urls?.desktop?.page ?? `https://en.wikipedia.org/wiki/${encodeURIComponent(title)}`, title: j.title };
 }
 
 /** The photo for a place: your own if set, else the first Wikipedia preview that exists. */
@@ -86,4 +86,31 @@ export function photoFor(id: string): Promise<Photo | null> {
     })());
   }
   return cache.get(id)!;
+}
+
+const galleries = new Map<string, Promise<Photo[]>>();
+
+/** Every photo of the place's Wikipedia article (lead photo first), for the full-screen gallery. */
+export function galleryFor(id: string, lead: Photo): Promise<Photo[]> {
+  if (!lead.title) return Promise.resolve([lead]);
+  if (!galleries.has(id)) {
+    galleries.set(id, (async () => {
+      try {
+        const r = await fetch(`https://en.wikipedia.org/api/rest_v1/page/media-list/${encodeURIComponent(lead.title!.replace(/ /g, "_"))}`);
+        if (!r.ok) return [lead];
+        const j = await r.json();
+        const more: Photo[] = [];
+        for (const it of j.items ?? []) {
+          if (it.type !== "image" || !it.srcset?.length || /\.(svg|gif)$/i.test(it.title ?? "")) continue;
+          const best = it.srcset[it.srcset.length - 1].src as string;
+          const src = best.startsWith("//") ? "https:" + best : best;   // never ask for more than the file has
+          more.push({ src, credit: (it.caption?.text as string | undefined)?.slice(0, 140) || lead.credit, link: `https://en.wikipedia.org/wiki/${encodeURIComponent(it.title)}` });
+        }
+        const leadFile = lead.src.split("/").slice(-1)[0].replace(/^\d+px-/, "");
+        const rest = more.filter((m) => !m.src.endsWith(leadFile)).slice(0, 14);
+        return [lead, ...rest];
+      } catch { return [lead]; }
+    })());
+  }
+  return galleries.get(id)!;
 }

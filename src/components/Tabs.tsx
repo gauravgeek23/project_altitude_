@@ -139,11 +139,18 @@ function Credits() {
 /* ------------------------------------------------------------------ Villages & passes */
 function Practicals({ p }: { p: PlaceRecord }) {
   const keys = Object.keys(PRACTICAL_LABEL) as (keyof Practical)[];
+  const known = keys.filter((k) => p.practical[k]).length;
   return (
-    <dl className="facts-grid">
-      <div><dt>Elevation</dt><dd><Elevation p={p} /></dd></div>
-      {keys.map((k) => <div key={k}><dt>{PRACTICAL_LABEL[k]}</dt><dd>{p.practical[k] ?? <span className="unknown">Not verified</span>}</dd></div>)}
-    </dl>
+    <details className="practicals">
+      <summary>
+        <span>Practical details</span>
+        <span className="practicals-count">{known ? `${known} of ${keys.length} filled` : "Not verified yet"}</span>
+      </summary>
+      <dl className="facts-grid">
+        <div><dt>Elevation</dt><dd><Elevation p={p} /></dd></div>
+        {keys.map((k) => <div key={k}><dt>{PRACTICAL_LABEL[k]}</dt><dd>{p.practical[k] ?? <span className="unknown">Not verified</span>}</dd></div>)}
+      </dl>
+    </details>
   );
 }
 const STATUS = {

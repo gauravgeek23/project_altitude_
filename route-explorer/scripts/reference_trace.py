@@ -173,14 +173,16 @@ def trace_circuits(cfg, locs, road, hav, dp, terrain_path=None):
                     # without a long detour is the better geometry for that link
                     if rp and rkm <= 2.0 * hav(A, B) + 15:
                         # a lake off the road: the route stops where the road passes it
-                        head = [A] if da < 1.0 else []; tail = [B] if db < 1.0 else []
+                        # stops sit at their published positions: the line bends in to meet them
+                        head = [A] if da < 8 else []
+                        tail = [B] if db < 8 else []
                         geom, source, km = head + rp + tail, "road", rkm
                 if geom is None:
                     matched = map_match(ll, pos, gadj, nearest_node, shortest, hav)
                     if matched:
                         geom, km = matched
-                        if hav(geom[0], A) < 2.5: geom = [A] + geom
-                        if hav(geom[-1], B) < 2.5: geom = geom + [B]
+                        if hav(geom[0], A) < 8: geom = [A] + geom
+                        if hav(geom[-1], B) < 8: geom = geom + [B]
                         source = "road"
                     else:
                         geom = dp(chaikin(ll, 3), 0.03)

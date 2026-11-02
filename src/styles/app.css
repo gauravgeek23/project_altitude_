@@ -30,15 +30,15 @@ a { color: inherit; }
 
 /* ---------------- sidebar */
 .sidebar { display: flex; flex-direction: column; justify-content: space-between; padding: 40px; height: 100%; overflow-y: auto; background: var(--paper); }
-.sidebar-top { display: flex; flex-direction: column; gap: 22px; }
+.sidebar-top { display: flex; flex-direction: column; gap: 26px; }
 .sidebar-head { display: flex; align-items: center; justify-content: space-between; }
-.nav-group { display: flex; flex-direction: column; gap: 18px; }
+.nav-group { display: flex; flex-direction: column; gap: 22px; }
 .divider { border: 0; border-top: 1px dashed #d3d8de; margin: 0; width: 100%; }
-.sidebar ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px; }
+.sidebar ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 7px; }
 .nav-item { display: block; font-size: 14px; letter-spacing: 0.14px; line-height: 26px; color: var(--grey); text-decoration: none; transition: color .15s; }
 .nav-item:hover { color: var(--ink); }
 .nav-item.active { color: var(--ink); font-weight: 500; }
-.sidebar .nav-footer { padding-top: 22px; }
+.sidebar .nav-footer { padding-top: 26px; }
 .nav-title { margin: -16px 0 -16px; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--grey); }
 
 /* ---------------- reading panel */
@@ -363,3 +363,31 @@ fieldset.card legend .meta { margin: 0; }
 .card.dish .card-title { display: flex; align-items: center; }
 .card.dish p { margin: 4px 0 0; line-height: 22px; }
 .dish-photo { margin: 0 0 10px; aspect-ratio: 4 / 3; }
+
+/* practical details fold away until opened */
+details.practicals { margin: 14px 0 4px; border: 1px solid var(--rule); border-radius: 10px; background: #fafafa; }
+details.practicals > summary { list-style: none; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 9px 14px; cursor: pointer; font-size: 14px; font-weight: 500; color: var(--ink); }
+details.practicals > summary::-webkit-details-marker { display: none; }
+details.practicals > summary::after { content: ""; width: 8px; height: 8px; border-right: 1.6px solid var(--grey); border-bottom: 1.6px solid var(--grey); transform: rotate(45deg); transition: transform .2s; margin-left: 4px; }
+details.practicals[open] > summary::after { transform: rotate(-135deg); }
+.practicals-count { margin-left: auto; font-size: 12px; font-weight: 400; color: var(--grey); }
+details.practicals .facts-grid { padding: 0 14px 12px; margin: 0; }
+/* photos open full screen */
+.place-photo img { cursor: zoom-in; }
+.place-photo .count { position: absolute; top: 8px; right: 8px; padding: 2px 8px; border-radius: 999px; background: rgba(0,0,0,.55); color: #fff; font-size: 11px; line-height: 18px; pointer-events: none; }
+.lightbox { position: fixed; inset: 0; z-index: 100; background: rgba(8,9,12,.94); display: grid; grid-template-rows: 1fr auto; animation: lb-in .2s ease; touch-action: pan-y; }
+@keyframes lb-in { from { opacity: 0; } }
+.lightbox figure { margin: 0; display: grid; place-items: center; min-height: 0; padding: 56px 64px 8px; }
+.lightbox img { max-width: 100%; max-height: calc(100vh - 150px); object-fit: contain; border-radius: 6px; box-shadow: 0 10px 40px rgba(0,0,0,.5); }
+.lightbox .lb-bar { display: flex; align-items: center; justify-content: center; gap: 14px; padding: 10px 16px 18px; color: #d7d9de; font-size: 13px; }
+.lightbox .lb-bar a { color: #fff; }
+.lightbox button { position: absolute; border: 0; background: rgba(255,255,255,.12); color: #fff; width: 44px; height: 44px; border-radius: 50%; font-size: 22px; cursor: pointer; display: grid; place-items: center; }
+.lightbox button:hover { background: rgba(255,255,255,.24); }
+.lightbox .lb-close { top: 14px; right: 14px; font-size: 18px; }
+.lightbox .lb-prev { left: 14px; top: 50%; transform: translateY(-50%); }
+.lightbox .lb-next { right: 14px; top: 50%; transform: translateY(-50%); }
+.lightbox .lb-thumbs { display: flex; gap: 6px; overflow-x: auto; max-width: 70vw; scrollbar-width: none; }
+.lightbox .lb-thumbs img { width: 46px; height: 34px; object-fit: cover; border-radius: 4px; opacity: .5; cursor: pointer; box-shadow: none; max-height: none; }
+.lightbox .lb-thumbs img.on { opacity: 1; outline: 2px solid #fff; }
+@media (max-width: 600px) { .lightbox figure { padding: 56px 8px 8px; } .lightbox .lb-prev, .lightbox .lb-next { top: auto; bottom: 64px; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .lightbox { animation: none; } }

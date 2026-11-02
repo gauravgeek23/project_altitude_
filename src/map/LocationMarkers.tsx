@@ -40,7 +40,7 @@ export function LocationMarkers({ region, project, transform, size, selected, ac
     const [x, y] = transform.apply(xy);
     const onVisible = on.some((id) => visible.has(id));
     const onActive = activeCircuit ? on.includes(activeCircuit) : false;
-    const priority = (l.id === selected ? 100 : 0) + (l.accent ? 50 : 0) + (onActive ? 30 : 0) + (onVisible ? 10 : 0)
+    const priority = (l.id === selected ? 100 : 0) + (l.hub ? 80 : 0) + (l.accent ? 50 : 0) + (onActive ? 30 : 0) + (onVisible ? 10 : 0)
       + (l.kind === "town" ? 4 : l.kind === "pass" ? 3 : 2);
     return { l, x, y, onVisible, onActive, priority };
   }).filter((i) => i.x > -40 && i.y > -40 && i.x < size.w + 40 && i.y < size.h + 40);
@@ -50,7 +50,7 @@ export function LocationMarkers({ region, project, transform, size, selected, ac
   const placed: [number, number, number, number][] = [[0, size.h - 62, 190, size.h], [size.w - 64, 0, size.w, 290], [0, 0, Math.min(430, size.w - 70), 60], [0, 60, Math.min(480, size.w - 64), 104]];
   const shown = new Set<string>();
   for (const i of [...items].sort((a, b) => b.priority - a.priority)) {
-    const w = i.l.name.length * CHAR_W + 20 + ICON_GAP;
+    const w = i.l.name.length * (i.l.hub ? 7.6 : CHAR_W) + 20 + ICON_GAP;
     // try right, then left, then above
     for (const [dx, dy] of [[8, -LABEL_H / 2], [-8 - w, -LABEL_H / 2], [-w / 2, -LABEL_H - 8], [-w / 2, 8]]) {
       const box: [number, number, number, number] = [i.x + dx, i.y + dy, i.x + dx + w, i.y + dy + LABEL_H];
@@ -75,7 +75,7 @@ export function LocationMarkers({ region, project, transform, size, selected, ac
         const box = (i as typeof i & { box?: number[] }).box;
         const sel = i.l.id === selected;
         return (
-          <g key={i.l.id} className={`loc ${i.l.kind} t-${iconOf(i.l)}` + (i.l.accent ? " accent" : "") + (sel ? " selected" : "") +
+          <g key={i.l.id} className={`loc ${i.l.kind} t-${iconOf(i.l)}` + (i.l.accent ? " accent" : "") + (i.l.hub ? " hub" : "") + (sel ? " selected" : "") +
             (i.onActive ? " on-active" : "") + (i.onVisible ? "" : " off")}
             role="button" tabIndex={0} aria-label={`${i.l.name}, ${kindWord(i.l)}`} aria-pressed={sel}
             onClick={(e) => { e.stopPropagation(); onSelect(i.l.id); }}

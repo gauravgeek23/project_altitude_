@@ -18,6 +18,8 @@ export interface MapLocation {
   /** where the coordinate came from */
   source: string | null;
   missing?: string;
+  /** the main hubs (Leh, Manali, Chandigarh) */
+  hub?: boolean;
   /** 1 (default): shown at every zoom; 2 and 3: revealed as you zoom in */
   tier?: number;
   /** circuits whose line passes within 3 km, for places that are not stops */
@@ -70,6 +72,8 @@ export interface RegionData {
   roads: { route: Coord[][]; trunk: Coord[][]; primary: Coord[][] };
   rivers: { w: number; c: Coord[] }[];
   boundaries: BoundaryLine[];
+  /** state polygons that tint on hover: Ladakh, Himachal Pradesh */
+  regions?: { id: string; name: string; c: Coord[][][] }[];
   locations: MapLocation[];
   circuits: Circuit[];
   sources: { name: string; use: string }[];

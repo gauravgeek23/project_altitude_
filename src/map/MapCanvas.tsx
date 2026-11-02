@@ -76,17 +76,17 @@ const COUNTRIES: { name: string; at: [number, number] }[] = [
 ];
 
 /** State and union-territory names, on either side of the Ladakh | Himachal Pradesh line. */
-const STATES: { name: string; at: [number, number] }[] = [
-  { name: "LADAKH", at: [78.2, 34.4] },               // the Shyok valley east of Diskit
-  { name: "HIMACHAL PRADESH", at: [77.55, 31.93] },   // Pin valley and the Great Himalayan park, clear of the routes
+const STATES: { id: string; name: string; at: [number, number] }[] = [
+  { id: "ladakh", name: "LADAKH", at: [78.2, 34.4] },               // the Shyok valley east of Diskit
+  { id: "himachal", name: "HIMACHAL PRADESH", at: [77.55, 31.93] }, // Pin valley and the Great Himalayan park, clear of the routes
 ];
 
 const reduceMotion = typeof matchMedia !== "undefined" && matchMedia("(prefers-reduced-motion: reduce)").matches;
 const ms = (t: number) => (reduceMotion ? 0 : t);
 
 /** Static layers: terrain, rivers, roads, boundaries. Re-rendered only on resize. */
-const BaseLayers = memo(function BaseLayers({ region, path, project, showClaims, satellite }: {
-  region: Region; path: d3.GeoPath; project: d3.GeoProjection; showClaims: boolean; satellite: boolean;
+const BaseLayers = memo(function BaseLayers({ region, path, project, showClaims, satellite, onRegion }: {
+  region: Region; path: d3.GeoPath; project: d3.GeoProjection; showClaims: boolean; satellite: boolean; onRegion(id: string | null): void;
 }) {
   const { data } = region;
   const [b0, b1, b2, b3] = data.terrain.bounds;
@@ -101,6 +101,7 @@ const BaseLayers = memo(function BaseLayers({ region, path, project, showClaims,
     for (const b of data.boundaries) by[styleOf(b)].push(b.c);
     return { international: line(by.international), contested: line(by.contested), claim: line(by.claim), state: line(by.state) };
   }, [path]);
+  const areas = useMemo(() => (data.regions ?? []).map((r) => ({ id: r.id, d: path({ type: "MultiPolygon", coordinates: r.c }) ?? "" })), [path]);
   return (
     <g className="base">
       {!satellite && <image href={region.terrainUrl} x={tl[0]} y={tl[1]} width={br[0] - tl[0]} height={br[1] - tl[1]} preserveAspectRatio="none" />}
@@ -109,7 +110,7 @@ const BaseLayers = memo(function BaseLayers({ region, path, project, showClaims,
       <path className="road trunk" d={roads.trunk} />
       <path className="road route" d={roads.route} />
       {showClaims && <path className="boundary claim" d={bounds.claim} />}
-      <path className="boundary state casing" d={bounds.state} />
+      {areas.map((a) => <path key={a.id} className={`region-area ${a.id}`} d={a.d} onPointerEnter={() => onRegion(a.id)} onPointerLeave={() => onRegion(null)} />)}
       <path className="boundary state" d={bounds.state} />
       <path className="boundary contested casing" d={bounds.contested} />
       <path className="boundary contested" d={bounds.contested} />
@@ -126,6 +127,7 @@ export const MapCanvas = forwardRef<MapHandle, Props>(function MapCanvas(props, 
   const zoomRef = useRef<d3.ZoomBehavior<SVGSVGElement, unknown>>();
   const [size, setSize] = useState({ w: 800, h: 1000 });
   const [t, setT] = useState(d3.zoomIdentity);
+  const [hoverRegion, setHoverRegion] = useState<string | null>(null);
 
   useEffect(() => {
     const el = wrap.current!;
@@ -204,7 +206,7 @@ export const MapCanvas = forwardRef<MapHandle, Props>(function MapCanvas(props, 
         }}>
         {props.basemap === "satellite" && <SatelliteTiles project={project} t={t} size={size} />}
         <g transform={t.toString()} className={props.basemap === "satellite" ? "on-satellite" : undefined}>
-          <BaseLayers region={region} path={path} project={project} showClaims={props.showClaims} satellite={props.basemap === "satellite"} />
+          <BaseLayers region={region} path={path} project={project} showClaims={props.showClaims} satellite={props.basemap === "satellite"} onRegion={setHoverRegion} />
           <RouteLayer circuits={region.data.circuits} path={path} visible={props.visible} active={props.activeCircuit}
             onHover={props.onHoverCircuit} onSelect={props.onSelectCircuit} />
         </g>
@@ -212,7 +214,7 @@ export const MapCanvas = forwardRef<MapHandle, Props>(function MapCanvas(props, 
           {STATES.map((c) => {
             const [x, y] = t.apply(project(c.at)!);
             if (x < 40 || x > size.w - 40 || y < 70 || y > size.h - 50) return null;
-            return <text key={c.name} x={x} y={y}>{c.name}</text>;
+            return <text key={c.name} x={x} y={y} className={hoverRegion === c.id ? "on" : undefined}>{c.name}</text>;
           })}
         </g>
         <g className="countries" aria-hidden="true">

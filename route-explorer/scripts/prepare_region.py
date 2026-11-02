@@ -424,6 +424,17 @@ def approx(src):
         if cand:
             q = max(cand, key=lambda c: elev(*c))
             return q, note + f"; the highest point of the mapped road within {r} km ({round(elev(*q))} m); verify"
+    elif how == "flat":
+        # a lake on a pass: the flattest ground within r km at about the pass's height
+        i0, j0 = _pix(p[0] - r / 90, p[1] + r / 110); i1, j1 = _pix(p[0] + r / 90, p[1] - r / 110)
+        sub = M[i0:i1, j0:j1]; z0 = elev(*p); best = None
+        for i in range(1, sub.shape[0] - 1):
+            for j in range(1, sub.shape[1] - 1):
+                q = _ll(i + i0, j + j0)
+                if hav(p, q) > r or hav(p, q) < 0.6 or abs(sub[i, j] - z0) > 150: continue
+                rough = float(np.ptp(sub[i - 1:i + 2, j - 1:j + 2]))
+                if best is None or rough < best[0]: best = (rough, q)
+        if best: return best[1], note + f"; the flattest ground near the pass on the terrain model; verify"
     elif how in ("peak", "lake"):
         i0, j0 = _pix(p[0] - r / 90, p[1] + r / 110); i1, j1 = _pix(p[0] + r / 90, p[1] - r / 110)
         sub = M[i0:i1, j0:j1]
@@ -458,6 +469,7 @@ def resolve_locations(lake_pts):
                 coord, label = terrain_lake(L["name"], lake_pts, puga)
         rec = {k: v for k, v in L.items() if k != "source"}
         if s and s["dataset"] == "approx" and s["snap"] == "route": rec["_snap"] = (s["lon"], s["lat"], s["radius"])
+        if s and s["dataset"] == "published" and s.get("snap") == "route": rec["_snap"] = (s["lon"], s["lat"], 3.0)
         if coord and inside(coord):
             rec.update({"lon": round(coord[0], 5), "lat": round(coord[1], 5), "elev": round(elev(*coord)), "source": label})
         else:
@@ -572,29 +584,90 @@ def route_circuits(locs, pos, adj):
 
 
 # ------------------------------------------------------------------ boundaries
+_OFFICIAL = None
+
+
+def official_india():
+    global _OFFICIAL
+    if _OFFICIAL is None: _OFFICIAL = _official_india()
+    return _OFFICIAL
+
+
+def _official_india():
+    """India's boundaries as the Government of India shows them: Natural Earth's India point of
+    view (admin-0), with states from Natural Earth admin-1. Ladakh includes Gilgit-Baltistan and
+    Aksai Chin; Jammu and Kashmir includes the area administered by Pakistan."""
+    from shapely.geometry import shape, box, mapping
+    from shapely.ops import unary_union
+    india = next(shape(f["geometry"]) for f in json.load(open(f"{RAW}/ne-admin1/countries_ind.geojson"))["features"]
+                 if f["properties"]["ADM0_A3"] == "IND")
+    clip = box(W - 3, S - 3, E + 3, N + 3)
+    india = india.intersection(clip)
+    a1 = {}
+    for f in json.load(open(f"{RAW}/ne-admin1/admin1.geojson"))["features"]:
+        g = shape(f["geometry"])
+        if g.intersects(clip): a1.setdefault(f["properties"]["name"], []).append(g.buffer(0))
+    get = lambda n: unary_union(a1.get(n, [])).buffer(0)
+    states = {}
+    states["jammu-kashmir"] = unary_union([get("Jammu and Kashmir"), get("Azad Kashmir")]).intersection(india)
+    for k, n in (("himachal", "Himachal Pradesh"), ("punjab", "Punjab"), ("uttarakhand", "Uttarakhand"), ("haryana", "Haryana"),
+                 ("chandigarh", "Chandigarh"), ("rajasthan", "Rajasthan"), ("uttar-pradesh", "Uttar Pradesh")):
+        g = get(n).intersection(india)
+        if n == "Punjab":   # two Punjabs share the name: keep the Indian one
+            g = unary_union([x for x in a1["Punjab"] if x.representative_point().x > 74.6]).intersection(india)
+        states[k] = g
+    others = unary_union(list(states.values()))
+    # everything else of India's northern territory is Ladakh
+    north = india.intersection(box(W - 3, 31.0, E + 3, N + 3))
+    ladakh = north.difference(others).buffer(0.002).buffer(-0.002)
+    states["ladakh"] = ladakh
+    return india, states
+
+
 def boundaries():
+    from shapely.geometry import LineString, MultiLineString
+    from shapely.ops import unary_union
+    india, states = official_india()
     out = []
-    for f, kind in (("ne_10m_admin_0_boundary_lines_land", "land"), ("ne_10m_admin_0_boundary_lines_disputed_areas", "claim")):
-        d = json.load(open(f"{RAW}/ne/{f}.geojson"))
-        for ft in d["features"]:
-            p = ft["properties"]; g = ft["geometry"]
-            cls = (p.get("FEATURECLA") or p.get("featurecla") or "").replace(" (please verify)", "").replace(" (verify)", "")
-            note = p.get("NOTE") or p.get("note") or p.get("NAME") or ""
-            for l in ([g["coordinates"]] if g["type"] == "LineString" else g["coordinates"]):
+    def lines_of(geom):
+        if geom.is_empty: return []
+        if geom.geom_type == "LineString": return [list(geom.coords)]
+        if geom.geom_type in ("MultiLineString", "GeometryCollection"): return [c for g in geom.geoms for c in lines_of(g)]
+        return []
+    outline = india.boundary
+    for l in lines_of(outline):
+        for run in runs_inside(l, pad=2.0):
+            if len(run) > 1:
+                out.append({"kind": "land", "cls": "International boundary", "name": "India (official boundary)", "left": "IND", "right": "",
+                            "c": [[round(x, 4), round(y, 4)] for x, y in dp(run, 0.02)]})
+    # state lines: the edge each pair of neighbouring states shares, merged into long runs
+    from shapely.ops import linemerge
+    keys = [k for k in states if not states[k].is_empty]
+    for i, a in enumerate(keys):
+        for b in keys[i + 1:]:
+            shared = states[a].boundary.intersection(states[b].buffer(0.01)).difference(outline.buffer(0.02))
+            if shared.is_empty: continue
+            merged = linemerge(shared) if shared.geom_type == "MultiLineString" else shared
+            for l in lines_of(merged):
+                if LineString(l).length < 0.05: continue
                 for run in runs_inside(l, pad=2.0):
-                    out.append({"kind": kind, "cls": cls, "name": note, "left": p.get("ADM0_LEFT") or p.get("BRK_A3"),
-                                "right": p.get("ADM0_RIGHT"), "c": [[round(x, 4), round(y, 4)] for x, y in dp(run, 0.05)]})
-    # state and union-territory lines inside India (Natural Earth admin-1), e.g. Ladakh | Himachal Pradesh
-    d = json.load(open(f"{RAW}/ne-admin1/lines.geojson"))
-    for ft in d["features"]:
-        p = ft["properties"]; g = ft["geometry"]
-        if p["ADM0_A3"] != "IND" or not p["FEATURECLA"].startswith("Admin-1"): continue
-        for l in ([g["coordinates"]] if g["type"] == "LineString" else g["coordinates"]):
-            for run in runs_inside(l, pad=2.0):
-                if len(run) < 2: continue
-                out.append({"kind": "state", "cls": "Admin-1 boundary", "name": f"{p['NAME_L']} | {p['NAME_R']}",
-                            "left": p["NAME_L"], "right": p["NAME_R"], "c": [[round(x, 4), round(y, 4)] for x, y in dp(run, 0.02)]})
-    print("boundary lines", len(out), sorted({(o["kind"], o["cls"], o["name"]) for o in out}))
+                    if len(run) > 1:
+                        out.append({"kind": "state", "cls": "Admin-1 boundary", "name": f"{a} | {b}", "left": a, "right": b,
+                                    "c": [[round(x, 4), round(y, 4)] for x, y in dp(run, 0.02)]})
+    print("boundary lines", len(out))
+    return out
+
+
+def regions():
+    """Hover areas: Ladakh and Himachal Pradesh as polygons (simplified)."""
+    from shapely.geometry import mapping
+    _, states = official_india()
+    out = []
+    for k, name in (("ladakh", "Ladakh"), ("himachal", "Himachal Pradesh")):
+        g = states[k].simplify(0.01)
+        polys = [g] if g.geom_type == "Polygon" else [p for p in g.geoms if p.area > 0.01]
+        out.append({"id": k, "name": name,
+                    "c": [[[[round(x, 3), round(y, 3)] for x, y in ring.coords] for ring in [p.exterior, *p.interiors]] for p in polys]})
     return out
 
 
@@ -638,15 +711,17 @@ def main():
                         d = hav(p, q)
                         if d <= r and (best is None or d < best[0]): best = (d, q)
         return best
+    stops = {w for c in circuits for leg in c["legs"] for w in leg["waypoints"]}
     for l in locs:
         snap = l.pop("_snap", None)
-        if not snap: continue
+        if not snap or l["id"] in stops: continue
         hit = on_line(snap[:2], min(snap[2], 2.5))
         if hit:
             l["lon"], l["lat"] = round(hit[1][0], 5), round(hit[1][1], 5)
             # a village sits on the valley floor; the simplified line may cut across a slope
             l["elev"] = round(min(elev(l["lon"] + dx / 100, l["lat"] + dy / 110) for dx in (-1, 0, 1) for dy in (-1, 0, 1)))
-            l["source"] = f"Approximate position from published descriptions, placed on the circuit line ({hit[0]:.1f} km); verify"
+            base = l["source"].split(";")[0].split(", moved")[0] if l["source"] else "Approximate position"
+            l["source"] = f"{base}; placed on the circuit line ({hit[0]:.1f} km away)" + ("" if base.startswith("Published") else "; verify")
     # places that are not stops of a circuit but sit on its line (within 3 km) belong to it too
     seg_pts = {c["id"]: [p for leg in c["legs"] for sg in leg["segments"] for p in (sg.get("coords") or [])] for c in circuits}
     for l in locs:
@@ -659,12 +734,12 @@ def main():
         if len(s) > 1: roads[cls].append([[round(x, 4), round(y, 4)] for x, y in s])
     out = {"id": CFG["id"], "name": CFG["name"], "bbox": CFG["bbox"],
            "terrain": {"image": f"{REGION}-terrain.jpg", "bounds": [round(v, 6) for v in tb]},
-           "reference": warp_info, "roads": roads, "rivers": rivers, "boundaries": boundaries(), "locations": locs, "circuits": circuits,
+           "reference": warp_info, "roads": roads, "rivers": rivers, "boundaries": boundaries(), "regions": regions(), "locations": locs, "circuits": circuits,
            "sources": [
                {"name": "Terrain Tiles (AWS Open Data; SRTM, GMTED and others)", "use": "Shaded relief, elevations, lakes, rivers, derived passes"},
                {"name": "OpenStreetMap contributors (ODbL)", "use": "Himachal trunk and primary roads; settlements; Atal Tunnel"},
                {"name": "scroll-route-demo by Aditya Sharma (MIT)", "use": "Road-following route lines and named checkpoints"},
-               {"name": "Natural Earth 1:10m (public domain)", "use": "International boundary lines as published, claim lines, state and union-territory lines, reservoirs"},
+               {"name": "Natural Earth 1:10m (public domain)", "use": "India's official boundary (India point of view), state and union-territory lines, reservoirs"},
                {"name": "GeoNames cities1000 (CC BY 4.0)", "use": "Mandi; basemap dots used to place your reference map"},
                {"name": "Your reference map (Proj Altitude circuits)", "use": "Which roads each circuit takes; lines where no road data exists; places no dataset has"}]}
     s = json.dumps(out, separators=(",", ":"))

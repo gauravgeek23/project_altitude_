@@ -21,19 +21,34 @@
       "id": "siachen-bc",
       "name": "Siachen Base Camp",
       "kind": "poi",
-      "source": null
+      "source": {
+        "dataset": "published",
+        "lon": 77.2161,
+        "lat": 35.1664,
+        "cite": "Wikipedia, Siachen Glacier (Dzingrulma base camp)"
+      }
     },
     {
       "id": "panamik",
       "name": "Panamik",
       "kind": "town",
-      "source": null
+      "source": {
+        "dataset": "published",
+        "lon": 77.5319,
+        "lat": 34.7867,
+        "cite": "Wikipedia, Panamic"
+      }
     },
     {
       "id": "turtuk",
       "name": "Turtuk",
       "kind": "town",
-      "source": null
+      "source": {
+        "dataset": "published",
+        "lon": 76.8269,
+        "lat": 34.8469,
+        "cite": "Wikipedia, Turtuk"
+      }
     },
     {
       "id": "diskit",
@@ -57,7 +72,12 @@
       "id": "lamayuru",
       "name": "Lamayuru",
       "kind": "town",
-      "source": null
+      "source": {
+        "dataset": "published",
+        "lon": 76.7744,
+        "lat": 34.2828,
+        "cite": "Wikipedia, Lamayuru Monastery"
+      }
     },
     {
       "id": "khardung-la",
@@ -92,7 +112,8 @@
       "source": {
         "dataset": "route-checkpoint",
         "key": "Leh"
-      }
+      },
+      "hub": true
     },
     {
       "id": "fotu-la",
@@ -107,33 +128,45 @@
       "id": "durbuk",
       "name": "Durbuk",
       "kind": "town",
-      "source": null
+      "source": {
+        "dataset": "published",
+        "lon": 78.1034,
+        "lat": 34.1206,
+        "cite": "Wikipedia, Durbuk"
+      }
     },
     {
       "id": "satso-lake",
       "name": "Satso Lake",
-      "kind": "town",
-      "source": null
+      "kind": "lake",
+      "source": {
+        "dataset": "approx",
+        "lon": 76.3553,
+        "lat": 33.8678,
+        "snap": "flat",
+        "radius": 2.5
+      }
     },
     {
       "id": "hemis",
       "name": "Hemis",
       "kind": "town",
-      "source": null
+      "source": {
+        "dataset": "published",
+        "lon": 77.7028,
+        "lat": 33.9125,
+        "cite": "Wikipedia, Hemis Monastery"
+      }
     },
     {
       "id": "chang-la",
       "name": "Chang La",
       "kind": "pass",
       "source": {
-        "dataset": "terrain-pass",
-        "route": "leh-pangong-umling",
-        "between": [
-          "Leh",
-          "Pangong Lake"
-        ],
-        "rank": 1,
-        "skipKm": 15
+        "dataset": "published",
+        "lon": 77.9305,
+        "lat": 34.047,
+        "cite": "Wikipedia, Chang La"
       }
     },
     {
@@ -150,26 +183,33 @@
       "name": "Pensi La",
       "kind": "pass",
       "source": {
-        "dataset": "terrain-pass",
-        "route": "zanskar-valley",
-        "between": [
-          "Rangdum",
-          "Padum"
-        ],
-        "rank": 1
+        "dataset": "published",
+        "lon": 76.3553,
+        "lat": 33.8678,
+        "cite": "Wikipedia, Pensi La"
       }
     },
     {
       "id": "maan",
       "name": "Maan",
       "kind": "town",
-      "source": null
+      "source": {
+        "dataset": "published",
+        "lon": 78.5263,
+        "lat": 33.8611,
+        "cite": "Wikivoyage, Pangong Lake (Man)"
+      }
     },
     {
       "id": "zangla",
       "name": "Zangla",
       "kind": "town",
-      "source": null
+      "source": {
+        "dataset": "published",
+        "lon": 76.98,
+        "lat": 33.67,
+        "cite": "Wikipedia, Zangla"
+      }
     },
     {
       "id": "taglang-la",
@@ -234,7 +274,12 @@
       "id": "tso-kar",
       "name": "Tso Kar",
       "kind": "lake",
-      "source": null
+      "source": {
+        "dataset": "published",
+        "lon": 77.983,
+        "lat": 33.3,
+        "cite": "Wikipedia, Tso Kar"
+      }
     },
     {
       "id": "karzok",
@@ -270,7 +315,12 @@
       "id": "gombo-ranjan",
       "name": "Gombo Ranjan",
       "kind": "poi",
-      "source": null
+      "source": {
+        "dataset": "published",
+        "lon": 77.2486,
+        "lat": 32.9585,
+        "cite": "Wikipedia, Gumbok Rangan"
+      }
     },
     {
       "id": "shinku-la",
@@ -295,7 +345,12 @@
       "id": "suraj-tal",
       "name": "Suraj Tal",
       "kind": "lake",
-      "source": null
+      "source": {
+        "dataset": "published",
+        "lon": 77.3978,
+        "lat": 32.7628,
+        "cite": "Wikipedia, Suraj Tal"
+      }
     },
     {
       "id": "tso-moriri",
@@ -319,7 +374,12 @@
       "id": "demchok",
       "name": "Demchok",
       "kind": "town",
-      "source": null
+      "source": {
+        "dataset": "published",
+        "lon": 79.4467,
+        "lat": 32.7038,
+        "cite": "Wikipedia, Demchok, Ladakh"
+      }
     },
     {
       "id": "darcha",
@@ -358,7 +418,12 @@
       "id": "komik",
       "name": "Komik",
       "kind": "town",
-      "source": null
+      "source": {
+        "dataset": "published",
+        "lon": 78.1087,
+        "lat": 32.2331,
+        "cite": "Wikipedia, Komic"
+      }
     },
     {
       "id": "kaza",
@@ -385,7 +450,8 @@
       "source": {
         "dataset": "route-checkpoint",
         "key": "Manali"
-      }
+      },
+      "hub": true
     },
     {
       "id": "tabo",
@@ -394,16 +460,6 @@
       "source": {
         "dataset": "route-checkpoint",
         "key": "Tabo"
-      }
-    },
-    {
-      "id": "mandi",
-      "name": "Mandi",
-      "kind": "town",
-      "source": {
-        "dataset": "geonames",
-        "key": "Mandi",
-        "admin1": "Himachal Pradesh"
       }
     },
     {
@@ -485,7 +541,8 @@
       "source": {
         "dataset": "route-checkpoint",
         "key": "Chandigarh"
-      }
+      },
+      "hub": true
     },
     {
       "id": "sankoo",
@@ -538,11 +595,11 @@
       "kind": "town",
       "tier": 3,
       "source": {
-        "dataset": "approx",
-        "lon": 75.98,
-        "lat": 34.08,
-        "snap": "route",
-        "radius": 6
+        "dataset": "published",
+        "lon": 75.9562,
+        "lat": 34.1225,
+        "cite": "Route checkpoint, scroll-route-demo/zanskar-valley",
+        "snap": "route"
       }
     },
     {
@@ -551,11 +608,11 @@
       "kind": "town",
       "tier": 2,
       "source": {
-        "dataset": "approx",
-        "lon": 77.68,
-        "lat": 34.51,
-        "snap": "route",
-        "radius": 4
+        "dataset": "published",
+        "lon": 77.703,
+        "lat": 34.4906,
+        "cite": "Wikipedia, Khalsar",
+        "snap": "route"
       }
     },
     {
@@ -564,11 +621,11 @@
       "kind": "town",
       "tier": 2,
       "source": {
-        "dataset": "approx",
-        "lon": 77.48,
-        "lat": 34.58,
-        "snap": "route",
-        "radius": 6
+        "dataset": "published",
+        "lon": 77.4948,
+        "lat": 34.5758,
+        "cite": "Wikipedia, Hundar",
+        "snap": "route"
       }
     },
     {
@@ -590,11 +647,11 @@
       "kind": "town",
       "tier": 2,
       "source": {
-        "dataset": "approx",
-        "lon": 77.62,
-        "lat": 34.62,
-        "snap": "route",
-        "radius": 6
+        "dataset": "published",
+        "lon": 77.6133,
+        "lat": 34.6186,
+        "cite": "Wikivoyage, Nubra Valley (Sumur)",
+        "snap": "route"
       }
     },
     {
@@ -603,11 +660,11 @@
       "kind": "town",
       "tier": 2,
       "source": {
-        "dataset": "approx",
-        "lon": 77.72,
-        "lat": 33.93,
-        "snap": "route",
-        "radius": 4
+        "dataset": "published",
+        "lon": 77.7642,
+        "lat": 33.9419,
+        "cite": "Wikipedia, Karu, Ladakh",
+        "snap": "route"
       }
     },
     {
@@ -616,11 +673,11 @@
       "kind": "town",
       "tier": 3,
       "source": {
-        "dataset": "approx",
-        "lon": 77.8,
-        "lat": 34.04,
-        "snap": "route",
-        "radius": 6
+        "dataset": "published",
+        "lon": 77.8167,
+        "lat": 33.9978,
+        "cite": "Wikipedia, Sakti, Ladakh",
+        "snap": "route"
       }
     },
     {
@@ -629,11 +686,11 @@
       "kind": "town",
       "tier": 2,
       "source": {
-        "dataset": "approx",
-        "lon": 78.17,
-        "lat": 34.03,
-        "snap": "route",
-        "radius": 4
+        "dataset": "published",
+        "lon": 78.1677,
+        "lat": 34.0302,
+        "cite": "Wikipedia, Tangtse",
+        "snap": "route"
       }
     },
     {
@@ -642,11 +699,11 @@
       "kind": "town",
       "tier": 3,
       "source": {
-        "dataset": "approx",
-        "lon": 78.4,
-        "lat": 33.97,
-        "snap": "route",
-        "radius": 4
+        "dataset": "published",
+        "lon": 78.4131,
+        "lat": 33.9955,
+        "cite": "Wikipedia, Lukung",
+        "snap": "route"
       }
     },
     {
@@ -655,11 +712,11 @@
       "kind": "town",
       "tier": 2,
       "source": {
-        "dataset": "approx",
-        "lon": 78.46,
-        "lat": 33.89,
-        "snap": "route",
-        "radius": 4
+        "dataset": "published",
+        "lon": 78.4573,
+        "lat": 33.9072,
+        "cite": "Wikipedia, Spangmik",
+        "snap": "route"
       }
     },
     {
@@ -668,11 +725,11 @@
       "kind": "town",
       "tier": 3,
       "source": {
-        "dataset": "approx",
-        "lon": 78.63,
-        "lat": 33.8,
-        "snap": "route",
-        "radius": 4
+        "dataset": "published",
+        "lon": 78.5912,
+        "lat": 33.7974,
+        "cite": "Wikipedia, Merak, Ladakh",
+        "snap": "route"
       }
     },
     {
@@ -681,11 +738,11 @@
       "kind": "town",
       "tier": 2,
       "source": {
-        "dataset": "approx",
-        "lon": 78.65,
-        "lat": 33.59,
-        "snap": "route",
-        "radius": 5
+        "dataset": "published",
+        "lon": 78.648,
+        "lat": 33.601,
+        "cite": "Wikipedia, Chushul",
+        "snap": "route"
       }
     },
     {
@@ -694,11 +751,11 @@
       "kind": "town",
       "tier": 2,
       "source": {
-        "dataset": "approx",
-        "lon": 78.27,
-        "lat": 31.42,
-        "snap": "route",
-        "radius": 4
+        "dataset": "published",
+        "lon": 78.265,
+        "lat": 31.4264,
+        "cite": "Wikipedia, Sangla",
+        "snap": "route"
       }
     },
     {
@@ -707,11 +764,11 @@
       "kind": "town",
       "tier": 3,
       "source": {
-        "dataset": "approx",
-        "lon": 78.36,
-        "lat": 31.39,
-        "snap": "route",
-        "radius": 4
+        "dataset": "published",
+        "lon": 78.3661,
+        "lat": 31.3769,
+        "cite": "Wikipedia, Rakchham",
+        "snap": "route"
       }
     },
     {
@@ -720,11 +777,11 @@
       "kind": "town",
       "tier": 2,
       "source": {
-        "dataset": "approx",
-        "lon": 78.27,
-        "lat": 31.54,
-        "snap": "route",
-        "radius": 4
+        "dataset": "published",
+        "lon": 78.2672,
+        "lat": 31.5407,
+        "cite": "Route checkpoint, scroll-route-demo/spiti-circuit",
+        "snap": "route"
       }
     },
     {
@@ -733,11 +790,10 @@
       "kind": "town",
       "tier": 2,
       "source": {
-        "dataset": "approx",
-        "lon": 78.215,
-        "lat": 32.089,
-        "snap": "none",
-        "radius": 0
+        "dataset": "published",
+        "lon": 78.2119,
+        "lat": 32.0906,
+        "cite": "Wikipedia, Dhankar Gompa"
       }
     },
     {
@@ -746,11 +802,10 @@
       "kind": "town",
       "tier": 2,
       "source": {
-        "dataset": "approx",
-        "lon": 78.01,
-        "lat": 32.33,
-        "snap": "none",
-        "radius": 0
+        "dataset": "published",
+        "lon": 78.0089,
+        "lat": 32.3317,
+        "cite": "Wikipedia, Kibber"
       }
     },
     {
@@ -772,11 +827,10 @@
       "kind": "town",
       "tier": 2,
       "source": {
-        "dataset": "approx",
-        "lon": 78.08,
-        "lat": 32.27,
-        "snap": "none",
-        "radius": 0
+        "dataset": "published",
+        "lon": 78.0816,
+        "lat": 32.2738,
+        "cite": "Wikipedia, Langza"
       }
     },
     {
@@ -798,11 +852,10 @@
       "kind": "town",
       "tier": 3,
       "source": {
-        "dataset": "approx",
-        "lon": 78.03,
-        "lat": 31.96,
-        "snap": "none",
-        "radius": 0
+        "dataset": "published",
+        "lon": 78.0325,
+        "lat": 31.9592,
+        "cite": "Wikipedia, Mud (village)"
       }
     },
     {
@@ -837,11 +890,11 @@
       "kind": "town",
       "tier": 3,
       "source": {
-        "dataset": "approx",
-        "lon": 77.67,
-        "lat": 34.06,
-        "snap": "none",
-        "radius": 0
+        "dataset": "published",
+        "lon": 77.6665,
+        "lat": 34.0557,
+        "cite": "Wikipedia, Thikse Monastery",
+        "snap": "route"
       }
     },
     {
@@ -850,11 +903,11 @@
       "kind": "town",
       "tier": 3,
       "source": {
-        "dataset": "approx",
-        "lon": 77.63,
-        "lat": 34.07,
-        "snap": "route",
-        "radius": 3
+        "dataset": "published",
+        "lon": 77.6325,
+        "lat": 34.0717,
+        "cite": "Wikipedia, Shey Monastery",
+        "snap": "route"
       }
     },
     {
@@ -863,11 +916,10 @@
       "kind": "town",
       "tier": 3,
       "source": {
-        "dataset": "approx",
-        "lon": 77.18,
-        "lat": 34.22,
-        "snap": "none",
-        "radius": 0
+        "dataset": "published",
+        "lon": 77.1753,
+        "lat": 34.2236,
+        "cite": "ASI list of monuments, Alchi"
       }
     },
     {
@@ -876,11 +928,11 @@
       "kind": "town",
       "tier": 3,
       "source": {
-        "dataset": "approx",
-        "lon": 76.88,
-        "lat": 34.32,
-        "snap": "route",
-        "radius": 4
+        "dataset": "published",
+        "lon": 76.8793,
+        "lat": 34.3201,
+        "cite": "Wikipedia, Khalatse",
+        "snap": "route"
       }
     },
     {
@@ -889,11 +941,11 @@
       "kind": "town",
       "tier": 3,
       "source": {
-        "dataset": "approx",
-        "lon": 76.36,
-        "lat": 34.38,
-        "snap": "route",
-        "radius": 6
+        "dataset": "published",
+        "lon": 76.3667,
+        "lat": 34.3786,
+        "cite": "ASI list of monuments, Mulbekh",
+        "snap": "route"
       }
     },
     {
@@ -902,11 +954,11 @@
       "kind": "town",
       "tier": 3,
       "source": {
-        "dataset": "approx",
-        "lon": 77.81,
-        "lat": 33.83,
-        "snap": "route",
-        "radius": 4
+        "dataset": "published",
+        "lon": 77.822,
+        "lat": 33.8198,
+        "cite": "Cybo, Upshi",
+        "snap": "route"
       }
     },
     {
@@ -928,11 +980,11 @@
       "kind": "town",
       "tier": 2,
       "source": {
-        "dataset": "approx",
-        "lon": 77.8,
-        "lat": 33.08,
-        "snap": "route",
-        "radius": 8
+        "dataset": "published",
+        "lon": 77.6343,
+        "lat": 33.1168,
+        "cite": "Route checkpoint, scroll-route-demo/manali-leh",
+        "snap": "route"
       }
     },
     {
@@ -941,11 +993,11 @@
       "kind": "town",
       "tier": 2,
       "source": {
-        "dataset": "approx",
-        "lon": 77.56,
-        "lat": 32.91,
-        "snap": "route",
-        "radius": 6
+        "dataset": "published",
+        "lon": 77.5813,
+        "lat": 32.907,
+        "cite": "Route checkpoint, scroll-route-demo/manali-leh",
+        "snap": "route"
       }
     },
     {
@@ -954,11 +1006,11 @@
       "kind": "town",
       "tier": 2,
       "source": {
-        "dataset": "approx",
-        "lon": 77.03,
-        "lat": 32.57,
-        "snap": "route",
-        "radius": 4
+        "dataset": "published",
+        "lon": 77.032,
+        "lat": 32.571,
+        "cite": "Route checkpoint, scroll-route-demo/manali-leh",
+        "snap": "route"
       }
     },
     {
@@ -967,11 +1019,11 @@
       "kind": "town",
       "tier": 3,
       "source": {
-        "dataset": "approx",
-        "lon": 77.18,
-        "lat": 32.64,
-        "snap": "route",
-        "radius": 4
+        "dataset": "published",
+        "lon": 77.1667,
+        "lat": 32.6333,
+        "cite": "Wikipedia, Jispa",
+        "snap": "route"
       }
     },
     {
@@ -980,11 +1032,11 @@
       "kind": "town",
       "tier": 3,
       "source": {
-        "dataset": "approx",
-        "lon": 77.12,
-        "lat": 32.48,
-        "snap": "route",
-        "radius": 4
+        "dataset": "published",
+        "lon": 77.1167,
+        "lat": 32.4833,
+        "cite": "Wikipedia, Sissu",
+        "snap": "route"
       }
     },
     {
@@ -993,11 +1045,11 @@
       "kind": "town",
       "tier": 3,
       "source": {
-        "dataset": "approx",
-        "lon": 76.98,
-        "lat": 32.55,
-        "snap": "route",
-        "radius": 4
+        "dataset": "published",
+        "lon": 76.9751,
+        "lat": 32.556,
+        "cite": "Lahaul and Spiti district listing, Tandi",
+        "snap": "route"
       }
     },
     {
@@ -1006,11 +1058,11 @@
       "kind": "town",
       "tier": 3,
       "source": {
-        "dataset": "approx",
-        "lon": 77.63,
-        "lat": 31.45,
-        "snap": "route",
-        "radius": 4
+        "dataset": "published",
+        "lon": 77.6298,
+        "lat": 31.4492,
+        "cite": "Route checkpoint, scroll-route-demo/spiti-circuit",
+        "snap": "route"
       }
     },
     {
@@ -1019,11 +1071,10 @@
       "kind": "poi",
       "tier": 2,
       "source": {
-        "dataset": "approx",
-        "lon": 78.01,
-        "lat": 32.3,
-        "snap": "none",
-        "radius": 0
+        "dataset": "published",
+        "lon": 78.0119,
+        "lat": 32.2978,
+        "cite": "Wikipedia, Key Monastery"
       }
     },
     {
@@ -1032,11 +1083,10 @@
       "kind": "pass",
       "tier": 2,
       "source": {
-        "dataset": "approx",
-        "lon": 76.52,
-        "lat": 34.38,
-        "snap": "pass",
-        "radius": 10
+        "dataset": "published",
+        "lon": 76.4597,
+        "lat": 34.3835,
+        "cite": "Route checkpoint, scroll-route-demo/srinagar-leh"
       }
     },
     {
@@ -1045,11 +1095,10 @@
       "kind": "pass",
       "tier": 1,
       "source": {
-        "dataset": "approx",
-        "lon": 77.637,
-        "lat": 32.398,
-        "snap": "pass",
-        "radius": 6
+        "dataset": "published",
+        "lon": 77.6485,
+        "lat": 32.4158,
+        "cite": "Wikipedia, Kunzum Pass"
       }
     },
     {
@@ -1075,7 +1124,8 @@
         "lon": 77.367,
         "lat": 32.272,
         "snap": "none",
-        "radius": 0
+        "radius": 0,
+        "cite": null
       }
     },
     {
@@ -1085,10 +1135,10 @@
       "tier": 2,
       "source": {
         "dataset": "approx",
-        "lon": 76.02,
+        "lon": 76.0217,
         "lat": 33.98,
         "snap": "peak",
-        "radius": 3
+        "radius": 2
       }
     },
     {
@@ -1097,11 +1147,10 @@
       "kind": "peak",
       "tier": 3,
       "source": {
-        "dataset": "approx",
-        "lon": 76.05,
-        "lat": 34.0,
-        "snap": "peak",
-        "radius": 2
+        "dataset": "published",
+        "lon": 76.0568,
+        "lat": 34.013,
+        "cite": "Wikipedia, Kun Peak"
       }
     },
     {
@@ -1136,11 +1185,10 @@
       "kind": "peak",
       "tier": 2,
       "source": {
-        "dataset": "approx",
-        "lon": 77.75,
-        "lat": 34.87,
-        "snap": "peak",
-        "radius": 5
+        "dataset": "published",
+        "lon": 77.7525,
+        "lat": 34.8667,
+        "cite": "Wikipedia, Saser Kangri"
       }
     },
     {
@@ -1162,11 +1210,10 @@
       "kind": "peak",
       "tier": 3,
       "source": {
-        "dataset": "approx",
-        "lon": 77.42,
-        "lat": 32.55,
-        "snap": "peak",
-        "radius": 4
+        "dataset": "published",
+        "lon": 77.4117,
+        "lat": 32.5453,
+        "cite": "Wikipedia, Mulkila"
       }
     },
     {
@@ -1188,11 +1235,34 @@
       "kind": "peak",
       "tier": 2,
       "source": {
-        "dataset": "approx",
-        "lon": 78.73,
-        "lat": 31.88,
-        "snap": "peak",
-        "radius": 4
+        "dataset": "published",
+        "lon": 78.7314,
+        "lat": 31.884,
+        "cite": "Wikipedia, Reo Purgyil"
+      }
+    },
+    {
+      "id": "nimmu",
+      "name": "Nimmu",
+      "kind": "town",
+      "tier": 2,
+      "source": {
+        "dataset": "published",
+        "lon": 77.3353,
+        "lat": 34.1952,
+        "cite": "Wikipedia, Nimo, Ladakh"
+      }
+    },
+    {
+      "id": "chilling",
+      "name": "Chilling",
+      "kind": "town",
+      "tier": 3,
+      "source": {
+        "dataset": "published",
+        "lon": 77.2167,
+        "lat": 34.0667,
+        "cite": "Wikipedia, Chiling (Zanskar–Indus confluence)"
       }
     }
   ],
@@ -1308,7 +1378,6 @@
           "darcha",
           "atal-tunnel",
           "manali",
-          "mandi",
           "chandigarh"
         ]
       ]
