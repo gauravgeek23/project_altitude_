@@ -27,7 +27,7 @@ Project Altitude is a rider's field guide to **Ladakh and Himachal Pradesh**, bu
 These come from the content blueprint and are not negotiable:
 - **Never invent facts.** That covers current road status, pass elevations, fuel availability, business names, contact numbers, prices, permit rules, medical facilities and journey times.
 - **Unknown fields stay unknown.** They display "Not verified" and are never filled with assumptions.
-- **Every factual field carries a status and sources.** The statuses are `verified`, `sourced`, `editorial` and `needs_verification`.
+- **Every factual field carries a status and sources.** The statuses are `verified`, `sourced`, `editorial` and `needs_verification`. They live in the data (`status`, `sources`, `last_verified` on each record); the place cards no longer print the badge, the "checked online" date or the source list (removed on the creator's request). The legend keeps the Access flag and the "Re-verify" badge used by the emergency contacts and the Gems list.
 - **No sensitive coordinates.** Don't publish coordinates for sensitive wildlife sites or restricted military areas.
 - **Boundaries follow India's official view.** India includes Gilgit-Baltistan and Aksai Chin (as part of Ladakh), the area administered by Pakistan (as part of Jammu & Kashmir), and the Shaksgam valley.
 
@@ -325,7 +325,7 @@ The reading panel separates things by colour, not by lines: the panel is `--pane
   - Type icon and circuit dots in the header.
   - The photo loads only when a card is opened.
   - **"Practical details"** is folded away by default, with a count of filled fields.
-  - Sources and the verification badge at the foot.
+  - "Show on map →" at the foot (or a note that the place has no sourced position yet). Status and sources stay in the record but are not displayed.
 - **Storage:** packing lists, trip plan and km/day are kept in `localStorage`, with every access wrapped in try/catch.
 
 ---

@@ -155,10 +155,6 @@ function Practicals({ p }: { p: PlaceRecord }) {
     </details>
   );
 }
-const STATUS = {
-  verified: { kind: "ok", label: "Verified" }, sourced: { kind: "ok", label: "From published sources" },
-  editorial: { kind: "editorial", label: "Editorial" }, needs_verification: { kind: "verify", label: "Needs verification" },
-} as const;
 function PlaceCard({ p, open, onPlace, innerRef }: { p: PlaceRecord; open: boolean; onPlace(id: string): void; innerRef?: (el: HTMLDetailsElement | null) => void }) {
   const [isOpen, setOpen] = useState(open);
   useEffect(() => { if (open) setOpen(true); }, [open]);
@@ -180,11 +176,7 @@ function PlaceCard({ p, open, onPlace, innerRef }: { p: PlaceRecord; open: boole
         {p.neighbours.length > 0 && <p className="near"><b>Nearby stops.</b> {p.neighbours.map((n, i) => <span key={n}>{i > 0 && " · "}<PlaceLink id={n} onPlace={onPlace} /></span>)}</p>}
         <div className="card-foot">
           {p.mapId && onMap.has(p.mapId) ? <button type="button" className="text-btn" onClick={() => onPlace(p.mapId!)}>Show on map →</button> : <span className="muted">Not on the map yet: position to be sourced</span>}
-          <span className="verify-line"><Badge kind={STATUS[p.status].kind}>{STATUS[p.status].label}</Badge> {p.status === "sourced" ? `Checked online ${p.last_verified}` : `Last verified: ${p.last_verified ?? "not yet"}`}</span>
         </div>
-        {p.sources.length > 0 && (
-          <p className="sources-line">Sources: {p.sources.map((s, i) => <span key={s.url}>{i > 0 && " · "}<a href={s.url} target="_blank" rel="noreferrer">{s.label}</a></span>)}. Not field-verified; confirm locally.</p>
-        )}
       </div>
     </details>
   );
@@ -627,10 +619,7 @@ function Legend() {
 
       <Section title="Labels on cards">
         <div className="legend-grid">
-          <Row sample={<Badge kind="ok">Verified</Badge>} title="Verified">Checked on the ground.</Row>
-          <Row sample={<Badge kind="ok">From published sources</Badge>} title="From published sources">Found in official pages, news or rider guides, with links; not field-checked.</Row>
-          <Row sample={<Badge kind="editorial">Editorial</Badge>} title="Editorial">Our description, not a factual claim.</Row>
-          <Row sample={<Badge kind="verify">Needs verification</Badge>} title="Needs verification">Not checked yet: confirm before relying on it.</Row>
+          <Row sample={<Badge kind="verify">Re-verify before relying on it</Badge>} title="Re-verify">A number or fact not checked recently: confirm it before you rely on it.</Row>
           <Row sample={<Badge kind="warn">Access</Badge>} title="Access restrictions">Permits or restricted areas apply.</Row>
           <Row sample={<span className="unknown">Not verified</span>} title="Not verified">A field we have no checked information for. Never filled with guesses.</Row>
           <Row sample={<span className="legend-chip">≈ 4,522 m</span>} title="Terrain-model height">Read from the elevation model, not an official figure.</Row>
