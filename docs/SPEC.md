@@ -287,10 +287,10 @@ Keyed sources stay hidden until their key is set. Each source shows its attribut
 
 ### Typography
 - **Font:** Helvetica Neue / system sans throughout.
-- **Reading panel:** two paragraph sizes only, set at the end of `app.css`.
-  - **16 px / 28 px:** main reading text, such as paragraphs, leads, card titles and summaries, lists, and section headings.
-  - **14 px / 22 px:** secondary text, such as meta lines, notes, sources, practical facts, card footers, filters and chips.
-  - **Unchanged:** page titles (26 px), small uppercase labels (11–13 px) and badges keep their own sizes.
+- **Reading panel:** two sizes only, set at the end of `app.css`.
+  - **16 px:** titles and headings: page titles, section headings and card titles.
+  - **14 px / 24 px:** all paragraph and body text.
+  - **Unchanged:** small uppercase labels (11–13 px) and badges keep their own sizes.
 - **Nav:** 14 px items, 7 px apart, with 22 px between groups.
 
 ---
