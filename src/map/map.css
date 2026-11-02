@@ -17,6 +17,7 @@
 .circuit .casing { stroke: var(--casing); stroke-width: 5; opacity: .85; }
 .circuit .line { stroke: var(--c); stroke-width: 2.8; }
 .circuit .hit { stroke: transparent; stroke-width: 16; pointer-events: stroke; cursor: pointer; }
+.circuit.top { pointer-events: none; }
 .routes.has-active .circuit:not(.active) .line { opacity: .28; }
 .routes.has-active .circuit:not(.active) .casing { opacity: .25; }
 .circuit.active .line { stroke-width: 4.2; }

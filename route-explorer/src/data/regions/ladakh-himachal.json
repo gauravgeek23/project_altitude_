@@ -1132,7 +1132,7 @@
       "id": "nun",
       "name": "Nun",
       "kind": "peak",
-      "tier": 2,
+      "tier": 1,
       "source": {
         "dataset": "approx",
         "lon": 76.0217,
@@ -1157,7 +1157,7 @@
       "id": "stok-kangri",
       "name": "Stok Kangri",
       "kind": "peak",
-      "tier": 2,
+      "tier": 1,
       "source": {
         "dataset": "approx",
         "lon": 77.45,
@@ -1183,7 +1183,7 @@
       "id": "saser-kangri",
       "name": "Saser Kangri",
       "kind": "peak",
-      "tier": 2,
+      "tier": 1,
       "source": {
         "dataset": "published",
         "lon": 77.7525,
@@ -1222,18 +1222,17 @@
       "kind": "peak",
       "tier": 2,
       "source": {
-        "dataset": "approx",
-        "lon": 78.37,
-        "lat": 31.49,
-        "snap": "peak",
-        "radius": 3
+        "dataset": "published",
+        "lon": 78.3636,
+        "lat": 31.5206,
+        "cite": "Wikipedia, Kinnaur Kailash"
       }
     },
     {
       "id": "reo-purgyil",
       "name": "Reo Purgyil",
       "kind": "peak",
-      "tier": 2,
+      "tier": 1,
       "source": {
         "dataset": "published",
         "lon": 78.7314,
@@ -1575,11 +1574,10 @@
       "kind": "peak",
       "tier": 3,
       "source": {
-        "dataset": "approx",
-        "lon": 77.04,
-        "lat": 32.34,
-        "snap": "peak",
-        "radius": 3
+        "dataset": "published",
+        "lon": 77.0403,
+        "lat": 32.3415,
+        "cite": "Wikidata, Hanuman Tibba"
       }
     },
     {
@@ -1630,6 +1628,501 @@
         "lat": 32.93,
         "snap": "peak",
         "radius": 4
+      }
+    },
+    {
+      "id": "k2",
+      "name": "K2",
+      "kind": "peak",
+      "tier": 0,
+      "source": {
+        "dataset": "published",
+        "lon": 76.5133,
+        "lat": 35.8825,
+        "cite": "Wikipedia, K2"
+      }
+    },
+    {
+      "id": "nanga-parbat",
+      "name": "Nanga Parbat",
+      "kind": "peak",
+      "tier": 0,
+      "source": {
+        "dataset": "published",
+        "lon": 74.589,
+        "lat": 35.237,
+        "cite": "GeoNames, Nanga Parbat"
+      }
+    },
+    {
+      "id": "gasherbrum-i",
+      "name": "Gasherbrum I",
+      "kind": "peak",
+      "tier": 2,
+      "source": {
+        "dataset": "published",
+        "lon": 76.696,
+        "lat": 35.724,
+        "cite": "GeoNames, Gasherbrum I"
+      }
+    },
+    {
+      "id": "gasherbrum-ii",
+      "name": "Gasherbrum II",
+      "kind": "peak",
+      "tier": 2,
+      "source": {
+        "dataset": "published",
+        "lon": 76.6533,
+        "lat": 35.7583,
+        "cite": "Wikipedia, Gasherbrum II"
+      }
+    },
+    {
+      "id": "broad-peak",
+      "name": "Broad Peak",
+      "kind": "peak",
+      "tier": 2,
+      "source": {
+        "dataset": "published",
+        "lon": 76.565,
+        "lat": 35.8117,
+        "cite": "Wikipedia, Broad Peak"
+      }
+    },
+    {
+      "id": "masherbrum",
+      "name": "Masherbrum",
+      "kind": "peak",
+      "tier": 2,
+      "source": {
+        "dataset": "published",
+        "lon": 76.3058,
+        "lat": 35.64,
+        "cite": "Wikipedia, Masherbrum"
+      }
+    },
+    {
+      "id": "rakaposhi",
+      "name": "Rakaposhi",
+      "kind": "peak",
+      "tier": 2,
+      "source": {
+        "dataset": "published",
+        "lon": 74.4892,
+        "lat": 36.1425,
+        "cite": "Wikipedia, Rakaposhi"
+      }
+    },
+    {
+      "id": "haramosh",
+      "name": "Haramosh",
+      "kind": "peak",
+      "tier": 2,
+      "source": {
+        "dataset": "published",
+        "lon": 74.8975,
+        "lat": 35.84,
+        "cite": "Wikipedia, Haramosh Peak"
+      }
+    },
+    {
+      "id": "saltoro-kangri",
+      "name": "Saltoro Kangri",
+      "kind": "peak",
+      "tier": 2,
+      "source": {
+        "dataset": "published",
+        "lon": 76.8487,
+        "lat": 35.3993,
+        "cite": "Wikipedia, Saltoro Kangri"
+      }
+    },
+    {
+      "id": "teram-kangri",
+      "name": "Teram Kangri",
+      "kind": "peak",
+      "tier": 2,
+      "source": {
+        "dataset": "published",
+        "lon": 77.0783,
+        "lat": 35.58,
+        "cite": "Wikipedia, list of mountains in India"
+      }
+    },
+    {
+      "id": "apsarasas-kangri",
+      "name": "Apsarasas Kangri",
+      "kind": "peak",
+      "tier": 2,
+      "source": {
+        "dataset": "published",
+        "lon": 77.1492,
+        "lat": 35.5389,
+        "cite": "Wikipedia, Apsarasas Kangri"
+      }
+    },
+    {
+      "id": "singhi-kangri",
+      "name": "Singhi Kangri",
+      "kind": "peak",
+      "tier": 2,
+      "source": {
+        "dataset": "published",
+        "lon": 76.9836,
+        "lat": 35.5997,
+        "cite": "Wikipedia, list of mountains in India"
+      }
+    },
+    {
+      "id": "rimo-i",
+      "name": "Rimo I",
+      "kind": "peak",
+      "tier": 2,
+      "source": {
+        "dataset": "published",
+        "lon": 77.3689,
+        "lat": 35.355,
+        "cite": "Wikipedia, Rimo Massif"
+      }
+    },
+    {
+      "id": "mamostong-kangri",
+      "name": "Mamostong Kangri",
+      "kind": "peak",
+      "tier": 2,
+      "source": {
+        "dataset": "published",
+        "lon": 77.5775,
+        "lat": 35.1408,
+        "cite": "Wikipedia, Mamostong Kangri"
+      }
+    },
+    {
+      "id": "chong-kumdang-ri",
+      "name": "Chong Kumdang Ri",
+      "kind": "peak",
+      "tier": 2,
+      "source": {
+        "dataset": "published",
+        "lon": 77.585,
+        "lat": 35.194,
+        "cite": "Wikipedia, Chong Kumdang Ri"
+      }
+    },
+    {
+      "id": "saser-kangri-ii",
+      "name": "Saser Kangri II",
+      "kind": "peak",
+      "tier": 2,
+      "source": {
+        "dataset": "published",
+        "lon": 77.805,
+        "lat": 34.8042,
+        "cite": "Wikipedia, Saser Muztagh"
+      }
+    },
+    {
+      "id": "argan-kangri",
+      "name": "Argan Kangri",
+      "kind": "peak",
+      "tier": 2,
+      "source": {
+        "dataset": "published",
+        "lon": 77.9,
+        "lat": 34.606,
+        "cite": "Wikipedia, Argan Kangri"
+      }
+    },
+    {
+      "id": "pinnacle-peak",
+      "name": "Pinnacle Peak",
+      "kind": "peak",
+      "tier": 2,
+      "source": {
+        "dataset": "published",
+        "lon": 76.0806,
+        "lat": 34.0213,
+        "cite": "Wikipedia, Pinnacle Peak (Ladakh)"
+      }
+    },
+    {
+      "id": "golep-kangri",
+      "name": "Golep Kangri",
+      "kind": "peak",
+      "tier": 3,
+      "source": {
+        "dataset": "published",
+        "lon": 77.486667,
+        "lat": 33.936028,
+        "cite": "PeakVisor, Golep Kangri"
+      }
+    },
+    {
+      "id": "matho-kangri",
+      "name": "Matho Kangri",
+      "kind": "peak",
+      "tier": 3,
+      "source": {
+        "dataset": "approx",
+        "lon": 77.5,
+        "lat": 33.9,
+        "snap": "peak",
+        "radius": 3
+      }
+    },
+    {
+      "id": "dzo-jongo",
+      "name": "Dzo Jongo",
+      "kind": "peak",
+      "tier": 3,
+      "source": {
+        "dataset": "published",
+        "lon": 77.573968,
+        "lat": 33.725816,
+        "cite": "PeakVisor, Dzo Jongo West"
+      }
+    },
+    {
+      "id": "chakula",
+      "name": "Chakula",
+      "kind": "peak",
+      "tier": 2,
+      "source": {
+        "dataset": "published",
+        "lon": 78.4417,
+        "lat": 33.3975,
+        "cite": "Wikipedia, Chakula"
+      }
+    },
+    {
+      "id": "spangnak-ri",
+      "name": "Spangnak Ri",
+      "kind": "peak",
+      "tier": 3,
+      "source": {
+        "dataset": "published",
+        "lon": 78.1746,
+        "lat": 33.1258,
+        "cite": "Wikipedia, Spangnak Ri"
+      }
+    },
+    {
+      "id": "kiagar-ri",
+      "name": "Kiagar Ri",
+      "kind": "peak",
+      "tier": 3,
+      "source": {
+        "dataset": "published",
+        "lon": 78.21687,
+        "lat": 33.12386,
+        "cite": "PeakVisor, Kiager Ri"
+      }
+    },
+    {
+      "id": "tiger-hill",
+      "name": "Tiger Hill",
+      "kind": "peak",
+      "tier": 2,
+      "source": {
+        "dataset": "published",
+        "lon": 75.6584,
+        "lat": 34.4844,
+        "cite": "Wikipedia, Tiger Hill (Kargil)"
+      }
+    },
+    {
+      "id": "tololing",
+      "name": "Tololing",
+      "kind": "peak",
+      "tier": 3,
+      "source": {
+        "dataset": "published",
+        "lon": 75.7952,
+        "lat": 34.4709,
+        "cite": "Mapcarta, Tololing Top"
+      }
+    },
+    {
+      "id": "kolahoi",
+      "name": "Kolahoi",
+      "kind": "peak",
+      "tier": 2,
+      "source": {
+        "dataset": "published",
+        "lon": 75.3269,
+        "lat": 34.1644,
+        "cite": "Wikipedia, Kolahoi Peak"
+      }
+    },
+    {
+      "id": "harmukh",
+      "name": "Harmukh",
+      "kind": "peak",
+      "tier": 3,
+      "source": {
+        "dataset": "published",
+        "lon": 74.9019,
+        "lat": 34.4039,
+        "cite": "Wikipedia, Harmukh"
+      }
+    },
+    {
+      "id": "machoi",
+      "name": "Machoi Peak",
+      "kind": "peak",
+      "tier": 3,
+      "source": {
+        "dataset": "published",
+        "lon": 75.5356,
+        "lat": 34.2572,
+        "cite": "Wikipedia, Machoi Peak"
+      }
+    },
+    {
+      "id": "yunam",
+      "name": "Yunam",
+      "kind": "peak",
+      "tier": 2,
+      "source": {
+        "dataset": "published",
+        "lon": 77.405,
+        "lat": 32.819,
+        "cite": "PeakVisor, Yunam"
+      }
+    },
+    {
+      "id": "gepang-goh",
+      "name": "Gepang Goh",
+      "kind": "peak",
+      "tier": 2,
+      "source": {
+        "dataset": "published",
+        "lon": 77.2029,
+        "lat": 32.4861,
+        "cite": "Mapcarta, Gepang Goh"
+      }
+    },
+    {
+      "id": "gangstang",
+      "name": "Gangstang",
+      "kind": "peak",
+      "tier": 3,
+      "source": {
+        "dataset": "approx",
+        "lon": 77.8,
+        "lat": 32.7,
+        "snap": "peak",
+        "radius": 3
+      }
+    },
+    {
+      "id": "phabrang",
+      "name": "Phabrang",
+      "kind": "peak",
+      "tier": 3,
+      "source": {
+        "dataset": "published",
+        "lon": 76.799455,
+        "lat": 32.771987,
+        "cite": "PeakVisor, Phabrang"
+      }
+    },
+    {
+      "id": "kullu-pumori",
+      "name": "Kullu Pumori",
+      "kind": "peak",
+      "tier": 2,
+      "source": {
+        "dataset": "published",
+        "lon": 77.710459,
+        "lat": 32.125342,
+        "cite": "PeakVisor, Kullu Pumori"
+      }
+    },
+    {
+      "id": "papsura",
+      "name": "Papsura",
+      "kind": "peak",
+      "tier": 3,
+      "source": {
+        "dataset": "published",
+        "lon": 77.553684,
+        "lat": 32.212125,
+        "cite": "PeakVisor, Papsura"
+      }
+    },
+    {
+      "id": "indrasan",
+      "name": "Indrasan",
+      "kind": "peak",
+      "tier": 3,
+      "source": {
+        "dataset": "approx",
+        "lon": 77.415,
+        "lat": 32.225,
+        "snap": "peak",
+        "radius": 2.5
+      }
+    },
+    {
+      "id": "jorkanden",
+      "name": "Jorkanden",
+      "kind": "peak",
+      "tier": 2,
+      "source": {
+        "dataset": "published",
+        "lon": 78.3747,
+        "lat": 31.4975,
+        "cite": "Wikipedia, Jorkanden"
+      }
+    },
+    {
+      "id": "rangrik-rang",
+      "name": "Rangrik Rang",
+      "kind": "peak",
+      "tier": 2,
+      "source": {
+        "dataset": "published",
+        "lon": 78.6139,
+        "lat": 31.3537,
+        "cite": "Wikipedia, Rangrik Rang"
+      }
+    },
+    {
+      "id": "leo-pargial",
+      "name": "Leo Pargial",
+      "kind": "peak",
+      "tier": 3,
+      "source": {
+        "dataset": "published",
+        "lon": 78.742497,
+        "lat": 31.901845,
+        "cite": "PeakVisor, Leo Pargial"
+      }
+    },
+    {
+      "id": "shrikhand-mahadev",
+      "name": "Shrikhand Mahadev",
+      "kind": "peak",
+      "tier": 2,
+      "source": {
+        "dataset": "published",
+        "lon": 77.6456,
+        "lat": 31.6596,
+        "cite": "Broken Compass, Shrikhand Kailash"
+      }
+    },
+    {
+      "id": "manimahesh-kailash",
+      "name": "Manimahesh Kailash",
+      "kind": "peak",
+      "tier": 2,
+      "source": {
+        "dataset": "published",
+        "lon": 76.67,
+        "lat": 32.4,
+        "cite": "DBpedia, Manimahesh Kailash Peak"
       }
     }
   ],

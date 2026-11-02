@@ -17,11 +17,13 @@ export const RouteLayer = memo(function RouteLayer({ circuits, path, visible, ac
   const ds = useMemo(() => circuits.map((c) => ({
     c, d: path({ type: "MultiLineString", coordinates: routedSegments(c).map((s) => s.coords!) }) ?? "",
   })), [circuits, path]);
-  // draw the active circuit last so it sits on top where circuits share a road
-  const order = [...ds].sort((a, b) => Number(a.c.id === active) - Number(b.c.id === active));
+  // the hit paths keep their place in the DOM (moving one under the pointer loses its leave event);
+  // the active circuit is drawn again on top, without pointer events, where circuits share a road
+  const shown = ds.filter(({ c }) => visible.has(c.id));
+  const top = active ? shown.find(({ c }) => c.id === active) : undefined;
   return (
     <g className={"routes" + (active ? " has-active" : "")}>
-      {order.filter(({ c }) => visible.has(c.id)).map(({ c, d }) => (
+      {shown.map(({ c, d }) => (
         <g key={c.id} className={"circuit" + (c.id === active ? " active" : "")} style={{ ["--c" as string]: c.color }}>
           <path className="casing" d={d} />
           <path className="line" d={d} />
@@ -32,6 +34,12 @@ export const RouteLayer = memo(function RouteLayer({ circuits, path, visible, ac
           </path>
         </g>
       ))}
+      {top && (
+        <g className="circuit active top" style={{ ["--c" as string]: top.c.color }}>
+          <path className="casing" d={top.d} />
+          <path className="line" d={top.d} />
+        </g>
+      )}
     </g>
   );
 });

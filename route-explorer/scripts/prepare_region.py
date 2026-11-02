@@ -41,6 +41,11 @@ def inside(p, pad=0.0):
     return W - pad <= p[0] <= E + pad and S - pad <= p[1] <= N + pad
 
 
+def on_relief(p):
+    """inside the shaded relief: a published landmark beyond the riding area (K2, Nanga Parbat) still draws there"""
+    return TW <= p[0] <= TE and TS <= p[1] <= TN
+
+
 # ------------------------------------------------------------------ terrain (Web Mercator)
 def mx(lon): return (lon + 180) / 360 * 2 ** Z * 256
 def my(lat):
@@ -470,7 +475,7 @@ def resolve_locations(lake_pts):
         rec = {k: v for k, v in L.items() if k != "source"}
         if s and s["dataset"] == "approx" and s["snap"] == "route": rec["_snap"] = (s["lon"], s["lat"], s["radius"])
         if s and s["dataset"] == "published" and s.get("snap") == "route": rec["_snap"] = (s["lon"], s["lat"], 3.0)
-        if coord and inside(coord):
+        if coord and (inside(coord) or (s and s["dataset"] == "published" and on_relief(coord))):
             rec.update({"lon": round(coord[0], 5), "lat": round(coord[1], 5), "elev": round(elev(*coord)), "source": label})
         else:
             rec.update({"lon": None, "lat": None, "elev": None,

@@ -245,6 +245,8 @@ export const MapCanvas = forwardRef<MapHandle, Props>(function MapCanvas(props, 
     <div className="map-canvas" ref={wrap}>
       <svg ref={svgRef} width={size.w} height={size.h} role="img"
         aria-label={`Map of ${region.data.name} with riding circuits`}
+        onPointerMove={(e) => { if (props.activeCircuit && !(e.target as Element).closest(".routes .hit")) props.onHoverCircuit(null); }}
+        onPointerLeave={() => props.onHoverCircuit(null)}
         onClick={(e) => {
           const el = e.target as Element;
           if (el === svgRef.current || el.tagName === "image" || el.closest(".base") || el.closest(".sat-tiles")) { props.onSelectLocation(null); props.onBackground?.(); }

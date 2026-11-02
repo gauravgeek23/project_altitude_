@@ -113,8 +113,8 @@ export function MapPanel({ selected, circuit, onCircuit, onSelect, onOpenPlace, 
           <input id="map-search" type="search" placeholder="Search villages, passes, lakes" value={q} onChange={(e) => setQ(e.target.value)}
             aria-label="Search the map" autoComplete="off"
             onKeyDown={(e) => { if (e.key === "Enter" && results[0]) { onSelect(results[0].mapId); setQ(""); } }} />
-          <button type="button" className={"sq-btn" + (panel ? " on" : "")} aria-expanded={panel} aria-label="Filters" title="Filters" onClick={() => setPanel(!panel)}><FilterIcon size={17} /></button>
-          <button type="button" className={"sq-btn" + (fuel ? " on" : "")} aria-pressed={fuel} aria-label="Petrol pumps" title={fuel ? "Hide petrol pumps" : "Show petrol pumps"} onClick={() => setFuel(!fuel)}><PlaceIcon kind="fuel" size={17} /></button>
+          <button type="button" className={"sq-btn fuel" + (fuel ? " on" : "")} aria-pressed={fuel} aria-label="Petrol pumps" title={fuel ? "Hide petrol pumps" : "Show petrol pumps"} onClick={() => setFuel(!fuel)}><PlaceIcon kind="fuel" size={17} /></button>
+          <button type="button" className={"sq-btn primary" + (panel ? " on" : "")} aria-expanded={panel} aria-label="Filters" title="Filters" onClick={() => setPanel(!panel)}><FilterIcon size={18} /></button>
         </div>
         {results.length > 0 && (
           <ul className="search-results" role="listbox" aria-label="Places">

@@ -52,7 +52,7 @@ These come from the content blueprint and are not negotiable:
 │   ├── components/
 │   │   ├── Sidebar.tsx       nav rail and mobile drawer, theme toggle in the footer
 │   │   ├── Tabs.tsx          every guide page, including the Map legend
-│   │   ├── MapPanel.tsx      map overlays: search, circuit filter, layers, place card, SOS
+│   │   ├── MapPanel.tsx      map overlays: search, petrol pumps, filters, circuit filter, place card, SOS
 │   │   ├── icons.tsx         the icon language (one SVG path per kind of place)
 │   │   ├── PlacePhoto.tsx    a place's photo with a count; click opens the gallery
 │   │   ├── PrayerFlags.tsx   the prayer flags hung above the logo in the rail (canvas)
@@ -128,7 +128,7 @@ Python needs `numpy`, `scipy`, `Pillow` and `shapely`.
 
 ### 4.2 Region config (`src/data/regions/ladakh-himachal.json`)
 - **`bbox`:** the core area. **`terrainBbox`:** the relief area, `[72.0, 27.6, 81.8, 38.4]`. It covers the whole northern crown, so the map can zoom out that far.
-- **`locations`:** each entry has `id`, `name`, `kind` (`town | pass | peak | lake | poi | via`), an optional `tier` (1–3), an optional `hub`, and a `source`. The `source.dataset` value is one of:
+- **`locations`:** each entry has `id`, `name`, `kind` (`town | pass | peak | lake | poi | via`), an optional `tier` (0–3; 0 = always shown but outside the default framing, used for K2 and Nanga Parbat), an optional `hub`, and a `source`. The `source.dataset` value is one of:
 
 | `dataset` | Meaning |
 |---|---|
@@ -202,15 +202,17 @@ PlaceRecord {
 
 | Feature | Where | Notes |
 |---|---|---|
-| Projection | `MapCanvas.tsx` | Mercator. At zoom 1, every tier-1 stop fits the panel; the relief always covers the panel. |
+| Projection | `MapCanvas.tsx` | Mercator. At zoom 1, every tier-1 stop fits the panel; the relief always covers the panel. Tier-0 places (K2, Nanga Parbat) are drawn but not part of the fit. |
 | Zoom range | `MapCanvas.tsx` | From `minK` (the whole northern crown, 72.3–80.6° E, 32–37.2° N) up to 28×. Panning stops at the relief's edge. |
-| Zoom tiers | `LocationMarkers.tsx` `TIER_ZOOM = [0, 1, 2.2, 4]` | Tier 1 always shows; tier 2 appears from 2.2×, tier 3 from 4×. The selected place always shows. |
+| Zoom tiers | `LocationMarkers.tsx` `TIER_ZOOM = [0, 0, 2.2, 4]` | Tiers 0 and 1 always show; tier 2 appears from 2.2×, tier 3 from 4×. The selected place always shows. |
 | Labels | `LocationMarkers.tsx` | Screen-space pills with the type icon. Placed by priority (selected, then hub, then highlight, then on the active circuit). Hidden when they collide, or fall under the search box, filter bar, controls or scale bar. |
 | Circuit filter | `MapPanel.tsx` | All · Zanskar · Nubra · Changthang · Spiti. Picking a circuit, or clicking its line, shows it alone and frames it. A click on empty map, "All", the same circuit again, or Reset shows all four. |
-| Filters | `MapPanel.tsx` | A square button beside the search box: the map source, and which kinds of place to show (villages and towns, passes, peaks, lakes, landmarks, monasteries). |
-| Petrol pumps | `MapPanel.tsx`, `content/fuel.ts` | The pump button beside Filters marks every pump in `FUEL_STOPS` with a green badge under the place's dot (amber where reports disagree). The card shows the fuel note. |
+| Circuit hover | `RouteLayer.tsx`, `MapCanvas.tsx` | Hovering a line (or a circuit card) lifts that circuit and fades the others; leaving it restores every circuit. The lines keep their DOM order (the active one is redrawn on top as a copy without pointer events), and the SVG clears the hover on any move off a line, so the faded state can't stick. |
+| Search row | `MapPanel.tsx` | Left to right: the search box, the petrol-pump toggle, then **Filters**, the dark primary button (it carries the most weight: the map source and which kinds of place to show, so it reads as the main control). |
+| Filters | `MapPanel.tsx` | The panel under the Filters button: the map source (terrain, satellite sources), and which kinds of place to show (villages and towns, passes, peaks, lakes, landmarks, monasteries). |
+| Petrol pumps | `MapPanel.tsx`, `content/fuel.ts` | The pump button between the search box and Filters marks every pump in `FUEL_STOPS` with a green badge under the place's dot (amber where reports disagree). The card shows the fuel note. |
 | Monasteries | `LocationMarkers.tsx` | Map kind `monastery`: an icon on its own, no tag; the name appears on hover, the card on a click. Tier 2 or 3, so they appear as you zoom in. |
-| Peaks | `LocationMarkers.tsx` | Map kind `peak`: the name in plain text (▲ Name) with no marker, placed where it does not collide; clickable. Tier 2 for the famous summits, 3 for the rest. |
+| Peaks | `LocationMarkers.tsx` | Map kind `peak`: the name in plain text (▲ Name) with no marker, placed where it does not collide; clickable. 59 summits across the riding area and the ranges around it (Ladakh, Zanskar, Nubra and the Saser and Rimo groups, the Karakoram giants, Nanga Parbat, the Kashmir, Lahaul, Kullu, Chamba and Kinnaur summits). Tier 0 for K2 and Nanga Parbat (always on, outside the default frame), tier 1 for Nun, Saser Kangri, Stok Kangri and Reo Purgyil, tier 2 for the other famous summits, 3 for the rest. Published positions may lie outside the location `bbox` as long as they fall on the relief (`on_relief` in `prepare_region.py`). |
 | States | `MapCanvas.tsx` `.region-area` | Hovering Ladakh or Himachal tints it 10% and darkens its name. |
 | Satellite | `MapCanvas.tsx` `SatelliteTiles` | Hybrid view, like Google's: Esri World Imagery, the relief multiplied on top for mountain shading, Esri's road overlay (roads only, no boundaries), city names, and India's official boundaries in white. Tiles load in the reader's browser; attribution switches with it. |
 | Orientation cities | `MapCanvas.tsx` `CITIES` | Srinagar, Jammu, Gilgit, Skardu, Dharamshala, Amritsar, Lahore and others, as plain labels for orientation. Not stops, not clickable. |
@@ -263,14 +265,18 @@ Google strips location data from photos shared by link, so the first selection w
 |---|---|---|---|
 | `--ink` | `#2d2d2d` | `#eceef2` | Text, active states |
 | `--grey` | `#6f7883` | `#9aa3ae` | Secondary text |
-| `--paper` / `--panel` | `#fff` / `#fbfbfb` | `#0d0f12` / `#13161a` | Nav rail / reading panel |
-| `--card` / `--soft` | `#fff` / `#f2f4f6` | `#1a1e24` / `#20252c` | Cards / quiet fills |
-| `--rule` | `#e4e7eb` | `#272c33` | Borders |
+| `--paper` / `--panel` | `#fff` / `#f3f4f6` | `#0d0f12` / `#13161a` | Nav rail / reading panel |
+| `--card` / `--soft` | `#fff` / `#e9ebef` | `#1a1e24` / `#262c34` | Cards / quiet fills inside a card (practical details, card footers, alternate table rows) |
+| `--card-selected` | `#fff3c4` | `#33301f` | The selected card (the map's yellow, softened) |
+| `--rule` | `#e4e7eb` | `#272c33` | Kept for the odd hairline on the map and the legend; the reading panel itself uses no borders (see Surfaces) |
 | `--accent` | `#e3241b` | `#ff4b3e` | Umling La, SOS, compass north |
 | `--float` | white 95% | near-black 92% | Floating map controls |
 | `--on-ink` | `#fff` | `#0d0f12` | Text on an `--ink` surface |
 
-**Map-only tokens** (on `.map-col` and `.legend`): `--town #ffe03a`, `--pass #17181a`, `--lake #4fe3ef`, `--boundary`, `--road`, `--river`, and `--tag-ink`. The tag ink stays dark in both themes, because tags keep their colours.
+**Map-only tokens** (on `.map-col` and `.legend`): `--town #ffe03a`, `--pass #17181a`, `--lake #4fe3ef`, `--boundary`, `--road`, `--river`, and `--tag-ink`. These are the same in both themes: the map is not themed (see Dark mode).
+
+### Surfaces, not strokes
+The reading panel separates things by colour, not by lines: the panel is `--panel` grey, cards are white `--card` on it, and anything quieter inside a card (the practical block, the card footer, stats, alternate rows of a table or itinerary, legend samples) is `--soft`. There are no borders on cards, chips, inputs, callouts or dividers; the selected card turns `--card-selected`, and a circuit card that is on takes a 12% tint of its circuit colour. Keep it that way when adding components: reach for a background tone before a stroke.
 
 ### Icons and metadata
 - `public/icon.svg` is the site mark (redrawn as vector from the original icon). `node scripts/icons.cjs` renders `icon-512.png`, `icon-192.png`, `icon-32.png`, `apple-touch-icon.png` and the 1200×630 social preview `og.png`.
@@ -279,7 +285,7 @@ Google strips location data from photos shared by link, so the first selection w
 ### Dark mode
 - **Toggle:** in the nav footer, and in the mobile top bar.
 - **Default:** follows the system until the reader picks a theme. The pick is saved in `localStorage` (`altitude-theme`), and `index.html` applies it before the first paint.
-- **Map in dark mode:** the relief image is inverted and darkened with a CSS filter, and boundaries, casings and halos flip.
+- **The map is universal:** it is not themed. The relief, every satellite source (Esri, Sentinel-2, NASA Blue Marble, MapTiler, Mapbox, Google), the boundaries, the tags and the peak names look the same in dark mode as in light. Only the floating controls, the search row, the legend swatches and the place card follow the theme.
 
 ### Icon language (`src/components/icons.tsx`)
 - **Glyphs:** village (house), town (gabled hall), pass (saddle with flag), peak (summit with snow line), lake (waves), landmark (pin with star), food (fork and knife).
@@ -326,7 +332,8 @@ Google strips location data from photos shared by link, so the first selection w
 
 ## 10. Known gaps and next steps
 
-- **Positions still to verify:** Nurbula, Hamta Pass, Stok Kangri, Kang Yatse, Deo Tibba, the Kinnaur Kailash range, Hikkim, Chicham, Losar, Batal, Rumtse and Tsaga La are approximate, and marked "verify" in their source text. Parkachik and Bogdang have no position yet.
+- **Positions still to verify:** Nurbula, Hamta Pass, Stok Kangri, Kang Yatse, Deo Tibba, Hikkim, Chicham, Losar, Batal, Rumtse and Tsaga La are approximate, and marked "verify" in their source text; so are the summits Matho Kangri, Gangstang, Indrasan, Mentok Kangri and Friendship Peak, and the monastery at Sani. The published peak positions come from Wikipedia, GeoNames, PeakVisor, Mapcarta and DBpedia and have not been checked against a survey sheet. Parkachik and Bogdang have no position yet.
+- **Peaks beyond the riding area:** K2, Broad Peak, the Gasherbrums, Masherbrum, Rakaposhi, Haramosh and Nanga Parbat are shown for the skyline on the crown view. Drop them from the region config if the map should stay with the ridable ranges.
 - **Approximate geometry:** the Nimmu–Padum road and the Nubra valley legs follow valley floors on the terrain model, not surveyed road lines. Replace them when road data is available.
 - **Practical fields:** about 35 places have sourced fuel, medical, network or stay facts; the rest show "Not verified".
 - **Restaurants:** "Handpicked places" on Eat & Drink is waiting for the creator's picks.
