@@ -101,10 +101,14 @@ details.card.selected { border-color: var(--ink); box-shadow: 0 0 0 1px var(--in
 .table small { color: var(--grey); }
 
 /* emergency */
-.numbers { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 210px), 1fr)); gap: 10px; margin-top: 24px; }
-.number { display: flex; gap: 14px; align-items: center; text-decoration: none; background: #fff; border: 1px solid var(--rule); border-radius: 10px; padding: 12px 16px; line-height: 20px; }
+.numbers { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr)); gap: 10px; margin-top: 24px; }
+.number { display: flex; flex-direction: column; gap: 6px; align-items: stretch; min-width: 0; text-decoration: none; background: #fff; border: 1px solid var(--rule); border-radius: 10px; padding: 12px 16px; line-height: 20px; }
 .number:hover { border-color: var(--ink); }
-.number .num { font-size: 24px; font-weight: 500; color: var(--accent); font-variant-numeric: tabular-nums; min-width: 52px; }
+.number .num { font-size: 20px; line-height: 26px; font-weight: 500; color: var(--accent); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.number .num.text { font-size: 15px; line-height: 22px; color: var(--ink); white-space: normal; }
+.number .who { display: grid; gap: 4px; min-width: 0; overflow-wrap: anywhere; }
+.number .who b { font-weight: 500; color: var(--ink); }
+.number .who .badge { justify-self: start; margin-top: 2px; }
 .number small { display: block; color: var(--grey); font-size: 12px; }
 .two-col { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 16px; }
 .danger h3 { color: var(--accent); }
@@ -273,9 +277,6 @@ fieldset.card legend .meta { margin: 0; }
 .coords output { font-variant-numeric: tabular-nums; font-size: 14px; color: var(--ink); }
 .range { display: grid; gap: 6px; margin: 14px 0; max-width: 420px; }
 .range input { accent-color: var(--ink); }
-.number .who { display: grid; gap: 2px; }
-.number .who .badge { justify-self: start; }
-.number .num { font-size: 18px; min-width: 120px; }
 
 /* ---------------- map overlays */
 .map-search { position: absolute; left: max(14px, env(safe-area-inset-left, 0px)); top: 14px; width: min(340px, calc(100% - 90px)); z-index: 4; display: grid; gap: 6px; }
@@ -314,9 +315,7 @@ fieldset.card legend .meta { margin: 0; }
   .route-note { display: none; }
 }
 
-.number .num { white-space: nowrap; min-width: 132px; }
 .map-card.docked { bottom: 76px; }
-@media (max-width: 560px) { .number { flex-wrap: wrap; } }
 
 .sources-line { margin: 8px 0 0; font-size: 12px; line-height: 18px; color: var(--grey); }
 .sources-line a { color: var(--grey); }

@@ -315,7 +315,7 @@ function Emergency() {
       <Head eyebrow="Emergency" title={G.EMERGENCY.title} />
       <div className="numbers">
         {G.CONTACTS.map((c) => {
-          const inner = (<><span className="num">{c.contact}</span><span className="who"><b>{c.service}</b><small>{c.notes}. Source: {c.source}.</small>
+          const inner = (<><span className={c.tel ? "num" : "num text"}>{c.contact}</span><span className="who"><b>{c.service}</b><small>{c.notes}. Source: {c.source}.</small>
             {c.status !== "verified" && <Badge kind="verify">Re-verify before relying on it</Badge>}</span></>);
           return c.tel ? <a key={c.service} className="number" href={`tel:${c.tel}`}>{inner}</a> : <div key={c.service} className="number">{inner}</div>;
         })}
