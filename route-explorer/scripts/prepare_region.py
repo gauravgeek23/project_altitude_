@@ -418,6 +418,8 @@ def resolve_locations(lake_pts):
             elif ds == "osm-road": coord, label = osm_road(s["key"])
             elif ds == "geonames": coord, label = geonames(s["key"], s["admin1"])
             elif ds == "terrain-pass": coord, label = terrain_pass(s)
+            elif ds == "terrain-saddle": coord, label = terrain_saddle(s)
+            elif ds == "published": coord, label = (s["lon"], s["lat"]), f"Published position: {s['cite']}"
             elif ds == "terrain-lake":
                 puga, _ = osm_settlement(342114939)
                 coord, label = terrain_lake(L["name"], lake_pts, puga)
@@ -430,6 +432,66 @@ def resolve_locations(lake_pts):
         out.append(rec)
     print("locations", sum(1 for r in out if r["lon"] is not None), "placed,", sum(1 for r in out if r["lon"] is None), "missing")
     return out
+
+
+def _pix(lon, lat): return int(my(lat) - MY0), int(mx(lon) - MX0)
+def _ll(i, j): return ((j + MX0) / (2 ** Z * 256) * 360 - 180, lat_of(i + MY0))
+
+
+def _window(a, b, pad=0.12):
+    i0, j0 = _pix(min(a[0], b[0]) - pad, max(a[1], b[1]) + pad)
+    i1, j1 = _pix(max(a[0], b[0]) + pad, min(a[1], b[1]) - pad)
+    return max(i0, 0), max(j0, 0), min(i1, M.shape[0]), min(j1, M.shape[1])
+
+
+def terrain_saddle(src):
+    """The lowest crossing between two valley points: the highest pixel on the path that keeps
+    its highest point lowest. Used for passes no dataset places."""
+    a, b = tuple(src["from"]), tuple(src["to"])
+    i0, j0, i1, j1 = _window(a, b, 0.05)
+    sub = M[i0:i1, j0:j1]; H, W_ = sub.shape
+    s = (_pix(*a)[0] - i0, _pix(*a)[1] - j0); g = (_pix(*b)[0] - i0, _pix(*b)[1] - j0)
+    best = {s: (sub[s], 0)}; pq = [(float(sub[s]), 0, s)]; prev = {}
+    while pq:
+        m, d, u = heapq.heappop(pq)
+        if u == g: break
+        if best[u] != (m, d): continue
+        for di in (-1, 0, 1):
+            for dj in (-1, 0, 1):
+                v = (u[0] + di, u[1] + dj)
+                if (di or dj) and 0 <= v[0] < H and 0 <= v[1] < W_:
+                    c = (max(m, float(sub[v])), d + 1)
+                    if v not in best or c < best[v]: best[v] = c; prev[v] = u; heapq.heappush(pq, (*c, v))
+    path = [g]
+    while path[-1] != s: path.append(prev[path[-1]])
+    k = max(path, key=lambda q: sub[q])
+    lon, lat = _ll(k[0] + i0, k[1] + j0)
+    return (lon, lat), f"Derived: the lowest crossing on the terrain model between {src['between']} ({round(float(sub[k]))} m), verify"
+
+
+def terrain_path(a, b):
+    """A valley-following line between two points: least-cost path over the terrain model,
+    where climbing and height cost extra. For legs with no road data and no drawn stroke."""
+    i0, j0, i1, j1 = _window(a, b)
+    sub = M[i0:i1, j0:j1].astype(np.float64); H, W_ = sub.shape
+    s = (_pix(*a)[0] - i0, _pix(*a)[1] - j0); g = (_pix(*b)[0] - i0, _pix(*b)[1] - j0)
+    px = 40075000 * math.cos(math.radians((a[1] + b[1]) / 2)) / (2 ** Z * 256)
+    low = min(sub[s], sub[g])
+    dist = {s: 0.0}; pq = [(0.0, s)]; prev = {}
+    while pq:
+        d, u = heapq.heappop(pq)
+        if u == g: break
+        if d > dist[u]: continue
+        for di in (-1, 0, 1):
+            for dj in (-1, 0, 1):
+                v = (u[0] + di, u[1] + dj)
+                if not (di or dj) or not (0 <= v[0] < H and 0 <= v[1] < W_): continue
+                step = px * math.hypot(di, dj); dz = sub[v] - sub[u]
+                c = step * (1 + 40 * (dz / step) ** 2 + max(0.0, sub[v] - low) / 600)
+                if d + c < dist.get(v, 1e18): dist[v] = d + c; prev[v] = u; heapq.heappush(pq, (d + c, v))
+    path = [g]
+    while path[-1] != s: path.append(prev[path[-1]])
+    return [a] + [_ll(i + i0, j + j0) for i, j in reversed(path[1:-1])] + [b]
 
 
 # ------------------------------------------------------------------ circuits
@@ -488,6 +550,16 @@ def boundaries():
                 for run in runs_inside(l, pad=2.0):
                     out.append({"kind": kind, "cls": cls, "name": note, "left": p.get("ADM0_LEFT") or p.get("BRK_A3"),
                                 "right": p.get("ADM0_RIGHT"), "c": [[round(x, 4), round(y, 4)] for x, y in dp(run, 0.05)]})
+    # state and union-territory lines inside India (Natural Earth admin-1), e.g. Ladakh | Himachal Pradesh
+    d = json.load(open(f"{RAW}/ne-admin1/lines.geojson"))
+    for ft in d["features"]:
+        p = ft["properties"]; g = ft["geometry"]
+        if p["ADM0_A3"] != "IND" or not p["FEATURECLA"].startswith("Admin-1"): continue
+        for l in ([g["coordinates"]] if g["type"] == "LineString" else g["coordinates"]):
+            for run in runs_inside(l, pad=2.0):
+                if len(run) < 2: continue
+                out.append({"kind": "state", "cls": "Admin-1 boundary", "name": f"{p['NAME_L']} | {p['NAME_R']}",
+                            "left": p["NAME_L"], "right": p["NAME_R"], "c": [[round(x, 4), round(y, 4)] for x, y in dp(run, 0.02)]})
     print("boundary lines", len(out), sorted({(o["kind"], o["cls"], o["name"]) for o in out}))
     return out
 
@@ -506,7 +578,7 @@ def main():
     if CFG.get("reference"):
         sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
         from reference_trace import trace_circuits
-        circuits, warp_info = trace_circuits(CFG, locs, (pos, adj, nearest_node, shortest), hav, dp)
+        circuits, warp_info = trace_circuits(CFG, locs, (pos, adj, nearest_node, shortest), hav, dp, terrain_path)
         for l in locs:
             if l["lon"] is not None and l["elev"] is None: l["elev"] = round(elev(l["lon"], l["lat"]))
     else:
@@ -522,7 +594,7 @@ def main():
                {"name": "Terrain Tiles (AWS Open Data; SRTM, GMTED and others)", "use": "Shaded relief, elevations, lakes, rivers, derived passes"},
                {"name": "OpenStreetMap contributors (ODbL)", "use": "Himachal trunk and primary roads; settlements; Atal Tunnel"},
                {"name": "scroll-route-demo by Aditya Sharma (MIT)", "use": "Road-following route lines and named checkpoints"},
-               {"name": "Natural Earth 1:10m (public domain)", "use": "International boundary lines as published, claim lines, reservoirs"},
+               {"name": "Natural Earth 1:10m (public domain)", "use": "International boundary lines as published, claim lines, state and union-territory lines, reservoirs"},
                {"name": "GeoNames cities1000 (CC BY 4.0)", "use": "Mandi; basemap dots used to place your reference map"},
                {"name": "Your reference map (Proj Altitude circuits)", "use": "Which roads each circuit takes; lines where no road data exists; places no dataset has"}]}
     s = json.dumps(out, separators=(",", ":"))

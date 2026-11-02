@@ -35,7 +35,7 @@ PX = {
     "siachen-bc": (536, 242), "turtuk": (419, 373), "wari-la": (742, 590), "hemis": (705, 728),
     "chang-la": (817, 661), "durbuk": (862, 680), "maan": (975, 800), "@changthang-fork": (1059, 991),
     "photi-la": (1128, 1052), "umling-la": (1222, 1140), "demchok": (1254, 1184), "hanle": (1090, 1165),
-    "nurbula": (1145, 1215), "nyoma": (940, 975), "@tso-kar-fork": (858, 985), "taglang-la": (783, 935),
+    "nurbula": (1145, 1215), "nyoma": (940, 975), "loma": (990, 985), "@tso-kar-fork": (858, 985), "taglang-la": (783, 935),
     "karzok": (864, 1084), "lachalung-la": (722, 990), "nakee-la": (673, 1028), "baralacha-la": (605, 1162),
     "darcha": (463, 1243), "atal-tunnel": (515, 1283), "manali": (510, 1395),
     "fotu-la": (400, 585), "lamayuru": (368, 583), "kargil": (207, 495), "satso-lake": (150, 665), "pensi-la": (300, 790),
@@ -55,10 +55,10 @@ CONTROL = ["kargil", "leh", "chandigarh", "padum", "darcha", "karzok", "mandi", 
 DRAWN = {
     "nubra": [["leh", "khardung-la", "diskit"], ["diskit", "panamik", "siachen-bc"], ["diskit", "turtuk"],
               ["diskit", "wari-la", "hemis"], ["hemis", "leh"]],
-    "changthang": [["leh", "hemis", "chang-la", "durbuk", "maan", "@changthang-fork"],
-                   ["@changthang-fork", "photi-la", "umling-la", "demchok"],
-                   ["@changthang-fork", "hanle", "nurbula", "demchok"],
-                   ["taglang-la", "@tso-kar-fork", "nyoma", "@changthang-fork"], ["@tso-kar-fork", "karzok"],
+    "changthang": [["leh", "hemis", "chang-la", "durbuk", "maan", "loma"],
+                   ["loma", "hanle", "nurbula", "demchok"],
+                   ["hanle", "photi-la", "umling-la"],
+                   ["taglang-la", "@tso-kar-fork", "nyoma", "loma"], ["@tso-kar-fork", "karzok"],
                    ["taglang-la", "hemis"],
                    ["taglang-la", "lachalung-la", "nakee-la", "baralacha-la", "darcha", "atal-tunnel", "manali"]],
     "zanskar": [["leh", "fotu-la", "kargil", "satso-lake", "pensi-la", "padum"], ["padum", "zangla"],
@@ -67,3 +67,7 @@ DRAWN = {
               ["kaza", "komik"], ["tabo", "gue"], ["kalpa", "chitkul"],
               ["atal-tunnel", "manali", "@aut", "jibhi", "narkanda"]],
 }
+
+# Legs with neither road data nor a usable stroke on the drawing (the drawn line there
+# was read onto the wrong road). They follow the valleys of the terrain model instead.
+TERRAIN_LEGS = {("diskit", "wari-la"), ("loma", "hanle"), ("hanle", "photi-la"), ("photi-la", "umling-la")}

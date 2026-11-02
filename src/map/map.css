@@ -59,6 +59,11 @@
 /* while a circuit is highlighted, other places step back without going unreadable */
 .locations.has-active .loc:not(.on-active):not(.selected) { opacity: .45; }
 .loc.off:not(.selected) { opacity: .6; }
+/* state and union-territory lines and names */
+.boundary.state { stroke: #232c40; stroke-width: 1.4px; opacity: .9; }
+.boundary.state.casing { stroke: #3b5b9a; stroke-width: 7px; opacity: .16; }
+.states text { font-family: var(--display); font-weight: 600; font-size: 11.5px; letter-spacing: .32em; fill: #2f3a4e; opacity: .62; text-anchor: middle;
+  paint-order: stroke; stroke: rgba(255,255,255,.8); stroke-width: 3px; stroke-linejoin: round; pointer-events: none; }
 /* country names */
 .countries text { font-family: var(--display); font-weight: 600; font-size: 13px; letter-spacing: .42em; fill: #5d6066; opacity: .78; text-anchor: middle;
   paint-order: stroke; stroke: rgba(255,255,255,.85); stroke-width: 3px; stroke-linejoin: round; pointer-events: none; }

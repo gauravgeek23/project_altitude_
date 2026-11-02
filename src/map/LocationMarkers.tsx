@@ -38,7 +38,7 @@ export function LocationMarkers({ region, project, transform, size, selected, ac
 
   // keep labels clear of the scale bar (bottom left) and the zoom buttons (top right)
   // keep labels clear of the search box (top left) too
-  const placed: [number, number, number, number][] = [[0, size.h - 62, 190, size.h], [size.w - 64, 0, size.w, 150], [0, 0, Math.min(430, size.w - 70), 60]];
+  const placed: [number, number, number, number][] = [[0, size.h - 62, 190, size.h], [size.w - 64, 0, size.w, 150], [0, 0, Math.min(430, size.w - 70), 60], [0, 60, Math.min(480, size.w - 64), 104]];
   const shown = new Set<string>();
   for (const i of [...items].sort((a, b) => b.priority - a.priority)) {
     const w = i.l.name.length * CHAR_W + 20;

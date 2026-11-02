@@ -28,7 +28,7 @@ export interface Segment {
   status: SegmentStatus;
   km?: number;
   /** road: real road geometry; traced: your reference map's line; gap: straight join where a label covers the line */
-  source?: "road" | "traced" | "gap";
+  source?: "road" | "traced" | "terrain" | "gap";
   note?: string;
   reason?: string;
   coords?: Coord[];

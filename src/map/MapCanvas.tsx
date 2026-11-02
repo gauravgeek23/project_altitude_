@@ -21,6 +21,8 @@ interface Props {
   onHoverCircuit(id: string | null): void;
   onSelectCircuit(id: string): void;
   onSelectLocation(id: string | null): void;
+  /** a click on empty map */
+  onBackground?(): void;
   onScale?(kmPerPx: number): void;
   kinds?: Set<string>;
 }
@@ -30,6 +32,12 @@ const COUNTRIES: { name: string; at: [number, number] }[] = [
   { name: "INDIA", at: [76.2, 31.5] },        // Kangra and Hamirpur hills
   { name: "PAKISTAN", at: [74.85, 32.35] },   // Pakistani Punjab, near Narowal
   { name: "CHINA", at: [79.95, 32.2] },       // Ngari, Tibet
+];
+
+/** State and union-territory names, on either side of the Ladakh | Himachal Pradesh line. */
+const STATES: { name: string; at: [number, number] }[] = [
+  { name: "LADAKH", at: [78.2, 34.4] },               // the Shyok valley east of Diskit
+  { name: "HIMACHAL PRADESH", at: [77.55, 31.93] },   // Pin valley and the Great Himalayan park, clear of the routes
 ];
 
 const reduceMotion = typeof matchMedia !== "undefined" && matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -48,9 +56,9 @@ const BaseLayers = memo(function BaseLayers({ region, path, project, showClaims 
   }), [path]);
   const rivers = useMemo(() => [0, 1, 2, 3].map((w) => line(data.rivers.filter((r) => r.w === w).map((r) => r.c))), [path]);
   const bounds = useMemo(() => {
-    const by: Record<string, Coord[][]> = { international: [], contested: [], claim: [] };
+    const by: Record<string, Coord[][]> = { international: [], contested: [], claim: [], state: [] };
     for (const b of data.boundaries) by[styleOf(b)].push(b.c);
-    return { international: line(by.international), contested: line(by.contested), claim: line(by.claim) };
+    return { international: line(by.international), contested: line(by.contested), claim: line(by.claim), state: line(by.state) };
   }, [path]);
   return (
     <g className="base">
@@ -60,6 +68,8 @@ const BaseLayers = memo(function BaseLayers({ region, path, project, showClaims 
       <path className="road trunk" d={roads.trunk} />
       <path className="road route" d={roads.route} />
       {showClaims && <path className="boundary claim" d={bounds.claim} />}
+      <path className="boundary state casing" d={bounds.state} />
+      <path className="boundary state" d={bounds.state} />
       <path className="boundary contested casing" d={bounds.contested} />
       <path className="boundary contested" d={bounds.contested} />
       <path className="boundary international casing" d={bounds.international} />
@@ -147,11 +157,21 @@ export const MapCanvas = forwardRef<MapHandle, Props>(function MapCanvas(props, 
     <div className="map-canvas" ref={wrap}>
       <svg ref={svgRef} width={size.w} height={size.h} role="img"
         aria-label={`Map of ${region.data.name} with riding circuits`}
-        onClick={(e) => { if (e.target === svgRef.current || (e.target as Element).tagName === "image") props.onSelectLocation(null); }}>
+        onClick={(e) => {
+          const el = e.target as Element;
+          if (el === svgRef.current || el.tagName === "image" || el.closest(".base")) { props.onSelectLocation(null); props.onBackground?.(); }
+        }}>
         <g transform={t.toString()}>
           <BaseLayers region={region} path={path} project={project} showClaims={props.showClaims} />
           <RouteLayer circuits={region.data.circuits} path={path} visible={props.visible} active={props.activeCircuit}
             onHover={props.onHoverCircuit} onSelect={props.onSelectCircuit} />
+        </g>
+        <g className="states" aria-hidden="true">
+          {STATES.map((c) => {
+            const [x, y] = t.apply(project(c.at)!);
+            if (x < 40 || x > size.w - 40 || y < 70 || y > size.h - 50) return null;
+            return <text key={c.name} x={x} y={y}>{c.name}</text>;
+          })}
         </g>
         <g className="countries" aria-hidden="true">
           {COUNTRIES.map((c) => {

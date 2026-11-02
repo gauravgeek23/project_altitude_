@@ -4,10 +4,11 @@ import type { BoundaryLine } from "./types";
  * Natural Earth publishes each line with a class. They are drawn as published:
  * the class decides the style, nothing is merged, moved or traced.
  */
-export type BoundaryStyle = "international" | "contested" | "claim";
+export type BoundaryStyle = "international" | "contested" | "claim" | "state";
 
 export function styleOf(b: BoundaryLine): BoundaryStyle {
   if (b.kind === "claim") return "claim";
+  if (b.kind === "state") return "state";
   return b.cls === "International boundary" ? "international" : "contested";
 }
 

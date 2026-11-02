@@ -9,6 +9,7 @@ import "../map/map.css";
 interface Props {
   selected: string | null;
   circuit: CircuitId | null;
+  onCircuit(id: CircuitId | null): void;
   onSelect(id: string | null): void;
   onOpenPlace(id: string): void;
   onEmergency(): void;
@@ -21,13 +22,19 @@ const CATEGORIES: { id: string; label: string }[] = [
   { id: "town", label: "Villages & towns" }, { id: "pass", label: "Passes" }, { id: "lake", label: "Lakes" }, { id: "poi", label: "Landmarks" },
 ];
 const fmt = (n: number) => n.toLocaleString("en-IN");
+const ALL_CIRCUITS = new Set(region.data.circuits.map((c) => c.id));
+// each circuit's extent, for zooming to it when it is picked
+const CIRCUIT_BOUNDS = Object.fromEntries(region.data.circuits.map((c) => {
+  const pts = c.legs.flatMap((l) => l.segments.flatMap((s) => s.coords ?? []));
+  const xs = pts.map((p) => p[0]), ys = pts.map((p) => p[1]);
+  return [c.id, [[Math.min(...xs), Math.min(...ys)], [Math.max(...xs), Math.max(...ys)]] as [[number, number], [number, number]]];
+}));
 
 /** The route map in the right panel, with search, circuit toggles, category filters and a place card. */
-export function MapPanel({ selected, circuit, onSelect, onOpenPlace, onEmergency }: Props) {
+export function MapPanel({ selected, circuit, onCircuit, onSelect, onOpenPlace, onEmergency }: Props) {
   const map = useRef<MapHandle>(null);
   const [hover, setHover] = useState<string | null>(null);
   const [kmPerPx, setKmPerPx] = useState(1);
-  const [visible, setVisible] = useState<Set<string>>(() => new Set(region.data.circuits.map((c) => c.id)));
   const [kinds, setKinds] = useState<Set<string>>(() => new Set(CATEGORIES.map((c) => c.id)));
   const [q, setQ] = useState("");
   const [panel, setPanel] = useState(false);
@@ -40,8 +47,16 @@ export function MapPanel({ selected, circuit, onSelect, onOpenPlace, onEmergency
     const d = 0.4;
     map.current?.fitTo([[l.lon - d, l.lat - d], [l.lon + d, l.lat + d]], 10);
   }, [selected]);
-  // a circuit picked in the guide is always shown
-  useEffect(() => { if (circuit && !visible.has(circuit)) setVisible((v) => new Set(v).add(circuit)); }, [circuit]);
+  // a picked circuit (here or in the guide) is shown on its own and framed; none picked shows all four
+  useEffect(() => {
+    if (circuit) map.current?.fitTo(CIRCUIT_BOUNDS[circuit], 6);
+  }, [circuit]);
+  const visible = useMemo(() => (circuit ? new Set<string>([circuit]) : ALL_CIRCUITS), [circuit]);
+  const pick = (id: CircuitId | null) => {
+    if (id === circuit) id = null;
+    onCircuit(id);
+    if (!id) map.current?.reset();
+  };
 
   // names that start with the query first, then names containing it, then region matches
   const results = useMemo(() => {
@@ -59,9 +74,21 @@ export function MapPanel({ selected, circuit, onSelect, onOpenPlace, onEmergency
   const elev = selected ? terrain[selected] : undefined;
   return (
     <div className="map-area">
-      <MapCanvas ref={map} region={region} visible={visible} activeCircuit={hover ?? circuit} selectedLocation={selected}
-        showClaims={false} onHoverCircuit={setHover} onSelectCircuit={() => undefined} kinds={kinds}
-        onSelectLocation={onSelect} onScale={setKmPerPx} />
+      <MapCanvas ref={map} region={region} visible={visible} activeCircuit={circuit ?? hover} selectedLocation={selected}
+        showClaims={false} onHoverCircuit={setHover} onSelectCircuit={(id) => { if (id !== circuit) pick(id as CircuitId); }} kinds={kinds}
+        onSelectLocation={onSelect} onScale={setKmPerPx}
+        onBackground={() => { if (circuit) pick(null); }} />
+
+      <div className="circuit-filter" role="toolbar" aria-label="Show circuits" onPointerDown={(e) => e.stopPropagation()}>
+        <button type="button" className={"cf" + (!circuit ? " on" : "")} aria-pressed={!circuit} onClick={() => pick(null)}>All</button>
+        {CIRCUIT_ORDER.map((c) => (
+          <button key={c} type="button" className={"cf" + (circuit === c ? " on" : "")} aria-pressed={circuit === c}
+            style={{ ["--c" as string]: CIRCUIT_META[c].color }} onClick={() => pick(c)}
+            onPointerEnter={() => setHover(c)} onPointerLeave={() => setHover(null)}>
+            <span className="dot" />{CIRCUIT_META[c].name}
+          </button>
+        ))}
+      </div>
 
       <div className="map-search" onPointerDown={(e) => e.stopPropagation()}>
         <div className="search-row">
@@ -81,11 +108,6 @@ export function MapPanel({ selected, circuit, onSelect, onOpenPlace, onEmergency
         )}
         {panel && (
           <div className="layers">
-            <p className="layers-title">Circuits</p>
-            <div className="chips">{CIRCUIT_ORDER.map((c) => (
-              <button key={c} type="button" className={"chip" + (visible.has(c) ? " on" : "")} aria-pressed={visible.has(c)} style={{ ["--c" as string]: CIRCUIT_META[c].color }}
-                onClick={() => toggle(visible, c, setVisible)}><span className="dot" />{CIRCUIT_META[c].name}</button>
-            ))}</div>
             <p className="layers-title">Show</p>
             <div className="chips">{CATEGORIES.map((c) => (
               <button key={c.id} type="button" className={"chip" + (kinds.has(c.id) ? " on" : "")} aria-pressed={kinds.has(c.id)}
@@ -97,7 +119,7 @@ export function MapPanel({ selected, circuit, onSelect, onOpenPlace, onEmergency
       </div>
 
       <MapControls kmPerPx={kmPerPx} onZoomIn={() => map.current?.zoomIn()} onZoomOut={() => map.current?.zoomOut()}
-        onReset={() => { map.current?.reset(); onSelect(null); }} />
+        onReset={() => { map.current?.reset(); onSelect(null); onCircuit(null); }} />
       <button type="button" className="sos" onClick={onEmergency} aria-label="Emergency information">SOS</button>
 
       {sel && (

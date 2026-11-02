@@ -15,7 +15,7 @@ from scipy.interpolate import RBFInterpolator
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 from georef import merc, ROOT                       # noqa: E402
-from reference_points import BASEMAP_DOTS, LABELS, PX, CONTROL, DRAWN   # noqa: E402
+from reference_points import BASEMAP_DOTS, LABELS, PX, CONTROL, DRAWN, TERRAIN_LEGS   # noqa: E402
 
 TRACED = f"{ROOT}/data/raw/reference/traced_px.json"
 
@@ -99,7 +99,7 @@ def build_warp(locs, traced, snap):
 
 
 # ------------------------------------------------------------------ circuits
-def trace_circuits(cfg, locs, road, hav, dp):
+def trace_circuits(cfg, locs, road, hav, dp, terrain_path=None):
     """road: (pos, adj, nearest_node, shortest) from the main script."""
     pos, gadj, nearest_node, shortest = road
     traced = json.load(open(TRACED))
@@ -143,6 +143,14 @@ def trace_circuits(cfg, locs, road, hav, dp):
         segs = []
         for run in DRAWN[c["id"]]:
             for a, b in zip(run, run[1:]):
+                if (a, b) in TERRAIN_LEGS and terrain_path:
+                    # no road data and no usable stroke: follow the valleys on the terrain model
+                    A, B = (by[a]["lon"], by[a]["lat"]), (by[b]["lon"], by[b]["lat"])
+                    geom = straighten(dp(chaikin(dp(terrain_path(A, B), 0.25), 3), 0.04), hav, dp)
+                    km = sum(hav(p, q) for p, q in zip(geom, geom[1:]))
+                    segs.append({"from": a, "to": b, "status": "ok", "source": "terrain", "km": round(km, 1),
+                                 "coords": [[round(x, 5), round(y, 5)] for x, y in geom]})
+                    continue
                 ia, pa = snap(c["id"], PX[a]); ib, pb = snap(c["id"], PX[b])
                 A, B = coord(a, pa), coord(b, pb)
                 px_path = None
