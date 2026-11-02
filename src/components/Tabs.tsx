@@ -159,7 +159,7 @@ function Practicals({ p }: { p: PlaceRecord }) {
 function PlaceCard({ p, open, onPlace, innerRef }: { p: PlaceRecord; open: boolean; onPlace(id: string): void; innerRef?: (el: HTMLDetailsElement | null) => void }) {
   const [isOpen, setOpen] = useState(open);
   useEffect(() => { if (open) setOpen(true); }, [open]);
-  // a card with a photo shows the photo while closed, and its context once opened; one without shows the context
+  // the header: name, kind and context on the left; a portrait thumbnail of the place's photo on the right
   const photo = hasPhotos(p.id);
   return (
     <details ref={innerRef} className={"card place" + (open ? " selected" : "") + (photo ? " with-photo" : "")} id={`place-${p.id}`} open={open || undefined}
@@ -168,13 +168,11 @@ function PlaceCard({ p, open, onPlace, innerRef }: { p: PlaceRecord; open: boole
         <span className="card-title">{p.name}{p.aka && <small className="muted"> {p.aka}</small>}</span>
         <span className="card-marks"><span className={`type-icon ${p.type}`} title={TYPE_LABEL[p.type]}><PlaceIcon kind={p.type} size={15} title={TYPE_LABEL[p.type]} /></span><Dots ids={p.circuits} /><span className="card-chev" aria-hidden="true"><ChevronIcon /></span></span>
         <span className="meta">{TYPE_LABEL[p.type]} · {p.region}</span>
-        {photo
-          ? <span className="card-photo" onClick={(e) => { if (isOpen) e.preventDefault(); }}><PlacePhoto id={p.id} alt={p.name} interactive={isOpen} /></span>
-          : <span className="summary-text">{p.summary}</span>}
+        <span className="summary-text">{p.summary}</span>
         {p.access && <span className="access-flag"><Badge kind="warn">Access</Badge> Restrictions apply</span>}
+        {photo && <span className="card-thumb" onClick={(e) => { if (isOpen) e.preventDefault(); }}><PlacePhoto id={p.id} alt={p.name} interactive={isOpen} caption={false} className="place-photo thumb" /></span>}
       </summary>
       <div className="card-body">
-        {photo && <p className="muted">{p.summary}</p>}
         {p.why && <p><b>Why stop.</b> {p.why}</p>}
         {p.access && <p className="warn-text"><b>Access.</b> {p.access}</p>}
         <Practicals p={p} />

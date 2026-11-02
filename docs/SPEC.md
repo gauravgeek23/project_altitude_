@@ -324,7 +324,8 @@ The reading panel separates things by colour, not by lines: the panel is `--pane
 
 - **Place cards:**
   - Type icon, circuit dots and a chevron (the hint that the card opens; it turns when it does) in the header.
-  - A card with a photo shows the photo while closed (the 640 px version, lazy-loaded) instead of its context line; the context appears at the top of the body once the card is open. A click on the closed card, photo included, opens it; on an open card a click on the photo opens the full-screen view. A card without a photo shows its context line while closed, as before.
+  - The header is two columns: name, kind and two lines of context on the left; on the right, a portrait thumbnail of the place's photo (72 × 96 px, centre-cropped, no caption; the 640 px version, lazy-loaded). The left side adds up to the same 96 px (26 + 26 + 44), so the two sides match. A card without a photo has the left column alone.
+  - A click on the closed card, thumbnail included, opens it; the context then shows in full and the body follows. On an open card a click on the thumbnail opens the full-screen view, with the caption.
   - **"Practical details"** is folded away by default, with a count of filled fields.
   - "Show on map →" at the foot (or a note that the place has no sourced position yet). Status and sources stay in the record but are not displayed.
 - **Storage:** packing lists, trip plan and km/day are kept in `localStorage`, with every access wrapped in try/catch.

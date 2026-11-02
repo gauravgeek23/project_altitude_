@@ -5,9 +5,11 @@ import { Lightbox } from "./Lightbox";
 /**
  * One photo of a place (the lead one, or the one at `index`) with a count of the others.
  * A click opens all of the place's photos full screen (not when `interactive` is false: then the click goes to
- * whatever holds the photo, such as a closed card). Renders nothing for a place without photos.
+ * whatever holds the photo, such as a closed card). `caption` false leaves the picture bare (a thumbnail).
+ * Renders nothing for a place without photos.
  */
-export function PlacePhoto({ id, alt, index = 0, className = "place-photo", interactive = true }: { id: string; alt: string; index?: number; className?: string; interactive?: boolean }) {
+export function PlacePhoto({ id, alt, index = 0, className = "place-photo", interactive = true, caption = true }:
+  { id: string; alt: string; index?: number; className?: string; interactive?: boolean; caption?: boolean }) {
   const photos = photosFor(id);
   const [open, setOpen] = useState<number | null>(null);
   const [loaded, setLoaded] = useState(false);
@@ -24,8 +26,8 @@ export function PlacePhoto({ id, alt, index = 0, className = "place-photo", inte
             onClick: show, role: "button" as const, tabIndex: 0, "aria-label": `${alt}: open ${n} photo${n > 1 ? "s" : ""} full screen`,
             onKeyDown: (e: React.KeyboardEvent) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); show(); } },
           } : {})} />
-        {n > 1 && <span className="count">{n} photos</span>}
-        <figcaption>{p.caption ? `${p.caption} · ` : ""}{photoDate(p)}</figcaption>
+        {caption && n > 1 && <span className="count">{n} photos</span>}
+        {caption && <figcaption>{p.caption ? `${p.caption} · ` : ""}{photoDate(p)}</figcaption>}
       </figure>
       {open != null && <Lightbox photos={photos} start={open} alt={alt} onClose={() => setOpen(null)} />}
     </>
