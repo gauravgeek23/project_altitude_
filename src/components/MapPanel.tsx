@@ -4,6 +4,7 @@ import { MapControls } from "../map/MapControls";
 import { DEFAULT_REGION, REGIONS } from "../map/data/regions";
 import { ALL_PLACES, BY_ID, CIRCUIT_META, CIRCUIT_ORDER, TYPE_LABEL } from "../content/places";
 import { PlaceIcon } from "./icons";
+import { BASEMAPS, BASEMAP_BY_ID, googleSessionToken, type BasemapId } from "../map/basemaps";
 import { PlacePhoto } from "./PlacePhoto";
 import type { CircuitId } from "../content/types";
 import "../map/map.css";
@@ -41,7 +42,18 @@ export function MapPanel({ selected, circuit, onCircuit, onSelect, onOpenPlace, 
   const [kinds, setKinds] = useState<Set<string>>(() => new Set(CATEGORIES.map((c) => c.id)));
   const [q, setQ] = useState("");
   const [panel, setPanel] = useState(false);
-  const [satellite, setSatellite] = useState(false);
+  const [base, setBase] = useState<BasemapId>("terrain");
+  const [lastSat, setLastSat] = useState<BasemapId>("esri");
+  const [session, setSession] = useState<string | null>(null);
+  const satellite = base !== "terrain";
+  const chooseBase = (id: BasemapId) => { setBase(id); if (id !== "terrain") setLastSat(id); };
+  useEffect(() => { if (base === "google" && !session) googleSessionToken().then(setSession); }, [base]);
+  const bm = BASEMAP_BY_ID[base];
+  const imagery = useMemo(() => {
+    if (!satellite || !bm.tile || (base === "google" && !session)) return undefined;
+    // Google's labels already include roads; the others get Esri's road overlay
+    return { tile: (z: number, x: number, y: number) => bm.tile!(z, x, y, session ?? undefined), maxZoom: bm.maxZoom, roads: base !== "google" };
+  }, [base, session]);
 
   // zoom to a place picked anywhere in the guide
   useEffect(() => {
@@ -81,7 +93,7 @@ export function MapPanel({ selected, circuit, onCircuit, onSelect, onOpenPlace, 
       <MapCanvas ref={map} region={region} visible={visible} activeCircuit={circuit ?? hover} selectedLocation={selected}
         showClaims={false} onHoverCircuit={setHover} onSelectCircuit={(id) => { if (id !== circuit) pick(id as CircuitId); }} kinds={kinds}
         onSelectLocation={onSelect} onScale={setKmPerPx}
-        onBackground={() => { if (circuit) pick(null); }} basemap={satellite ? "satellite" : "terrain"} />
+        onBackground={() => { if (circuit) pick(null); }} basemap={satellite && (base !== "google" || session) ? "satellite" : "terrain"} imagery={imagery} />
 
       <div className="circuit-filter" role="toolbar" aria-label="Show circuits" onPointerDown={(e) => e.stopPropagation()}>
         <button type="button" className={"cf" + (!circuit ? " on" : "")} aria-pressed={!circuit} onClick={() => pick(null)}>All</button>
@@ -113,6 +125,11 @@ export function MapPanel({ selected, circuit, onCircuit, onSelect, onOpenPlace, 
         )}
         {panel && (
           <div className="layers">
+            <p className="layers-title">Map</p>
+            <div className="chips">{BASEMAPS.filter((b) => b.available).map((b) => (
+              <button key={b.id} type="button" className={"chip" + (base === b.id ? " on" : "")} aria-pressed={base === b.id} onClick={() => chooseBase(b.id)}>{b.label}</button>
+            ))}</div>
+            <p className="layers-note">{bm.note}{BASEMAPS.some((b) => !b.available) && " More sources (MapTiler, Mapbox, Google) appear once their keys are set; see docs/SPEC.md."}</p>
             <p className="layers-title">Show</p>
             <div className="chips">{CATEGORIES.map((c) => (
               <button key={c.id} type="button" className={"chip" + (kinds.has(c.id) ? " on" : "")} aria-pressed={kinds.has(c.id)}
@@ -123,7 +140,7 @@ export function MapPanel({ selected, circuit, onCircuit, onSelect, onOpenPlace, 
         )}
       </div>
 
-      <MapControls kmPerPx={kmPerPx} satellite={satellite} onSatellite={() => setSatellite(!satellite)} onZoomIn={() => map.current?.zoomIn()} onZoomOut={() => map.current?.zoomOut()}
+      <MapControls kmPerPx={kmPerPx} satellite={satellite} onSatellite={() => chooseBase(satellite ? "terrain" : lastSat)} onZoomIn={() => map.current?.zoomIn()} onZoomOut={() => map.current?.zoomOut()}
         onReset={() => { map.current?.reset(); onSelect(null); onCircuit(null); }} />
       <button type="button" className="sos" onClick={onEmergency} aria-label="Emergency information">SOS</button>
 
@@ -145,7 +162,7 @@ export function MapPanel({ selected, circuit, onCircuit, onSelect, onOpenPlace, 
         </div>
       )}
       <p className="route-note">Routes are drawn for planning, not live road status.</p>
-      <p className="attribution">{satellite ? "Imagery: Esri, Maxar, Earthstar Geographics · " : "Terrain: AWS Terrain Tiles · "}Roads © OpenStreetMap contributors · Boundaries: Natural Earth</p>
+      <p className="attribution">{bm.attribution} · Roads © OpenStreetMap contributors · Boundaries: Natural Earth</p>
     </div>
   );
 }

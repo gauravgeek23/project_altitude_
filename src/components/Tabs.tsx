@@ -606,7 +606,7 @@ function Legend() {
           <Row sample={<span className="legend-area himachal" />} title="Himachal Pradesh">Hover anywhere in Himachal to tint it.</Row>
           <Row sample={<LineSample color="var(--road)" width={0.9} />} title="Other roads">Roads from OpenStreetMap and the route data, for context.</Row>
           <Row sample={<LineSample color="var(--river)" width={1.4} />} title="Rivers">From the terrain model.</Row>
-          <Row sample={<span className="legend-relief" />} title="Terrain or satellite">Shaded relief by default. The globe button switches to a hybrid satellite view: Esri imagery with relief shading, roads and city names.</Row>
+          <Row sample={<span className="legend-relief" />} title="Terrain or satellite">Shaded relief by default. The globe button switches to a hybrid satellite view, with relief shading, roads and city names. Pick the imagery under Layers → Map: Esri, Sentinel-2, NASA Blue Marble, or MapTiler, Mapbox and Google when their keys are set.</Row>
         </div>
       </Section>
 

@@ -27,6 +27,8 @@ interface Props {
   kinds?: Set<string>;
   /** terrain: the shaded relief; satellite: Esri World Imagery tiles */
   basemap?: "terrain" | "satellite";
+  /** which imagery to use in satellite mode (default Esri) */
+  imagery?: { tile: (z: number, x: number, y: number) => string; maxZoom: number; roads: boolean };
 }
 
 /** Esri World Imagery (free to display with attribution). Tiles are fetched by the reader's browser. */
@@ -53,10 +55,11 @@ const CITIES: { name: string; at: [number, number]; rank: 1 | 2 }[] = [
 ];
 
 /** Web Mercator tiles covering the panel at the current zoom, placed in screen space. */
-function SatelliteTiles({ project, t, size, url = TILE, className = "sat-tiles" }: { project: d3.GeoProjection; t: d3.ZoomTransform; size: { w: number; h: number }; url?: (z: number, x: number, y: number) => string; className?: string }) {
+function SatelliteTiles({ project, t, size, url = TILE, className = "sat-tiles", maxZoom = 17 }: { project: d3.GeoProjection; t: d3.ZoomTransform; size: { w: number; h: number }; url?: (z: number, x: number, y: number) => string; className?: string; maxZoom?: number }) {
   // the projection's world is 2*pi*scale px wide; a tile zoom z world is 256 * 2^z px
   const world = 2 * Math.PI * project.scale() * t.k;
-  const z = Math.max(1, Math.min(17, Math.ceil(Math.log2(world / 256) + 0.3)));
+  // beyond a provider's deepest level, its last level is stretched
+  const z = Math.max(1, Math.min(maxZoom, 17, Math.ceil(Math.log2(world / 256) + 0.3)));
   const n = 2 ** z;
   const inv = (sx: number, sy: number) => project.invert!(t.invert([sx, sy]))!;
   const [w0, n0] = inv(0, 0), [e0, s0] = inv(size.w, size.h);
@@ -230,13 +233,14 @@ export const MapCanvas = forwardRef<MapHandle, Props>(function MapCanvas(props, 
           const el = e.target as Element;
           if (el === svgRef.current || el.tagName === "image" || el.closest(".base") || el.closest(".sat-tiles")) { props.onSelectLocation(null); props.onBackground?.(); }
         }}>
-        {props.basemap === "satellite" && <SatelliteTiles project={project} t={t} size={size} />}
+        {props.basemap === "satellite" && <SatelliteTiles key={props.imagery?.tile(1, 0, 0) ?? "esri"} project={project} t={t} size={size}
+          url={props.imagery?.tile} maxZoom={props.imagery?.maxZoom} />}
         <g transform={t.toString()} className={props.basemap === "satellite" ? "on-satellite" : undefined}>
           <BaseLayers region={region} path={path} project={project} showClaims={props.showClaims} satellite={props.basemap === "satellite"} onRegion={setHoverRegion} />
           <RouteLayer circuits={region.data.circuits} path={path} visible={props.visible} active={props.activeCircuit}
             onHover={props.onHoverCircuit} onSelect={props.onSelectCircuit} />
         </g>
-        {props.basemap === "satellite" && <SatelliteTiles project={project} t={t} size={size} url={ROADS_TILE} className="sat-tiles sat-roads" />}
+        {props.basemap === "satellite" && (props.imagery?.roads ?? true) && <SatelliteTiles project={project} t={t} size={size} url={ROADS_TILE} className="sat-tiles sat-roads" />}
         <g className="cities" aria-hidden="true">
           {(() => {
             const boxes: number[][] = [];

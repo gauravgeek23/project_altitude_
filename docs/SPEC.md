@@ -91,6 +91,7 @@ npm run build:single   # dist/project-altitude.html: one self-contained page
 - **Vercel:** builds from `main` using `vercel.json`. Pushing to `main` deploys.
 - **Optional environment variables** (Vercel → Project Settings → Environment Variables):
   - `VITE_GOOGLE_CSE_KEY` and `VITE_GOOGLE_CSE_CX` turn on Google image results; see §7.
+  - `VITE_MAPTILER_KEY`, `VITE_MAPBOX_TOKEN` and `VITE_GOOGLE_MAPS_KEY` add those satellite sources; see §6.1.
 
 ---
 
@@ -207,6 +208,21 @@ PlaceRecord {
 | Compass | `MapCanvas.tsx` `Compass` | Fixed; north is always up. |
 | Search | `MapPanel.tsx` | Names that start with the query, then names containing it, then region matches. Enter picks the first result. |
 | Place card | `MapPanel.tsx` | Type icon, photo, terrain-model height (m and ft), circuits, summary, access warning, "Open the full entry". |
+
+### 6.1 Satellite sources (`src/map/basemaps.ts`)
+
+Pick one under **Layers → Map**. The globe button switches between Terrain and the last satellite source used.
+
+| Source | Key | Detail | Terms |
+|---|---|---|---|
+| Esri World Imagery (default) | none | Sharpest free imagery, to about z18 | Free to display with attribution |
+| Sentinel-2 cloudless 2016 (EOX) | none | Even, cloud-free 10 m colours; best for the whole region; to z14 | CC BY 4.0 (the 2016 edition; later editions are non-commercial) |
+| NASA Blue Marble (GIBS) | none | Shaded-relief overview for the crown view; to z8 | NASA imagery, credit NASA |
+| MapTiler satellite-v2 | `VITE_MAPTILER_KEY` | High-resolution | Free plan is non-commercial; paid plans for commercial use |
+| Mapbox Satellite | `VITE_MAPBOX_TOKEN` | High-resolution (Maxar Vivid at z13–16) | Free tier, then pay per tile |
+| Google (Map Tiles API) | `VITE_GOOGLE_MAPS_KEY`, billing on | Google's own satellite imagery, with India as the region for borders | Google Maps Platform terms; Google's labels replace the road overlay |
+
+Keyed sources stay hidden until their key is set. Each source shows its attribution in the map footer while in use. Do not use unofficial Google tile URLs (`mt*.google.com`): they break Google's terms.
 
 ---
 
