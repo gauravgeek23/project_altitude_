@@ -285,12 +285,15 @@ fieldset.card legend .meta { margin: 0; }
 .range input { accent-color: var(--ink); }
 
 /* ---------------- map overlays */
-.map-search { position: absolute; left: max(14px, env(safe-area-inset-left, 0px)); top: 14px; width: min(340px, calc(100% - 90px)); z-index: 4; display: grid; gap: 6px; }
+/* the search row and the circuit bar share one column: the bar sets the width, the search row stretches to it */
+.map-top { position: absolute; left: max(14px, env(safe-area-inset-left, 0px)); top: 14px; z-index: 4; display: grid; grid-template-columns: minmax(0, max-content); gap: 6px; max-width: calc(100% - 90px); }
+.map-search { position: relative; min-width: min(340px, 100%); }
 .search-row { display: flex; gap: 6px; }
 .search-row input { flex: 1; min-width: 0; height: 38px; border-radius: 10px; border: 1px solid rgba(0,0,0,.08); background: var(--float); padding: 0 12px; font-size: 14px;
   box-shadow: 0 1px 3px rgba(0,0,0,.12); }
 .filter-btn { height: 38px; padding: 0 12px; border-radius: 10px; border: 1px solid rgba(0,0,0,.08); background: var(--float); font-size: 13px; font-weight: 500; cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,.12); }
 .filter-btn.on { background: var(--ink); color: var(--on-ink); }
+.search-results, .layers { position: absolute; top: 44px; left: 0; right: 0; z-index: 2; }
 .search-results { list-style: none; margin: 0; padding: 4px; background: var(--card); border-radius: 10px; box-shadow: 0 8px 24px rgba(0,0,0,.14), 0 0 0 1px rgba(0,0,0,.05); }
 .search-results button { display: grid; grid-template-columns: 26px 1fr; align-items: center; gap: 8px; width: 100%; text-align: left; border: 0; background: none; padding: 7px 10px; border-radius: 7px; cursor: pointer; line-height: 20px; }
 .search-results button:hover, .search-results button:focus-visible { background: var(--soft); }
@@ -316,7 +319,7 @@ fieldset.card legend .meta { margin: 0; }
 .map-card-text { margin: 0 0 6px; font-size: 13px; line-height: 20px; color: var(--grey); }
 .map-card-warn { margin: 0 0 6px; font-size: 12.5px; color: #a4321e; }
 @media (max-width: 899px) {
-  .map-search { width: calc(100% - 84px); top: 12px; }
+  .map-top { max-width: calc(100% - 84px); top: 12px; }
   .sos { bottom: calc(150px + env(safe-area-inset-bottom, 0px)); }
   .route-note { display: none; }
 }
@@ -325,8 +328,7 @@ fieldset.card legend .meta { margin: 0; }
 
 
 /* ---------------- circuit filter on the map */
-.circuit-filter { position: absolute; left: max(14px, env(safe-area-inset-left, 0px)); top: 62px; z-index: 3; display: flex; gap: 4px; padding: 4px;
-  max-width: calc(100% - 84px); overflow-x: auto; scrollbar-width: none; background: var(--float); border-radius: 12px;
+.circuit-filter { display: flex; gap: 4px; padding: 4px; max-width: 100%; overflow-x: auto; scrollbar-width: none; background: var(--float); border-radius: 12px;
   box-shadow: 0 1px 3px rgba(0,0,0,.12), 0 0 0 1px rgba(0,0,0,.04); backdrop-filter: blur(6px); }
 .circuit-filter::-webkit-scrollbar { display: none; }
 .cf { flex: none; display: inline-flex; align-items: center; gap: 6px; height: 30px; padding: 0 11px; border: 0; border-radius: 8px; background: transparent;
@@ -337,7 +339,6 @@ fieldset.card legend .meta { margin: 0; }
 .cf.on { background: var(--ink); color: var(--on-ink); }
 .cf.on[style] { background: var(--c); }
 .cf.on .dot { background: var(--card); box-shadow: none; }
-@media (max-width: 899px) { .circuit-filter { top: 60px; } }
 @media (prefers-reduced-motion: reduce) { .cf, .cf .dot { transition: none; } }
 
 /* ---------------- icon language: one glyph per kind of place, in a tinted tile */

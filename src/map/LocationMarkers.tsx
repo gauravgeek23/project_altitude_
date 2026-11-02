@@ -36,7 +36,7 @@ interface Item { l: MapLocation; x: number; y: number; onVisible: boolean; onAct
  * Markers and labels live in screen space so they keep one size at every zoom.
  * Towns, passes, lakes and landmarks: a dot and a name tag, placed by priority and dropped where
  * it would collide (the dot stays). Peaks: a name in plain text, nothing else. Monasteries: a small
- * icon only; the name appears on hover and the card on a click. Fuel: a badge under the dot.
+ * icon only, at every zoom; the name appears on hover and the card on a click. Fuel: a badge under the dot.
  */
 export function LocationMarkers({ region, project, transform, size, selected, activeCircuit, visible, onSelect, kinds, fuel }: Props) {
   const [hover, setHover] = useState<string | null>(null);
@@ -44,7 +44,8 @@ export function LocationMarkers({ region, project, transform, size, selected, ac
     l, xy: project([l.lon!, l.lat!])!, on: circuitsAt(region, l.id).map((c) => c.id),
   })), [region, project, kinds, selected]);
 
-  const items: Item[] = locs.filter(({ l }) => l.id === selected || transform.k >= TIER_ZOOM[l.tier ?? 1]).map(({ l, xy, on }) => {
+  // monasteries ignore the zoom tiers: every one is on the map at every zoom (icons only, so they cost no room)
+  const items: Item[] = locs.filter(({ l }) => l.id === selected || l.kind === "monastery" || transform.k >= TIER_ZOOM[l.tier ?? 1]).map(({ l, xy, on }) => {
     const [x, y] = transform.apply(xy);
     const onVisible = on.some((id) => visible.has(id));
     const onActive = activeCircuit ? on.includes(activeCircuit) : false;
@@ -53,8 +54,24 @@ export function LocationMarkers({ region, project, transform, size, selected, ac
     return { l, x, y, onVisible, onActive, priority };
   }).filter((i) => i.x > -40 && i.y > -40 && i.x < size.w + 40 && i.y < size.h + 40);
 
+  // monastery icons never stack: where two would overlap, or one would sit on a dot, they are eased apart.
+  // At zoom 1 an icon spans ten kilometres, so the few pixels of easing stay within its own footprint.
+  const mons = items.filter((i) => i.l.kind === "monastery"), dots = items.filter((i) => i.l.kind !== "monastery" && i.l.kind !== "peak");
+  const apart = (m: Item, o: Item, d: number, share: number) => {
+    let dx = m.x - o.x, dy = m.y - o.y, dist = Math.hypot(dx, dy);
+    if (dist >= d) return;
+    if (dist < 0.01) { dx = 0; dy = -1; dist = 1; }
+    const k = (d - dist) / dist;
+    m.x += dx * k * share; m.y += dy * k * share; o.x -= dx * k * (1 - share); o.y -= dy * k * (1 - share);
+  };
+  for (let pass = 0; pass < 3; pass++) for (const m of mons) {
+    for (const o of dots) apart(m, o, BADGE + 10, 1);
+    for (const o of mons) if (o !== m) apart(m, o, 2 * BADGE + 2, 0.5);
+  }
+
   // keep labels clear of the scale bar (bottom left), the zoom buttons (top right), the search box and the circuit bar
-  const placed: Box[] = [[0, size.h - 62, 190, size.h], [size.w - 64, 0, size.w, 290], [0, 0, Math.min(430, size.w - 70), 60], [0, 60, Math.min(480, size.w - 64), 104]];
+  const reserved: Box[] = [[0, size.h - 62, 190, size.h], [size.w - 64, 0, size.w, 290], [0, 0, Math.min(425, size.w - 64), 104]];
+  const placed: Box[] = [...reserved];
   for (const i of [...items].sort((a, b) => b.priority - a.priority)) {
     if (i.l.kind === "monastery" && i.l.id !== selected) continue;   // icon only: the name shows on hover
     const peak = i.l.kind === "peak";
@@ -66,10 +83,26 @@ export function LocationMarkers({ region, project, transform, size, selected, ac
       const box: Box = [i.x + dx, i.y + dy, i.x + dx + w, i.y + dy + h];
       const clear = box[0] > 2 && box[2] < size.w - 2 && box[1] > 2 && box[3] < size.h - 2 &&
         !placed.some((b) => box[0] < b[2] + 2 && box[2] > b[0] - 2 && box[1] < b[3] + 1 && box[3] > b[1] - 1) &&
-        !items.some((o) => o !== i && o.l.kind !== "peak" && o.x > box[0] - 3 && o.x < box[2] + 3 && o.y > box[1] - 3 && o.y < box[3] + 3);
+        !items.some((o) => o !== i && o.l.kind !== "peak" && o.l.kind !== "monastery" && o.x > box[0] - 3 && o.x < box[2] + 3 && o.y > box[1] - 3 && o.y < box[3] + 3);
       if (clear) { placed.push(box); i.box = box; break; }
     }
   }
+
+  // tags come first: an icon under one is moved out through the nearest side, then eased clear of its neighbours again
+  const tags = placed.slice(reserved.length), pad = BADGE + 2;
+  for (let pass = 0; pass < 3; pass++) for (const m of mons) {
+    for (const b of tags) {
+      if (!(m.x > b[0] - pad && m.x < b[2] + pad && m.y > b[1] - pad && m.y < b[3] + pad)) continue;
+      const out = [m.x - (b[0] - pad), (b[2] + pad) - m.x, m.y - (b[1] - pad), (b[3] + pad) - m.y];
+      const side = out.indexOf(Math.min(...out));
+      if (side === 0) m.x = b[0] - pad; else if (side === 1) m.x = b[2] + pad; else if (side === 2) m.y = b[1] - pad; else m.y = b[3] + pad;
+    }
+    for (const o of dots) apart(m, o, BADGE + 10, 1);
+    for (const o of mons) if (o !== m) apart(m, o, 2 * BADGE + 2, 0.5);
+  }
+  // an icon under the search box or the controls could not be clicked, so it is left out there
+  const drawn = items.filter((i) => i.l.kind !== "monastery" || i.l.id === selected ||
+    !reserved.some((b) => i.x > b[0] - BADGE && i.x < b[2] + BADGE && i.y > b[1] - BADGE && i.y < b[3] + BADGE));
 
   const label = (i: Item, box: Box) => (
     <g className="label">
@@ -78,7 +111,7 @@ export function LocationMarkers({ region, project, transform, size, selected, ac
       <text x={box[0] + ICON_GAP + (box[2] - box[0] - ICON_GAP) / 2} y={box[1] + LABEL_H / 2 + 0.5}>{i.l.name}</text>
     </g>
   );
-  const hovered = hover ? items.find((i) => i.l.id === hover && i.l.kind === "monastery" && !i.box) : undefined;
+  const hovered = hover ? drawn.find((i) => i.l.id === hover && i.l.kind === "monastery" && !i.box) : undefined;
 
   return (
     <g className={"locations" + (activeCircuit ? " has-active" : "")}>
@@ -90,7 +123,7 @@ export function LocationMarkers({ region, project, transform, size, selected, ac
           <feDropShadow dx="0" dy="3" stdDeviation="3" floodColor="#000" floodOpacity="0.28" />
         </filter>
       </defs>
-      {items.map((i) => {
+      {drawn.map((i) => {
         const sel = i.l.id === selected;
         const cls = `loc ${i.l.kind} t-${iconOf(i.l)}` + (i.l.accent ? " accent" : "") + (i.l.hub ? " hub" : "") + (sel ? " selected" : "") +
           (i.onActive ? " on-active" : "") + (i.onVisible ? "" : " off");

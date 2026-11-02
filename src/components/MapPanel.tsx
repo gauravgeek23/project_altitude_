@@ -97,17 +97,8 @@ export function MapPanel({ selected, circuit, onCircuit, onSelect, onOpenPlace, 
         onSelectLocation={onSelect} onScale={setKmPerPx}
         onBackground={() => { if (circuit) pick(null); }} basemap={satellite && (base !== "google" || session) ? "satellite" : "terrain"} imagery={imagery} />
 
-      <div className="circuit-filter" role="toolbar" aria-label="Show circuits" onPointerDown={(e) => e.stopPropagation()}>
-        <button type="button" className={"cf" + (!circuit ? " on" : "")} aria-pressed={!circuit} onClick={() => pick(null)}>All</button>
-        {CIRCUIT_ORDER.map((c) => (
-          <button key={c} type="button" className={"cf" + (circuit === c ? " on" : "")} aria-pressed={circuit === c}
-            style={{ ["--c" as string]: CIRCUIT_META[c].color }} onClick={() => pick(c)}
-            onPointerEnter={() => setHover(c)} onPointerLeave={() => setHover(null)}>
-            <span className="dot" />{CIRCUIT_META[c].name}
-          </button>
-        ))}
-      </div>
 
+      <div className="map-top">
       <div className="map-search" onPointerDown={(e) => e.stopPropagation()}>
         <div className="search-row">
           <input id="map-search" type="search" placeholder="Search villages, passes, lakes" value={q} onChange={(e) => setQ(e.target.value)}
@@ -141,6 +132,17 @@ export function MapPanel({ selected, circuit, onCircuit, onSelect, onOpenPlace, 
             <p className="layers-note">The pump button beside Filters shows the petrol pumps. Food, stays and medical layers will appear once listings are verified.</p>
           </div>
         )}
+      </div>
+      <div className="circuit-filter" role="toolbar" aria-label="Show circuits" onPointerDown={(e) => e.stopPropagation()}>
+        <button type="button" className={"cf" + (!circuit ? " on" : "")} aria-pressed={!circuit} onClick={() => pick(null)}>All</button>
+        {CIRCUIT_ORDER.map((c) => (
+          <button key={c} type="button" className={"cf" + (circuit === c ? " on" : "")} aria-pressed={circuit === c}
+            style={{ ["--c" as string]: CIRCUIT_META[c].color }} onClick={() => pick(c)}
+            onPointerEnter={() => setHover(c)} onPointerLeave={() => setHover(null)}>
+            <span className="dot" />{CIRCUIT_META[c].name}
+          </button>
+        ))}
+      </div>
       </div>
 
       <MapControls kmPerPx={kmPerPx} satellite={satellite} onSatellite={() => chooseBase(satellite ? "terrain" : lastSat)} onZoomIn={() => map.current?.zoomIn()} onZoomOut={() => map.current?.zoomOut()}
