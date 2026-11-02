@@ -22,6 +22,7 @@ interface Props {
   onSelectCircuit(id: string): void;
   onSelectLocation(id: string | null): void;
   onScale?(kmPerPx: number): void;
+  kinds?: Set<string>;
 }
 
 /** Country names, each set well inside territory that is not in dispute. */
@@ -163,7 +164,7 @@ export const MapCanvas = forwardRef<MapHandle, Props>(function MapCanvas(props, 
         </g>
         <LocationMarkers region={region.data} project={project} transform={t} size={size}
           selected={props.selectedLocation} activeCircuit={props.activeCircuit} visible={props.visible}
-          onSelect={props.onSelectLocation} />
+          onSelect={props.onSelectLocation} kinds={props.kinds} />
       </svg>
     </div>
   );

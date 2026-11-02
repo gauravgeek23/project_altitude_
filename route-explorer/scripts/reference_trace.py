@@ -177,6 +177,7 @@ def trace_circuits(cfg, locs, road, hav, dp):
                     else:
                         geom = dp(chaikin(ll, 3), 0.03)
                         if not px_path: source = "gap"
+                geom = straighten(geom, hav, dp)
                 segs.append({"from": "" if a.startswith("@") else a, "to": "" if b.startswith("@") else b,
                              "status": "ok", "source": source, "km": round(km, 1),
                              "coords": [[round(x, 5), round(y, 5)] for x, y in geom]})
@@ -280,3 +281,25 @@ def bend_to(ll, A, B, hav, reach=0.35):
         out.append((x + da[0] * wa + db[0] * wb, y + da[1] * wa + db[1] * wb))
     out[0], out[-1] = A, B
     return out
+
+
+def straighten(pts, hav, dp, spike_km=1.5, tol_km=0.3):
+    """Calmer lines: remove short hooks where the line doubles back on itself, then simplify so
+    the line stays within `tol_km` of the road but drops the grid-snapping wiggle."""
+    pts = list(pts)
+    changed = True
+    while changed and len(pts) > 2:
+        changed = False
+        out = [pts[0]]
+        for i in range(1, len(pts) - 1):
+            a, b, c = out[-1], pts[i], pts[i + 1]
+            v1 = (b[0] - a[0], b[1] - a[1]); v2 = (c[0] - b[0], c[1] - b[1])
+            n1 = (v1[0] ** 2 + v1[1] ** 2) ** .5; n2 = (v2[0] ** 2 + v2[1] ** 2) ** .5
+            if n1 and n2:
+                cos = (v1[0] * v2[0] + v1[1] * v2[1]) / (n1 * n2)
+                # a sharp reversal on a short arm is a snapping artefact, not a hairpin road
+                if cos < -0.5 and min(hav(a, b), hav(b, c)) < spike_km:
+                    changed = True; continue
+            out.append(b)
+        out.append(pts[-1]); pts = out
+    return dp(pts, tol_km)

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Sidebar } from "./components/Sidebar";
 import { MapPanel } from "./components/MapPanel";
+import { BY_ID } from "./content/places";
 import { TABS } from "./components/Tabs";
 import { Logo } from "./components/Logo";
 import { isTab, labelOf, type TabId } from "./nav";
@@ -35,7 +36,7 @@ export default function App() {
     setTab(id); setDrawer(false); setView("guide");
   };
   const showOnMap = (id: string) => { setSelected(id); if (mobile()) setView("map"); };
-  const openPlace = (id: string) => { setSelected(id); go("villages"); };
+  const openPlace = (id: string) => { setSelected(id); go(BY_ID[id]?.type === "pass" ? "passes" : "villages"); };
 
   const Tab = TABS[tab];
   return (
@@ -64,7 +65,7 @@ export default function App() {
       </main>
 
       <aside className="map-col" aria-label="Circuit map">
-        <MapPanel selected={selected} circuit={circuit} onSelect={setSelected} onOpenPlace={(id) => { openPlace(id); setView("guide"); }} />
+        <MapPanel selected={selected} circuit={circuit} onSelect={setSelected} onOpenPlace={(id) => { openPlace(id); setView("guide"); }} onEmergency={() => go("emergency")} />
       </aside>
 
       <div className="switcher" role="tablist" aria-label="View">

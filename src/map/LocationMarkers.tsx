@@ -12,6 +12,8 @@ interface Props {
   activeCircuit: string | null;
   visible: Set<string>;
   onSelect(id: string): void;
+  /** kinds of place to show; all when omitted */
+  kinds?: Set<string>;
 }
 
 const CHAR_W = 6.5, LABEL_H = 20;
@@ -20,10 +22,10 @@ const CHAR_W = 6.5, LABEL_H = 20;
  * Markers and labels live in screen space so they keep one size at every zoom.
  * Labels are placed by priority and dropped where they would collide; the marker stays.
  */
-export function LocationMarkers({ region, project, transform, size, selected, activeCircuit, visible, onSelect }: Props) {
-  const locs = useMemo(() => mapLocations(region).map((l) => ({
+export function LocationMarkers({ region, project, transform, size, selected, activeCircuit, visible, onSelect, kinds }: Props) {
+  const locs = useMemo(() => mapLocations(region).filter((l) => !kinds || kinds.has(l.kind) || l.id === selected).map((l) => ({
     l, xy: project([l.lon!, l.lat!])!, on: circuitsAt(region, l.id).map((c) => c.id),
-  })), [region, project]);
+  })), [region, project, kinds, selected]);
 
   const items = locs.map(({ l, xy, on }) => {
     const [x, y] = transform.apply(xy);
@@ -35,7 +37,8 @@ export function LocationMarkers({ region, project, transform, size, selected, ac
   }).filter((i) => i.x > -40 && i.y > -40 && i.x < size.w + 40 && i.y < size.h + 40);
 
   // keep labels clear of the scale bar (bottom left) and the zoom buttons (top right)
-  const placed: [number, number, number, number][] = [[0, size.h - 62, 190, size.h], [size.w - 64, 0, size.w, 150]];
+  // keep labels clear of the search box (top left) too
+  const placed: [number, number, number, number][] = [[0, size.h - 62, 190, size.h], [size.w - 64, 0, size.w, 150], [0, 0, Math.min(430, size.w - 70), 60]];
   const shown = new Set<string>();
   for (const i of [...items].sort((a, b) => b.priority - a.priority)) {
     const w = i.l.name.length * CHAR_W + 20;
