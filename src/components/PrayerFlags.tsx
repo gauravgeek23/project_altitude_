@@ -112,7 +112,8 @@ export function PrayerFlags({ height = 58, flags = 5 }: { height?: number; flags
       const fw = FW * sc, fh = FH * sc, cols = sc < 0.75 ? 10 : 14;
       // the string is pinned at the top edge and sags a little between its two ends
       const sag = Math.min(fh * 0.55, w * 0.11), ropeY = 1.4;
-      const ropeAt = (x: number) => { const u = x / w; return ropeY + sag * 4 * u * (1 - u) + 0.6 * sc * Math.sin(t * 0.8 + u * 3.1); };
+      // the string sags, and a slow wave runs along it
+      const ropeAt = (x: number) => { const u = x / w; return ropeY + sag * 4 * u * (1 - u) + 1.6 * sc * Math.sin(t * 1.3 - u * 6.0) + 0.7 * sc * Math.sin(t * 0.8 + u * 3.1); };
       const slopeAt = (x: number) => (ropeAt(x + 2) - ropeAt(x - 2)) / 4;
       // each flag hangs from its spot on the curve, turned a little to follow it
       const inset = fw * 0.55;
@@ -144,22 +145,24 @@ export function PrayerFlags({ height = 58, flags = 5 }: { height?: number; flags
         const cx = centre(i), u = cx / w, g = gustAt(t, u);
         const f = tex[i % FLAGS.length];
         const tilt = Math.atan(slopeAt(cx)) * 0.6;
-        // the free hem swings downwind, and sways
-        const shear = 0.08 + 0.4 * g + 0.1 * g * Math.sin(t * 2.3 + i * 1.7);
+        // the flag swings on its knot in an arc, and its free hem shears downwind
+        const swing = (0.08 + 0.16 * g) * Math.sin(t * 1.9 + i * 1.3 + u * 2.0);
+        const shear = 0.06 + 0.32 * g + 0.14 * g * Math.sin(t * 2.3 + i * 1.7);
         const sw = f.width / cols, dw = fw / cols;
         ctx!.save();
         ctx!.translate(cx, ropeAt(cx) + 0.5);
-        ctx!.rotate(tilt);
+        ctx!.rotate(tilt + swing);
         for (let c = 0; c < cols; c++) {
           const v = (c + 0.5) / cols;
-          const ph = v * 9.5 - t * (5 + 7 * g) + i * 1.1;   // a ripple travelling across the cloth
-          const x = -fw / 2 + c * dw + 1.1 * sc * g * Math.sin(ph);   // threads bunch on the folds
-          const lift = 1 - 0.07 * g - 0.08 * g * (0.5 + 0.5 * Math.sin(ph * 0.8 + 0.9));   // the hem waves up
+          const ph = v * 6.3 - t * (4 + 6 * g) + i * 1.1;   // one big wave travelling across the cloth
+          const x = -fw / 2 + c * dw + 2.2 * sc * g * Math.sin(ph);   // threads bunch on the folds
+          const dy = 1.8 * sc * g * Math.sin(ph * 0.9 + 0.4);        // the cloth rises and falls with the wave
+          const lift = 1 - 0.05 * g - 0.16 * g * (0.5 + 0.5 * Math.sin(ph * 0.8 + 0.9));   // the hem waves up
           const hh = fh * lift;
           ctx!.save();
-          ctx!.transform(1, 0, shear, 1, x, 0);
+          ctx!.transform(1, 0, shear, 1, x, dy);
           ctx!.drawImage(f, c * sw, 0, sw + 1, f.height, 0, 0, dw + 0.7, hh);
-          const light = Math.cos(ph) * 0.2 * g;   // the side of a fold that faces the light
+          const light = Math.cos(ph) * 0.28 * g;   // the side of a fold that faces the light
           ctx!.fillStyle = light > 0 ? `rgba(255,255,255,${light.toFixed(3)})` : `rgba(0,0,0,${(-light * 0.9).toFixed(3)})`;
           ctx!.fillRect(0, 0, dw + 0.7, hh);
           ctx!.restore();

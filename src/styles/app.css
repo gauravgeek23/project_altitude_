@@ -101,8 +101,9 @@ details.card.selected { background: var(--card-selected); }
 .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--c, var(--grey)); display: inline-block; flex: none; }
 
 /* filters */
-.filters { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 24px; }
-.filters input { flex: 1 1 200px; min-width: 0; height: 36px; border: 0; border-radius: 8px; padding: 0 12px; background: var(--soft); font-size: 14px; }
+.filters { display: flex; flex-direction: column; gap: 8px; align-items: stretch; margin-top: 24px; }
+.filters input { min-width: 0; height: 38px; border: 0; border-radius: 10px; padding: 0 12px; background: var(--card); font-size: 14px; box-shadow: 0 1px 3px rgba(0,0,0,.12); }
+.filters .circuit-filter { align-self: flex-start; }
 .chips { display: flex; flex-wrap: wrap; gap: 6px; width: 100%; }
 .chip { display: inline-flex; align-items: center; gap: 6px; height: 32px; padding: 0 12px; border-radius: 999px; border: 0; background: var(--soft); cursor: pointer; font-size: 13px; color: var(--grey); }
 .chip.on { background: var(--ink); color: var(--on-ink); border-color: var(--ink); }
@@ -317,9 +318,11 @@ fieldset.card legend .meta { margin: 0; }
 .search-results small { display: block; color: var(--grey); font-size: 12px; }
 .layers { background: var(--card); border-radius: 12px; padding: 10px 12px 12px; box-shadow: 0 8px 24px rgba(0,0,0,.14), 0 0 0 1px rgba(0,0,0,.05); }
 .layers-title { margin: 6px 0 6px; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--grey); line-height: 16px; }
-.layers .chips { gap: 5px; }
+/* the panel's options: plain rows with a box or a radio, two columns */
+.opts { display: grid; grid-template-columns: 1fr 1fr; gap: 0 14px; margin: 0 0 4px; }
+.opt { display: flex; align-items: center; gap: 10px; height: 30px; font-size: 13.5px; color: var(--ink); cursor: pointer; }
+.opt input { width: 16px; height: 16px; margin: 0; accent-color: var(--ink); cursor: pointer; }
 .layers .chip { height: 28px; font-size: 12.5px; }
-.layers-note { margin: 10px 0 0; font-size: 12px; line-height: 18px; color: var(--grey); }
 .sos { position: absolute; right: max(14px, env(safe-area-inset-right, 0px)); bottom: 74px; z-index: 4; width: 44px; height: 44px; border-radius: 50%; border: 0; background: var(--accent); color: var(--on-ink);
   font-weight: 700; font-size: 12px; letter-spacing: .06em; cursor: pointer; box-shadow: 0 4px 14px rgba(227,36,27,.4); }
 .sos:hover { transform: scale(1.05); }
@@ -440,8 +443,9 @@ details.card.selected /* photos open full screen */
    colours text ink or grey sets the matching size (generated from the colour rules above).
    Kept as they are: small uppercase labels, badges, chips, photo captions and legend samples. */
 .content { font-size: 16px; line-height: 26px; }
-.content *:not(.eyebrow-sm, .group-title, .badge, .badge *, .stats dt, .facts-grid dt, .type-icon, .type-icon *, figcaption, figcaption *, .legend-svg, .legend-svg *, .legend-key, .legend-key *, .chip, .chip *, .seg button, .legend-chip) { font-size: inherit !important; line-height: inherit; }
+.content *:not(.eyebrow-sm, .group-title, .badge, .badge *, .stats dt, .facts-grid dt, .type-icon, .type-icon *, figcaption, figcaption *, .legend-svg, .legend-svg *, .legend-key, .legend-key *, .chip, .chip *, .cf, .cf *, .seg button, .legend-chip) { font-size: inherit !important; line-height: inherit; }
 .content .chip, .content .seg button, .content .legend-chip { font-size: 13px !important; }
+.content .cf { font-size: 12.5px !important; }
 .content :is(.block p, .bullets, .callout, .card p, .check, .chip, .count-line, .empty, .empty-state, .fine, .form-grid label, .itinerary small, .legend-chip, .legend-row p, .link-list, .meta, .muted, .number small, .numbered .num, .numbered p, .para, .seg button, .steps, .stops li, .table dd, .table small, .tldr p, details.card .summary-text) { font-size: 14px !important; line-height: 22px; }
 .content :is(.block h2, .block h3, .card-title, .coords output, .facts-grid dd, .lead, .lead-sm, .legend-row b, .number .num.text, .number .who b, .numbered h3, .page-title, .place-link, .place-plain, .rule-line, .stats dd, .table dt, .text-btn, .tldr h1, b) { font-size: 16px !important; line-height: 26px; }
 .content .page-title, .content .tldr h1.page-title { font-size: 16px !important; line-height: 26px !important; margin-bottom: 6px; }

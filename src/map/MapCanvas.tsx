@@ -94,6 +94,9 @@ function Compass({ x, y }: { x: number; y: number }) {
 }
 
 /** Country names, each set well inside territory that is not in dispute. */
+/** the places come out once per page load, a couple of seconds after the routes */
+let revealedOnce = false;
+
 const COUNTRIES: { id: string; name: string; at: [number, number] }[] = [
   { id: "india", name: "INDIA", at: [76.2, 31.5] },        // Kangra and Hamirpur hills
   { id: "pakistan", name: "PAKISTAN", at: [73.9, 31.95] },    // Pakistani Punjab, near Gujranwala
@@ -156,6 +159,15 @@ export const MapCanvas = forwardRef<MapHandle, Props>(function MapCanvas(props, 
   const [size, setSize] = useState({ w: 800, h: 1000 });
   const [t, setT] = useState(d3.zoomIdentity);
   const [hoverRegion, setHoverRegion] = useState<string | null>(null);
+  // first the relief and the routes; the places follow after a beat, each a moment after the last
+  const [revealed, setRevealed] = useState(revealedOnce);
+  const [settled, setSettled] = useState(revealedOnce);
+  useEffect(() => {
+    if (revealedOnce) return;
+    const a = setTimeout(() => { revealedOnce = true; setRevealed(true); }, 2200);
+    const b = setTimeout(() => setSettled(true), 2200 + 1600);
+    return () => { clearTimeout(a); clearTimeout(b); };
+  }, []);
 
   useEffect(() => {
     const el = wrap.current!;
@@ -266,7 +278,7 @@ export const MapCanvas = forwardRef<MapHandle, Props>(function MapCanvas(props, 
             onHover={props.onHoverCircuit} onSelect={props.onSelectCircuit} />
         </g>
         {props.basemap === "satellite" && (props.imagery?.roads ?? true) && <SatelliteTiles project={project} t={t} size={size} url={ROADS_TILE} className="sat-tiles sat-roads" />}
-        <g className="cities" aria-hidden="true">
+        <g className={"cities" + (revealed ? "" : " veiled")} aria-hidden="true">
           {(() => {
             const boxes: number[][] = [];
             return CITIES.filter((c) => c.rank === 1 || t.k >= 0.9).map((c) => {
@@ -279,14 +291,14 @@ export const MapCanvas = forwardRef<MapHandle, Props>(function MapCanvas(props, 
             });
           })()}
         </g>
-        <g className="states" aria-hidden="true">
+        <g className={"states" + (revealed ? "" : " veiled")} aria-hidden="true">
           {STATES.map((c) => {
             const [x, y] = t.apply(project(c.at)!);
             if (x < 40 || x > size.w - 40 || y < 70 || y > size.h - 50) return null;
             return <text key={c.name} x={x} y={y} className={hoverRegion === c.id ? "on" : undefined}>{c.name}</text>;
           })}
         </g>
-        <g className="countries" aria-hidden="true">
+        <g className={"countries" + (revealed ? "" : " veiled")} aria-hidden="true">
           {COUNTRIES.map((c) => {
             const [x, y] = t.apply(project(c.at)!);
             // slide a little to stay inside the panel; never far from the country itself
@@ -298,7 +310,7 @@ export const MapCanvas = forwardRef<MapHandle, Props>(function MapCanvas(props, 
         <Compass x={size.w - 32} y={216} />
         <LocationMarkers region={region.data} project={project} transform={t} size={size}
           selected={props.selectedLocation} activeCircuit={props.activeCircuit} visible={props.visible}
-          onSelect={props.onSelectLocation} kinds={props.kinds} fuel={props.fuel} />
+          onSelect={props.onSelectLocation} kinds={props.kinds} fuel={props.fuel} revealed={revealed} stagger={!settled} />
       </svg>
     </div>
   );

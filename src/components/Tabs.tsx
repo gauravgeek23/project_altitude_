@@ -60,10 +60,10 @@ function Elevation({ p }: { p: PlaceRecord }) {
 }
 function CircuitChips({ value, onChange, all = true }: { value: CircuitId | "all"; onChange(v: CircuitId | "all"): void; all?: boolean }) {
   return (
-    <div className="chips" role="group" aria-label="Filter by circuit">
-      {all && <button type="button" className={"chip" + (value === "all" ? " on" : "")} aria-pressed={value === "all"} onClick={() => onChange("all")}>All circuits</button>}
+    <div className="circuit-filter" role="group" aria-label="Filter by circuit">
+      {all && <button type="button" className={"cf" + (value === "all" ? " on" : "")} aria-pressed={value === "all"} onClick={() => onChange("all")}>All</button>}
       {CIRCUIT_ORDER.map((id) => (
-        <button key={id} type="button" className={"chip" + (value === id ? " on" : "")} aria-pressed={value === id} style={{ ["--c" as string]: CIRCUIT_META[id].color }} onClick={() => onChange(id)}>
+        <button key={id} type="button" className={"cf" + (value === id ? " on" : "")} aria-pressed={value === id} style={{ ["--c" as string]: CIRCUIT_META[id].color }} onClick={() => onChange(id)}>
           <span className="dot" />{CIRCUIT_META[id].name}
         </button>
       ))}

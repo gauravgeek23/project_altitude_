@@ -25,7 +25,7 @@ const placed = new Set(region.data.locations.filter((l) => l.lon != null).map((l
 const searchable = ALL_PLACES.filter((p) => p.mapId && placed.has(p.mapId));
 const CATEGORIES: { id: string; label: string }[] = [
   { id: "town", label: "Villages & towns" }, { id: "pass", label: "Passes" }, { id: "peak", label: "Peaks" }, { id: "lake", label: "Lakes" }, { id: "poi", label: "Landmarks" }, { id: "monastery", label: "Monasteries" },
-];
+  { id: "fuel", label: "Petrol pumps" }];
 const fmt = (n: number) => n.toLocaleString("en-IN");
 const ALL_CIRCUITS = new Set(region.data.circuits.map((c) => c.id));
 // each circuit's extent, for zooming to it when it is picked
@@ -40,10 +40,10 @@ export function MapPanel({ selected, circuit, onCircuit, onSelect, onOpenPlace, 
   const map = useRef<MapHandle>(null);
   const [hover, setHover] = useState<string | null>(null);
   const [kmPerPx, setKmPerPx] = useState(1);
-  const [kinds, setKinds] = useState<Set<string>>(() => new Set(CATEGORIES.map((c) => c.id)));
+  const [kinds, setKinds] = useState<Set<string>>(() => new Set(CATEGORIES.filter((c) => c.id !== "fuel").map((c) => c.id)));
   const [q, setQ] = useState("");
   const [panel, setPanel] = useState(false);
-  const [fuel, setFuel] = useState(false);
+  const fuel = kinds.has("fuel");
   const [base, setBase] = useState<BasemapId>("terrain");
   const [lastSat, setLastSat] = useState<BasemapId>("esri");
   const [session, setSession] = useState<string | null>(null);
@@ -104,7 +104,7 @@ export function MapPanel({ selected, circuit, onCircuit, onSelect, onOpenPlace, 
           <input id="map-search" type="search" placeholder="Search villages, passes, lakes" value={q} onChange={(e) => setQ(e.target.value)}
             aria-label="Search the map" autoComplete="off"
             onKeyDown={(e) => { if (e.key === "Enter" && results[0]) { onSelect(results[0].mapId); setQ(""); } }} />
-          <button type="button" className={"sq-btn fuel" + (fuel ? " on" : "")} aria-pressed={fuel} aria-label="Petrol pumps" title={fuel ? "Hide petrol pumps" : "Show petrol pumps"} onClick={() => setFuel(!fuel)}><PlaceIcon kind="fuel" size={17} /></button>
+          <button type="button" className={"sq-btn fuel" + (fuel ? " on" : "")} aria-pressed={fuel} aria-label="Petrol pumps" title={fuel ? "Hide petrol pumps" : "Show petrol pumps"} onClick={() => toggle(kinds, "fuel", setKinds)}><PlaceIcon kind="fuel" size={17} /></button>
           <button type="button" className={"sq-btn primary" + (panel ? " on" : "")} aria-expanded={panel} aria-label="Filters" title="Filters" onClick={() => setPanel(!panel)}><FilterIcon size={18} /></button>
         </div>
         {results.length > 0 && (
@@ -120,16 +120,13 @@ export function MapPanel({ selected, circuit, onCircuit, onSelect, onOpenPlace, 
         {panel && (
           <div className="layers">
             <p className="layers-title">Map</p>
-            <div className="chips">{BASEMAPS.filter((b) => b.available).map((b) => (
-              <button key={b.id} type="button" className={"chip" + (base === b.id ? " on" : "")} aria-pressed={base === b.id} onClick={() => chooseBase(b.id)}>{b.label}</button>
+            <div className="opts">{BASEMAPS.filter((b) => b.available).map((b) => (
+              <label key={b.id} className="opt"><input type="radio" name="basemap" checked={base === b.id} onChange={() => chooseBase(b.id)} />{b.label}</label>
             ))}</div>
-            <p className="layers-note">{bm.note}{BASEMAPS.some((b) => !b.available) && " More sources (MapTiler, Mapbox, Google) appear once their keys are set; see docs/SPEC.md."}</p>
             <p className="layers-title">Show</p>
-            <div className="chips">{CATEGORIES.map((c) => (
-              <button key={c.id} type="button" className={"chip" + (kinds.has(c.id) ? " on" : "")} aria-pressed={kinds.has(c.id)}
-                onClick={() => toggle(kinds, c.id, setKinds)}>{c.label}</button>
+            <div className="opts">{CATEGORIES.map((c) => (
+              <label key={c.id} className="opt"><input type="checkbox" checked={kinds.has(c.id)} onChange={() => toggle(kinds, c.id, setKinds)} />{c.label}</label>
             ))}</div>
-            <p className="layers-note">The pump button beside Filters shows the petrol pumps. Food, stays and medical layers will appear once listings are verified.</p>
           </div>
         )}
       </div>

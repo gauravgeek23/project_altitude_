@@ -74,8 +74,8 @@
 .loc.selected.peak .label text { fill: #fff; }
 .loc.selected.peak .label .map-icon { stroke: #fff; }
 /* places revealed by zooming fade in */
-.loc { animation: loc-in .25s ease both; }
-@keyframes loc-in { from { opacity: 0; } }
+.loc { animation: loc-in .55s cubic-bezier(.2,.7,.2,1) both; }
+@keyframes loc-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 @media (prefers-reduced-motion: reduce) { .loc { animation: none; } }
 
 /* state and union-territory lines and names */
@@ -171,3 +171,11 @@
 .fuel-badge circle { fill: #0f8f5f; stroke: #ffffff; stroke-width: 1.5; filter: url(#tag-shadow); }
 .fuel-badge .map-icon { fill: none; stroke: #ffffff; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; pointer-events: none; }
 .fuel-badge.unsure circle { fill: #b7791f; }
+/* a pump standing on its own (its town filtered out): the same green badge, at the place itself */
+.loc.fuel-only .badge { fill: #0f8f5f; stroke: #ffffff; stroke-width: 1.5; filter: url(#tag-shadow); }
+.loc.fuel-only > .map-icon { fill: none; stroke: #ffffff; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; pointer-events: none; }
+.loc.fuel-only.unsure .badge { fill: #b7791f; }
+/* the reveal: the routes first; then the places, each a moment after the last, the names of cities and states with them */
+.locations.veiled .loc { animation: none; opacity: 0; pointer-events: none; }
+.cities, .states, .countries { transition: opacity 1s ease .5s; }
+.cities.veiled, .states.veiled, .countries.veiled { opacity: 0; transition: none; }
