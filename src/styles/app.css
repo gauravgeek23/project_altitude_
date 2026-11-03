@@ -97,7 +97,13 @@ details.card.with-photo .meta { margin-bottom: 4px; }   /* 26 + 26 + 44 = the th
 .place-photo.thumb { width: 72px; height: 96px; aspect-ratio: auto; margin: 0; border-radius: 8px; }
 .place-photo.static img { cursor: pointer; }
 details.card .card-body { margin-top: 12px; }
-details.card.selected { background: var(--card-selected); }
+/* the entry just opened from the map blinks yellow twice to show itself, then settles back to white */
+details.card.selected { animation: card-flash 2.2s ease-in-out both; }
+@keyframes card-flash {
+  0% { background: var(--card); } 12% { background: var(--card-selected); } 40% { background: var(--card); }
+  52% { background: var(--card-selected); } 85%, 100% { background: var(--card); }
+}
+@media (prefers-reduced-motion: reduce) { details.card.selected { animation: none; background: var(--card-selected); } }
 .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--c, var(--grey)); display: inline-block; flex: none; }
 
 /* filters */
@@ -396,8 +402,7 @@ fieldset.card legend .meta { margin: 0; }
 .card.dish p { margin: 4px 0 0; line-height: 22px; }
 .dish-photo { margin: 0 0 10px; aspect-ratio: 4 / 3; }
 
-/* practical details fold away until opened */
-details.card.selected /* photos open full screen */
+/* photos open full screen */
 .place-photo img { cursor: zoom-in; }
 .place-photo .count { position: absolute; top: 8px; right: 8px; padding: 2px 8px; border-radius: 999px; background: rgba(0,0,0,.55); color: #fff; font-size: 11px; line-height: 18px; pointer-events: none; }
 .lightbox { position: fixed; inset: 0; z-index: 100; background: rgba(8,9,12,.94); display: grid; grid-template-rows: 1fr auto; animation: lb-in .2s ease; touch-action: pan-y; }

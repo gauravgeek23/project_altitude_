@@ -269,7 +269,7 @@ Google strips location data from photos shared by link, so the first selection w
 | `--grey` | `#6f7883` | `#9aa3ae` | Secondary text |
 | `--paper` / `--panel` | `#fff` / `#f8f9fb` | `#0d0f12` / `#13161a` | Nav rail / reading panel |
 | `--card` / `--soft` | `#fff` / `#e9ebef` | `#1a1e24` / `#262c34` | Cards / quiet fills inside a card (practical details, card footers, alternate table rows) |
-| `--card-selected` | `#fff3c4` | `#33301f` | The selected card (the map's yellow, softened) |
+| `--card-selected` | `#fff3c4` | `#33301f` | The flash of a card just opened from the map (the map's yellow, softened); the card settles back to white |
 | `--rule` | `#e4e7eb` | `#272c33` | Kept for the odd hairline on the map and the legend; the reading panel itself uses no borders (see Surfaces) |
 | `--accent` | `#e3241b` | `#ff4b3e` | Umling La, SOS, compass north |
 | `--float` | white 95% | near-black 92% | Floating map controls |
@@ -278,7 +278,7 @@ Google strips location data from photos shared by link, so the first selection w
 **Map-only tokens** (on `.map-col` and `.legend`): `--town #ffe03a`, `--pass #17181a`, `--lake #4fe3ef`, `--boundary`, `--road`, `--river`, and `--tag-ink`. These are the same in both themes: the map is not themed (see Dark mode).
 
 ### Surfaces, not strokes
-The reading panel separates things by colour, not by lines: the panel is `--panel` grey, cards are white `--card` on it, and anything quieter inside a card (the practical block, the card footer, stats, alternate rows of a table or itinerary, legend samples) is `--soft`. There are no borders on cards, chips, inputs, callouts or dividers; the selected card turns `--card-selected`, and a circuit card that is on takes a 12% tint of its circuit colour. Keep it that way when adding components: reach for a background tone before a stroke.
+The reading panel separates things by colour, not by lines: the panel is `--panel` grey, cards are white `--card` on it, and anything quieter inside a card (the practical block, the card footer, stats, alternate rows of a table or itinerary, legend samples) is `--soft`. There are no borders on cards, chips, inputs, callouts or dividers; a card just opened from the map blinks `--card-selected` twice (2.2 s) and settles back to `--card`, and a circuit card that is on takes a 12% tint of its circuit colour. Keep it that way when adding components: reach for a background tone before a stroke.
 
 ### Icons and metadata
 - `public/icon.png` is the creator's own icon (82 × 84), used as is for the favicon. `node scripts/icons.cjs` renders `icon-32.png`, `apple-touch-icon.png` (180, upscaled) and the 1200×630 social preview `og.png` from it. No redrawn version is used.
