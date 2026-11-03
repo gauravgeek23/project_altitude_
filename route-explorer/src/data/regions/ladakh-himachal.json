@@ -547,20 +547,22 @@
     {
       "id": "sankoo",
       "name": "Sankoo",
-      "kind": "via",
+      "kind": "town",
       "source": {
         "dataset": "route-checkpoint",
         "key": "Sankoo"
-      }
+      },
+      "tier": 3
     },
     {
       "id": "rangdum",
       "name": "Rangdum",
-      "kind": "via",
+      "kind": "town",
       "source": {
         "dataset": "route-checkpoint",
         "key": "Rangdum"
-      }
+      },
+      "tier": 2
     },
     {
       "id": "aut",
@@ -603,6 +605,19 @@
       }
     },
     {
+      "id": "parkachik",
+      "name": "Parkachik",
+      "kind": "town",
+      "tier": 3,
+      "source": {
+        "dataset": "published",
+        "lon": 75.982,
+        "lat": 34.0836,
+        "cite": "Mapcarta, Parkatchik Alpine Hut (OSM node 763056584), a guesthouse in Parkachik",
+        "snap": "route"
+      }
+    },
+    {
       "id": "khalsar",
       "name": "Khalsar",
       "kind": "town",
@@ -639,6 +654,19 @@
         "lat": 34.88,
         "snap": "route",
         "radius": 6
+      }
+    },
+    {
+      "id": "bogdang",
+      "name": "Bogdang",
+      "kind": "town",
+      "tier": 3,
+      "source": {
+        "dataset": "published",
+        "lon": 77.0415,
+        "lat": 34.8034,
+        "cite": "Wikipedia, Bogdang",
+        "snap": "route"
       }
     },
     {
