@@ -282,6 +282,102 @@
       }
     },
     {
+      "id": "kyagar-tso",
+      "name": "Kyagar Tso",
+      "kind": "lake",
+      "tier": 2,
+      "source": {
+        "dataset": "published",
+        "lon": 78.30447,
+        "lat": 33.10641,
+        "cite": "Mapcarta (OpenStreetMap), Kyago Tso; Wikidata Q33267209"
+      }
+    },
+    {
+      "id": "startsapuk-tso",
+      "name": "Startsapuk Tso",
+      "kind": "lake",
+      "tier": 2,
+      "source": {
+        "dataset": "published",
+        "lon": 78.033,
+        "lat": 33.25,
+        "cite": "Wikidata Q33312112, Startsapuk Tso"
+      }
+    },
+    {
+      "id": "mirpal-tso",
+      "name": "Mirpal Tso",
+      "kind": "lake",
+      "tier": 3,
+      "source": {
+        "dataset": "published",
+        "lon": 78.61,
+        "lat": 33.47,
+        "cite": "Mapcarta (OpenStreetMap), Mitpal Tso"
+      }
+    },
+    {
+      "id": "deepak-tal",
+      "name": "Deepak Tal",
+      "kind": "lake",
+      "tier": 2,
+      "source": {
+        "dataset": "published",
+        "lon": 77.2556,
+        "lat": 32.7534,
+        "cite": "Mapcarta (OpenStreetMap), Dozam Tso, also Deepak Tal, by Patseo"
+      }
+    },
+    {
+      "id": "dashair-lake",
+      "name": "Dashair Lake",
+      "kind": "lake",
+      "tier": 3,
+      "source": {
+        "dataset": "published",
+        "lon": 77.224,
+        "lat": 32.375,
+        "cite": "Wikipedia, Dashair Lake"
+      }
+    },
+    {
+      "id": "dhankar-lake",
+      "name": "Dhankar Lake",
+      "kind": "lake",
+      "tier": 3,
+      "source": {
+        "dataset": "published",
+        "lon": 78.2281,
+        "lat": 32.0897,
+        "cite": "Wikipedia, Dhankar Lake"
+      }
+    },
+    {
+      "id": "nako-lake",
+      "name": "Nako Lake",
+      "kind": "lake",
+      "tier": 2,
+      "source": {
+        "dataset": "published",
+        "lon": 78.627632,
+        "lat": 31.879639,
+        "cite": "Wikipedia, Nako Lake"
+      }
+    },
+    {
+      "id": "sissu-lake",
+      "name": "Sissu Lake",
+      "kind": "lake",
+      "tier": 3,
+      "source": {
+        "dataset": "published",
+        "lon": 77.13233,
+        "lat": 32.46885,
+        "cite": "Mapcarta (OpenStreetMap), Sissu village; the lake adjoins the village"
+      }
+    },
+    {
       "id": "karzok",
       "name": "Karzok",
       "kind": "town",
