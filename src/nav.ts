@@ -7,7 +7,7 @@ export const NAV: { group: string; items: { id: TabId; label: string }[] }[] = [
   // the note carries the story too (#story still opens it)
   { group: "About", items: [{ id: "note", label: "A note" }, { id: "how", label: "How to use" }] },
   { group: "Guide", items: [
-    { id: "circuits", label: "Circuits" }, { id: "legend", label: "Map legend" }, { id: "villages", label: "Villages" }, { id: "passes", label: "Passes & Peaks" }, { id: "gems", label: "Gems" }] },
+    { id: "circuits", label: "Circuits" }, { id: "legend", label: "Map legend" }, { id: "villages", label: "Villages" }, { id: "passes", label: "Passes" }, { id: "gems", label: "Gems" }] },
   { group: "On the road", items: [
     { id: "commute", label: "Commute" }, { id: "stays", label: "Stays" }, { id: "food", label: "Eat & Drink" }, { id: "packing", label: "Packing" }, { id: "emergency", label: "Emergency" }] },
   { group: "Shop", items: [{ id: "swags", label: "Swags" }] },

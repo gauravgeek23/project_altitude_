@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
-import { ALL_PLACES, BY_ID, CIRCUIT_META, CIRCUIT_ORDER, PASSES, PEAKS, PLACES, PRACTICAL_LABEL, TYPE_LABEL } from "../content/places";
+import { ALL_PLACES, BY_ID, CIRCUIT_META, CIRCUIT_ORDER, PASSES, PLACES, PRACTICAL_LABEL, TYPE_LABEL } from "../content/places";
 import { FilterIcon, MapIcon, PlaceIcon, RefreshIcon, SatelliteIcon, type IconKind } from "./icons";
 import "../map/map.css";
 import { PlacePhoto } from "./PlacePhoto";
@@ -136,20 +136,16 @@ function Credits() {
 }
 
 /* ------------------------------------------------------------------ Villages & passes */
+/** the practical facts we have, listed plainly; a field we have nothing for is simply left out */
 function Practicals({ p }: { p: PlaceRecord }) {
-  const keys = Object.keys(PRACTICAL_LABEL) as (keyof Practical)[];
-  const known = keys.filter((k) => p.practical[k]).length;
+  const keys = (Object.keys(PRACTICAL_LABEL) as (keyof Practical)[]).filter((k) => p.practical[k]);
+  const elev = p.elevation_m ?? (p.mapId ? terrain[p.mapId] : undefined);
+  if (!elev && keys.length === 0) return null;
   return (
-    <details className="practicals">
-      <summary>
-        <span>Practical details</span>
-        <span className="practicals-count">{known ? `${known} of ${keys.length} filled` : "Not verified yet"}</span>
-      </summary>
-      <dl className="facts-grid">
-        <div><dt>Elevation</dt><dd><Elevation p={p} /></dd></div>
-        {keys.map((k) => <div key={k}><dt>{PRACTICAL_LABEL[k]}</dt><dd>{p.practical[k] ?? <span className="unknown">Not verified</span>}</dd></div>)}
-      </dl>
-    </details>
+    <dl className="facts-grid practicals">
+      {elev && <div><dt>Elevation</dt><dd><Elevation p={p} /></dd></div>}
+      {keys.map((k) => <div key={k}><dt>{PRACTICAL_LABEL[k]}</dt><dd>{p.practical[k]}</dd></div>)}
+    </dl>
   );
 }
 function PlaceCard({ p, open, onPlace, innerRef }: { p: PlaceRecord; open: boolean; onPlace(id: string): void; innerRef?: (el: HTMLDetailsElement | null) => void }) {
@@ -234,15 +230,11 @@ function Villages({ selected, onPlace }: TabProps) {
 function Passes({ selected, onPlace }: TabProps) {
   return (
     <>
-      <Head eyebrow="Passes & peaks" title="The passes that define the ride">
+      <Head eyebrow="Passes" title="The passes that define the ride">
         <p className="lead">High passes are the backbone of Project Altitude. Official elevations are shown only once verified; until then, the card gives the terrain model's reading, in metres and feet, clearly marked.</p>
       </Head>
       <p className="callout"><b>Road status: unknown here.</b> Nothing on this page is live. Check official advisories for the current status of every pass before you ride it.</p>
       <Directory records={PASSES} selected={selected} onPlace={onPlace} label="passes" />
-      <Section title="Peaks">
-        <p className="para muted">The big summits you see from the road. Not riding objectives: they are here so you can name what's on the skyline. Heights are the terrain model's reading; positions are approximate.</p>
-        <Directory records={PEAKS} selected={selected} onPlace={onPlace} label="peaks" />
-      </Section>
     </>
   );
 }

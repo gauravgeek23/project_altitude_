@@ -185,7 +185,7 @@ PlaceRecord {
 - **Where records live:**
   - `PLACES`: villages, towns, lakes and landmarks.
   - `PASSES`: passes.
-  - `PEAKS`: peaks.
+  - `PEAKS`: peaks (on the map only; the Passes page lists passes alone).
   - All are created with small helpers (`P`, `pass`, `peak`).
 - **`facts.ts`** merges sourced practical facts into records at load time. A merged record gets status `sourced` and the date it was checked online.
 - **Page copy** lives in `guide.ts`, never inside components. `DISHES` feeds the Eat & Drink page.
@@ -318,7 +318,7 @@ The reading panel separates things by colour, not by lines: the panel is `--pane
 | Group | Pages |
 |---|---|
 | About | A note (the note, then the story: `#story` opens the same page), How to use |
-| Guide | **Circuits**, **Map legend**, Villages, Passes & Peaks, Gems |
+| Guide | **Circuits**, **Map legend**, Villages, Passes, Gems |
 | On the road | Commute, Stays, Eat & Drink, Packing, Emergency |
 | Shop | Swags |
 | Footer | Meet the Creator; then T&C · Credits on one line |
@@ -327,8 +327,8 @@ The reading panel separates things by colour, not by lines: the panel is `--pane
   - Type icon, circuit dots and a chevron (the hint that the card opens; it turns when it does) in the header.
   - The header is two columns: name, kind and two lines of context on the left; on the right, a portrait thumbnail of the place's photo (72 × 96 px, centre-cropped, no caption; the 640 px version, lazy-loaded). The left side adds up to the same 96 px (26 + 26 + 44), so the two sides match. A card without a photo has the left column alone.
   - A click on the thumbnail opens the full-screen view (with the caption), whether the card is open or closed; a click anywhere else on the header opens or closes the card. Open, the context shows in full and the body follows.
-  - **"Practical details"** is folded away by default, with a count of filled fields.
-  - A filled **Show on map** button at the foot, on its own (no block around it; no icon). Status, sources and neighbours stay in the record but are not displayed. In the selected (yellow) card the practical block turns white so it still reads as a block.
+  - The practical facts are listed plainly (elevation, then each practical field that has a value); a field with nothing known is left out, and a place with nothing known shows no list.
+  - A filled **Show on map** button at the foot, the full width of the card (no block around it; no icon). Status, sources and neighbours stay in the record but are not displayed.
 - **Storage:** packing lists, trip plan and km/day are kept in `localStorage`, with every access wrapped in try/catch.
 
 ---
