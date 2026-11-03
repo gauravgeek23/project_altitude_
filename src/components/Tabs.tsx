@@ -175,14 +175,13 @@ function PlaceCard({ p, open, onPlace, innerRef }: { p: PlaceRecord; open: boole
         <Practicals p={p} />
         <div className="card-foot">
           {p.mapId && onMap.has(p.mapId)
-            ? <button type="button" className="map-btn" onClick={() => onPlace(p.mapId!)}><PinIcon />Show on map</button>
+            ? <button type="button" className="map-btn" onClick={() => onPlace(p.mapId!)}>Show on map</button>
             : <span className="muted">Not on the map yet: position to be sourced</span>}
         </div>
       </div>
     </details>
   );
 }
-const PinIcon = () => <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M12 21s-6-5.3-6-11a6 6 0 0 1 12 0c0 5.7-6 11-6 11z" /><circle cx="12" cy="10" r="2.3" /></svg>;
 const ChevronIcon = () => <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="M6 9l6 6 6-6" /></svg>;
 function Directory({ records, selected, onPlace, label }: { records: PlaceRecord[]; selected: string | null; onPlace(id: string): void; label: string }) {
   const [q, setQ] = useState("");

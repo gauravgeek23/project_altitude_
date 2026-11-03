@@ -328,7 +328,7 @@ The reading panel separates things by colour, not by lines: the panel is `--pane
   - The header is two columns: name, kind and two lines of context on the left; on the right, a portrait thumbnail of the place's photo (72 × 96 px, centre-cropped, no caption; the 640 px version, lazy-loaded). The left side adds up to the same 96 px (26 + 26 + 44), so the two sides match. A card without a photo has the left column alone.
   - A click on the thumbnail opens the full-screen view (with the caption), whether the card is open or closed; a click anywhere else on the header opens or closes the card. Open, the context shows in full and the body follows.
   - **"Practical details"** is folded away by default, with a count of filled fields.
-  - A filled **Show on map** button at the foot (or a note that the place has no sourced position yet). Status, sources and neighbours stay in the record but are not displayed.
+  - A filled **Show on map** button at the foot, on its own (no block around it; no icon). Status, sources and neighbours stay in the record but are not displayed. In the selected (yellow) card the practical block turns white so it still reads as a block.
 - **Storage:** packing lists, trip plan and km/day are kept in `localStorage`, with every access wrapped in try/catch.
 
 ---
