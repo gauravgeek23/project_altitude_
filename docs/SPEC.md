@@ -218,7 +218,7 @@ PlaceRecord {
 | Orientation cities | `MapCanvas.tsx` `CITIES` | Srinagar, Jammu, Gilgit, Skardu, Dharamshala, Amritsar, Lahore and others, as plain labels for orientation. Not stops, not clickable. |
 | Compass | `MapCanvas.tsx` `Compass` | Fixed; north is always up. |
 | Search | `MapPanel.tsx` | Names that start with the query, then names containing it, then region matches. Enter picks the first result. |
-| Place card | `MapPanel.tsx` | Type icon, photo, terrain-model height (m and ft), circuits, summary, access warning, "Open the full entry". |
+| Place card | `MapPanel.tsx` | Kind line and close button on top; then the essentials on the left (name, terrain-model height in m and ft, circuit chips, fuel note, access warning) and a bare 72 × 96 thumbnail on the right that opens the photo full screen; "Open the full entry" below. No summary text. |
 
 ### 6.1 Satellite sources (`src/map/basemaps.ts`)
 

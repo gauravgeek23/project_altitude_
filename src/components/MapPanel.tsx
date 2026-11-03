@@ -155,17 +155,21 @@ export function MapPanel({ selected, circuit, onCircuit, onSelect, onOpenPlace, 
             <p className="map-card-kind"><span className={`type-icon ${sel.type}`}><PlaceIcon kind={sel.type} size={13} /></span>{TYPE_LABEL[sel.type]} · {sel.region}</p>
             <button type="button" className="close" onClick={() => onSelect(null)} aria-label="Close">✕</button>
           </div>
-          <PlacePhoto id={sel.id} alt={sel.name} className="place-photo map-photo" />
-          <p className="map-card-name">{sel.name}{sel.aka && <small> {sel.aka}</small>}</p>
-          <p className="map-card-meta">
-            {elev != null ? <>≈ {fmt(elev)} m · {fmt(Math.round(elev * 3.28084))} ft <small>terrain model</small></> : "Elevation not verified"}
-          </p>
-          <p className="map-card-circuits">{sel.circuits.map((c) => <span key={c} className="chip mini" style={{ ["--c" as string]: CIRCUIT_META[c].color }}><span className="dot" />{CIRCUIT_META[c].name}</span>)}</p>
-          <p className="map-card-text">{sel.summary}</p>
-          {(sel.practical.fuel || FUEL_AT.has(sel.id)) && (
-            <p className="map-card-fuel"><span className="type-icon fuel"><PlaceIcon kind="fuel" size={13} /></span><span>{sel.practical.fuel ?? FUEL_AT.get(sel.id)!.note}</span></p>
-          )}
-          {sel.access && <p className="map-card-warn">Access restrictions apply. Check before planning.</p>}
+          {/* the essentials on the left, the photo as a bare thumbnail on the right (a click opens it full screen) */}
+          <div className="map-card-main">
+            <div className="map-card-left">
+              <p className="map-card-name">{sel.name}{sel.aka && <small> {sel.aka}</small>}</p>
+              <p className="map-card-meta">
+                {elev != null ? <>≈ {fmt(elev)} m · {fmt(Math.round(elev * 3.28084))} ft <small>terrain model</small></> : "Elevation not verified"}
+              </p>
+              <p className="map-card-circuits">{sel.circuits.map((c) => <span key={c} className="chip mini" style={{ ["--c" as string]: CIRCUIT_META[c].color }}><span className="dot" />{CIRCUIT_META[c].name}</span>)}</p>
+              {(sel.practical.fuel || FUEL_AT.has(sel.id)) && (
+                <p className="map-card-fuel"><span className="type-icon fuel"><PlaceIcon kind="fuel" size={13} /></span><span>{sel.practical.fuel ?? FUEL_AT.get(sel.id)!.note}</span></p>
+              )}
+              {sel.access && <p className="map-card-warn">Access restrictions apply. Check before planning.</p>}
+            </div>
+            <PlacePhoto id={sel.id} alt={sel.name} caption={false} className="place-photo thumb map-thumb" />
+          </div>
           <button type="button" className="text-btn" onClick={() => onOpenPlace(sel.id)}>Open the full entry →</button>
         </div>
       )}
