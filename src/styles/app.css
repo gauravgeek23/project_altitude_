@@ -433,7 +433,8 @@ details.card.selected /* photos open full screen */
 .legend-fade { opacity: .45; }
 .legend-chip { display: inline-block; padding: 2px 10px; border-radius: 999px; background: var(--soft); color: var(--grey); font-size: 12.5px; line-height: 22px; }
 .legend-key { display: inline-grid; place-items: center; min-width: 36px; height: 32px; padding: 0 8px; border-radius: 8px; border: 0; background: var(--card); color: var(--ink); font-size: 13px; font-weight: 500; }
-.legend-key.compass-key { border-radius: 50%; width: 34px; padding: 0; color: var(--accent); }
+.legend-key.compass-key { border-radius: 50%; width: 34px; padding: 0; background: none; }
+.legend-key.compass-key svg { display: block; }
 .legend-key.sos-key { border-radius: 50%; width: 38px; height: 38px; padding: 0; border: 0; background: var(--accent); color: #fff; font-size: 11px; }
 .legend-area { display: block; width: 64px; height: 28px; border-radius: 6px; border: 1.2px dashed #7d838d; }
 .legend-area.ladakh { background: rgba(196, 128, 32, .16); }

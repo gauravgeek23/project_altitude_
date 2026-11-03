@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { ALL_PLACES, BY_ID, CIRCUIT_META, CIRCUIT_ORDER, PASSES, PLACES, PRACTICAL_LABEL, TYPE_LABEL } from "../content/places";
 import { FilterIcon, MapIcon, PlaceIcon, RefreshIcon, SatelliteIcon, type IconKind } from "./icons";
 import "../map/map.css";
+import { Compass } from "../map/MapCanvas";
 import { PlacePhoto } from "./PlacePhoto";
 import { hasPhotos } from "../content/images";
 import type { CircuitId, PlaceRecord, Practical } from "../content/types";
@@ -625,7 +626,7 @@ function Legend() {
           <Row sample={<span className="legend-key">+ −</span>} title="Zoom">Zoom out far enough to see the whole north, from Gilgit-Baltistan to Aksai Chin.</Row>
           <Row sample={<span className="legend-key"><RefreshIcon size={15} /></span>} title="Reset">Back to the view with every stop, all circuits shown.</Row>
           <Row sample={<span className="legend-key"><SatelliteIcon size={15} /></span>} title="Satellite">Switch between terrain and satellite imagery.</Row>
-          <Row sample={<span className="legend-key compass-key">N</span>} title="Compass">North is always up; the map does not rotate.</Row>
+          <Row sample={<span className="legend-key compass-key"><svg width="34" height="34" viewBox="-56 -56 112 112" aria-hidden="true"><Compass x={0} y={0} /></svg></span>} title="Compass">A compass rose: north is always up; the map does not rotate.</Row>
           <Row sample={<span className="legend-key sos-key">SOS</span>} title="Emergency">Opens emergency numbers and what to do.</Row>
           <Row sample={<span className="legend-key"><FilterIcon size={15} /></span>} title="Filters">The map source, and which kinds of place to show: villages and towns, passes, peaks, lakes, landmarks, monasteries.</Row>
           <Row sample={<span className="legend-key fuel-key"><PlaceIcon kind="fuel" size={15} /></span>} title="Petrol pumps">Marks every pump we know of on the circuits; amber where reports disagree. The card says what is known about it. Ladakh has long stretches with none.</Row>

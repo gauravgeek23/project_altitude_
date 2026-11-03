@@ -109,11 +109,18 @@
 .map-controls button.sat.on { background: var(--ink); color: var(--on-ink); border-color: var(--ink); }
 /* compass */
 .compass { pointer-events: none; }
-.compass-face { fill: var(--float); stroke: rgba(0,0,0,.1); filter: drop-shadow(0 1px 2px rgba(0,0,0,.12)); }
-.compass .needle-n { fill: var(--accent); }
-.compass .needle-s { fill: #9aa0a8; }
-.compass text { font-family: var(--display); font-size: 8.5px; font-weight: 600; text-anchor: middle; dominant-baseline: middle; fill: var(--grey); }
-.compass text.n { fill: var(--accent); font-size: 9.5px; }
+.compass-disc { fill: rgba(255,255,255,.74); }
+.compass .ring { fill: none; stroke: #1f232b; }
+.compass .ring.outer { stroke-width: 1.1; }
+.compass .ring.inner { stroke-width: .6; opacity: .85; }
+.compass .ticks line { stroke: #1f232b; stroke-width: .8; }
+.compass .dots circle { fill: #1f232b; }
+.compass .lit { fill: #ffffff; stroke: #1f232b; stroke-width: .7; stroke-linejoin: round; }
+.compass .dark { fill: #1f232b; stroke: #1f232b; stroke-width: .7; stroke-linejoin: round; }
+.compass .hub { fill: #ffffff; stroke: #1f232b; stroke-width: 1; }
+.compass text { font-family: var(--display); text-anchor: middle; dominant-baseline: middle; fill: #1f232b; }
+.compass text.card { font-size: 11.5px; font-weight: 700; }
+.compass text.inter { font-size: 7px; font-weight: 500; letter-spacing: .02em; }
 /* on satellite imagery, lines and boundaries need more contrast */
 .on-satellite .road { opacity: .35; }
 .on-satellite .boundary.state { stroke: #ffffff; opacity: .9; }

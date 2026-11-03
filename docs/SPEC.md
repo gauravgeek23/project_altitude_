@@ -217,7 +217,7 @@ PlaceRecord {
 | States and neighbours | `MapCanvas.tsx` `.region-area` | Hovering Ladakh (amber) or Himachal (green) tints it 18% and darkens its name. The neighbours are tinted always: China flag red, Pakistan flag green, Nepal the blue of its flag's border, Afghanistan a smoky black; each is named. The country areas follow India's official map, so Gilgit-Baltistan and Aksai Chin are not part of them. |
 | Satellite | `MapCanvas.tsx` `SatelliteTiles` | Hybrid view, like Google's: Esri World Imagery, the relief multiplied on top for mountain shading, Esri's road overlay (roads only, no boundaries), city names, and India's official boundaries in white. Tiles load in the reader's browser; attribution switches with it. |
 | Orientation cities | `MapCanvas.tsx` `CITIES` | Srinagar, Jammu, Gilgit, Skardu, Dharamshala, Amritsar, Lahore and others, as plain labels for orientation. Not stops, not clickable. |
-| Compass | `MapCanvas.tsx` `Compass` | Fixed; north is always up. |
+| Compass | `MapCanvas.tsx` `Compass` | A classic engraved rose: an eight-point star with lit and shaded halves, two rings with degree ticks, a circle of dots, N E S W and the intercardinals; monochrome ink on a faint disc. Fixed; north is always up. The legend shows the same rose at a third of the size. |
 | Search | `MapPanel.tsx` | Names that start with the query, then names containing it, then region matches. Enter picks the first result. |
 | Place card | `MapPanel.tsx` | Kind line and close button on top; then the essentials on the left (name, terrain-model height in m and ft, circuit chips, fuel note, access warning) and a bare 72 × 96 thumbnail on the right that opens the photo full screen; "Open the full entry" below. No summary text. |
 
