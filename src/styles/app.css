@@ -5,7 +5,7 @@
   --ink: #2d2d2d;          /* --black in the Figma file */
   --grey: #6f7883;         /* --grey/1 */
   --paper: #ffffff;
-  --panel: #f3f4f6;
+  --panel: #f8f9fb;        /* the reading panel: a whisper of grey behind the white cards */
   --rule: #e4e7eb;
   --card: #ffffff;
   --soft: #e9ebef;

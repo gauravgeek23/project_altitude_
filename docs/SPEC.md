@@ -266,7 +266,7 @@ Google strips location data from photos shared by link, so the first selection w
 |---|---|---|---|
 | `--ink` | `#2d2d2d` | `#eceef2` | Text, active states |
 | `--grey` | `#6f7883` | `#9aa3ae` | Secondary text |
-| `--paper` / `--panel` | `#fff` / `#f3f4f6` | `#0d0f12` / `#13161a` | Nav rail / reading panel |
+| `--paper` / `--panel` | `#fff` / `#f8f9fb` | `#0d0f12` / `#13161a` | Nav rail / reading panel |
 | `--card` / `--soft` | `#fff` / `#e9ebef` | `#1a1e24` / `#262c34` | Cards / quiet fills inside a card (practical details, card footers, alternate table rows) |
 | `--card-selected` | `#fff3c4` | `#33301f` | The selected card (the map's yellow, softened) |
 | `--rule` | `#e4e7eb` | `#272c33` | Kept for the odd hairline on the map and the legend; the reading panel itself uses no borders (see Surfaces) |
