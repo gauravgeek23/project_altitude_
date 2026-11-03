@@ -673,13 +673,22 @@ def boundaries():
 
 
 def regions():
-    """Hover areas: Ladakh and Himachal Pradesh as polygons (simplified)."""
-    from shapely.geometry import mapping
+    """Hover areas, as simplified polygons: Ladakh and Himachal Pradesh, and the neighbours China and
+    Pakistan as India's official map has them (so Gilgit-Baltistan and Aksai Chin are not theirs), clipped
+    to the relief."""
+    from shapely.geometry import shape, box
     _, states = official_india()
+    clip = box(TW, TS, TE, TN)
+    areas = [("ladakh", "Ladakh", states["ladakh"]), ("himachal", "Himachal Pradesh", states["himachal"])]
+    for f in json.load(open(f"{RAW}/ne-admin1/countries_ind.geojson"))["features"]:
+        a3 = f["properties"].get("ADM0_A3")
+        if a3 in ("CHN", "PAK"):
+            g = shape(f["geometry"]).buffer(0).intersection(clip)
+            if not g.is_empty: areas.append(("china" if a3 == "CHN" else "pakistan", "China" if a3 == "CHN" else "Pakistan", g))
     out = []
-    for k, name in (("ladakh", "Ladakh"), ("himachal", "Himachal Pradesh")):
-        g = states[k].simplify(0.01)
-        polys = [g] if g.geom_type == "Polygon" else [p for p in g.geoms if p.area > 0.01]
+    for k, name, g in areas:
+        g = g.simplify(0.01)
+        polys = [g] if g.geom_type == "Polygon" else [p for p in g.geoms if p.geom_type == "Polygon" and p.area > 0.01]
         out.append({"id": k, "name": name,
                     "c": [[[[round(x, 3), round(y, 3)] for x, y in ring.coords] for ring in [p.exterior, *p.interiors]] for p in polys]})
     return out

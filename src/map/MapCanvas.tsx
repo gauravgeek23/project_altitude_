@@ -94,10 +94,10 @@ function Compass({ x, y }: { x: number; y: number }) {
 }
 
 /** Country names, each set well inside territory that is not in dispute. */
-const COUNTRIES: { name: string; at: [number, number] }[] = [
-  { name: "INDIA", at: [76.2, 31.5] },        // Kangra and Hamirpur hills
-  { name: "PAKISTAN", at: [73.9, 31.95] },    // Pakistani Punjab, near Gujranwala
-  { name: "CHINA", at: [79.95, 32.2] },       // Ngari, Tibet
+const COUNTRIES: { id: string; name: string; at: [number, number] }[] = [
+  { id: "india", name: "INDIA", at: [76.2, 31.5] },        // Kangra and Hamirpur hills
+  { id: "pakistan", name: "PAKISTAN", at: [73.9, 31.95] },    // Pakistani Punjab, near Gujranwala
+  { id: "china", name: "CHINA", at: [79.95, 32.2] },       // Ngari, Tibet
 ];
 
 /** State and union-territory names, on either side of the Ladakh | Himachal Pradesh line. */
@@ -285,7 +285,7 @@ export const MapCanvas = forwardRef<MapHandle, Props>(function MapCanvas(props, 
             // slide a little to stay inside the panel; never far from the country itself
             const half = c.name.length * 6.8, cx = Math.min(Math.max(x, half + 10), size.w - half - 10);
             if (Math.abs(cx - x) > 70 || y < 20 || y > size.h - 50) return null;
-            return <text key={c.name} x={cx} y={y}>{c.name}</text>;
+            return <text key={c.name} x={cx} y={y} className={hoverRegion === c.id ? "on" : undefined}>{c.name}</text>;
           })}
         </g>
         <Compass x={size.w - 32} y={216} />

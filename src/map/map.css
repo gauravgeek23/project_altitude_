@@ -84,6 +84,10 @@
 .region-area { fill: transparent; stroke: none; pointer-events: fill; transition: fill .2s ease; }
 .region-area.ladakh:hover { fill: rgba(196, 128, 32, .18); }
 .region-area.himachal:hover { fill: rgba(34, 128, 74, .18); }
+.region-area.china:hover { fill: rgba(222, 41, 16, .18); }      /* the red of China's flag */
+.region-area.pakistan:hover { fill: rgba(0, 100, 45, .22); }     /* Pakistan's green, lifted a little so it reads as green on the grey relief */
+.countries text { transition: opacity .2s ease, fill .2s ease; }
+.countries text.on { opacity: 1; fill: #111; }
 .states text { transition: opacity .2s ease, fill .2s ease; }
 .states text.on { opacity: 1; fill: #111; }
 .states text { font-family: var(--display); font-weight: 600; font-size: 11.5px; letter-spacing: .32em; fill: #2f3a4e; opacity: .62; text-anchor: middle;

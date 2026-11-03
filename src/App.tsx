@@ -8,7 +8,7 @@ import { Logo } from "./components/Logo";
 import { isTab, labelOf, type TabId } from "./nav";
 import type { CircuitId } from "./content/places";
 
-const fromHash = (): TabId => { const h = location.hash.slice(1); return isTab(h) ? h : "note"; };
+const fromHash = (): TabId => { const h = location.hash.slice(1); return h === "story" ? "note" : isTab(h) ? h : "note"; };
 
 export default function App() {
   const [tab, setTab] = useState<TabId>(fromHash);

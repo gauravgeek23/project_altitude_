@@ -44,6 +44,9 @@ a { color: inherit; }
 .nav-item:hover { color: var(--ink); }
 .nav-item.active { color: var(--ink); font-weight: 500; }
 .sidebar .nav-footer { padding-top: 26px; }
+.nav-pair { display: flex; align-items: center; gap: 8px; }
+.nav-pair .nav-item { display: inline; }
+.nav-dot { color: var(--grey); line-height: 26px; }
 .nav-title { margin: -16px 0 -16px; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--grey); }
 
 /* ---------------- reading panel */

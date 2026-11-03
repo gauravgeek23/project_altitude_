@@ -83,6 +83,13 @@ function Note({ onTab }: TabProps) {
         <button type="button" className="text-btn" onClick={() => onTab("how")}>How to use this guide →</button>
         <button type="button" className="text-btn" onClick={() => onTab("emergency")}>Read Emergency first →</button>
       </div>
+      <Section title={G.STORY.title} id="story">
+        <p className="lead">{G.STORY.lead}</p>
+        <Stats />
+        <div className="photo-row three">{[0, 1, 2].map((i) => <PlacePhoto key={i} id="story" alt="From the ride" index={i} />)}</div>
+        <Paras items={G.STORY.body} />
+        <Rule>{G.STORY.signoff}</Rule>
+      </Section>
     </>
   );
 }
@@ -94,17 +101,6 @@ function Stats() {
       <div><dt>Circuits</dt><dd>{G.EXPEDITION.circuits}</dd></div>
       <div><dt>Summit</dt><dd>{G.EXPEDITION.summit}</dd></div>
     </dl>
-  );
-}
-function Story() {
-  return (
-    <>
-      <Head eyebrow="Story" title={G.STORY.title}><p className="lead">{G.STORY.lead}</p></Head>
-      <Stats />
-      <div className="photo-row three">{[0, 1, 2].map((i) => <PlacePhoto key={i} id="story" alt="From the ride" index={i} />)}</div>
-      <Paras items={G.STORY.body} />
-      <Rule>{G.STORY.signoff}</Rule>
-    </>
   );
 }
 function HowTo() {
@@ -636,7 +632,7 @@ function Legend() {
 
 export const TABS: Record<TabId, (p: TabProps) => JSX.Element> = {
   legend: Legend,
-  note: Note, story: Story, how: HowTo, credits: Credits,
+  note: Note, how: HowTo, credits: Credits,
   villages: Villages, passes: Passes, food: Food, stays: Stays, emergency: Emergency, packing: Packing, commute: Commute, circuits: Circuits, gems: Gems,
   swags: Swags, creator: Creator, terms: Terms,
 };

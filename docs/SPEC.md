@@ -213,7 +213,7 @@ PlaceRecord {
 | Petrol pumps | `MapPanel.tsx`, `content/fuel.ts` | The pump button between the search box and Filters marks every pump in `FUEL_STOPS` with a green badge under the place's dot (amber where reports disagree). The card shows the fuel note. |
 | Monasteries | `LocationMarkers.tsx` | Map kind `monastery`: an icon on its own, no tag; the name appears on hover, the card on a click. Shown at every zoom (they ignore the zoom tiers): an icon only waits for a closer zoom where it would sit under a tag, on a dot or on another monastery icon. |
 | Peaks | `LocationMarkers.tsx` | Map kind `peak`: the name in plain text (▲ Name) with no marker, placed where it does not collide; clickable. 59 summits across the riding area and the ranges around it (Ladakh, Zanskar, Nubra and the Saser and Rimo groups, the Karakoram giants, Nanga Parbat, the Kashmir, Lahaul, Kullu, Chamba and Kinnaur summits). Tier 0 for K2 and Nanga Parbat (always on, outside the default frame), tier 1 for Nun, Saser Kangri, Stok Kangri and Reo Purgyil, tier 2 for the other famous summits, 3 for the rest. Published positions may lie outside the location `bbox` as long as they fall on the relief (`on_relief` in `prepare_region.py`). |
-| States | `MapCanvas.tsx` `.region-area` | Hovering Ladakh or Himachal tints it 18% and darkens its name. |
+| States and neighbours | `MapCanvas.tsx` `.region-area` | Hovering Ladakh (amber) or Himachal (green), China (flag red) or Pakistan (flag green) tints it 18% and darkens its name. The country areas follow India's official map, so Gilgit-Baltistan and Aksai Chin are not part of them. |
 | Satellite | `MapCanvas.tsx` `SatelliteTiles` | Hybrid view, like Google's: Esri World Imagery, the relief multiplied on top for mountain shading, Esri's road overlay (roads only, no boundaries), city names, and India's official boundaries in white. Tiles load in the reader's browser; attribution switches with it. |
 | Orientation cities | `MapCanvas.tsx` `CITIES` | Srinagar, Jammu, Gilgit, Skardu, Dharamshala, Amritsar, Lahore and others, as plain labels for orientation. Not stops, not clickable. |
 | Compass | `MapCanvas.tsx` `Compass` | Fixed; north is always up. |
@@ -317,10 +317,11 @@ The reading panel separates things by colour, not by lines: the panel is `--pane
 
 | Group | Pages |
 |---|---|
-| About | A note, Story, How to use, Credits |
-| Guide | **Circuits**, **Map legend**, Villages, Passes & Peaks, Eat & Drink, Stays, Emergency, Packing, Commute, Gems |
+| About | A note (the note, then the story: `#story` opens the same page), How to use |
+| Guide | **Circuits**, **Map legend**, Villages, Passes & Peaks, Gems |
+| On the road | Commute, Stays, Eat & Drink, Packing, Emergency |
 | Shop | Swags |
-| Footer | Meet the Creator, T&C |
+| Footer | Meet the Creator; then T&C · Credits on one line |
 
 - **Place cards:**
   - Type icon, circuit dots and a chevron (the hint that the card opens; it turns when it does) in the header.

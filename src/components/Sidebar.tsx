@@ -1,5 +1,5 @@
-import type { ReactNode } from "react";
-import { FOOTER_NAV, NAV, type TabId } from "../nav";
+import { Fragment, type ReactNode } from "react";
+import { FOOTER_NAV, FOOTER_PAIR, NAV, type TabId } from "../nav";
 import { Logo } from "./Logo";
 import { PrayerFlags } from "./PrayerFlags";
 
@@ -13,12 +13,11 @@ interface Props {
 }
 
 export function Sidebar({ tab, onTab, variant = "rail", onClose, footer }: Props) {
-  const Item = ({ id, label }: { id: TabId; label: string }) => (
-    <li>
-      <a href={`#${id}`} className={"nav-item" + (tab === id ? " active" : "")} aria-current={tab === id ? "page" : undefined}
-        onClick={(e) => { e.preventDefault(); onTab(id); }}>{label}</a>
-    </li>
+  const Link = ({ id, label }: { id: TabId; label: string }) => (
+    <a href={`#${id}`} className={"nav-item" + (tab === id ? " active" : "")} aria-current={tab === id ? "page" : undefined}
+      onClick={(e) => { e.preventDefault(); onTab(id); }}>{label}</a>
   );
+  const Item = (i: { id: TabId; label: string }) => <li><Link {...i} /></li>;
   return (
     <nav className={`sidebar ${variant}`} aria-label="Sections">
       <div className="sidebar-top">
@@ -36,7 +35,10 @@ export function Sidebar({ tab, onTab, variant = "rail", onClose, footer }: Props
         ))}
       </div>
       <div className="nav-bottom">
-        <ul className="nav-footer">{FOOTER_NAV.map((i) => <Item key={i.id} {...i} />)}</ul>
+        <ul className="nav-footer">
+          {FOOTER_NAV.map((i) => <Item key={i.id} {...i} />)}
+          <li className="nav-pair">{FOOTER_PAIR.map((i, k) => <Fragment key={i.id}>{k > 0 && <span className="nav-dot" aria-hidden="true">·</span>}<Link {...i} /></Fragment>)}</li>
+        </ul>
         {footer && <div className="nav-theme">{footer}</div>}
       </div>
     </nav>
