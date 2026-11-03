@@ -217,7 +217,7 @@ PlaceRecord {
 | States and neighbours | `MapCanvas.tsx` `.region-area` | Hovering Ladakh (amber) or Himachal (green) tints it 18% and darkens its name. The neighbours are tinted always: China flag red, Pakistan flag green, Nepal the blue of its flag's border, Afghanistan a smoky black; each is named. The country areas follow India's official map, so Gilgit-Baltistan and Aksai Chin are not part of them. |
 | Satellite | `MapCanvas.tsx` `SatelliteTiles` | Hybrid view, like Google's: Esri World Imagery, the relief multiplied on top for mountain shading, Esri's road overlay (roads only, no boundaries), city names, and India's official boundaries in white. Tiles load in the reader's browser; attribution switches with it. |
 | Orientation cities | `MapCanvas.tsx` `CITIES` | Srinagar, Jammu, Gilgit, Skardu, Dharamshala, Amritsar, Lahore and others, as plain labels for orientation. Not stops, not clickable. |
-| Compass | `MapCanvas.tsx` `Compass` | A classic engraved rose: an eight-point star with lit and shaded halves, two rings with degree ticks, a circle of dots, N E S W and the intercardinals; monochrome ink on a faint disc. Fixed; north is always up. The legend shows the same rose at a third of the size. |
+| Compass | `MapCanvas.tsx` `Compass` | A small engraved rose: a four-point star with lit and shaded halves and short points between, one ring with eight ticks, N E S W; monochrome ink on a faint disc (light ink on the dark terrain). Fixed; north is always up. The legend shows the same rose. |
 | Search | `MapPanel.tsx` | Names that start with the query, then names containing it, then region matches. Enter picks the first result. |
 | Place card | `MapPanel.tsx` | Kind line and close button on top; then the essentials on the left (name, terrain-model height in m and ft, circuit chips, fuel note, access warning) and a bare 72 × 96 thumbnail on the right that opens the photo full screen; "Open the full entry" below. No summary text. |
 
@@ -287,7 +287,7 @@ The reading panel separates things by colour, not by lines: the panel is `--pane
 ### Dark mode
 - **Toggle:** in the nav footer, and in the mobile top bar.
 - **Default:** follows the system until the reader picks a theme. The pick is saved in `localStorage` (`altitude-theme`), and `index.html` applies it before the first paint.
-- **The map is universal:** it is not themed. The relief, every satellite source (Esri, Sentinel-2, NASA Blue Marble, MapTiler, Mapbox, Google), the boundaries, the tags and the peak names look the same in dark mode as in light. Only the floating controls, the search row, the legend swatches and the place card follow the theme.
+- **Only the terrain map is themed.** In dark mode the relief is inverted and darkened, with boundaries, roads, rivers, city, state and country names, peak names and tags adjusted (`dark.css`, scoped to `.map-area:not(.sat)`). Every satellite source (Esri, Sentinel-2, NASA Blue Marble, MapTiler, Mapbox, Google) looks the same in both themes. The floating controls, the search row and the place card follow the theme in either case.
 
 ### Icon language (`src/components/icons.tsx`)
 - **Glyphs:** village (house), town (gabled hall), pass (saddle with flag), peak (summit with snow line), lake (waves), landmark (pin with star), food (fork and knife).

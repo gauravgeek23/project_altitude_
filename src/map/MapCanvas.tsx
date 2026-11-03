@@ -82,9 +82,9 @@ function SatelliteTiles({ project, t, size, url = TILE, className = "sat-tiles",
 
 /** A fixed compass: the map is never rotated, so north is always up. */
 /**
- * A compass rose in the classic engraved style: an eight-point star, each point split into a lit and a
- * shaded half, inside two rings with degree ticks and a circle of dots, N E S W outside and the
- * intercardinals between. Monochrome ink on a faint disc, so it reads on relief and on imagery alike.
+ * A small compass rose in the engraved manner: a four-point star, each point split into a lit and a
+ * shaded half, with short points between, one ring with eight ticks, and N E S W. Monochrome ink on a
+ * faint disc, so it reads on relief and on imagery alike. About the size of a map control.
  */
 export function Compass({ x, y, scale = 1 }: { x: number; y: number; scale?: number }) {
   // one point of the star: tip at r = L, shoulders at r = s and half-width w; the right half is shaded
@@ -94,22 +94,16 @@ export function Compass({ x, y, scale = 1 }: { x: number; y: number; scale?: num
       <path className="dark" d={`M0 ${-L} L${w} ${-s} L0 0 Z`} />
     </g>
   );
-  const ticks = Array.from({ length: 72 }, (_, i) => i * 5).filter((a) => a % 45 !== 0);
-  const dots = Array.from({ length: 16 }, (_, i) => 11.25 + i * 22.5);
   return (
-    <g className="compass" transform={`translate(${x} ${y}) scale(${scale})`} aria-label="Compass rose: north is up" role="img">
-      <circle r={52} className="compass-disc" />
-      <circle r={30} className="ring outer" />
-      <circle r={24.5} className="ring inner" />
-      <g className="ticks">{ticks.map((a) => <line key={a} transform={`rotate(${a})`} y1={-30} y2={a % 15 === 0 ? -26.8 : -28.4} />)}</g>
-      <g className="dots">{dots.map((a) => <circle key={a} transform={`rotate(${a})`} cy={-34.5} r={1.15} />)}</g>
-      {[45, 135, 225, 315].map((a) => point(23, 3.4, 6.5, a, "minor"))}
-      {[0, 90, 180, 270].map((a) => point(39, 5, 9, a, "major"))}
-      <circle r={2.3} className="hub" />
-      <text y={-45.5} className="card">N</text><text x={46} y={0.5} className="card">E</text>
-      <text y={46} className="card">S</text><text x={-46} y={0.5} className="card">W</text>
-      <text x={28} y={-27} className="inter">ne</text><text x={28} y={28} className="inter">se</text>
-      <text x={-28} y={28} className="inter">sw</text><text x={-28} y={-27} className="inter">nw</text>
+    <g className="compass" transform={`translate(${x} ${y}) scale(${scale})`} aria-label="Compass: north is up" role="img">
+      <circle r={28} className="compass-disc" />
+      <circle r={16} className="ring outer" />
+      <g className="ticks">{[22.5, 67.5, 112.5, 157.5, 202.5, 247.5, 292.5, 337.5].map((a) => <line key={a} transform={`rotate(${a})`} y1={-16} y2={-13.6} />)}</g>
+      {[45, 135, 225, 315].map((a) => point(11, 2, 3.6, a, "minor"))}
+      {[0, 90, 180, 270].map((a) => point(19.5, 3, 5.2, a, "major"))}
+      <circle r={1.6} className="hub" />
+      <text y={-23} className="card">N</text><text x={23.5} y={0.5} className="card">E</text>
+      <text y={23.5} className="card">S</text><text x={-23.5} y={0.5} className="card">W</text>
     </g>
   );
 }
@@ -328,7 +322,7 @@ export const MapCanvas = forwardRef<MapHandle, Props>(function MapCanvas(props, 
             return <text key={c.name} x={cx} y={y} className={hoverRegion === c.id ? "on" : undefined}>{c.name}</text>;
           })}
         </g>
-        <Compass x={size.w - 60} y={266} />
+        <Compass x={size.w - 38} y={236} />
         <LocationMarkers region={region.data} project={project} transform={t} size={size}
           selected={props.selectedLocation} activeCircuit={props.activeCircuit} visible={props.visible}
           onSelect={props.onSelectLocation} kinds={props.kinds} fuel={props.fuel} revealed={revealed} stagger={!settled} />

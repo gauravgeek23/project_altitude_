@@ -104,4 +104,48 @@
 .theme-btn svg { transition: transform .5s cubic-bezier(.2,.8,.2,1); }
 .theme-btn:hover svg { transform: rotate(-25deg); }
 .topbar .theme-btn { padding: 0; width: 36px; justify-content: center; border: 0; background: none; }
-.topbar .theme-btn span { display: none; }
+.topbar .theme-btn span { display: none; 
+/* the terrain map has a dark face in dark mode; the satellite sources (Esri, Sentinel-2, Blue Marble) look the same in both themes */
+:root:not([data-theme="light"]) .map-area:not(.sat) { --casing: #0b0d10; --halo: rgba(8,9,12,.85); --road: #5c626b; --road-strong: #8a9099; --river: #3d6489; --boundary: #e9ebef; --muted: #8a9099; }
+:root:not([data-theme="light"]) .map-area:not(.sat) .base > image { filter: invert(1) hue-rotate(180deg) brightness(.72) contrast(1.18) saturate(.55); }
+:root:not([data-theme="light"]) .map-area:not(.sat) .boundary.state { stroke: #8a929c; }
+:root:not([data-theme="light"]) .map-area:not(.sat) .states text { fill: #c8ced6; }
+:root:not([data-theme="light"]) .map-area:not(.sat) .states text.on { fill: #ffffff; }
+:root:not([data-theme="light"]) .map-area:not(.sat) .countries text { fill: #a9b0b9; }
+:root:not([data-theme="light"]) .map-area:not(.sat) .countries text.on { fill: #ffffff; }
+:root:not([data-theme="light"]) .map-area:not(.sat) .loc.peak .peak-name { fill: #d3d8e0; }
+:root:not([data-theme="light"]) .map-area:not(.sat) .cities text { fill: #c3c9d1; stroke: rgba(8,9,12,.85); }
+:root:not([data-theme="light"]) .map-area:not(.sat) .cities circle { fill: #0d0f12; stroke: #c3c9d1; }
+:root:not([data-theme="light"]) .map-area:not(.sat) .loc .label rect { stroke: rgba(0,0,0,.5); }
+:root:not([data-theme="light"]) .map-area:not(.sat) .loc.peak .label rect { fill: #e9ecf0; }
+:root:not([data-theme="light"]) .map-area:not(.sat) .loc.pass:not(.accent):not(.selected) .label rect { fill: #3a404a; stroke: rgba(255,255,255,.28); }
+:root:not([data-theme="light"]) .map-area:not(.sat) .loc.hub:not(.selected) .label rect { stroke-width: 2; }
+:root:not([data-theme="light"]) .map-area:not(.sat) .compass-disc { fill: rgba(16,18,22,.72); }
+:root:not([data-theme="light"]) .map-area:not(.sat) .compass .ring, :root:not([data-theme="light"]) .map-area:not(.sat) .compass .ticks line { stroke: #e3e7ec; }
+:root:not([data-theme="light"]) .map-area:not(.sat) .compass .dark { fill: #e3e7ec; stroke: #e3e7ec; }
+:root:not([data-theme="light"]) .map-area:not(.sat) .compass .lit { fill: #1a1e24; stroke: #e3e7ec; }
+:root:not([data-theme="light"]) .map-area:not(.sat) .compass .hub { fill: #1a1e24; stroke: #e3e7ec; }
+:root:not([data-theme="light"]) .map-area:not(.sat) .compass text { fill: #e3e7ec; }
+}
+
+/* the terrain map has a dark face in dark mode; the satellite sources (Esri, Sentinel-2, Blue Marble) look the same in both themes */
+:root[data-theme="dark"] .map-area:not(.sat) { --casing: #0b0d10; --halo: rgba(8,9,12,.85); --road: #5c626b; --road-strong: #8a9099; --river: #3d6489; --boundary: #e9ebef; --muted: #8a9099; }
+:root[data-theme="dark"] .map-area:not(.sat) .base > image { filter: invert(1) hue-rotate(180deg) brightness(.72) contrast(1.18) saturate(.55); }
+:root[data-theme="dark"] .map-area:not(.sat) .boundary.state { stroke: #8a929c; }
+:root[data-theme="dark"] .map-area:not(.sat) .states text { fill: #c8ced6; }
+:root[data-theme="dark"] .map-area:not(.sat) .states text.on { fill: #ffffff; }
+:root[data-theme="dark"] .map-area:not(.sat) .countries text { fill: #a9b0b9; }
+:root[data-theme="dark"] .map-area:not(.sat) .countries text.on { fill: #ffffff; }
+:root[data-theme="dark"] .map-area:not(.sat) .loc.peak .peak-name { fill: #d3d8e0; }
+:root[data-theme="dark"] .map-area:not(.sat) .cities text { fill: #c3c9d1; stroke: rgba(8,9,12,.85); }
+:root[data-theme="dark"] .map-area:not(.sat) .cities circle { fill: #0d0f12; stroke: #c3c9d1; }
+:root[data-theme="dark"] .map-area:not(.sat) .loc .label rect { stroke: rgba(0,0,0,.5); }
+:root[data-theme="dark"] .map-area:not(.sat) .loc.peak .label rect { fill: #e9ecf0; }
+:root[data-theme="dark"] .map-area:not(.sat) .loc.pass:not(.accent):not(.selected) .label rect { fill: #3a404a; stroke: rgba(255,255,255,.28); }
+:root[data-theme="dark"] .map-area:not(.sat) .loc.hub:not(.selected) .label rect { stroke-width: 2; }
+:root[data-theme="dark"] .map-area:not(.sat) .compass-disc { fill: rgba(16,18,22,.72); }
+:root[data-theme="dark"] .map-area:not(.sat) .compass .ring, :root[data-theme="dark"] .map-area:not(.sat) .compass .ticks line { stroke: #e3e7ec; }
+:root[data-theme="dark"] .map-area:not(.sat) .compass .dark { fill: #e3e7ec; stroke: #e3e7ec; }
+:root[data-theme="dark"] .map-area:not(.sat) .compass .lit { fill: #1a1e24; stroke: #e3e7ec; }
+:root[data-theme="dark"] .map-area:not(.sat) .compass .hub { fill: #1a1e24; stroke: #e3e7ec; }
+:root[data-theme="dark"] .map-area:not(.sat) .compass text { fill: #e3e7ec; }
