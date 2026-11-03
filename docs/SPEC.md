@@ -339,7 +339,7 @@ The reading panel separates things by colour, not by lines: the panel is `--pane
 
 - **Positions still to verify:** Nurbula, Hamta Pass, Polokongka La, Stok Kangri, Kang Yatse, Deo Tibba, Hikkim, Chicham, Losar, Batal, Rumtse and Tsaga La are approximate, and marked "verify" in their source text; so are the summits Matho Kangri, Gangstang, Indrasan, Mentok Kangri and Friendship Peak, and the monastery at Sani. The published peak positions come from Wikipedia, GeoNames, PeakVisor, Mapcarta and DBpedia and have not been checked against a survey sheet. Parkachik uses the position of a guesthouse in the village (Mapcarta, OSM node 763056584), village-level accuracy; Bogdang has Wikipedia's position.
 - **Peaks beyond the riding area:** K2, Broad Peak, the Gasherbrums, Masherbrum, Rakaposhi, Haramosh and Nanga Parbat are shown for the skyline on the crown view. Drop them from the region config if the map should stay with the ridable ranges.
-- **Approximate geometry:** the Nimmu–Padum road and the Nubra valley legs follow valley floors on the terrain model, not surveyed road lines. Replace them when road data is available.
+- **Approximate geometry:** the Nimmu–Padum road, the Nubra valley legs and the Indus road from Demchok back to Loma via Koyul and Dungti follow valley floors on the terrain model, not surveyed road lines. Replace them when road data is available.
 - **Practical fields:** about 35 places have sourced fuel, medical, network or stay facts; the rest show "Not verified".
 - **Restaurants:** "Handpicked places" on Eat & Drink is waiting for the creator's picks.
 - **Photos:** places without a photo from the ride show none. Captions and a few inferred placements are for the creator to check (§7).

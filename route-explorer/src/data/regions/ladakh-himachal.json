@@ -382,6 +382,28 @@
       }
     },
     {
+      "id": "koyul",
+      "name": "Koyul",
+      "kind": "town",
+      "tier": 3,
+      "source": {
+        "dataset": "published",
+        "lon": 79.1989,
+        "lat": 32.8861,
+        "cite": "Wikipedia, Koyul"
+      }
+    },
+    {
+      "id": "dungti",
+      "name": "Dungti",
+      "kind": "town",
+      "tier": 3,
+      "source": {
+        "dataset": "osm-settlement",
+        "osm_id": 7508597972
+      }
+    },
+    {
       "id": "darcha",
       "name": "Darcha",
       "kind": "town",

@@ -57,6 +57,7 @@ DRAWN = {
               ["diskit", "wari-la", "hemis"], ["hemis", "karu", "thiksey", "shey", "leh"]],
     "changthang": [["leh", "shey", "thiksey", "karu", "hemis", "chang-la", "durbuk", "maan", "loma"],
                    ["loma", "hanle", "nurbula", "demchok"],
+                   ["demchok", "koyul", "dungti", "loma"],   # the Indus road back from Demchok
                    ["hanle", "photi-la", "umling-la"],
                    ["taglang-la", "@tso-kar-fork", "nyoma", "loma"], ["@tso-kar-fork", "karzok"],
                    ["taglang-la", "hemis"],
@@ -70,4 +71,4 @@ DRAWN = {
 
 # Legs with neither road data nor a usable stroke on the drawing (the drawn line there
 # was read onto the wrong road). They follow the valleys of the terrain model instead.
-TERRAIN_LEGS = {("diskit", "wari-la"), ("diskit", "sumur"), ("sumur", "panamik"), ("panamik", "siachen-bc"), ("diskit", "hunder"), ("hunder", "turtuk"), ("zangla", "chilling"), ("chilling", "nimmu"), ("loma", "hanle"), ("hanle", "photi-la"), ("photi-la", "umling-la")}
+TERRAIN_LEGS = {("demchok", "koyul"), ("koyul", "dungti"), ("dungti", "loma"), ("diskit", "wari-la"), ("diskit", "sumur"), ("sumur", "panamik"), ("panamik", "siachen-bc"), ("diskit", "hunder"), ("hunder", "turtuk"), ("zangla", "chilling"), ("chilling", "nimmu"), ("loma", "hanle"), ("hanle", "photi-la"), ("photi-la", "umling-la")}
