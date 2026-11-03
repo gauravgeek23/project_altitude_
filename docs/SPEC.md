@@ -96,6 +96,7 @@ npm run build:single   # dist/project-altitude.html: one self-contained page
 ```
 
 - **Vercel:** builds from `main` using `vercel.json`. Pushing to `main` deploys.
+- **Git identity:** commit as the repository owner (`gauravgeek23 <48709686+gauravgeek23@users.noreply.github.com>`) so the work is credited on GitHub's contribution graph; GitHub counts a commit only when its author email belongs to the account. A session that commits as `Claude <noreply@anthropic.com>` leaves no mark. Co-author trailers are fine on top of that.
 - **Optional environment variables** (Vercel → Project Settings → Environment Variables):
   - `VITE_MAPTILER_KEY`, `VITE_MAPBOX_TOKEN` and `VITE_GOOGLE_MAPS_KEY` add those satellite sources; see §6.1.
 
