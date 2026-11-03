@@ -39,8 +39,8 @@ function Head({ eyebrow = "TL;DR", title, children }: { eyebrow?: string; title:
 }
 const Paras = ({ items }: { items: string[] }) => <>{items.map((t) => <p key={t} className="para">{t}</p>)}</>;
 const Rule = ({ children }: { children: ReactNode }) => <p className="rule-line">{children}</p>;
-const Section = ({ title, children, id }: { title: string; children: ReactNode; id?: string }) => (
-  <section className="block" id={id}><h2>{title}</h2>{children}</section>
+const Section = ({ title, children, id, level = 2 }: { title: string; children: ReactNode; id?: string; level?: 2 | 3 }) => (
+  <section className={"block" + (level === 3 ? " sub" : "")} id={id}>{level === 3 ? <h3>{title}</h3> : <h2>{title}</h2>}{children}</section>
 );
 const Badge = ({ kind, children }: { kind: "verify" | "editorial" | "warn" | "ok"; children: ReactNode }) => <span className={`badge ${kind}`}>{children}</span>;
 const Dots = ({ ids }: { ids: CircuitId[] }) => (
@@ -239,13 +239,12 @@ function Passes({ selected, onPlace }: TabProps) {
 }
 
 /* ------------------------------------------------------------------ Food & stays */
-function Food() {
+function FoodBody() {
   return (
     <>
-      <Head eyebrow="Eat & drink" title={G.FOOD.title} />
       <Paras items={G.FOOD.body} />
       <Rule>{G.FOOD.rule}</Rule>
-      <Section title="Dishes of the region">
+      <Section level={3} title="Dishes of the region">
         <div className="dishes">{G.DISHES.map((d) => (
           <article key={d.id} className="card dish">
             <PlacePhoto id={d.id} alt={d.name} className="place-photo dish-photo" />
@@ -255,32 +254,31 @@ function Food() {
           </article>
         ))}</div>
       </Section>
-      <Section title="What to look for">
+      <Section level={3} title="What to look for">
         <div className="cards grid">{G.FOOD.categories.map((c) => <article key={c.name} className="card"><p className="card-title">{c.name}</p><p>{c.body}</p></article>)}</div>
       </Section>
-      <Section title="Food planning by circuit">
+      <Section level={3} title="Food planning by circuit">
         <div className="table">{G.FOOD.byCircuit.map((r) => <div key={r.circuit}><dt><Dots ids={[r.circuit]} /> {CIRCUIT_META[r.circuit].name}</dt><dd><b>{r.base}.</b> {r.advice}</dd></div>)}</div>
         <p className="fine">Planning guidelines, not guarantees of food availability.</p>
       </Section>
-      <Section title="Handpicked places">
+      <Section level={3} title="Handpicked places">
         <p className="empty-state">Restaurants, cafés and dhabas picked from the rides will appear here, with their location, what to order, opening season and when they were last confirmed open. None are listed yet: Project Altitude doesn't publish places it hasn't eaten at.</p>
       </Section>
     </>
   );
 }
-function Stays() {
+function StaysBody() {
   return (
     <>
-      <Head eyebrow="Stays" title={G.STAYS.title} />
       <Paras items={G.STAYS.body} />
       <Rule>{G.STAYS.rule}</Rule>
-      <Section title="Kinds of stay">
+      <Section level={3} title="Kinds of stay">
         <div className="table">{G.STAYS.categories.map((c) => <div key={c.type}><dt>{c.type}</dt><dd><b>{c.ideal}.</b> <span className="muted">Ask about: {c.capture}.</span></dd></div>)}</div>
       </Section>
-      <Section title="Accommodation hubs">
+      <Section level={3} title="Accommodation hubs">
         <div className="table">{G.STAYS.hubs.map((h) => <div key={h.circuit}><dt><Dots ids={[h.circuit]} /> {CIRCUIT_META[h.circuit].name}</dt><dd>{h.places}</dd></div>)}</div>
       </Section>
-      <Section title="Listings">
+      <Section level={3} title="Listings">
         <p className="empty-state">Verified properties will appear here with type, season, meals, hot water, heating, bike parking and a last-verified date. No property names, prices or contacts are published until they are confirmed.</p>
       </Section>
     </>
@@ -288,6 +286,17 @@ function Stays() {
 }
 
 /* ------------------------------------------------------------------ Emergency */
+/** getting there, where to stay and what to eat, on one page (the old #commute, #stays and #food still land here) */
+function Essentials() {
+  return (
+    <>
+      <Head eyebrow="Essentials" title="Getting there, staying and eating" />
+      <Section id="commute" title={G.COMMUTE.title}><CommuteBody /></Section>
+      <Section id="stays" title={G.STAYS.title}><StaysBody /></Section>
+      <Section id="food" title={G.FOOD.title}><FoodBody /></Section>
+    </>
+  );
+}
 function Emergency() {
   return (
     <>
@@ -320,7 +329,7 @@ function Emergency() {
 
 /* ------------------------------------------------------------------ Packing */
 const LISTS: { id: string; label: string }[] = [{ id: "expedition", label: "Full expedition" }, ...CIRCUIT_ORDER.map((c) => ({ id: c, label: CIRCUIT_META[c].name }))];
-function Packing() {
+function Gear() {
   const [list, setList] = useState<string>(() => store.get("altitude-packing-list", "expedition"));
   const key = `altitude-packing-v2-${list}`;
   const [done, setDone] = useState<string[]>(() => store.get(key, []));
@@ -331,7 +340,7 @@ function Packing() {
   const toggle = (k: string) => setDone((d) => (d.includes(k) ? d.filter((x) => x !== k) : [...d, k]));
   return (
     <>
-      <Head eyebrow="Packing" title={G.PACKING_INTRO.title} />
+      <Head eyebrow="Gear" title={G.PACKING_INTRO.title} />
       <Paras items={G.PACKING_INTRO.body} />
       <Rule>{G.PACKING_INTRO.rule}</Rule>
       <div className="seg" role="tablist" aria-label="Packing list">
@@ -356,23 +365,22 @@ function Packing() {
 }
 
 /* ------------------------------------------------------------------ Commute */
-function Commute() {
+function CommuteBody() {
   const [perDay, setPerDay] = useState<number>(() => store.get("altitude-km-per-day", 150));
   useEffect(() => store.set("altitude-km-per-day", perDay), [perDay]);
   return (
     <>
-      <Head eyebrow="Commute" title={G.COMMUTE.title} />
       <Paras items={G.COMMUTE.body} />
       <Rule>{G.COMMUTE.rule}</Rule>
-      <Section title="Starting points">
+      <Section level={3} title="Starting points">
         <div className="table">{G.COMMUTE.starts.map((s) => <div key={s.place}><dt>{s.place}</dt><dd><b>{s.best}.</b> <span className="muted">Plan: {s.plan}.</span></dd></div>)}</div>
         <p className="fine">Possible logistical bases, not guarantees that every route is currently accessible.</p>
       </Section>
-      <Section title="Getting your motorcycle there">
+      <Section level={3} title="Getting your motorcycle there">
         <div className="cards grid">{G.COMMUTE.bike.map((b) => <article key={b.title} className="card"><p className="card-title">{b.title}</p><ul className="bullets">{b.points.map((p) => <li key={p}>{p}</li>)}</ul></article>)}</div>
       </Section>
-      <Section title="Before departure"><ul className="bullets">{G.COMMUTE.checklist.map((c) => <li key={c}>{c}</li>)}</ul></Section>
-      <Section title="Distance and time planning">
+      <Section level={3} title="Before departure"><ul className="bullets">{G.COMMUTE.checklist.map((c) => <li key={c}>{c}</li>)}</ul></Section>
+      <Section level={3} title="Distance and time planning">
         <p className="para">Don't calculate riding days from kilometres alone. {G.COMMUTE.factors.join(", ")} all matter.</p>
         <label className="range" htmlFor="km-per-day"><span>Your daily riding limit: <b>{perDay} km</b></span>
           <input id="km-per-day" type="range" min={60} max={300} step={10} value={perDay} onChange={(e) => setPerDay(+e.target.value)} /></label>
@@ -463,26 +471,45 @@ function CircuitPicker({ plan, setPlan }: { plan: CircuitId[]; setPlan(f: (p: Ci
 /* ------------------------------------------------------------------ Gems, swags, creator, terms */
 function Gems({ onPlace }: TabProps) {
   const [c, setC] = useState<CircuitId | "all">("all");
+  const [kind, setKind] = useState<string>("all");
+  const kinds = [...new Set(G.GEMS.list.map((g) => g.category))];
+  const list = G.GEMS.list.filter((g) => (c === "all" || g.circuit === c) && (kind === "all" || g.category === kind));
   return (
     <>
-      <Head eyebrow="Gems" title={G.GEMS.title} />
+      <Head eyebrow="Hidden gems" title={G.GEMS.title} />
       <Paras items={G.GEMS.body} />
       <Rule>{G.GEMS.rule}</Rule>
-      <CircuitChips value={c} onChange={setC} />
-      <div className="cards grid">
-        {G.GEMS.list.filter((g) => c === "all" || g.circuit === c).map((g) => (
-          <article key={g.title} className="card gem">
-            <p className="meta"><Dots ids={[g.circuit]} /> {g.category}</p>
-            <p className="card-title">{g.title}</p>
-            <p className="muted">Near <PlaceLink id={g.place} onPlace={onPlace} /> · <Badge kind="verify">To research</Badge></p>
-          </article>
-        ))}
+      <div className="filters">
+        <div className="circuit-filter" role="group" aria-label="Filter by kind">
+          <button type="button" className={"cf" + (kind === "all" ? " on" : "")} aria-pressed={kind === "all"} onClick={() => setKind("all")}>All</button>
+          {kinds.map((k) => <button key={k} type="button" className={"cf" + (kind === k ? " on" : "")} aria-pressed={kind === k} onClick={() => setKind(k)}>{k}</button>)}
+        </div>
+        <CircuitChips value={c} onChange={setC} />
       </div>
+      <p className="count-line">{list.length} gems</p>
+      <div className="cards">
+        {list.map((g) => {
+          const id = g.id ?? slug(g.title), photo = hasPhotos(id);
+          return (
+            <article key={id} className={"card gem" + (photo ? " with-photo" : "")}>
+              <div className="gem-head">
+                <div className="gem-text">
+                  <p className="card-title">{g.title}</p>
+                  <p className="meta"><Dots ids={[g.circuit]} /> {g.category}{g.place && <> · near <PlaceLink id={g.place} onPlace={onPlace} /></>}</p>
+                  {g.summary ? <p className="summary-text">{g.summary}</p> : <p className="muted"><Badge kind="verify">To research</Badge></p>}
+                </div>
+                {photo && <PlacePhoto id={id} alt={g.title} caption={false} className="place-photo thumb" />}
+              </div>
+            </article>
+          );
+        })}
+      </div>
+      {!list.length && <p className="empty">Nothing here yet for this pick.</p>}
       <p className="fine">{G.GEMS.note}</p>
-      <Section title="Categories"><p className="para muted">{G.GEMS.categories.join(" · ")}</p></Section>
     </>
   );
 }
+const slug = (t: string) => t.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 function Swags() {
   return (
     <>
@@ -621,6 +648,6 @@ function Legend() {
 export const TABS: Record<TabId, (p: TabProps) => JSX.Element> = {
   legend: Legend,
   note: Note, how: HowTo, credits: Credits,
-  villages: Villages, passes: Passes, food: Food, stays: Stays, emergency: Emergency, packing: Packing, commute: Commute, circuits: Circuits, gems: Gems,
+  villages: Villages, passes: Passes, essentials: Essentials, gear: Gear, emergency: Emergency, circuits: Circuits, gems: Gems,
   swags: Swags, creator: Creator, terms: Terms,
 };

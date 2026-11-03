@@ -318,9 +318,8 @@ The reading panel separates things by colour, not by lines: the panel is `--pane
 
 | Group | Pages |
 |---|---|
-| About | A note (the note, then the story: `#story` opens the same page), How to use |
-| Guide | **Circuits** (the four circuit cards; no summary table), **Map legend**, Villages, Passes, Gems |
-| On the road | Commute, Stays, Eat & Drink, Packing, Emergency |
+| About | A note (the note, then the story: `#story` opens the same page), How to use, Map legend |
+| Guide | **Circuits** (the four circuit cards; no summary table), Villages, Passes, **Essentials** (getting there, where to stay, what to eat, as three sections; `#commute`, `#stays` and `#food` open it at the section), **Gear** (the packing lists, motorcycle essentials included; `#packing` opens it), **Hidden gems**, Emergency |
 | Shop | Swags |
 | Footer | Meet the Creator; then T&C · Credits on one line |
 
@@ -330,7 +329,8 @@ The reading panel separates things by colour, not by lines: the panel is `--pane
   - A click on the thumbnail opens the full-screen view (with the caption), whether the card is open or closed; a click anywhere else on the header opens or closes the card. Open, the context shows in full and the body follows.
   - The practical facts are listed plainly (elevation, then each practical field that has a value); a field with nothing known is left out, and a place with nothing known shows no list.
   - A filled **Show on map** button at the foot, the full width of the card (no block around it; no icon). Status, sources and neighbours stay in the record but are not displayed.
-- **Directory filter:** the search box and the circuit bar above a list look like the map's own (white search field, the same circuit bar with its dots).
+- **Directory filter:** the search box and the circuit bar above a list look like the map's own (white search field, the same circuit bar with its dots); the bar fills the column and scrolls sideways when the column is narrower than its buttons.
+- **Hidden gems:** `GEMS.list` in `guide.ts` is a list of `Gem` entries (title, free-text category, circuit, nearest place, summary, optional photo id). The page filters by category and by circuit with the same bars; a card shows title, category, the nearest place as a link, the summary (or "To research" until one is written) and a thumbnail when a photo exists under the gem's id.
 - **Storage:** packing lists, trip plan and km/day are kept in `localStorage`, with every access wrapped in try/catch.
 
 ---

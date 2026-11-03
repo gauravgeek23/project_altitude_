@@ -103,7 +103,13 @@ details.card.selected { background: var(--card-selected); }
 /* filters */
 .filters { display: flex; flex-direction: column; gap: 8px; align-items: stretch; margin-top: 24px; }
 .filters input { min-width: 0; height: 38px; border: 0; border-radius: 10px; padding: 0 12px; background: var(--card); font-size: 14px; box-shadow: 0 1px 3px rgba(0,0,0,.12); }
-.filters .circuit-filter { align-self: flex-start; }
+.filters .circuit-filter { align-self: stretch; }
+.filters .cf { flex: 1 0 auto; justify-content: center; }
+.gem-head { display: flex; gap: 12px; align-items: flex-start; }
+.gem-text { flex: 1; min-width: 0; }
+.card.gem .summary-text { color: var(--grey); }
+.block.sub { margin-top: 26px; }
+.block.sub h3 { margin: 0 0 10px; }
 .chips { display: flex; flex-wrap: wrap; gap: 6px; width: 100%; }
 .chip { display: inline-flex; align-items: center; gap: 6px; height: 32px; padding: 0 12px; border-radius: 999px; border: 0; background: var(--soft); cursor: pointer; font-size: 13px; color: var(--grey); }
 .chip.on { background: var(--ink); color: var(--on-ink); border-color: var(--ink); }

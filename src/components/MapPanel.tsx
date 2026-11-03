@@ -40,7 +40,7 @@ export function MapPanel({ selected, circuit, onCircuit, onSelect, onOpenPlace, 
   const map = useRef<MapHandle>(null);
   const [hover, setHover] = useState<string | null>(null);
   const [kmPerPx, setKmPerPx] = useState(1);
-  const [kinds, setKinds] = useState<Set<string>>(() => new Set(CATEGORIES.filter((c) => c.id !== "fuel").map((c) => c.id)));
+  const [kinds, setKinds] = useState<Set<string>>(() => new Set(CATEGORIES.map((c) => c.id)));
   const [q, setQ] = useState("");
   const [panel, setPanel] = useState(false);
   const fuel = kinds.has("fuel");

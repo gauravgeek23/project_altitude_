@@ -5,10 +5,12 @@ import { MapPanel } from "./components/MapPanel";
 import { BY_ID } from "./content/places";
 import { TABS } from "./components/Tabs";
 import { Logo } from "./components/Logo";
-import { isTab, labelOf, type TabId } from "./nav";
+import { ALIASES, isTab, labelOf, type TabId } from "./nav";
 import type { CircuitId } from "./content/places";
 
-const fromHash = (): TabId => { const h = location.hash.slice(1); return h === "story" ? "note" : isTab(h) ? h : "note"; };
+const fromHash = (): TabId => { const h = location.hash.slice(1); return isTab(h) ? h : ALIASES[h] ?? "note"; };
+/** an old address like #stays opens Essentials and scrolls to that section */
+const scrollToAlias = () => { const h = location.hash.slice(1); if (ALIASES[h]) setTimeout(() => document.getElementById(h)?.scrollIntoView({ block: "start" }), 60); };
 
 export default function App() {
   const [tab, setTab] = useState<TabId>(fromHash);
@@ -20,8 +22,9 @@ export default function App() {
   const mobile = () => matchMedia("(max-width: 899px)").matches;
 
   useEffect(() => {
-    const on = () => setTab(fromHash());
+    const on = () => { setTab(fromHash()); scrollToAlias(); };
     addEventListener("hashchange", on);
+    scrollToAlias();
     return () => removeEventListener("hashchange", on);
   }, []);
   useEffect(() => { content.current?.scrollTo({ top: 0 }); if (mobile()) scrollTo({ top: 0 }); }, [tab]);

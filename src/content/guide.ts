@@ -38,9 +38,9 @@ export const HOW_TO = {
   steps: [
     { n: "01", title: "Start with the map", body: "Explore the four coloured circuits. Zoom into valleys, pan across the terrain, and select marked villages, mountain passes, lakes, and other stops to discover more about each location." },
     { n: "02", title: "Pick your circuit", body: "You don't have to do the entire expedition. Choose Zanskar, Nubra, Changthang, or Spiti and build a journey around the time you have." },
-    { n: "03", title: "Plan your stops", body: "Use the villages, food, and stays sections to identify possible overnight stops, places to eat, and towns where you can restock." },
-    { n: "04", title: "Prepare for the ride", body: "Check the packing list, road conditions, altitude considerations, fuel gaps, and emergency information before leaving." },
-    { n: "05", title: "Find something unexpected", body: "Explore the Gems section for quieter places, detours, unusual landscapes, and stops that deserve more than a quick photograph." },
+    { n: "03", title: "Plan your stops", body: "Use the villages and essentials sections to identify possible overnight stops, places to eat, and towns where you can restock." },
+    { n: "04", title: "Prepare for the ride", body: "Check the gear list, road conditions, altitude considerations, fuel gaps, and emergency information before leaving." },
+    { n: "05", title: "Find something unexpected", body: "Explore the Hidden gems section for quieter places, detours, unusual landscapes, and stops that deserve more than a quick photograph." },
     { n: "06", title: "Verify before you leave", body: "This is a planning guide, not a live guarantee of road access or services. Confirm current road conditions, permits, weather, accommodation, and fuel availability before each remote section." },
   ],
   tip: "Save important information offline. Mobile data can disappear for long stretches, particularly around remote parts of Zanskar and Changthang.",
@@ -316,6 +316,10 @@ export const EXPEDITION_PAGE = {
 };
 
 /* ------------------------------------------------------------------ Gems */
+/** One hidden gem: a place, a restaurant, a stay, a route, an experience… `category` is free text and becomes a filter;
+ *  `place` links the nearest guide entry; `summary` is the card's text (without it the card says "To research");
+ *  `id` keys a photo in the photo selection (defaults to the title's slug). */
+export interface Gem { id?: string; title: string; category: string; circuit: CircuitId; place?: string; summary?: string }
 export const GEMS = {
   title: "The places between the destinations",
   body: [
@@ -325,7 +329,7 @@ export const GEMS = {
   ],
   rule: "Some of the best discoveries happen when you leave a little room in the itinerary.",
   categories: ["Hidden viewpoints", "Village life", "Monasteries and heritage", "Lakes and landscapes", "Short walks", "Photography spots", "Stargazing", "Food discoveries", "Quiet detours", "Rider stories"],
-  list: [
+  list: <Gem[]>[
     { circuit: "zanskar" as CircuitId, place: "zangla", title: "Zangla's historic settlement", category: "Monasteries and heritage" },
     { circuit: "zanskar" as CircuitId, place: "rangdum", title: "The landscapes around Rangdum", category: "Lakes and landscapes" },
     { circuit: "zanskar" as CircuitId, place: "parkachik", title: "Nun–Kun views from public viewpoints", category: "Hidden viewpoints" },
