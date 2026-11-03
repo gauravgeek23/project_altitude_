@@ -206,7 +206,7 @@ PlaceRecord {
 | Zoom range | `MapCanvas.tsx` | From `minK` (the whole northern crown, 72.3–80.6° E, 32–37.2° N) up to 28×. Panning stops at the relief's edge. |
 | Zoom tiers | `LocationMarkers.tsx` `TIER_ZOOM = [0, 0, 2.2, 4]` | Tiers 0 and 1 always show; tier 2 appears from 2.2×, tier 3 from 4×. The selected place always shows. |
 | Reveal | `MapCanvas.tsx`, `LocationMarkers.tsx` | Once per page load the map shows the relief and the routes alone for 2.2 s; then the places come out one after another (each 14 ms after the last, up to 0.9 s), rising a little as they fade in, and the city, state and country names fade in with them. |
-| Labels | `LocationMarkers.tsx` | Screen-space pills with the type icon. Placed by priority (selected, then hub, then highlight, then on the active circuit). Hidden when they collide, or fall under the search box, filter bar, controls or scale bar. |
+| Labels | `LocationMarkers.tsx` | Screen-space pills with the type icon. Placed by priority (selected, then the pinned ones, then on the active circuit). Hidden when they collide, or fall under the search box, filter bar, controls or scale bar. **Pinned:** the hubs (Leh, Manali, Chandigarh) and Umling La always carry their name, at every zoom; icons move out of their way. |
 | Circuit filter | `MapPanel.tsx` | All · Zanskar · Nubra · Changthang · Spiti. Picking a circuit, or clicking its line, shows it alone and frames it. A click on empty map, "All", the same circuit again, or Reset shows all four. |
 | Circuit hover | `RouteLayer.tsx`, `MapCanvas.tsx` | Hovering a line (or a circuit card) lifts that circuit and fades the others; leaving it restores every circuit. The lines keep their DOM order (the active one is redrawn on top as a copy without pointer events), and the SVG clears the hover on any move off a line, so the faded state can't stick. |
 | Search row | `MapPanel.tsx` | Left to right: the search box, the petrol-pump toggle, then **Filters**, the dark primary button (it carries the most weight: the map source and which kinds of place to show, so it reads as the main control). The row and the circuit bar share one grid column (`.map-top`): the bar's natural width sets the column, the search box stretches to it, so Filters ends flush with the bar. The results list and the Filters panel drop down over the bar. |
@@ -319,7 +319,7 @@ The reading panel separates things by colour, not by lines: the panel is `--pane
 | Group | Pages |
 |---|---|
 | About | A note (the note, then the story: `#story` opens the same page), How to use |
-| Guide | **Circuits**, **Map legend**, Villages, Passes, Gems |
+| Guide | **Circuits** (the four circuit cards; no summary table), **Map legend**, Villages, Passes, Gems |
 | On the road | Commute, Stays, Eat & Drink, Packing, Emergency |
 | Shop | Swags |
 | Footer | Meet the Creator; then T&C · Credits on one line |

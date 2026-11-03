@@ -401,10 +401,6 @@ function Circuits({ onPlace, onCircuit }: TabProps) {
       <Head eyebrow="Circuits" title="Four circuits, each its own journey">
         <p className="lead">Each circuit can be ridden on its own. Open one to see its route, a suggested itinerary and what to watch for; selecting it lights it up on the map.</p>
       </Head>
-      <div className="table compact">
-        {G.CIRCUITS.map((c) => <div key={c.id}><dt><Dots ids={[c.id]} /> {CIRCUIT_META[c.id].name}</dt><dd>{CIRCUIT_META[c.id].character} <span className="muted">Base: {c.base} · planning window {c.window}</span></dd></div>)}
-      </div>
-      <p className="fine">Planning windows are initial itinerary targets, not validated trip durations.</p>
       <div className="cards">
         {G.CIRCUITS.map((c) => {
           const m = CIRCUIT_META[c.id], on = open === c.id, inPlan = plan.includes(c.id);

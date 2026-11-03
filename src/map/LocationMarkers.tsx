@@ -55,7 +55,8 @@ export function LocationMarkers({ region, project, transform, size, selected, ac
     const [x, y] = transform.apply(xy);
     const onVisible = on.some((id) => visible.has(id));
     const onActive = activeCircuit ? on.includes(activeCircuit) : false;
-    const priority = (l.id === selected ? 100 : 0) + (l.hub ? 80 : 0) + (l.accent ? 50 : 0) + (onActive ? 30 : 0) + (onVisible ? 10 : 0)
+    // the hubs (Leh, Manali, Chandigarh) and the highlight (Umling La) are pinned: placed first and never dropped
+    const priority = (l.id === selected ? 100 : 0) + (l.hub || l.accent ? 200 : 0) + (onActive ? 30 : 0) + (onVisible ? 10 : 0)
       + (l.kind === "town" ? 4 : l.kind === "pass" ? 3 : l.kind === "peak" ? 1 : 2);
     return { l, x, y, onVisible, onActive, priority, fuelOnly };
   }).filter((i) => i.x > -40 && i.y > -40 && i.x < size.w + 40 && i.y < size.h + 40);
@@ -86,30 +87,38 @@ export function LocationMarkers({ region, project, transform, size, selected, ac
     const h = peak ? PEAK_H : LABEL_H;
     // tags: right, left, above, below the dot; peak names: centred above or below the summit
     const spots = peak ? [[-w / 2, -h - 3], [-w / 2, 3], [5, -h / 2], [-w - 5, -h / 2]] : [[8, -h / 2], [-8 - w, -h / 2], [-w / 2, -h - 8], [-w / 2, 8]];
+    const pinned = !!(i.l.hub || i.l.accent);
     for (const [dx, dy] of spots) {
       const box: Box = [i.x + dx, i.y + dy, i.x + dx + w, i.y + dy + h];
       const clear = box[0] > 2 && box[2] < size.w - 2 && box[1] > 2 && box[3] < size.h - 2 &&
         !placed.some((b) => box[0] < b[2] + 2 && box[2] > b[0] - 2 && box[1] < b[3] + 1 && box[3] > b[1] - 1) &&
-        !items.some((o) => o !== i && o.l.kind !== "peak" && !isIcon(o) && o.x > box[0] - 3 && o.x < box[2] + 3 && o.y > box[1] - 3 && o.y < box[3] + 3);
+        (pinned || !items.some((o) => o !== i && o.l.kind !== "peak" && !isIcon(o) && o.x > box[0] - 3 && o.x < box[2] + 3 && o.y > box[1] - 3 && o.y < box[3] + 3));
       if (clear) { placed.push(box); i.box = box; break; }
+    }
+    if (pinned && !i.box) {   // nowhere clear: it still shows, at its first spot
+      const [dx, dy] = spots[0]; const box: Box = [i.x + dx, i.y + dy, i.x + dx + w, i.y + dy + h]; placed.push(box); i.box = box;
     }
   }
 
   // tags come first: an icon under one is moved out through the nearest side, then eased clear of its neighbours again
   const tags = placed.slice(reserved.length), pad = BADGE + 2;
-  for (let pass = 0; pass < 3; pass++) for (const m of mons) {
+  const outOfTags = (m: Item) => {
     for (const b of tags) {
       if (!(m.x > b[0] - pad && m.x < b[2] + pad && m.y > b[1] - pad && m.y < b[3] + pad)) continue;
       const out = [m.x - (b[0] - pad), (b[2] + pad) - m.x, m.y - (b[1] - pad), (b[3] + pad) - m.y];
       const side = out.indexOf(Math.min(...out));
       if (side === 0) m.x = b[0] - pad; else if (side === 1) m.x = b[2] + pad; else if (side === 2) m.y = b[1] - pad; else m.y = b[3] + pad;
     }
+  };
+  for (let pass = 0; pass < 4; pass++) for (const m of mons) {
     for (const o of dots) apart(m, o, BADGE + 10, 1);
     for (const o of mons) if (o !== m) apart(m, o, 2 * BADGE + 2, 0.5);
+    outOfTags(m);   // the tags have the last word
   }
   // an icon under the search box or the controls could not be clicked, so it is left out there
   const drawn = items.filter((i) => !isIcon(i) || i.l.id === selected ||
-    !reserved.some((b) => i.x > b[0] - BADGE && i.x < b[2] + BADGE && i.y > b[1] - BADGE && i.y < b[3] + BADGE));
+    !reserved.some((b) => i.x > b[0] - BADGE && i.x < b[2] + BADGE && i.y > b[1] - BADGE && i.y < b[3] + BADGE))
+    .sort((a, b) => Number(!!(a.l.hub || a.l.accent)) - Number(!!(b.l.hub || b.l.accent)));
 
   const label = (i: Item, box: Box) => (
     <g className="label">
