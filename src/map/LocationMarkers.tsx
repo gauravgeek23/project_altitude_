@@ -50,8 +50,8 @@ export function LocationMarkers({ region, project, transform, size, selected, ac
     fuelOnly: !!kinds && !kinds.has(l.kind) && l.id !== selected && !!fuel && FUEL_AT.has(l.id),
   })), [region, project, kinds, selected, fuel]);
 
-  // monasteries ignore the zoom tiers: every one is on the map at every zoom (icons only, so they cost no room)
-  const items: Item[] = locs.filter(({ l, fuelOnly }) => l.id === selected || l.kind === "monastery" || fuelOnly || transform.k >= TIER_ZOOM[l.tier ?? 1]).map(({ l, xy, on, fuelOnly }) => {
+  // a few main monasteries show at every zoom, the rest as you zoom in (their tiers); a pump marker shows whenever pumps are on
+  const items: Item[] = locs.filter(({ l, fuelOnly }) => l.id === selected || fuelOnly || transform.k >= TIER_ZOOM[l.tier ?? 1]).map(({ l, xy, on, fuelOnly }) => {
     const [x, y] = transform.apply(xy);
     const onVisible = on.some((id) => visible.has(id));
     const onActive = activeCircuit ? on.includes(activeCircuit) : false;

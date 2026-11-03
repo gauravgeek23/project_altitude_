@@ -100,8 +100,9 @@ export function PrayerFlags({ height = 58, flags = 5 }: { height?: number; flags
     };
 
     // a slow breathing strength with the odd stronger gust, travelling left to right
-    const noise = (t: number) => 0.5 + 0.5 * (0.55 * Math.sin(t * 0.31) + 0.3 * Math.sin(t * 0.83 + 1.3) + 0.15 * Math.sin(t * 2.1 + 0.4));
-    const gustAt = (t: number, u: number) => { const g = noise(t * 0.9 - u * 1.8); return 0.22 + 0.78 * g * g; };
+    // a slow wind: the strength breathes over tens of seconds and drifts along the string
+    const noise = (t: number) => 0.5 + 0.5 * (0.55 * Math.sin(t * 0.12) + 0.3 * Math.sin(t * 0.31 + 1.3) + 0.15 * Math.sin(t * 0.7 + 0.4));
+    const gustAt = (t: number, u: number) => { const g = noise(t * 0.45 - u * 1.8); return 0.3 + 0.7 * g * g; };
 
     function draw(t: number) {
       ctx!.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -113,7 +114,7 @@ export function PrayerFlags({ height = 58, flags = 5 }: { height?: number; flags
       // the string is pinned at the top edge and sags a little between its two ends
       const sag = Math.min(fh * 0.55, w * 0.11), ropeY = 1.4;
       // the string sags, and a slow wave runs along it
-      const ropeAt = (x: number) => { const u = x / w; return ropeY + sag * 4 * u * (1 - u) + 1.6 * sc * Math.sin(t * 1.3 - u * 6.0) + 0.7 * sc * Math.sin(t * 0.8 + u * 3.1); };
+      const ropeAt = (x: number) => { const u = x / w; return ropeY + sag * 4 * u * (1 - u) + 1.6 * sc * Math.sin(t * 0.5 - u * 6.0) + 0.7 * sc * Math.sin(t * 0.3 + u * 3.1); };
       const slopeAt = (x: number) => (ropeAt(x + 2) - ropeAt(x - 2)) / 4;
       // each flag hangs from its spot on the curve, turned a little to follow it
       const inset = fw * 0.55;
@@ -146,15 +147,15 @@ export function PrayerFlags({ height = 58, flags = 5 }: { height?: number; flags
         const f = tex[i % FLAGS.length];
         const tilt = Math.atan(slopeAt(cx)) * 0.6;
         // the flag swings on its knot in an arc, and its free hem shears downwind
-        const swing = (0.08 + 0.16 * g) * Math.sin(t * 1.9 + i * 1.3 + u * 2.0);
-        const shear = 0.06 + 0.32 * g + 0.14 * g * Math.sin(t * 2.3 + i * 1.7);
+        const swing = (0.08 + 0.16 * g) * Math.sin(t * 0.7 + i * 1.3 + u * 2.0);
+        const shear = 0.06 + 0.3 * g + 0.14 * g * Math.sin(t * 0.85 + i * 1.7);
         const sw = f.width / cols, dw = fw / cols;
         ctx!.save();
         ctx!.translate(cx, ropeAt(cx) + 0.5);
         ctx!.rotate(tilt + swing);
         for (let c = 0; c < cols; c++) {
           const v = (c + 0.5) / cols;
-          const ph = v * 6.3 - t * (4 + 6 * g) + i * 1.1;   // one big wave travelling across the cloth
+          const ph = v * 6.3 - t * (1.3 + 1.7 * g) + i * 1.1;   // one big wave travelling slowly across the cloth
           const x = -fw / 2 + c * dw + 2.2 * sc * g * Math.sin(ph);   // threads bunch on the folds
           const dy = 1.8 * sc * g * Math.sin(ph * 0.9 + 0.4);        // the cloth rises and falls with the wave
           const lift = 1 - 0.05 * g - 0.16 * g * (0.5 + 0.5 * Math.sin(ph * 0.8 + 0.9));   // the hem waves up

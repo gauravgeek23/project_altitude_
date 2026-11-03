@@ -1419,7 +1419,7 @@
       "id": "matho",
       "name": "Matho Monastery",
       "kind": "monastery",
-      "tier": 3,
+      "tier": 2,
       "source": {
         "dataset": "approx",
         "lon": 77.63,
@@ -1432,7 +1432,7 @@
       "id": "spituk",
       "name": "Spituk Monastery",
       "kind": "monastery",
-      "tier": 2,
+      "tier": 1,
       "source": {
         "dataset": "published",
         "lon": 77.526278,
@@ -1444,7 +1444,7 @@
       "id": "phyang",
       "name": "Phyang Monastery",
       "kind": "monastery",
-      "tier": 3,
+      "tier": 2,
       "source": {
         "dataset": "published",
         "lon": 77.48944,
@@ -1492,7 +1492,7 @@
       "id": "samstanling",
       "name": "Samstanling Monastery",
       "kind": "monastery",
-      "tier": 2,
+      "tier": 1,
       "source": {
         "dataset": "published",
         "lon": 77.625252,
@@ -1504,7 +1504,7 @@
       "id": "karsha",
       "name": "Karsha Monastery",
       "kind": "monastery",
-      "tier": 2,
+      "tier": 1,
       "source": {
         "dataset": "published",
         "lon": 76.907,
@@ -1516,7 +1516,7 @@
       "id": "stongdey",
       "name": "Stongdey Monastery",
       "kind": "monastery",
-      "tier": 3,
+      "tier": 2,
       "source": {
         "dataset": "published",
         "lon": 76.9882,
@@ -1553,7 +1553,7 @@
       "id": "thukje",
       "name": "Thukje Monastery",
       "kind": "monastery",
-      "tier": 3,
+      "tier": 2,
       "source": {
         "dataset": "published",
         "lon": 78.0248,
@@ -1565,7 +1565,7 @@
       "id": "kungri",
       "name": "Kungri Monastery",
       "kind": "monastery",
-      "tier": 2,
+      "tier": 1,
       "source": {
         "dataset": "published",
         "lon": 78.075,
@@ -1577,7 +1577,7 @@
       "id": "lhalung",
       "name": "Lhalung Monastery",
       "kind": "monastery",
-      "tier": 3,
+      "tier": 2,
       "source": {
         "dataset": "published",
         "lon": 78.235,
