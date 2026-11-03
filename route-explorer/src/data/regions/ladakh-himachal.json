@@ -1118,6 +1118,68 @@
       }
     },
     {
+      "id": "zoji-la",
+      "name": "Zoji La",
+      "kind": "pass",
+      "tier": 2,
+      "source": {
+        "dataset": "published",
+        "lon": 75.47194,
+        "lat": 34.27889,
+        "cite": "Wikipedia, Zoji La",
+        "snap": "route"
+      }
+    },
+    {
+      "id": "rohtang-la",
+      "name": "Rohtang La",
+      "kind": "pass",
+      "tier": 1,
+      "source": {
+        "dataset": "published",
+        "lon": 77.24639,
+        "lat": 32.37139,
+        "cite": "Wikipedia, Rohtang Pass"
+      }
+    },
+    {
+      "id": "jalori-pass",
+      "name": "Jalori Pass",
+      "kind": "pass",
+      "tier": 1,
+      "source": {
+        "dataset": "published",
+        "lon": 77.3675,
+        "lat": 31.5383,
+        "cite": "Wikidata, Jalori Galu (Q26788845)"
+      }
+    },
+    {
+      "id": "marsimik-la",
+      "name": "Marsimik La",
+      "kind": "pass",
+      "tier": 2,
+      "source": {
+        "dataset": "published",
+        "lon": 78.6178,
+        "lat": 34.0933,
+        "cite": "Wikipedia, Marsimik La"
+      }
+    },
+    {
+      "id": "polokongka-la",
+      "name": "Polokongka La",
+      "kind": "pass",
+      "tier": 2,
+      "source": {
+        "dataset": "approx",
+        "lon": 78.17,
+        "lat": 33.27,
+        "snap": "pass",
+        "radius": 12
+      }
+    },
+    {
       "id": "kunzum-la",
       "name": "Kunzum La",
       "kind": "pass",

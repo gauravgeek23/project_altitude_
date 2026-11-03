@@ -27,7 +27,7 @@
 :root[data-theme="dark"] .draft-note { background: rgba(255, 196, 61, .12); color: #ffd277; }
 :root[data-theme="dark"] .empty-state { border-color: #333a43; }
 :root[data-theme="dark"] .check input:checked + span, .stops li:not(:last-child)::after { text-decoration-color: #4b525c; color: inherit; }
-:root[data-theme="dark"] .type-icon.village, .type-icon.town { background: rgba(255, 224, 58, .16); color: #ffe03a; }
+:root[data-theme="dark"] .type-icon.village, :root[data-theme="dark"] .type-icon.town { background: rgba(255, 224, 58, .16); color: #ffe03a; }
 :root[data-theme="dark"] .type-icon.pass { background: #eceef2; color: #0d0f12; }
 :root[data-theme="dark"] .type-icon.peak { background: rgba(255,255,255,.08); color: #dfe4ea; box-shadow: inset 0 0 0 1px rgba(255,255,255,.12); }
 :root[data-theme="dark"] .type-icon.lake { background: rgba(79, 227, 239, .14); color: #6fe9f3; }
@@ -75,7 +75,7 @@
 :root:not([data-theme="light"]) .draft-note { background: rgba(255, 196, 61, .12); color: #ffd277; }
 :root:not([data-theme="light"]) .empty-state { border-color: #333a43; }
 :root:not([data-theme="light"]) .check input:checked + span, .stops li:not(:last-child)::after { text-decoration-color: #4b525c; color: inherit; }
-:root:not([data-theme="light"]) .type-icon.village, .type-icon.town { background: rgba(255, 224, 58, .16); color: #ffe03a; }
+:root:not([data-theme="light"]) .type-icon.village, :root:not([data-theme="light"]) .type-icon.town { background: rgba(255, 224, 58, .16); color: #ffe03a; }
 :root:not([data-theme="light"]) .type-icon.pass { background: #eceef2; color: #0d0f12; }
 :root:not([data-theme="light"]) .type-icon.peak { background: rgba(255,255,255,.08); color: #dfe4ea; box-shadow: inset 0 0 0 1px rgba(255,255,255,.12); }
 :root:not([data-theme="light"]) .type-icon.lake { background: rgba(79, 227, 239, .14); color: #6fe9f3; }

@@ -158,7 +158,7 @@ function PlaceCard({ p, open, onPlace, innerRef }: { p: PlaceRecord; open: boole
       onToggle={(e) => setOpen((e.currentTarget as HTMLDetailsElement).open)}>
       <summary>
         <span className="card-title">{p.name}{p.aka && <small className="muted"> {p.aka}</small>}</span>
-        <span className="card-marks"><span className={`type-icon ${p.type}`} title={TYPE_LABEL[p.type]}><PlaceIcon kind={p.type} size={15} title={TYPE_LABEL[p.type]} /></span><Dots ids={p.circuits} /><span className="card-chev" aria-hidden="true"><ChevronIcon /></span></span>
+        <span className="card-marks"><Dots ids={p.circuits} /><span className={`type-icon ${p.type}`} title={TYPE_LABEL[p.type]}><PlaceIcon kind={p.type} size={15} title={TYPE_LABEL[p.type]} /></span></span>
         <span className="meta">{TYPE_LABEL[p.type]} · {p.region}</span>
         <span className="summary-text">{p.summary}</span>
         {p.access && <span className="access-flag"><Badge kind="warn">Access</Badge> Restrictions apply</span>}
@@ -178,7 +178,6 @@ function PlaceCard({ p, open, onPlace, innerRef }: { p: PlaceRecord; open: boole
     </details>
   );
 }
-const ChevronIcon = () => <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="M6 9l6 6 6-6" /></svg>;
 function Directory({ records, selected, onPlace, label }: { records: PlaceRecord[]; selected: string | null; onPlace(id: string): void; label: string }) {
   const [q, setQ] = useState("");
   const [c, setC] = useState<CircuitId | "all">("all");
@@ -415,7 +414,6 @@ function Circuits({ onPlace, onCircuit }: TabProps) {
               <button type="button" className="circuit-head" aria-expanded={on} onClick={() => { const n = on ? null : c.id; setOpen(n); onCircuit(n); }}>
                 <span className="bar" />
                 <span><span className="card-title">{m.name}</span><span className="meta">{c.window} · ≈ {fmt(circuitKm[c.id])} km drawn · base {c.base}</span></span>
-                <span className="chev" aria-hidden="true">{on ? "−" : "+"}</span>
               </button>
               {on && (
                 <div className="card-body">

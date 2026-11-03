@@ -84,8 +84,11 @@
 .region-area { fill: transparent; stroke: none; pointer-events: fill; transition: fill .2s ease; }
 .region-area.ladakh:hover { fill: rgba(196, 128, 32, .18); }
 .region-area.himachal:hover { fill: rgba(34, 128, 74, .18); }
-.region-area.china:hover { fill: rgba(222, 41, 16, .18); }      /* the red of China's flag */
-.region-area.pakistan:hover { fill: rgba(0, 100, 45, .22); }     /* Pakistan's green, lifted a little so it reads as green on the grey relief */
+/* the neighbours are always tinted, in a colour of their flag (China red, Pakistan green, Nepal's blue border, Afghanistan's black) */
+.region-area.china { fill: rgba(222, 41, 16, .18); }
+.region-area.pakistan { fill: rgba(0, 100, 45, .22); }
+.region-area.nepal { fill: rgba(0, 56, 147, .18); }
+.region-area.afghanistan { fill: rgba(30, 30, 30, .16); }
 .countries text { transition: opacity .2s ease, fill .2s ease; }
 .countries text.on { opacity: 1; fill: #111; }
 .states text { transition: opacity .2s ease, fill .2s ease; }

@@ -673,18 +673,19 @@ def boundaries():
 
 
 def regions():
-    """Hover areas, as simplified polygons: Ladakh and Himachal Pradesh, and the neighbours China and
-    Pakistan as India's official map has them (so Gilgit-Baltistan and Aksai Chin are not theirs), clipped
-    to the relief."""
+    """Areas, as simplified polygons: Ladakh and Himachal Pradesh (tinted on hover) and the neighbours China,
+    Pakistan, Afghanistan and Nepal (tinted always), as India's official map has them (so Gilgit-Baltistan and
+    Aksai Chin are not theirs), clipped to the relief."""
     from shapely.geometry import shape, box
     _, states = official_india()
     clip = box(TW, TS, TE, TN)
     areas = [("ladakh", "Ladakh", states["ladakh"]), ("himachal", "Himachal Pradesh", states["himachal"])]
     for f in json.load(open(f"{RAW}/ne-admin1/countries_ind.geojson"))["features"]:
         a3 = f["properties"].get("ADM0_A3")
-        if a3 in ("CHN", "PAK"):
+        names = {"CHN": ("china", "China"), "PAK": ("pakistan", "Pakistan"), "AFG": ("afghanistan", "Afghanistan"), "NPL": ("nepal", "Nepal")}
+        if a3 in names:
             g = shape(f["geometry"]).buffer(0).intersection(clip)
-            if not g.is_empty: areas.append(("china" if a3 == "CHN" else "pakistan", "China" if a3 == "CHN" else "Pakistan", g))
+            if not g.is_empty: areas.append((*names[a3], g))
     out = []
     for k, name, g in areas:
         g = g.simplify(0.01)

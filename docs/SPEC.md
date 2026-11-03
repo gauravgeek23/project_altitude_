@@ -184,7 +184,7 @@ PlaceRecord {
 
 - **Where records live:**
   - `PLACES`: villages, towns, lakes and landmarks.
-  - `PASSES`: passes.
+  - `PASSES`: the 22 passes, on the circuits or a detour from them (Zoji La, Rohtang La, Jalori Pass, Marsimik La and Polokongka La were added from Wikipedia, Wikidata and, for Polokongka La, an approximate position on the Tso Kar road).
   - `PEAKS`: peaks (on the map only; the Passes page lists passes alone).
   - All are created with small helpers (`P`, `pass`, `peak`).
 - **`facts.ts`** merges sourced practical facts into records at load time. A merged record gets status `sourced` and the date it was checked online.
@@ -202,7 +202,7 @@ PlaceRecord {
 
 | Feature | Where | Notes |
 |---|---|---|
-| Projection | `MapCanvas.tsx` | Mercator. At zoom 1, every tier-1 stop fits the panel; the relief always covers the panel. Tier-0 places (K2, Nanga Parbat) are drawn but not part of the fit. |
+| Projection | `MapCanvas.tsx` | Mercator. At zoom 1, every tier-1 stop fits the panel; the relief always covers the panel. Tier-0 places (K2, Nanga Parbat) are drawn but not part of the fit. The map **opens on the crown view** (`crown`, scale `minK`), Reset returns to it, and the last step out lands on it. |
 | Zoom range | `MapCanvas.tsx` | From `minK` (the whole northern crown, 72.3–80.6° E, 32–37.2° N) up to 28×. Panning stops at the relief's edge. |
 | Zoom tiers | `LocationMarkers.tsx` `TIER_ZOOM = [0, 0, 2.2, 4]` | Tiers 0 and 1 always show; tier 2 appears from 2.2×, tier 3 from 4×. The selected place always shows. |
 | Labels | `LocationMarkers.tsx` | Screen-space pills with the type icon. Placed by priority (selected, then hub, then highlight, then on the active circuit). Hidden when they collide, or fall under the search box, filter bar, controls or scale bar. |
@@ -213,7 +213,7 @@ PlaceRecord {
 | Petrol pumps | `MapPanel.tsx`, `content/fuel.ts` | The pump button between the search box and Filters marks every pump in `FUEL_STOPS` with a green badge under the place's dot (amber where reports disagree). The card shows the fuel note. |
 | Monasteries | `LocationMarkers.tsx` | Map kind `monastery`: an icon on its own, no tag; the name appears on hover, the card on a click. Shown at every zoom (they ignore the zoom tiers): an icon only waits for a closer zoom where it would sit under a tag, on a dot or on another monastery icon. |
 | Peaks | `LocationMarkers.tsx` | Map kind `peak`: the name in plain text (▲ Name) with no marker, placed where it does not collide; clickable. 59 summits across the riding area and the ranges around it (Ladakh, Zanskar, Nubra and the Saser and Rimo groups, the Karakoram giants, Nanga Parbat, the Kashmir, Lahaul, Kullu, Chamba and Kinnaur summits). Tier 0 for K2 and Nanga Parbat (always on, outside the default frame), tier 1 for Nun, Saser Kangri, Stok Kangri and Reo Purgyil, tier 2 for the other famous summits, 3 for the rest. Published positions may lie outside the location `bbox` as long as they fall on the relief (`on_relief` in `prepare_region.py`). |
-| States and neighbours | `MapCanvas.tsx` `.region-area` | Hovering Ladakh (amber) or Himachal (green), China (flag red) or Pakistan (flag green) tints it 18% and darkens its name. The country areas follow India's official map, so Gilgit-Baltistan and Aksai Chin are not part of them. |
+| States and neighbours | `MapCanvas.tsx` `.region-area` | Hovering Ladakh (amber) or Himachal (green) tints it 18% and darkens its name. The neighbours are tinted always: China flag red, Pakistan flag green, Nepal the blue of its flag's border, Afghanistan a smoky black; each is named. The country areas follow India's official map, so Gilgit-Baltistan and Aksai Chin are not part of them. |
 | Satellite | `MapCanvas.tsx` `SatelliteTiles` | Hybrid view, like Google's: Esri World Imagery, the relief multiplied on top for mountain shading, Esri's road overlay (roads only, no boundaries), city names, and India's official boundaries in white. Tiles load in the reader's browser; attribution switches with it. |
 | Orientation cities | `MapCanvas.tsx` `CITIES` | Srinagar, Jammu, Gilgit, Skardu, Dharamshala, Amritsar, Lahore and others, as plain labels for orientation. Not stops, not clickable. |
 | Compass | `MapCanvas.tsx` `Compass` | Fixed; north is always up. |
@@ -324,7 +324,7 @@ The reading panel separates things by colour, not by lines: the panel is `--pane
 | Footer | Meet the Creator; then T&C · Credits on one line |
 
 - **Place cards:**
-  - Type icon, circuit dots and a chevron (the hint that the card opens; it turns when it does) in the header.
+  - Circuit dots, then the type icon, at the right of the header. No open/close indicator: the whole header is the toggle.
   - The header is two columns: name, kind and two lines of context on the left; on the right, a portrait thumbnail of the place's photo (72 × 96 px, centre-cropped, no caption; the 640 px version, lazy-loaded). The left side adds up to the same 96 px (26 + 26 + 44), so the two sides match. A card without a photo has the left column alone.
   - A click on the thumbnail opens the full-screen view (with the caption), whether the card is open or closed; a click anywhere else on the header opens or closes the card. Open, the context shows in full and the body follows.
   - The practical facts are listed plainly (elevation, then each practical field that has a value); a field with nothing known is left out, and a place with nothing known shows no list.
@@ -335,7 +335,7 @@ The reading panel separates things by colour, not by lines: the panel is `--pane
 
 ## 10. Known gaps and next steps
 
-- **Positions still to verify:** Nurbula, Hamta Pass, Stok Kangri, Kang Yatse, Deo Tibba, Hikkim, Chicham, Losar, Batal, Rumtse and Tsaga La are approximate, and marked "verify" in their source text; so are the summits Matho Kangri, Gangstang, Indrasan, Mentok Kangri and Friendship Peak, and the monastery at Sani. The published peak positions come from Wikipedia, GeoNames, PeakVisor, Mapcarta and DBpedia and have not been checked against a survey sheet. Parkachik uses the position of a guesthouse in the village (Mapcarta, OSM node 763056584), village-level accuracy; Bogdang has Wikipedia's position.
+- **Positions still to verify:** Nurbula, Hamta Pass, Polokongka La, Stok Kangri, Kang Yatse, Deo Tibba, Hikkim, Chicham, Losar, Batal, Rumtse and Tsaga La are approximate, and marked "verify" in their source text; so are the summits Matho Kangri, Gangstang, Indrasan, Mentok Kangri and Friendship Peak, and the monastery at Sani. The published peak positions come from Wikipedia, GeoNames, PeakVisor, Mapcarta and DBpedia and have not been checked against a survey sheet. Parkachik uses the position of a guesthouse in the village (Mapcarta, OSM node 763056584), village-level accuracy; Bogdang has Wikipedia's position.
 - **Peaks beyond the riding area:** K2, Broad Peak, the Gasherbrums, Masherbrum, Rakaposhi, Haramosh and Nanga Parbat are shown for the skyline on the crown view. Drop them from the region config if the map should stay with the ridable ranges.
 - **Approximate geometry:** the Nimmu–Padum road and the Nubra valley legs follow valley floors on the terrain model, not surveyed road lines. Replace them when road data is available.
 - **Practical fields:** about 35 places have sourced fuel, medical, network or stay facts; the rest show "Not verified".

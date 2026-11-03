@@ -96,10 +96,6 @@ details.card .card-thumb { grid-column: 3; grid-row: 1 / span 3; align-self: sta
 details.card.with-photo .meta { margin-bottom: 4px; }   /* 26 + 26 + 44 = the thumbnail's 96 px */
 .place-photo.thumb { width: 72px; height: 96px; aspect-ratio: auto; margin: 0; border-radius: 8px; }
 .place-photo.static img { cursor: pointer; }
-/* the hint that the card opens: a small chevron that turns when it does */
-.card-chev { display: inline-grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: var(--soft); color: var(--ink); transition: transform .2s, background .15s; }
-details.card summary:hover .card-chev { background: var(--ink); color: var(--on-ink); }
-details.card[open] .card-chev { transform: rotate(180deg); }
 details.card .card-body { margin-top: 12px; }
 details.card.selected { background: var(--card-selected); }
 .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--c, var(--grey)); display: inline-block; flex: none; }
@@ -153,7 +149,6 @@ fieldset.card legend .meta { margin: 0; }
 .circuit-head .bar { width: 4px; align-self: stretch; border-radius: 4px; background: var(--c); }
 .circuit-head > span:nth-child(2) { flex: 1; min-width: 0; }
 .circuit-head .meta { margin: 0; }
-.chev { font-size: 20px; color: var(--grey); }
 .card.circuit .card-body { padding: 0 18px 16px 36px; }
 .card.circuit.on { background: color-mix(in srgb, var(--c) 12%, var(--card)); }
 .stops { list-style: none; margin: 8px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 4px 0; }
@@ -364,7 +359,8 @@ fieldset.card legend .meta { margin: 0; }
 
 /* ---------------- icon language: one glyph per kind of place, in a tinted tile */
 .type-icon { display: inline-grid; place-items: center; width: 24px; height: 24px; border-radius: 7px; flex: none; color: var(--ink); background: #fff3c4; }
-.type-icon.village, .type-icon.town { background: #fff1b8; color: #6b4f00; }
+.type-icon.village, .type-icon.town { background: #ffe9a8; color: #5a4200; }
+.type-icon .place-icon { stroke-width: 2.4; }   /* a heavier line reads at 15 px */
 .type-icon.pass { background: #1f232b; color: var(--on-ink); }
 .type-icon.peak { background: #eef1f5; color: #2b3445; box-shadow: inset 0 0 0 1px #d9dee6; }
 .type-icon.lake { background: #d8f4fb; color: #0b6f86; }
@@ -446,7 +442,7 @@ details.card.selected /* photos open full screen */
 .content { font-size: 16px; line-height: 26px; }
 .content *:not(.eyebrow-sm, .group-title, .badge, .badge *, .stats dt, .facts-grid dt, .type-icon, .type-icon *, figcaption, figcaption *, .legend-svg, .legend-svg *, .legend-key, .legend-key *, .chip, .chip *, .seg button, .legend-chip) { font-size: inherit !important; line-height: inherit; }
 .content .chip, .content .seg button, .content .legend-chip { font-size: 13px !important; }
-.content :is(.block p, .bullets, .callout, .card p, .check, .chev, .chip, .count-line, .empty, .empty-state, .fine, .form-grid label, .itinerary small, .legend-chip, .legend-row p, .link-list, .meta, .muted, .number small, .numbered .num, .numbered p, .para, .seg button, .steps, .stops li, .table dd, .table small, .tldr p, details.card .summary-text) { font-size: 14px !important; line-height: 22px; }
+.content :is(.block p, .bullets, .callout, .card p, .check, .chip, .count-line, .empty, .empty-state, .fine, .form-grid label, .itinerary small, .legend-chip, .legend-row p, .link-list, .meta, .muted, .number small, .numbered .num, .numbered p, .para, .seg button, .steps, .stops li, .table dd, .table small, .tldr p, details.card .summary-text) { font-size: 14px !important; line-height: 22px; }
 .content :is(.block h2, .block h3, .card-title, .coords output, .facts-grid dd, .lead, .lead-sm, .legend-row b, .number .num.text, .number .who b, .numbered h3, .page-title, .place-link, .place-plain, .rule-line, .stats dd, .table dt, .text-btn, .tldr h1, b) { font-size: 16px !important; line-height: 26px; }
 .content .page-title, .content .tldr h1.page-title { font-size: 16px !important; line-height: 26px !important; margin-bottom: 6px; }
 
