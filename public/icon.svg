@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
-  <!-- Project Altitude mark: a ridge, the sun behind a second summit, and a star. Redrawn as vector from the original icon. -->
-  <rect width="100" height="100" rx="22" fill="#0e2a4c"/>
-  <path d="M75.5 15.5l2.3 6.2 6.2 2.3-6.2 2.3-2.3 6.2-2.3-6.2-6.2-2.3 6.2-2.3z" fill="#ffffff"/>
-  <path d="M9 83 L35 42 L57 70" fill="none" stroke="#ffffff" stroke-width="10.5" stroke-linejoin="round" stroke-linecap="round"/>
-  <circle cx="63" cy="69" r="11.5" fill="#ef6f3a"/>
-  <path d="M49 86 L72 58 L95 86 Z" fill="#ffffff"/>
-  <rect x="8" y="80.5" width="87" height="7.5" rx="3.75" fill="#ffffff"/>
-</svg>

@@ -42,7 +42,7 @@ These come from the content blueprint and are not negotiable:
 ├── vercel.json           framework vite, npm run build, output dist/
 ├── scripts/inline.mjs    inlines CSS and JS into dist/project-altitude.html (React from cdnjs)
 ├── scripts/photos.py     lists the shared album, makes contact sheets, builds public/photos and the manifest
-├── scripts/icons.cjs     renders public/icon.svg to the PNG icons and the social-preview image public/og.png
+├── scripts/icons.cjs     renders public/icon.png (the creator's icon) to the favicon sizes and the social-preview image public/og.png
 ├── scripts/photo-selection.json  which album photos go with which place, with captions
 ├── public/photos/        the photos, two sizes each (served as /photos/...)
 ├── docs/SPEC.md          this file
@@ -280,7 +280,7 @@ Google strips location data from photos shared by link, so the first selection w
 The reading panel separates things by colour, not by lines: the panel is `--panel` grey, cards are white `--card` on it, and anything quieter inside a card (the practical block, the card footer, stats, alternate rows of a table or itinerary, legend samples) is `--soft`. There are no borders on cards, chips, inputs, callouts or dividers; the selected card turns `--card-selected`, and a circuit card that is on takes a 12% tint of its circuit colour. Keep it that way when adding components: reach for a background tone before a stroke.
 
 ### Icons and metadata
-- `public/icon.svg` is the site mark (redrawn as vector from the original icon). `node scripts/icons.cjs` renders `icon-512.png`, `icon-192.png`, `icon-32.png`, `apple-touch-icon.png` and the 1200×630 social preview `og.png`.
+- `public/icon.png` is the creator's own icon (82 × 84), used as is for the favicon. `node scripts/icons.cjs` renders `icon-32.png`, `apple-touch-icon.png` (180, upscaled) and the 1200×630 social preview `og.png` from it. No redrawn version is used.
 - `index.html` links the icons and sets Open Graph tags; `og:image` needs an absolute URL: `vite.config.ts` fills in `VITE_SITE_URL`, which defaults to `https://project-altitude.vercel.app`; set it in Vercel to the real domain.
 
 ### Dark mode
@@ -326,7 +326,7 @@ The reading panel separates things by colour, not by lines: the panel is `--pane
 - **Place cards:**
   - Type icon, circuit dots and a chevron (the hint that the card opens; it turns when it does) in the header.
   - The header is two columns: name, kind and two lines of context on the left; on the right, a portrait thumbnail of the place's photo (72 × 96 px, centre-cropped, no caption; the 640 px version, lazy-loaded). The left side adds up to the same 96 px (26 + 26 + 44), so the two sides match. A card without a photo has the left column alone.
-  - A click on the closed card, thumbnail included, opens it; the context then shows in full and the body follows. On an open card a click on the thumbnail opens the full-screen view, with the caption.
+  - A click on the thumbnail opens the full-screen view (with the caption), whether the card is open or closed; a click anywhere else on the header opens or closes the card. Open, the context shows in full and the body follows.
   - **"Practical details"** is folded away by default, with a count of filled fields.
   - "Show on map →" at the foot (or a note that the place has no sourced position yet). Status and sources stay in the record but are not displayed.
 - **Storage:** packing lists, trip plan and km/day are kept in `localStorage`, with every access wrapped in try/catch.

@@ -166,7 +166,8 @@ function PlaceCard({ p, open, onPlace, innerRef }: { p: PlaceRecord; open: boole
         <span className="meta">{TYPE_LABEL[p.type]} · {p.region}</span>
         <span className="summary-text">{p.summary}</span>
         {p.access && <span className="access-flag"><Badge kind="warn">Access</Badge> Restrictions apply</span>}
-        {photo && <span className="card-thumb" onClick={(e) => { if (isOpen) e.preventDefault(); }}><PlacePhoto id={p.id} alt={p.name} interactive={isOpen} caption={false} className="place-photo thumb" /></span>}
+        {/* the thumbnail opens the photo full screen, open or closed; the rest of the header opens the card */}
+        {photo && <span className="card-thumb" onClick={(e) => e.preventDefault()}><PlacePhoto id={p.id} alt={p.name} caption={false} className="place-photo thumb" /></span>}
       </summary>
       <div className="card-body">
         {p.why && <p><b>Why stop.</b> {p.why}</p>}
