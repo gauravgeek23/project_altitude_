@@ -222,8 +222,12 @@ export const MapCanvas = forwardRef<MapHandle, Props>(function MapCanvas(props, 
   const minK = useMemo(() => {
     const [x0, y0] = project([72.3, 37.2])!, [x1, y1] = project([80.6, 32.0])!;
     // leave room for the search box and filter bar on top and the scale bar below
-    return Math.min(1, 0.92 * Math.min(size.w / (x1 - x0), Math.max(200, size.h - 180) / (y1 - y0)));
-  }, [project, size.w, size.h]);
+    const crown = 0.92 * Math.min(size.w / (x1 - x0), Math.max(200, size.h - 180) / (y1 - y0));
+    // but never past the relief: at the widest zoom the relief still lies under every pixel of the panel
+    const [[rx0, ry0], [rx1, ry1]] = reliefBox;
+    const cover = Math.max(size.w / (rx1 - rx0), size.h / (ry1 - ry0));
+    return Math.min(1, Math.max(crown, cover));
+  }, [project, size.w, size.h, reliefBox]);
 
   // the default view: the whole northern crown of India, centred a little below the middle but never past
   // the relief's edges. The map opens on it, Reset returns to it, and the last step out lands on it.
@@ -236,7 +240,8 @@ export const MapCanvas = forwardRef<MapHandle, Props>(function MapCanvas(props, 
     const ty = clamp(size.h / 2 + 45 - minK * cy, size.h - minK * ry1, -minK * ry0);
     return d3.zoomIdentity.translate(tx, ty).scale(minK);
   }, [project, size.w, size.h, minK, reliefBox]);
-  const opened = useRef(false);
+  // true once the reader has zoomed or panned; until then the panel keeps its opening view while it settles to its size
+  const touched = useRef(false);
 
   useEffect(() => {
     const svg = d3.select(svgRef.current!);
@@ -245,10 +250,13 @@ export const MapCanvas = forwardRef<MapHandle, Props>(function MapCanvas(props, 
       .translateExtent(reliefBox)    // never pan past the shaded relief
       .extent([[0, 0], [size.w, size.h]])
       .clickDistance(5)
-      .on("zoom", (e) => setT(e.transform));
+      .on("zoom", (e) => { if (e.sourceEvent) touched.current = true; setT(e.transform); });
     zoomRef.current = zoom;
     svg.call(zoom).on("dblclick.zoom", null);
-    if (!opened.current && size.w > 200) { opened.current = true; svg.call(zoom.transform, crown); }
+    if (size.w > 200) {
+      if (!touched.current) svg.call(zoom.transform, crown);   // the opening view, framed again whenever the panel's size settles
+      else { const cur = d3.zoomTransform(svg.node()!); svg.call(zoom.scaleTo, Math.max(cur.k, minK)); }   // a resized panel: never past the relief
+    }
     return () => { svg.on(".zoom", null); };
   }, [size.w, size.h, reliefBox, minK, crown]);
 
@@ -262,14 +270,16 @@ export const MapCanvas = forwardRef<MapHandle, Props>(function MapCanvas(props, 
 
   const svgSel = () => d3.select(svgRef.current!);
   useImperativeHandle(ref, () => ({
-    zoomIn: () => svgSel().transition().duration(ms(300)).call(zoomRef.current!.scaleBy, 1.6),
+    zoomIn: () => { touched.current = true; svgSel().transition().duration(ms(300)).call(zoomRef.current!.scaleBy, 1.6); },
     zoomOut: () => {
+      touched.current = true;
       // the last step out frames the whole crown, below the search box and filter bar
       if (t.k / 1.6 <= minK * 1.02) svgSel().transition().duration(ms(400)).call(zoomRef.current!.transform, crown);
       else svgSel().transition().duration(ms(300)).call(zoomRef.current!.scaleBy, 1 / 1.6);
     },
-    reset: () => svgSel().transition().duration(ms(450)).call(zoomRef.current!.transform, crown),
+    reset: () => { touched.current = true; svgSel().transition().duration(ms(450)).call(zoomRef.current!.transform, crown); },
     fitTo: ([[w, s], [e, n]], maxScale = 10) => {
+      touched.current = true;
       const [x0, y1] = project([w, s])!, [x1, y0] = project([e, n])!;
       const k = Math.max(1, Math.min(maxScale, 0.8 / Math.max((x1 - x0) / size.w, (y1 - y0) / size.h)));
       const next = d3.zoomIdentity.translate(size.w / 2, size.h / 2).scale(k).translate(-(x0 + x1) / 2, -(y0 + y1) / 2);
