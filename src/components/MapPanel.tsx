@@ -93,7 +93,7 @@ export function MapPanel({ selected, circuit, onCircuit, onSelect, onOpenPlace, 
   return (
     <div className={"map-area" + (satellite ? " sat" : "")}>
       <MapCanvas ref={map} region={region} visible={visible} activeCircuit={circuit ?? hover} selectedLocation={selected}
-        showClaims={false} onHoverCircuit={setHover} onSelectCircuit={(id) => { if (id !== circuit) pick(id as CircuitId); }} kinds={kinds} fuel={fuel}
+        showClaims={false} onHoverCircuit={setHover} onSelectCircuit={(id) => { if (id !== circuit) pick(id as CircuitId); }} kinds={kinds} showAll={kinds.size < CATEGORIES.length} fuel={fuel}
         onSelectLocation={onSelect} onScale={setKmPerPx}
         onBackground={() => { if (circuit) pick(null); }} basemap={satellite && (base !== "google" || session) ? "satellite" : "terrain"} imagery={imagery} />
 

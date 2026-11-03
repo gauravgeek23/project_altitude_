@@ -25,6 +25,8 @@ interface Props {
   onBackground?(): void;
   onScale?(kmPerPx: number): void;
   kinds?: Set<string>;
+  /** the reader has narrowed the kinds: every place of the kinds shown appears at every zoom */
+  showAll?: boolean;
   /** show the petrol pumps */
   fuel?: boolean;
   /** terrain: the shaded relief; satellite: Esri World Imagery tiles */
@@ -325,7 +327,7 @@ export const MapCanvas = forwardRef<MapHandle, Props>(function MapCanvas(props, 
         <Compass x={size.w - 38} y={236} />
         <LocationMarkers region={region.data} project={project} transform={t} size={size}
           selected={props.selectedLocation} activeCircuit={props.activeCircuit} visible={props.visible}
-          onSelect={props.onSelectLocation} kinds={props.kinds} fuel={props.fuel} revealed={revealed} stagger={!settled} />
+          onSelect={props.onSelectLocation} kinds={props.kinds} showAll={props.showAll} fuel={props.fuel} revealed={revealed} stagger={!settled} />
       </svg>
     </div>
   );
