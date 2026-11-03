@@ -43,6 +43,15 @@ export function MapPanel({ selected, circuit, onCircuit, onSelect, onOpenPlace, 
   const [kinds, setKinds] = useState<Set<string>>(() => new Set(CATEGORIES.map((c) => c.id)));
   const [q, setQ] = useState("");
   const [panel, setPanel] = useState(false);
+  // the Filters panel closes on a click or tap anywhere outside the search block, and on Escape
+  const top = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (!panel) return;
+    const down = (e: PointerEvent) => { if (!top.current?.contains(e.target as Node)) setPanel(false); };
+    const key = (e: KeyboardEvent) => { if (e.key === "Escape") setPanel(false); };
+    addEventListener("pointerdown", down, true); addEventListener("keydown", key);
+    return () => { removeEventListener("pointerdown", down, true); removeEventListener("keydown", key); };
+  }, [panel]);
   const fuel = kinds.has("fuel");
   const [base, setBase] = useState<BasemapId>("terrain");
   const [lastSat, setLastSat] = useState<BasemapId>("esri");
@@ -98,7 +107,7 @@ export function MapPanel({ selected, circuit, onCircuit, onSelect, onOpenPlace, 
         onBackground={() => { if (circuit) pick(null); }} basemap={satellite && (base !== "google" || session) ? "satellite" : "terrain"} imagery={imagery} />
 
 
-      <div className="map-top">
+      <div className="map-top" ref={top}>
       <div className="map-search" onPointerDown={(e) => e.stopPropagation()}>
         <div className="search-row">
           <input id="map-search" type="search" placeholder="Search villages, passes, lakes" value={q} onChange={(e) => setQ(e.target.value)}
