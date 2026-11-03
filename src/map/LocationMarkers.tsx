@@ -26,7 +26,7 @@ interface Props {
   kinds?: Set<string>;
   /** show the petrol pumps: a badge under a shown town, or a pump marker of its own where the town is filtered out */
   fuel?: boolean;
-  /** the kinds are narrowed: every place of the kinds shown appears at every zoom, tiers aside */
+  /** a single kind is shown: every place of it appears at every zoom, tiers aside */
   showAll?: boolean;
   /** false while the map is still showing only the routes */
   revealed?: boolean;
@@ -52,8 +52,8 @@ export function LocationMarkers({ region, project, transform, size, selected, ac
     fuelOnly: !!kinds && !kinds.has(l.kind) && l.id !== selected && !!fuel && FUEL_AT.has(l.id),
   })), [region, project, kinds, selected, fuel]);
 
-  // with every kind shown, the tiers thin the map out (a few main monasteries, the smaller villages as you zoom in);
-  // once the reader narrows the kinds, every place of those kinds is on the map at every zoom
+  // the tiers thin the map out (a few main monasteries, the smaller villages as you zoom in); with a single kind
+  // ticked, every place of that kind is on the map at every zoom
   const items: Item[] = locs.filter(({ l, fuelOnly }) => l.id === selected || fuelOnly || showAll || transform.k >= TIER_ZOOM[l.tier ?? 1]).map(({ l, xy, on, fuelOnly }) => {
     const [x, y] = transform.apply(xy);
     const onVisible = on.some((id) => visible.has(id));

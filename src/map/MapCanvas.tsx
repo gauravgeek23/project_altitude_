@@ -25,7 +25,7 @@ interface Props {
   onBackground?(): void;
   onScale?(kmPerPx: number): void;
   kinds?: Set<string>;
-  /** the reader has narrowed the kinds: every place of the kinds shown appears at every zoom */
+  /** a single kind is shown: every place of it appears at every zoom */
   showAll?: boolean;
   /** show the petrol pumps */
   fuel?: boolean;

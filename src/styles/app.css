@@ -479,7 +479,8 @@ details.card.selected /* photos open full screen */
 .sq-btn.on:hover { color: var(--on-ink); }
 .sq-btn.primary { background: var(--ink); color: var(--on-ink); border-color: var(--ink); box-shadow: 0 2px 8px rgba(0,0,0,.22); }
 .sq-btn.primary:hover { color: var(--on-ink); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,.26); }
-.sq-btn.primary.on { background: var(--accent); border-color: var(--accent); }
+/* open: the same ink button, pressed in (a touch lighter, an inner shadow, no lift) */
+.sq-btn.primary.on, .sq-btn.primary.on:hover { background: #454b54; border-color: #454b54; transform: none; box-shadow: inset 0 2px 6px rgba(0,0,0,.4), 0 1px 3px rgba(0,0,0,.14); }
 .sq-btn.fuel.on { background: #0f8f5f; border-color: #0f8f5f; color: #fff; }
 .map-card-fuel { display: flex; gap: 8px; align-items: flex-start; margin: 0 0 8px; font-size: 13px; line-height: 20px; color: var(--ink); }
 .map-card-fuel .type-icon { width: 20px; height: 20px; border-radius: 6px; flex: none; }
