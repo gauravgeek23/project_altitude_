@@ -103,7 +103,8 @@
 .map-controls { position: absolute; top: max(14px, env(safe-area-inset-top, 0px)); right: 14px; display: flex; flex-direction: column; gap: 6px; }
 .map-controls button { width: 36px; height: 36px; border: 1px solid var(--rule); background: var(--card); border-radius: 8px; font-size: 18px; line-height: 1; cursor: pointer; color: var(--ink);
   box-shadow: 0 1px 2px rgba(0,0,0,.06); }
-.map-controls button.reset, .map-controls button.sat { display: grid; place-items: center; padding: 0; }
+.map-controls button.reset, .map-controls button.sat, .map-controls button.full { display: grid; place-items: center; padding: 0; }
+.map-controls button.full.on { background: var(--ink); color: var(--on-ink); border-color: var(--ink); }
 .map-controls button.reset svg { transition: transform .45s cubic-bezier(.2,.8,.2,1); }
 .map-controls button.reset:hover svg { transform: rotate(-180deg); }
 .map-controls button.sat.on { background: var(--ink); color: var(--on-ink); border-color: var(--ink); }

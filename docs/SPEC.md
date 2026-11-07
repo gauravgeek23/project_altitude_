@@ -20,7 +20,7 @@ Project Altitude is a rider's field guide to **Ladakh and Himachal Pradesh**, bu
 **Hubs:** Leh, Manali and Chandigarh are drawn larger than other places and always shown.
 
 ### Screen layout
-- **Desktop:** three columns. The nav rail is 214 px, the reading panel takes what is left, and the map takes 50% of the width. Defined in `.app` in `src/styles/app.css`.
+- **Desktop:** three columns. The nav rail is 214 px, the reading panel takes what is left, and the map takes 50% of the width. Defined in `.app` in `src/styles/app.css`. **Full map:** the last button in the map controls (arrows out) makes the map take the whole window (`.app.full`: the nav and the reading panel are hidden, the map column fills the grid); the same button, Escape, or opening a full entry brings the guide back. The map keeps its state, since it is the same component resized.
 - **Below 900 px:** a top bar (logo, title, theme toggle, menu) shows one view at a time. A floating **Guide / Map** switch sits at the bottom, and the menu opens as a drawer.
 
 ### Content rules

@@ -334,7 +334,7 @@ export const MapCanvas = forwardRef<MapHandle, Props>(function MapCanvas(props, 
             return <text key={c.name} x={cx} y={y} className={hoverRegion === c.id ? "on" : undefined}>{c.name}</text>;
           })}
         </g>
-        <Compass x={size.w - 38} y={236} />
+        <Compass x={size.w - 38} y={266} />
         <LocationMarkers region={region.data} project={project} transform={t} size={size}
           selected={props.selectedLocation} activeCircuit={props.activeCircuit} visible={props.visible}
           onSelect={props.onSelectLocation} kinds={props.kinds} showAll={props.showAll} fuel={props.fuel} revealed={revealed} stagger={!settled} />

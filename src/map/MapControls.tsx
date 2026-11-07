@@ -1,4 +1,4 @@
-import { RefreshIcon, SatelliteIcon } from "../components/icons";
+import { ExpandIcon, RefreshIcon, SatelliteIcon } from "../components/icons";
 
 interface Props {
   satellite: boolean;
@@ -7,10 +7,13 @@ interface Props {
   onZoomOut(): void;
   onReset(): void;
   kmPerPx: number;
+  /** the map fills the window (desktop) */
+  full: boolean;
+  onFull(): void;
 }
 
 /** Zoom buttons and a scale bar that stays true at every zoom level. */
-export function MapControls({ onZoomIn, onZoomOut, onReset, kmPerPx, satellite, onSatellite }: Props) {
+export function MapControls({ onZoomIn, onZoomOut, onReset, kmPerPx, satellite, onSatellite, full, onFull }: Props) {
   const nice = [1, 2, 5, 10, 20, 25, 50, 100, 200];
   const km = nice.find((n) => n / kmPerPx >= 70) ?? 200;
   return (
@@ -21,6 +24,7 @@ export function MapControls({ onZoomIn, onZoomOut, onReset, kmPerPx, satellite, 
         <button type="button" onClick={onReset} aria-label="Reset view" title="Reset view" className="reset"><RefreshIcon size={17} /></button>
         <button type="button" onClick={onSatellite} aria-pressed={satellite} title={satellite ? "Show terrain" : "Show satellite view"}
           aria-label={satellite ? "Show terrain" : "Show satellite view"} className={"sat" + (satellite ? " on" : "")}><SatelliteIcon size={17} /></button>
+        <button type="button" onClick={onFull} aria-pressed={full} title={full ? "Back to the guide (Esc)" : "Full map"} aria-label={full ? "Back to the guide" : "Full map"} className={"full" + (full ? " on" : "")}><ExpandIcon size={17} on={full} /></button>
       </div>
       <div className="scale-bar" aria-label={`Scale: bar is ${km} km`}>
         <span style={{ width: `${km / kmPerPx}px` }} />

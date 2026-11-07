@@ -20,6 +20,8 @@ export default function App() {
   const [circuit, setCircuit] = useState<CircuitId | null>(null);
   const [view, setView] = useState<"guide" | "map">("guide");
   const [drawer, setDrawer] = useState(false);
+  // the full map: the map column takes the whole window; Escape or the same button brings the guide back
+  const [full, setFull] = useState(false);
   const content = useRef<HTMLElement>(null);
   const mobile = () => matchMedia("(max-width: 899px)").matches;
 
@@ -41,13 +43,19 @@ export default function App() {
     if (location.hash.slice(1) !== id) history.pushState(null, "", `#${id}`);
     setTab(id); setDrawer(false); setView("guide");
   };
+  useEffect(() => {
+    if (!full) return;
+    const k = (e: KeyboardEvent) => e.key === "Escape" && setFull(false);
+    addEventListener("keydown", k);
+    return () => removeEventListener("keydown", k);
+  }, [full]);
   const showOnMap = (id: string) => { setSelected(id); if (mobile()) setView("map"); };
   const openPlace = (id: string) => { setSelected(id); go(BY_ID[id]?.type === "pass" || BY_ID[id]?.type === "peak" ? "passes" : "villages"); };
 
   const [theme, toggleTheme] = useTheme();
   const Tab = TABS[tab];
   return (
-    <div className="app" data-view={view}>
+    <div className={"app" + (full ? " full" : "")} data-view={view}>
       <header className="topbar">
         <a href="#note" onClick={(e) => { e.preventDefault(); go("note"); }} aria-label="Project Altitude, home"><Logo /></a>
         <span className="topbar-title">{view === "map" ? "Map" : labelOf(tab)}</span>
@@ -73,7 +81,7 @@ export default function App() {
       </main>
 
       <aside className="map-col" aria-label="Circuit map">
-        <MapPanel kinds={kinds} onKinds={setKinds} selected={selected} circuit={circuit} onCircuit={setCircuit} onSelect={setSelected} onOpenPlace={(id) => { openPlace(id); setView("guide"); }} />
+        <MapPanel full={full} onFull={() => setFull((f) => !f)} kinds={kinds} onKinds={setKinds} selected={selected} circuit={circuit} onCircuit={setCircuit} onSelect={setSelected} onOpenPlace={(id) => { openPlace(id); setView("guide"); setFull(false); }} />
       </aside>
 
       <div className="switcher" role="tablist" aria-label="View">

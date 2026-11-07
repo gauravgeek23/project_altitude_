@@ -170,6 +170,12 @@ fieldset.card legend .meta { margin: 0; }
 
 /* ---------------- map */
 .map-col { position: relative; min-width: 0; }
+/* the full map (desktop): the map column takes the whole window; the nav and the reading panel step aside */
+@media (min-width: 900px) {
+  .app.full { grid-template-columns: minmax(0, 1fr); }
+  .app.full .sidebar, .app.full .content { display: none; }
+}
+@media (max-width: 899px) { .map-controls button.full { display: none; } }
 .map-panel { position: absolute; inset: 0; overflow: hidden; background: var(--map-bg); touch-action: none; cursor: grab; user-select: none; -webkit-user-select: none; }
 .map-panel:active { cursor: grabbing; }
 .map-stage { position: absolute; left: 50%; top: 50%; transform-origin: center; }
