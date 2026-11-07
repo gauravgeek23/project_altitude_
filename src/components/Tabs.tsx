@@ -598,7 +598,7 @@ function Creator() {
         {G.STORY.chapters.map((ch) => (
           <Section key={ch.h} title={ch.h}>
             <Paras items={ch.body} />
-            {ch.photo != null && <PlacePhoto id="story" index={ch.photo} alt={ch.h} className="place-photo chapter-photo" />}
+            {ch.photo != null && <PlacePhoto id="story" index={ch.photo} alt={ch.h} count={false} className="place-photo chapter-photo" />}
           </Section>
         ))}
         <Rule>{G.STORY.signoff}</Rule>

@@ -8,8 +8,8 @@ import { Lightbox } from "./Lightbox";
  * whatever holds the photo, such as a closed card). `caption` false leaves the picture bare (a thumbnail).
  * Renders nothing for a place without photos.
  */
-export function PlacePhoto({ id, alt, index = 0, className = "place-photo", interactive = true, caption = true }:
-  { id: string; alt: string; index?: number; className?: string; interactive?: boolean; caption?: boolean }) {
+export function PlacePhoto({ id, alt, index = 0, className = "place-photo", interactive = true, caption = true, count = true }:
+  { id: string; alt: string; index?: number; className?: string; interactive?: boolean; caption?: boolean; count?: boolean }) {
   const photos = photosFor(id);
   const [open, setOpen] = useState<number | null>(null);
   const [loaded, setLoaded] = useState(false);
@@ -26,7 +26,7 @@ export function PlacePhoto({ id, alt, index = 0, className = "place-photo", inte
             onClick: show, role: "button" as const, tabIndex: 0, "aria-label": `${alt}: open ${n} photo${n > 1 ? "s" : ""} full screen`,
             onKeyDown: (e: React.KeyboardEvent) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); show(); } },
           } : {})} />
-        {caption && n > 1 && <span className="count">{n} photos</span>}
+        {caption && count && n > 1 && <span className="count">{n} photos</span>}
         {caption && <figcaption>{p.caption ? `${p.caption} · ` : ""}{photoDate(p)}</figcaption>}
       </figure>
       {open != null && <Lightbox photos={photos} start={open} alt={alt} onClose={() => setOpen(null)} />}
