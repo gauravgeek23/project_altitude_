@@ -88,7 +88,6 @@ function Note({ onTab }: TabProps) {
         <h1 className="manifesto-title">{G.NOTE.name}</h1>
       </header>
       <div className="manifesto">{G.NOTE.manifesto.map((t) => <Rich key={t} text={t} className="para manifesto-p" />)}</div>
-      <Stats />
       <div className="letter">
         <h2 className="letter-title">{G.NOTE.title}</h2>
         <p className="para salute">{G.NOTE.salute}</p>
@@ -102,16 +101,6 @@ function Note({ onTab }: TabProps) {
         <button type="button" className="text-btn" onClick={() => onTab("creator")}>The story of the ride →</button>
       </div>
     </>
-  );
-}
-function Stats() {
-  return (
-    <dl className="stats">
-      <div><dt>Distance</dt><dd>{G.EXPEDITION.km}</dd></div>
-      <div><dt>Passes</dt><dd>{G.EXPEDITION.passes}</dd></div>
-      <div><dt>Circuits</dt><dd>{G.EXPEDITION.circuits}</dd></div>
-      <div><dt>Summit</dt><dd>{G.EXPEDITION.summit}</dd></div>
-    </dl>
   );
 }
 function HowTo({ onPlace, onTab }: TabProps) {
@@ -298,6 +287,7 @@ function FoodBody() {
   return (
     <>
       <Paras items={G.FOOD.body} />
+      <p className="callout"><b>How I ate.</b> {G.FOOD.rhythm}</p>
       <Rule>{G.FOOD.rule}</Rule>
       <Section level={3} title="Dishes of the region">
         <div className="dishes">{G.DISHES.map((d) => (
@@ -317,7 +307,8 @@ function FoodBody() {
         <p className="fine">Planning guidelines, not guarantees of food availability.</p>
       </Section>
       <Section level={3} title="Handpicked places">
-        <p className="empty-state">Restaurants, cafés and dhabas picked from the rides will appear here, with their location, what to order, opening season and when they were last confirmed open. None are listed yet: Project Altitude doesn't publish places it hasn't eaten at.</p>
+        <GemList categories={["Restaurant", "Café", "Food"]} />
+        <p className="empty-state" hidden>Restaurants, cafés and dhabas picked from the rides will appear here, with their location, what to order, opening season and when they were last confirmed open. None are listed yet: Project Altitude doesn't publish places it hasn't eaten at.</p>
       </Section>
     </>
   );
@@ -333,8 +324,10 @@ function StaysBody() {
       <Section level={3} title="Accommodation hubs">
         <div className="table">{G.STAYS.hubs.map((h) => <div key={h.circuit}><dt><Dots ids={[h.circuit]} /> {CIRCUIT_META[h.circuit].name}</dt><dd>{h.places}</dd></div>)}</div>
       </Section>
-      <Section level={3} title="Listings">
-        <p className="empty-state">Verified properties will appear here with type, season, meals, hot water, heating, bike parking and a last-verified date. No property names, prices or contacts are published until they are confirmed.</p>
+      <Section level={3} title="The stays, as ridden">
+        <p className="para muted">Top five of the whole ride: {G.STAYS.best.join(" · ")}.</p>
+        <GemList categories={["Stay"]} />
+        <p className="empty-state" hidden>Verified properties will appear here with type, season, meals, hot water, heating, bike parking and a last-verified date. No property names, prices or contacts are published until they are confirmed.</p>
       </Section>
     </>
   );
@@ -345,7 +338,10 @@ function StaysBody() {
 function Essentials() {
   return (
     <>
-      <Head eyebrow="Essentials" title="Getting there, staying and eating" />
+      <Head title="Getting there, staying and eating" />
+      <Section id="notes" title="Notes from the ride">
+        <div className="notes-grid">{G.RIDER_NOTES.map((n) => <div key={n.title} className="card note-card"><p className="card-title">{n.title}</p><ul className="bullets">{n.items.map((i) => <li key={i}>{i}</li>)}</ul></div>)}</div>
+      </Section>
       <Section id="commute" title={G.COMMUTE.title}><CommuteBody /></Section>
       <Section id="stays" title={G.STAYS.title}><StaysBody /></Section>
       <Section id="food" title={G.FOOD.title}><FoodBody /></Section>
@@ -395,9 +391,13 @@ function Gear() {
   const toggle = (k: string) => setDone((d) => (d.includes(k) ? d.filter((x) => x !== k) : [...d, k]));
   return (
     <>
-      <Head eyebrow="Gear" title={G.PACKING_INTRO.title} />
+      <Head title={G.PACKING_INTRO.title} />
       <Paras items={G.PACKING_INTRO.body} />
       <Rule>{G.PACKING_INTRO.rule}</Rule>
+      <Section title={G.BIKE.title}>
+        <p className="lead-sm">{G.BIKE.model}</p>
+        <dl className="facts-grid bike-facts">{G.BIKE.rows.map((r) => <div key={r.k}><dt>{r.k}</dt><dd>{r.v}</dd></div>)}</dl>
+      </Section>
       <div className="seg" role="tablist" aria-label="Packing list">
         {LISTS.map((l) => <button key={l.id} role="tab" aria-selected={list === l.id} onClick={() => setList(l.id)}>{l.label}</button>)}
       </div>
@@ -536,6 +536,15 @@ function CircuitPicker({ plan, setPlan }: { plan: CircuitId[]; setPlan(f: (p: Ci
 }
 
 /* ------------------------------------------------------------------ Gems, swags, creator, terms */
+/** the gems of some categories, as compact rows: the places named on the ride */
+function GemList({ categories }: { categories: string[] }) {
+  const list = G.GEMS.list.filter((g) => categories.includes(g.category));
+  return (
+    <div className="table">
+      {list.map((g) => <div key={g.title}><dt><Dots ids={[g.circuit]} /> {g.title}</dt><dd>{g.summary ?? <span className="muted">To research</span>}</dd></div>)}
+    </div>
+  );
+}
 function Gems({ onPlace }: TabProps) {
   const [c, setC] = useState<CircuitId | "all">("all");
   const [kind, setKind] = useState<string>("all");
@@ -595,7 +604,6 @@ function Creator() {
       <Head title={G.CREATOR.title} />
       <Paras items={G.CREATOR.body} />
       {links.length > 0 && <p className="links">{links.map((l) => <a key={l.label} href={l.url} target="_blank" rel="noreferrer">{l.label} ↗</a>)}</p>}
-      <Stats />
       <div className="story" id="story">
         <h2 className="story-title">{G.STORY.title}</h2>
         <p className="lead">{G.STORY.lead}</p>

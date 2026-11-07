@@ -86,7 +86,7 @@ export const CREDITS = {
     { name: "GeoNames", use: "Place coordinates", licence: "Creative Commons Attribution 4.0", link: "https://www.geonames.org/" },
     { name: "scroll-route-demo by Aditya Sharma", use: "Road-following route lines and checkpoints", licence: "MIT", link: "https://github.com/adisharma29/scroll-route-demo" },
   ],
-  research: ["Official tourism departments and district administrations.", "Local businesses and accommodation providers.", "Riders and travellers who share their experiences.", "Local residents whose knowledge makes these journeys possible."],
+  research: ["Trek The Himalayas, who ran the Hamta Pass trek that opened the ride.", "Official tourism departments and district administrations.", "Local businesses and accommodation providers.", "Riders and travellers who share their experiences.", "Local residents whose knowledge makes these journeys possible."],
   project: "Route curation, interface, writing, photography, and product direction: Project Altitude. All photographs are from the ride.",
   disclaimer: "This guide is an independent travel-planning project, not an official government publication. Map data, route geometry, and travel information may contain errors or become outdated. If you notice something that needs correcting, please get in touch.",
 };
@@ -121,6 +121,7 @@ export const ROUTE_NOTES: Record<CircuitId, string[]> = {
 /* ------------------------------------------------------------------ Food */
 export const FOOD = {
   title: "Eat and drink along the way",
+  rhythm: "Don't eat heavily while riding. My days ran on a light breakfast, tea and a banana or an omelette, a heavy lunch at about two when the riding was done, and a light dinner. The named places are in the Hidden gems; the list below is pulled from there.",
   body: [
     "Some of the best meals on a Himalayan ride aren't planned. They're the hot plate of momos you find after a long day, the thukpa that gets you through a cold evening, or the simple meal prepared by a family running a homestay.",
     "This guide is about finding food when you need it and discovering local dishes along the way.",
@@ -161,8 +162,9 @@ export const DISHES = [
 export const STAYS = {
   title: "Find a place to stop",
   body: [
-    "A good place to stay can change an entire riding day.",
-    "Sometimes it's a basic room where you can get a hot shower and dry your gear. Sometimes it's a homestay where dinner is ready when you arrive. And sometimes it's simply the place that lets you stop riding before the weather turns.",
+    "A good place to stay can change an entire riding day. Sometimes it's a basic room where you can get a hot shower and dry your gear. Sometimes it's a homestay where dinner is ready when you arrive. And sometimes it's simply the place that lets you stop riding before the weather turns.",
+    "How I did it, every day: open Google Maps at the next place and look for homestays and hotels. The homestays are listed as hotels too, so don't worry about the label. The standard offer across the whole region is the same: a room plus dinner and breakfast. Unless you go lavish, that is ₹1,500 to ₹2,500 a day depending on the season; in August, the cheapest, ₹1,500 bought the whole thing.",
+    "Don't carry a tent. Pangong is about the only place it earns its weight. A homestay is cheaper than you think, insulated against the cold, private, and nothing wanders in at night.",
     "Availability changes with the season, weather, and local conditions. In remote villages, contact your host before arriving, especially if you're travelling late or outside the main season.",
   ],
   rule: "Don't plan a remote riding day around an unconfirmed bed.",
@@ -170,16 +172,16 @@ export const STAYS = {
     { type: "Homestay", ideal: "Local experience and meals", capture: "Host contact, meals, booking confirmation, parking" },
     { type: "Guesthouse", ideal: "Practical overnight stops", capture: "Room availability, hot water, heating, parking" },
     { type: "Hotel", ideal: "Larger service centres", capture: "Price, facilities, parking, cancellation policy" },
-    { type: "Campsite", ideal: "Seasonal stays in suitable areas", capture: "Operating dates, facilities, weather restrictions" },
-    { type: "Dormitory / hostel", ideal: "Budget travellers", capture: "Bed availability, luggage storage, bike parking" },
-    { type: "Basic village accommodation", ideal: "Remote overnight stops", capture: "Advance confirmation, meals, bedding, water, toilets" },
+    { type: "Hostel", ideal: "Leh, Manali, Kargil, Narkanda: a bed, people, a kitchen", capture: "Bed availability, luggage storage, bike parking" },
+    { type: "Campsite", ideal: "Pangong, at most", capture: "Operating dates, facilities, weather restrictions" },
   ],
   hubs: [
-    { circuit: "zanskar" as CircuitId, places: "Kargil, Padum, and confirmed overnight stops along the Suru Valley route." },
-    { circuit: "nubra" as CircuitId, places: "Leh, Diskit, Hunder, Sumur and Panamik, subject to current availability." },
-    { circuit: "changthang" as CircuitId, places: "Leh, Tangtse, and confirmed accommodation around Hanle and the Pangong region. Never assume accommodation exists at every mapped settlement." },
-    { circuit: "spiti" as CircuitId, places: "Shimla, Sangla, Kalpa, Nako, Tabo, Kaza, and confirmed stops around Pin Valley." },
+    { circuit: "zanskar" as CircuitId, places: "Gonbo Rangjon (a couple of houses), Padum, Kargil, Lamayuru, Leh." },
+    { circuit: "nubra" as CircuitId, places: "Turtuk, Diskit; Hunder, Sumur and Panamik have rooms too." },
+    { circuit: "changthang" as CircuitId, places: "Maan on Pangong, Hanle, Karzok (10–15 homestays and expensive hotels), Nyoma. Never assume a bed at Tso Kar or on the Nurbula route." },
+    { circuit: "spiti" as CircuitId, places: "Jibhi, Kalpa, Nako, Tabo, Kaza, Chitkul, Narkanda." },
   ],
+  best: ["Karzok, the cabin by Tso Moriri", "Turtuk, Maha Guest House", "Kalpa, the B&B with the key locker", "Narkanda, the hostel", "Diskit, Hotel Karakoram"],
 };
 
 /* ------------------------------------------------------------------ Emergency */
@@ -222,6 +224,22 @@ export const CONTACTS: ContactRecord[] = [
   { service: "Ladakh Police / tourist assistance", contact: "Official Ladakh Police channels", tel: null, notes: "Verified contact details and app links to be added", source: "Ladakh Police", status: "needs_verification", last_verified: null },
 ];
 
+/* ------------------------------------------------------------------ The bike */
+export const BIKE = {
+  title: "The bike I rode",
+  model: "Triumph Speed 400, 2025",
+  rows: [
+    { k: "Luggage", v: "Viaterra Claw Pro 2, plus an extra mount at the back to tie a bag on when needed." },
+    { k: "Protection", v: "The front grille guard covered, so a flying stone can't reach the radiator." },
+    { k: "Tyres", v: "Upgraded before leaving to an off-road tread." },
+    { k: "Range", v: "270–300 km to a tank in the mountains." },
+    { k: "Spares carried", v: "Brake pads, a clutch cable, fuses, a puncture kit, chain lube and cleaner." },
+    { k: "Riding gear", v: "Jacket, riding pants, boots, gloves, helmet, rain layers (there was little rain)." },
+    { k: "Electronics", v: "Phone, a second phone, a power bank, an action camera." },
+    { k: "Left behind", v: "Cooking kit: riding alone, it takes space you'd rather not carry for two months. Tent: a homestay is better in every way." },
+  ],
+};
+
 /* ------------------------------------------------------------------ Packing */
 export const PACKING_INTRO = {
   title: "Pack for the altitude, not just the distance",
@@ -239,6 +257,39 @@ export const PACKING = [
   { id: "clothes", title: "Clothing and luggage", items: ["Warm sleeping layers", "Lightweight casual clothes", "Quick-drying innerwear", "Spare footwear", "Laundry bag", "Dry bags or waterproof luggage covers", "Small towel", "Earplugs and eye mask", "Reusable bags for waste"] },
   { id: "docs", title: "Documents and money", items: ["Driving licence", "Vehicle registration", "Insurance", "Identity documents", "Required permits and confirmations", "Accommodation bookings", "Emergency cash in small denominations", "Bank cards", "Emergency contact information"] },
   { id: "pass", title: "Before every major pass", items: ["Check the latest road and weather conditions", "Confirm fuel range and the next known fuel stop", "Check tyre pressure and visible tyre damage", "Check brakes, lights, chain and luggage", "Carry water and food for an unexpected delay", "Check daylight and expected arrival time", "Tell someone your route and expected arrival", "Turn back if conditions are unsafe"] },
+];
+
+/* ------------------------------------------------------------------ On the road: notes from the ride */
+export const RIDER_NOTES: { title: string; items: string[] }[] = [
+  { title: "Rhythm", items: [
+    "Start at seven or eight and be done by two. It is dark after five, and if something goes wrong late there is no one on the road to help.",
+    "Water crossings early: the ice melts through the day and by two in the afternoon the same crossing is hard. Most are no wider than a small nala.",
+    "The one crossing to avoid is on the Shyok road from Diskit towards Pangong. Go Diskit → Leh → Pangong instead.",
+  ] },
+  { title: "Roads", items: [
+    "Ladakh is sorted; the roads are better than their reputation. The bad patches on the whole ride were three: Tabo to Kaza, 10–15 km on the Zanskar side coming down to Kargil, and 5–10 km between Diskit and Turtuk.",
+    "The Kaza–Kunzum–Chandratal road to the Atal Tunnel was under construction; ask before you count on it.",
+    "The new roads (Demchok–Nyoma, the Zanskar highway) were not on Google Maps yet. Mappls had them.",
+  ] },
+  { title: "Fuel", items: [
+    "The bike gave 270–300 km to a tank in the mountains. I carried a spare can and never opened it; a jerrycan is not needed.",
+    "Pumps are at Leh, Karu, Diskit, Kargil, Nyoma, Padum, Tandi, Kaza and the towns south. Between them, fuel is sold from drums at a premium in villages like Hanle.",
+    "The only time I ran low was reaching Nyoma after Demchok. Fill up before Hanle.",
+  ] },
+  { title: "Permits and papers", items: [
+    "One permit covers everything: about ₹400 from the Leh tourism website, for Nubra, Pangong, Hanle, Umling La and the border villages. Link to come.",
+    "Carry the pollution certificate, the RC, your licence and your Aadhaar. No passport photos were asked for anywhere.",
+  ] },
+  { title: "Money and phone", items: [
+    "The whole ride, Delhi to Delhi, 47 days, came to about ₹1 lakh. Fuel was ₹18–20k of it; stays with dinner and breakfast ₹1,500–2,500 a day.",
+    "UPI works almost everywhere; I used cash eight or ten times in the whole trip.",
+    "Airtel worked everywhere. Buy a local SIM in Leh (or Padum if you come in from Himachal). The only dead zones are between villages.",
+  ] },
+  { title: "Altitude and health", items: [
+    "I didn't take Diamox and didn't need it; an oxygen can for the Umling La day is the one thing I'd insist on. Diamox is in any village pharmacy if you want it.",
+    "A basic first-aid kit: Vicks, Iodex, bandages, Crocin. Hospitals in Leh and Manali; basic medical help in almost every village.",
+    "Eat light while riding; the heavy meal is at two, after.",
+  ] },
 ];
 
 /* ------------------------------------------------------------------ Commute */
@@ -359,25 +410,39 @@ export const GEMS = {
     { circuit: "zanskar" as CircuitId, place: "zangla", title: "Zangla's historic settlement", category: "Monasteries and heritage" },
     { circuit: "zanskar" as CircuitId, place: "rangdum", title: "The landscapes around Rangdum", category: "Lakes and landscapes" },
     { circuit: "zanskar" as CircuitId, place: "parkachik", title: "Nun–Kun views from public viewpoints", category: "Hidden viewpoints" },
-    { circuit: "zanskar" as CircuitId, place: "padum", title: "Village experiences around Padum", category: "Village life" },
+    { circuit: "zanskar" as CircuitId, place: "padum", id: "padum", title: "Khangok Homestay, Padum", category: "Stay", summary: "The stay in Padum. The owner runs camping too, and teaches skiing in the winter." },
+    { circuit: "zanskar" as CircuitId, place: "kargil", id: "kargil", title: "Black Sheep Bed & Breakfast, Kargil", category: "Stay", summary: "A hostel-style B&B, and a really good base for the three days in Kargil." },
+    { circuit: "zanskar" as CircuitId, place: "kargil", title: "Haji Kitchen, Kargil", category: "Restaurant", summary: "The best meal in Kargil, and the bare minimum you have to visit. Go." },
+    { circuit: "zanskar" as CircuitId, place: "lamayuru", title: "The Moonland patch", category: "Hidden viewpoints", summary: "The moonland proper is just outside the village: walk or ride out to it rather than looking from the road." },
+    { circuit: "zanskar" as CircuitId, place: "leh", title: "An army café on the Lamayuru–Leh road", category: "Café", summary: "An army-run café on the way into Leh, with a really good dosa. Not the Midway; name to come." },
+    { circuit: "zanskar" as CircuitId, place: "nimmu", id: "nimmu", title: "Sangam Point", category: "Hidden viewpoints", summary: "Where the Zanskar meets the Indus, a stop before Leh: the two colours of water side by side, and rafting on the Zanskar if you want to be in it." },
+    { circuit: "zanskar" as CircuitId, place: "leh", title: "Namza Dining, Leh", category: "Restaurant", summary: "One of the two great places to eat in Leh." },
+    { circuit: "zanskar" as CircuitId, place: "leh", title: "Saas by Dolkar, Leh", category: "Restaurant", summary: "The other of the two great places to eat in Leh." },
+    { circuit: "zanskar" as CircuitId, place: "leh", title: "Tsamkang by Ladakhi Chef, Leh", category: "Restaurant", summary: "Ladakhi food by a local chef: the one to pick over the fine-dining places." },
+    { circuit: "zanskar" as CircuitId, place: "leh", title: "Heritage Kitchen, Leh", category: "Restaurant", summary: "Fine dining with a local chef, if that is the evening you want." },
+    { circuit: "zanskar" as CircuitId, place: "leh", title: "Wazwan Planet, Leh", category: "Restaurant", summary: "For Kashmiri Wazwan." },
+    { circuit: "zanskar" as CircuitId, place: "leh", title: "Analog Café, Leh", category: "Café", summary: "Near the market; the café for a slow hour." },
+    { circuit: "zanskar" as CircuitId, place: "leh", title: "Thukpa, anywhere", category: "Food", summary: "Order thukpa wherever you are in Leh; it is good everywhere." },
+    { circuit: "changthang" as CircuitId, place: "manali", id: "manali", title: "The hostel on Goshal Road, Manali", category: "Stay", summary: "A great place to stay in Manali, on Goshal Road across the river. Name to come." },
+    { circuit: "changthang" as CircuitId, place: "manali", title: "Manali: walk it", category: "Rider tip", summary: "No single place to send you to; there is a lot. Walk around Old Manali and the Goshal side and explore." },
     { circuit: "nubra" as CircuitId, place: "turtuk", id: "turtuk", title: "Turtuk, on foot", category: "Village life", summary: "No road into the village: park before the footbridge and walk in. Four days here without the bike, and the most peaceful place on the whole ride." },
     { circuit: "nubra" as CircuitId, place: "turtuk", title: "The Balti Kitchen, Turtuk", category: "Restaurant", summary: "A ten-year-old kitchen 200–300 m into the village from the footbridge. Balti food, and the walk in is part of it." },
     { circuit: "nubra" as CircuitId, place: "turtuk", title: "The Balti Museum and the old Balti houses", category: "Heritage", summary: "Protected old houses, built under the earth against the winters, and a museum of how people lived; Balti culture kept well." },
-    { circuit: "nubra" as CircuitId, place: "thang", id: "thang", title: "Thang, the last village", category: "Border", summary: "About 20 km beyond Turtuk, the international border village. The peaks across the line are Pakistan's, and the posts are in the mountains: you can't see them, they can see you." },
+    { circuit: "nubra" as CircuitId, place: "thang", id: "thang", title: "Thang, the last village", category: "Border", summary: "About 10 km beyond Turtuk on the bike, the international border village. The peaks across the line are Pakistan's, and the posts are in the mountains: you can't see them, they can see you." },
     { circuit: "nubra" as CircuitId, place: "khardung-la", id: "khardung-la", title: "Snow on Khardung La", category: "Experience", summary: "The pass was full of snow on the way into Nubra: the first snowfall of the ride." },
     { circuit: "nubra" as CircuitId, place: "diskit", id: "diskit", title: "Diskit Monastery and the great statue", category: "Monasteries and heritage", summary: "A really beautiful monastery above the valley, and the big statue beside it." },
     { circuit: "nubra" as CircuitId, place: "diskit", title: "Hotel Karakoram, Diskit", category: "Stay", summary: "Off season, a room with dinner and breakfast for about ₹1,500, a full-course meal cooked to order, veg or non-veg, and a beautiful garden." },
     { circuit: "nubra" as CircuitId, place: "turtuk", title: "Maha Guest House, Turtuk", category: "Stay", summary: "The stay in Turtuk. Don't stay near the road: walk up the stream and into the village." },
     { circuit: "nubra" as CircuitId, place: "turtuk", title: "The rooftop at Duktuk Hotel", category: "Hidden viewpoints", summary: "Go up for sunset; the rooftop is worth the visit on its own." },
     { circuit: "nubra" as CircuitId, place: "turtuk", title: "The upper village, above the stream", category: "Village life", summary: "Cross the Razabe Turtuk bridge, then keep walking up the stream: the upper village is the beautiful part." },
-    { circuit: "nubra" as CircuitId, place: "siachen-bc", id: "siachen-bc", title: "The empty road to Siachen Base Camp", category: "Best route", summary: "About 120 km one way from Diskit, three to four hours, barely a soul off season; the stillness is the point. Start early." },
-    { circuit: "nubra" as CircuitId, place: "panamik", id: "panamik", title: "The hot spring at Panamik", category: "Experience", summary: "Crazy hot water in the middle of an icy desert, about 50 km from Diskit; built and kept by the locals for ₹50. There are hidden hot streams off the route too, but alone and off season the built one was the sensible choice. A half-hour soak before the ride back." },
+    { circuit: "nubra" as CircuitId, place: "siachen-bc", id: "siachen-bc", title: "The empty road to Siachen Base Camp", category: "Best route", summary: "About 120 km one way from Diskit, three to four hours, barely a soul off season; the stillness is the point. At the camp, the war memorial, and soldiers who will talk to you about what goes on up there. Start early." },
+    { circuit: "nubra" as CircuitId, place: "panamik", id: "panamik", title: "The hot spring at Panamik", category: "Experience", summary: "Crazy hot water in the middle of an icy desert, about 50 km from Diskit; built and kept by the locals for ₹50. An open-air pool and closed bathtubs, for men and women, with lockers and a small canteen; safe. No check post, and nothing marks it: pin it on Google Maps before you leave Diskit. A half-hour soak before the ride back." },
     { circuit: "nubra" as CircuitId, place: "hunder", id: "hunder", title: "Dunes and landscapes near Hunder", category: "Lakes and landscapes" },
     { circuit: "zanskar" as CircuitId, place: "leh", id: "leh", title: "Rainbow Hostel, Leh", category: "Stay", summary: "Of several stays tried over five days in Leh, the one that was really amazing." },
     { circuit: "zanskar" as CircuitId, place: "leh", title: "Leh Palace", category: "Heritage", summary: "Really great; the walk up from the old town." },
-    { circuit: "zanskar" as CircuitId, place: "lamayuru", id: "lamayuru", title: "Lamayuru Monastery and the art installations", category: "Monasteries and heritage", summary: "A really great monastery. The Sa Biennale was on at the time, with artists' installations around the village." },
+    { circuit: "zanskar" as CircuitId, place: "lamayuru", id: "lamayuru", title: "Lamayuru Monastery and the art installations", category: "Monasteries and heritage", summary: "A really great monastery. The Sa Ladakh Biennale was on at the time: artists' installations in eight villages between Kargil and Leh, Hunderman, Mulbekh, Likir and Basgo among them." },
     { circuit: "zanskar" as CircuitId, place: "mulbekh", id: "mulbekh", title: "Mulbekh", category: "Quiet detours", summary: "One of the small villages between Lamayuru and Leh: sweet hidden gems, all of them." },
-    { circuit: "zanskar" as CircuitId, place: "likir", id: "likir", title: "Likir", category: "Quiet detours", summary: "A few kilometres off the road into Leh; the monastery on its hill." },
+    { circuit: "zanskar" as CircuitId, place: "likir", id: "likir", title: "Likir", category: "Quiet detours", summary: "A few kilometres off the road into Leh; the monastery on its hill, and a pottery village below it." },
     { circuit: "zanskar" as CircuitId, place: "basgo", id: "basgo", title: "Basgo", category: "Quiet detours", summary: "The old capital's ruins above the road, between Likir and Nimmu." },
     { circuit: "zanskar" as CircuitId, place: "alchi", title: "Alchi", category: "Quiet detours", summary: "A short way off the road; the old murals of the Choskor." },
     { circuit: "changthang" as CircuitId, place: "chemrey", id: "chemrey", title: "Chemrey Monastery", category: "Monasteries and heritage", summary: "On the way out of Leh towards Chang La, instead of Hemis a second time." },
@@ -394,10 +459,11 @@ export const GEMS = {
     { circuit: "changthang" as CircuitId, place: "kyagar-tso", id: "kyagar-tso", title: "Kyagar Tso and the three pyramids", category: "Lakes and landscapes", summary: "Off the Mahe Bridge cut on the way to Karzok. With the snow just right, three peaks across the water stand like three pyramids. Not a soul by the lake." },
     { circuit: "changthang" as CircuitId, place: "karzok", id: "karzok", title: "A cabin in Karzok", category: "Stay", summary: "The most beautiful stay of the whole ride (Turtuk second, Kalpa third): a small cabin with an uncle, an aunt and their grandson, two days of eating and sleeping with them, Tso Moriri and the snow outside, Mentok Kangri above. The hotels are expensive and there are only 10–15 homestays." },
     { circuit: "changthang" as CircuitId, place: "taglang-la", id: "taglang-la", title: "Taglang La, up and back", category: "Experience", summary: "A run up to the pass from the Tso Kar side and back the same way, before the long road south." },
-    { circuit: "changthang" as CircuitId, place: "nakee-la", title: "The Gata Loops", category: "Best route", summary: "The stack of hairpins up from the Sarchu plain towards Nakee La. Phenomenal." },
+    { circuit: "changthang" as CircuitId, place: "nakee-la", title: "The Gata Loops", category: "Best route", summary: "The stack of hairpins up from the Sarchu plain towards Nakee La. Phenomenal. Stop at the ghost shrine on the way up." },
     { circuit: "changthang" as CircuitId, place: "suraj-tal", id: "suraj-tal", title: "Suraj Tal", category: "Lakes and landscapes", summary: "Just below Baralacha La on the way down to Jispa. Incredible." },
     { circuit: "changthang" as CircuitId, place: "jispa", id: "jispa", title: "Jispa and Sissu", category: "Quiet detours", summary: "Great villages on the way down the Bhaga and the Chandra to the tunnel." },
     { circuit: "spiti" as CircuitId, place: "jibhi", id: "jibhi", title: "Two days in Jibhi", category: "Stay", summary: "Rain in the last ten minutes of the ride in, so an extra day: everything washed and dried, good food, and the local fruit drinks, passion fruit among them." },
+    { circuit: "spiti" as CircuitId, place: "jibhi", title: "A new café in Jibhi", category: "Café", summary: "A good new café had just opened; it was off season and little else was. Name to come." },
     { circuit: "spiti" as CircuitId, place: "kalpa", id: "kalpa", title: "The B&B in Kalpa", category: "Stay", summary: "The third-best stay of the ride: a small B&B with the owner away and a key locker for the door. A village you can walk in half an hour, and four days of it under Kinnaur Kailash." },
     { circuit: "spiti" as CircuitId, place: "kalpa", title: "Zostel Kalpa", category: "Stay", summary: "One of the best views in Kalpa. If you go, stay a week." },
     { circuit: "spiti" as CircuitId, place: "kinnaur-kailash", id: "kinnaur-kailash", title: "Kinnaur Kailash from Kalpa", category: "Hidden viewpoints", summary: "The mountain fills the view from the village; four days of it was not too many." },
@@ -408,11 +474,11 @@ export const GEMS = {
     { circuit: "spiti" as CircuitId, place: "langza", id: "langza", title: "The Buddha at Langza", category: "Photography spots", summary: "The iconic statue above the village, with the valley behind." },
     { circuit: "spiti" as CircuitId, place: "komik", id: "komik", title: "Komic, India's highest village", category: "Village life", summary: "The top of the Kaza day loop." },
     { circuit: "spiti" as CircuitId, place: "ki-monastery", id: "ki-monastery", title: "Key Monastery", category: "Monasteries and heritage", summary: "The monastery on its hill above the Spiti, on the way back to Kaza." },
-    { circuit: "spiti" as CircuitId, place: "kaza", id: "kaza", title: "The Kaza day loop", category: "Best route", summary: "Hikkim, Langza, Komic and Key in a day from Kaza. A fun ride in foul weather: dust, wind and sun at once, in the cold." },
+    { circuit: "spiti" as CircuitId, place: "kaza", id: "kaza", title: "The Kaza day loop", category: "Best route", summary: "Hikkim, Langza, Komic, Key and up to Kibber in a day from Kaza. A fun ride in foul weather: dust, wind and sun at once, in the cold. Chicham bridge can be skipped." },
     { circuit: "spiti" as CircuitId, place: "chandratal", title: "The Chandratal road, skipped", category: "Rider tip", summary: "The Kaza–Kunzum–Chandratal road to the Atal Tunnel was the only bad patch left in Spiti, under construction and said to be ready around 2028. Chandratal itself had already been seen after the Hamta trek, so the ride went back the way it came." },
-    { circuit: "spiti" as CircuitId, place: "chitkul", id: "chitkul", title: "Chitkul, the last village", category: "Village life", summary: "The last village of India on the Himachal side. A day or so; really peaceful, really beautiful." },
-    { circuit: "spiti" as CircuitId, place: "narkanda", id: "narkanda", title: "A night in Narkanda", category: "Stay", summary: "Not top three, but for sure top five. One day was not enough: stay two." },
-    { circuit: "spiti" as CircuitId, place: "shimla", id: "shimla", title: "Mashobra", category: "Quiet detours", summary: "A village just outside Shimla, close to the heart." },
+    { circuit: "spiti" as CircuitId, place: "chitkul", id: "chitkul", title: "Chitkul, the last village", category: "Village life", summary: "The last village of India on the Himachal side. A day or so; really peaceful, really beautiful. Stop here rather than in Sangla, which is a bigger town." },
+    { circuit: "spiti" as CircuitId, place: "narkanda", id: "narkanda", title: "The hostel in Narkanda", category: "Stay", summary: "Not top three, but for sure top five. A hostel stay (goSTOPS, as heard); one day was not enough, stay two." },
+    { circuit: "spiti" as CircuitId, place: "shimla", id: "shimla", title: "Mashobra", category: "Quiet detours", summary: "Ten minutes from Shimla with every amenity of the city, and none of it. If I ever want to live somewhere forever, this is the place." },
     { circuit: "spiti" as CircuitId, place: "chandigarh", id: "chandigarh", title: "The four-lane to Chandigarh", category: "Best route", summary: "From Shimla the four-lane highway starts, and it is a joy to cruise on a bike." },
   ],
   note: "These are starting candidates to research, not claims that every location is hidden or uncrowded. Coordinates for sensitive wildlife locations, restricted military areas and fragile places are not published.",
