@@ -57,12 +57,57 @@ Leh–Zangla–Leh ride on the new highway as its last leg.
 - Diskit → Wari La → Hemis → Leh [14 Aug]: the bridge on the Shyok road to Pangong was closed, so Wari La
   instead of Khardung La again (half an hour more). Felt like a homecoming. End of circuit 2.
 
-## Circuits 3–4: to come (Changthang ~16–20 Aug, back to Manali 21 Aug, Spiti 22–31 Aug, per the album)
+### Circuit 2, answers and more
+- Turtuk stay: Maha Guest House. Don't stay near the road: walk up the stream into the village; the upper
+  village above the stream is the beautiful part. The rooftop at Duktuk Hotel is worth it, best at sunset.
+  The footbridge is the Razabe Turtuk Bridge (spellings as heard).
+- Diskit stay: Hotel Karakoram. The Siachen run went "via Warshi and all".
+- Panamik: the hot spring is built and kept by the locals, ₹50. There are hidden hot streams off the
+  route, but alone and off season he stayed with the built one.
+- Lamayuru's art event: the Sa Biennale.
+
+## Circuit 3 — Changthang (as ridden: Leh → Chang La → Pangong → Hanle → Nurbula → Umling La → Demchok → Nyoma → Karzok → Manali; 16–21 Aug)
+"The biggest and most important circuit, the one I came for: the summit at Umling La." 2–3 more days in Leh first.
+- Leh → (Hemis skipped, already seen) → Chemrey monastery → Chang La top [16 Aug]: he had stood there two years
+  earlier in summer; a memory of growth, of how life changed and around whom. → Pangong; stayed in Maan
+  village ("one of the most beautiful villages"), a bit of snow outside, great views and a great ride around
+  the lake.
+- → Hanle [17 Aug] (Chushul, Tsaga La on the way): met riders from Maharashtra on the road. Pangong to Hanle,
+  one of the most beautiful roads to ride. Overnight; the astronomical site.
+- Summit day [18 Aug]: Hanle → the Nurbula top route: no road, a 75 km off-road climb from Hanle to 5,200 m
+  at Nurbula top → another 50–60 km → Umling La. "Every metre up you realise you're about as high as anyone
+  on earth right now bar a few thousand on summits, and it's not summit season." (He says 6,000 m; the
+  published height is about 5,800 m: the site shows the terrain model's figure, not 6,000.) The highest
+  drivable road in the world. Mig La was about to open but demolished and army-restricted; maybe 2028.
+- Instead of back to Hanle: down the new road from Umling La to Demchok (good road, not off-road). The
+  Demchok camp, the India–China border: the Chinese village about 100 m away, officials moving between
+  bunkers. An hour's rest, then Demchok → Nyoma on the new highway: not on Google Maps; Mappls had it
+  (Mappls is good in the north). Airtel worked everywhere; buy a local SIM in Leh, or Padum if coming from
+  Himachal. The Indus valley road: Chinese mountains on the right, the Indus, the road, Indian mountains on
+  the left, ~100 km dead straight, empty valley, rivers kilometres wide, the true scale of the mountains.
+  "The highlight of my entire bike ride; the most beautiful place I rode." (He said "between India and
+  Nepal"; China.)
+- Nyoma about 3 pm, fuel nearly gone, filled up; the people at the pump said the road on was well built, so
+  on to Karzok (70–80 km) via the Mahe Bridge cut. On the way Kyagar Tso: with the snow just right, three
+  peaks behind the valley look like three pyramids; not a single person by the lake.
+- Karzok, Tso Moriri [18–19 Aug]: 2 days. The most beautiful stay of the whole ride (Turtuk second, Kalpa
+  third, to come). Hotels super expensive; only 10–15 homestays. A small cabin with an uncle, an aunt and
+  their grandson; ate and slept with them for two days, by the lake, the landscape, the snow; Mentok
+  (Kangri) above.
+- Karzok → the Leh–Manali highway [20 Aug]: went up to Taglang La and came back the same way, then south:
+  Gata Loops ("phenomenal"), Suraj Tal ("incredible"), Jispa, Sissu, the Ladakh–Himachal border, the Atal
+  Tunnel → Manali [21 Aug]. End of circuit 3.
+
+## Circuit 4: to come (Spiti, 22–31 Aug per the album)
 
 ## Things Gaurav asked me to remember / ask later
 1. The name of the hotel in Padum.
-2. The name of the stay in Turtuk.
-3. The name of the hotel in Diskit (₹1,500 with dinner and breakfast, the garden).
+2. ~~The stay in Turtuk~~ → Maha Guest House.
+3. ~~The hotel in Diskit~~ → Hotel Karakoram.
 4. Leh: the restaurants and places to explore nearby, to list at the end.
-5. The name of the art event at Lamayuru (sounded like "Sa bin Ali").
+5. ~~The art event at Lamayuru~~ → the Sa Biennale.
 6. Diskit's big statue: he was told it is an old king, not the Buddha; published accounts call it the Maitreya Buddha. Confirm before it goes on a card.
+7. The name of the stay in Kalpa (third-best stay of the ride; "I'll tell you later").
+8. The Karzok cabin: the hosts' names, if he wants them on the card.
+9. Where he slept on 20 Aug, between Karzok and Manali (Jispa? Darcha? Keylong?).
+10. Spellings to confirm: Duktuk Hotel, Razabe Turtuk Bridge, Warshi (on the Siachen road).

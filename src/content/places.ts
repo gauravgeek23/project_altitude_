@@ -150,6 +150,8 @@ export const PLACES: PlaceRecord[] = [
     "The village and its lake together, a short walk from the road.", { near: ["nako"] }),
   P("sissu-lake", "Sissu Lake", "lake", ["changthang"], "Lahaul", "A lake beside the helipad at Sissu, on the Chandra just beyond the Atal Tunnel.",
     "The first stop in Lahaul after the tunnel.", { near: ["atal-tunnel", "darcha"], notes: "Placed at the village; the lake adjoins it." }),
+  P("suraj-tal", "Suraj Tal", "lake", ["changthang"], "Lahaul", "The lake just below Baralacha La on the Manali–Leh road, at the head of the Bhaga.",
+    "The pause before or after the pass.", { near: ["baralacha-la", "jispa"] }),
   P("chandratal", "Chandra Taal", "lake", ["spiti"], "Lahaul", "A crescent-shaped high-altitude lake below Kunzum Pass.", "One of the most beautiful lakes in the Himalaya.", { aka: "Chandratal", notes: "Access and camping conditions vary; use designated sites.", near: ["batal"] }),
   P("atal-tunnel", "Atal Tunnel", "landmark", ["spiti", "changthang"], "Manali–Lahaul", "A road tunnel of about 9 km under the Rohtang ridge, opened in 2020.", "It links Manali and Lahaul without crossing Rohtang Pass.", { notes: "Weather can be completely different at the two ends.", near: ["manali", "darcha"] }),
   P("manali", "Manali", "town", ["spiti", "changthang"], "Kullu valley", "A major transport, accommodation, repair and supply centre at the head of the Kullu valley.", "Get the motorcycle serviced before the high roads.", { near: ["atal-tunnel", "jibhi"] }),
