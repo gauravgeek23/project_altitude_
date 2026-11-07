@@ -335,10 +335,7 @@ fieldset.card legend .meta { margin: 0; }
 .opt { display: flex; align-items: center; gap: 10px; height: 30px; font-size: 13.5px; color: var(--ink); cursor: pointer; }
 .opt input { width: 16px; height: 16px; margin: 0; accent-color: var(--ink); cursor: pointer; }
 .layers .chip { height: 28px; font-size: 12.5px; }
-.sos { position: absolute; right: max(14px, env(safe-area-inset-right, 0px)); bottom: 74px; z-index: 4; width: 44px; height: 44px; border-radius: 50%; border: 0; background: var(--accent); color: var(--on-ink);
   font-weight: 700; font-size: 12px; letter-spacing: .06em; cursor: pointer; box-shadow: 0 4px 14px rgba(227,36,27,.4); }
-.sos:hover { transform: scale(1.05); }
-.route-note { position: absolute; right: 70px; bottom: 30px; margin: 0; font-size: 11px; color: var(--grey); background: var(--float); padding: 3px 8px; border-radius: 6px; pointer-events: none; }
 .map-card.docked { width: min(320px, calc(100% - 32px)); }
 .map-card-top { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
 .map-card .close { border: 0; background: none; cursor: pointer; color: var(--grey); font-size: 14px; width: 28px; height: 28px; border-radius: 6px; }
@@ -351,8 +348,6 @@ fieldset.card legend .meta { margin: 0; }
 .map-card-warn { margin: 0 0 6px; font-size: 12.5px; color: #a4321e; }
 @media (max-width: 899px) {
   .map-top { max-width: calc(100% - 84px); top: 12px; }
-  .sos { bottom: calc(150px + env(safe-area-inset-bottom, 0px)); }
-  .route-note { display: none; }
 }
 
 .map-card.docked { bottom: 76px; }
@@ -440,7 +435,6 @@ fieldset.card legend .meta { margin: 0; }
 .legend-key { display: inline-grid; place-items: center; min-width: 36px; height: 32px; padding: 0 8px; border-radius: 8px; border: 0; background: var(--card); color: var(--ink); font-size: 13px; font-weight: 500; }
 .legend-key.compass-key { border-radius: 50%; width: 34px; padding: 0; background: none; }
 .legend-key.compass-key svg { display: block; }
-.legend-key.sos-key { border-radius: 50%; width: 38px; height: 38px; padding: 0; border: 0; background: var(--accent); color: #fff; font-size: 11px; }
 .legend-area { display: block; width: 64px; height: 28px; border-radius: 6px; border: 1.2px dashed #7d838d; }
 .legend-area.ladakh { background: rgba(196, 128, 32, .16); }
 .legend-area.himachal { background: rgba(34, 128, 74, .16); }

@@ -691,7 +691,6 @@ function Legend() {
           <Row sample={<span className="legend-key"><RefreshIcon size={15} /></span>} title="Reset">Back to the view with every stop, all circuits shown.</Row>
           <Row sample={<span className="legend-key"><SatelliteIcon size={15} /></span>} title="Satellite">Switch between terrain and satellite imagery.</Row>
           <Row sample={<span className="legend-key compass-key"><svg width="34" height="34" viewBox="-29 -29 58 58" aria-hidden="true"><Compass x={0} y={0} /></svg></span>} title="Compass">A compass rose: north is always up; the map does not rotate.</Row>
-          <Row sample={<span className="legend-key sos-key">SOS</span>} title="Emergency">Opens emergency numbers and what to do.</Row>
           <Row sample={<span className="legend-key"><FilterIcon size={15} /></span>} title="Filters">The map source, and which kinds of place to show: villages and towns, passes, peaks, lakes, landmarks, monasteries.</Row>
           <Row sample={<span className="legend-key fuel-key"><PlaceIcon kind="fuel" size={15} /></span>} title="Petrol pumps">Marks every pump we know of on the circuits; amber where reports disagree. The card says what is known about it. Ladakh has long stretches with none.</Row>
         </div>

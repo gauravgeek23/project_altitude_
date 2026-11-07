@@ -73,7 +73,7 @@ export default function App() {
       </main>
 
       <aside className="map-col" aria-label="Circuit map">
-        <MapPanel kinds={kinds} onKinds={setKinds} selected={selected} circuit={circuit} onCircuit={setCircuit} onSelect={setSelected} onOpenPlace={(id) => { openPlace(id); setView("guide"); }} onEmergency={() => go("emergency")} />
+        <MapPanel kinds={kinds} onKinds={setKinds} selected={selected} circuit={circuit} onCircuit={setCircuit} onSelect={setSelected} onOpenPlace={(id) => { openPlace(id); setView("guide"); }} />
       </aside>
 
       <div className="switcher" role="tablist" aria-label="View">

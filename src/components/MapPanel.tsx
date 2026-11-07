@@ -20,7 +20,6 @@ interface Props {
   onCircuit(id: CircuitId | null): void;
   onSelect(id: string | null): void;
   onOpenPlace(id: string): void;
-  onEmergency(): void;
 }
 
 const region = REGIONS[DEFAULT_REGION];
@@ -38,7 +37,7 @@ const CIRCUIT_BOUNDS = Object.fromEntries(region.data.circuits.map((c) => {
 }));
 
 /** The route map in the right panel, with search, circuit toggles, category filters and a place card. */
-export function MapPanel({ kinds, onKinds, selected, circuit, onCircuit, onSelect, onOpenPlace, onEmergency }: Props) {
+export function MapPanel({ kinds, onKinds, selected, circuit, onCircuit, onSelect, onOpenPlace }: Props) {
   const map = useRef<MapHandle>(null);
   const [hover, setHover] = useState<string | null>(null);
   const [kmPerPx, setKmPerPx] = useState(1);
@@ -154,7 +153,6 @@ export function MapPanel({ kinds, onKinds, selected, circuit, onCircuit, onSelec
 
       <MapControls kmPerPx={kmPerPx} satellite={satellite} onSatellite={() => chooseBase(satellite ? "terrain" : lastSat)} onZoomIn={() => map.current?.zoomIn()} onZoomOut={() => map.current?.zoomOut()}
         onReset={() => { map.current?.reset(); onSelect(null); onCircuit(null); }} />
-      <button type="button" className="sos" onClick={onEmergency} aria-label="Emergency information">SOS</button>
 
       {sel && (
         <div className="map-card docked" role="dialog" aria-label={sel.name}>
@@ -180,8 +178,6 @@ export function MapPanel({ kinds, onKinds, selected, circuit, onCircuit, onSelec
           <button type="button" className="text-btn" onClick={() => onOpenPlace(sel.id)}>Open the full entry →</button>
         </div>
       )}
-      <p className="route-note">Routes are drawn for planning, not live road status.</p>
-      <p className="attribution">{bm.attribution} · Roads © OpenStreetMap contributors · Boundaries: Natural Earth</p>
     </div>
   );
 }
