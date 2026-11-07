@@ -152,7 +152,7 @@ Leh–Zangla–Leh ride on the new highway as its last leg.
 | I | Restaurants/cafés anywhere else (Kargil, Leh, Kaza…) | gems, category Restaurant; On the Road → Eat |
 | J | Bike: model, mods, luggage, what broke, service points | Gear Up → "The bike" section (`PACKING`/`COMMUTE.bike` in `guide.ts`) |
 | K | Permits he actually needed, and where he got them | On the Road → Getting there; Emergency |
-| L | A professional portrait (any size; it is shown at 4:5) and the profile links (LinkedIn, portfolio, Substack, X) | Meet the Creator: the portrait goes in the photo selection under the key `portrait` (`scripts/photo-selection.json` → `python3 scripts/photos.py build`), or as `public/photos/portrait-1.jpg` + `-s.jpg` with a manifest entry; the links in `CREATOR.links` in `src/content/guide.ts` |
+| L | ~~A professional portrait~~ (in: the conference photo, as the Meet the Creator hero and the nav row) and the profile links (LinkedIn, portfolio, Substack, X) | the links in `CREATOR.links` in `src/content/guide.ts` |
 | M | Swag ideas / products | Swags page (`SWAGS` in `guide.ts`) |
 
 ## Questions for Gaurav (asked 7 Nov; answers go into gems, cards, On the Road, Gear Up, Emergency)

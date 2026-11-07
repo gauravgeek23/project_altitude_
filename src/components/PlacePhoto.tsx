@@ -21,7 +21,7 @@ export function PlacePhoto({ id, alt, index = 0, className = "place-photo", inte
     <>
       <figure className={className + (loaded ? " loaded" : "") + (interactive ? "" : " static")}>
         <img src={p.thumb} alt={p.caption || alt} width={p.w} height={p.h} loading="lazy" decoding="async" referrerPolicy="no-referrer"
-          onLoad={() => setLoaded(true)}
+          style={{ objectPosition: p.focus }} onLoad={() => setLoaded(true)}
           {...(interactive ? {
             onClick: show, role: "button" as const, tabIndex: 0, "aria-label": `${alt}: open ${n} photo${n > 1 ? "s" : ""} full screen`,
             onKeyDown: (e: React.KeyboardEvent) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); show(); } },

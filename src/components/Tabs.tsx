@@ -582,14 +582,10 @@ function Creator() {
   const links = G.CREATOR.links.filter((l) => l.url);
   return (
     <>
+      <PlacePhoto id="portrait" index={0} alt="Gaurav Kumar" caption={false} interactive={false} className="place-photo creator-hero" />
       <Head title={G.CREATOR.title} />
-      <div className="creator-head">
-        <PlacePhoto id="portrait" index={0} alt="Gaurav" caption={false} className="place-photo portrait" />
-        <div className="creator-text">
-          <Paras items={G.CREATOR.body} />
-          {links.length > 0 && <p className="links">{links.map((l) => <a key={l.label} href={l.url} target="_blank" rel="noreferrer">{l.label} ↗</a>)}</p>}
-        </div>
-      </div>
+      <Paras items={G.CREATOR.body} />
+      {links.length > 0 && <p className="links">{links.map((l) => <a key={l.label} href={l.url} target="_blank" rel="noreferrer">{l.label} ↗</a>)}</p>}
       <Stats />
       <div className="story" id="story">
         <h2 className="story-title">{G.STORY.title}</h2>

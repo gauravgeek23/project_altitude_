@@ -93,6 +93,11 @@ def build():
         for n, p in enumerate(photos, 1):
             base = f"{place}-{n}"
             full, thumb = f"{OUT_DIR}/{base}.jpg", f"{OUT_DIR}/{base}-s.jpg"
+            if p.get("local"):   # not from the album: the files are already in place; the thumb travels as a data URI
+                import base64
+                im = Image.open(full); data = "data:image/jpeg;base64," + base64.b64encode(open(thumb, "rb").read()).decode()
+                manifest[place].append({"f": f"photos/{base}.jpg", "t": f"photos/{base}-s.jpg", "r": data, "w": im.width, "h": im.height, "d": p.get("date", ""), "c": p.get("caption", "")})
+                continue
             jobs.append((p["url"] + f"=w{LONG}-h{LONG}-no", full, LONG, Q)); jobs.append((p["url"] + f"=w{THUMB}-h{THUMB}-no", thumb, THUMB, QT))
             w, h = p["w"], p["h"]; k = LONG / max(w, h)
             taken = dt.datetime.fromtimestamp((p["ts"] + p["tz"]) / 1000, dt.timezone.utc).strftime("%Y-%m-%d")
@@ -111,9 +116,38 @@ def build():
     print(f"{n} photos for {len(manifest)} places -> {OUT_DIR} ({size} MB), manifest {MANIFEST}")
 
 
+def focus_of(path):
+    """Where the subject of a photo sits, as percentages of width and height: the centre of the half-width and
+    half-height windows with the most edge energy (ridgelines, people, buildings score high; flat sky and
+    tarmac low). Used as CSS object-position so a crop keeps the subject."""
+    import numpy as np
+    from PIL import Image
+    im = Image.open(path).convert("L"); im.thumbnail((320, 320))
+    a = np.asarray(im, dtype=np.float32)
+    gy, gx = np.gradient(a); e = np.hypot(gx, gy)
+    def best(profile, frac=0.5):
+        n = len(profile); w = max(1, int(n * frac)); cs = np.concatenate([[0], np.cumsum(profile)])
+        sums = cs[w:] - cs[:-w]; i = int(np.argmax(sums)); return round(100 * (i + w / 2) / n)
+    return best(e.sum(axis=0)), best(e.sum(axis=1))
+
+
+def focus():
+    """Adds fx, fy (the focus point) to every manifest entry from the full-size files."""
+    manifest = json.load(open(MANIFEST))
+    n = 0
+    for entries in manifest.values():
+        for e in entries:
+            path = f"{ROOT}/public/{e['f']}"
+            if os.path.exists(path):
+                e["fx"], e["fy"] = focus_of(path); n += 1
+    json.dump(manifest, open(MANIFEST, "w"), separators=(",", ":"))
+    print(f"focus points for {n} photos -> {MANIFEST}")
+
+
 if __name__ == "__main__":
     cmd = sys.argv[1] if len(sys.argv) > 1 else ""
     if cmd == "list": list_album(sys.argv[2])
     elif cmd == "sheets": sheets()
-    elif cmd == "build": build()
+    elif cmd == "build": build(); focus()
+    elif cmd == "focus": focus()
     else: print(__doc__)

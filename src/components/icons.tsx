@@ -79,3 +79,30 @@ export function ExpandIcon({ size = 16, on = false }: { size?: number; on?: bool
     </svg>
   );
 }
+
+/** the left panel's glyphs, one per tab, on the same 24-px grid as the place icons */
+const NAV_PATHS: Record<string, string> = {
+  note: "M4 6.5h16v11H4z M4 7l8 6 8-6",
+  how: "M5 4h14l-4 4 4 4H5z M5 4v16",
+  legend: "M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2z M9 4v14 M15 6v14",
+  circuits: "M7 17a5 5 0 1 0 0-10h10a5 5 0 1 1 0 10H7z",
+  villages: "M3 11l9-7 9 7 M5 10v10h5v-6h4v6h5V10",
+  passes: "M2 20l6-10 4 6 3-4 7 8z M8 10l1.5-2.5L11 10",
+  essentials: "M12 3v18 M8 21h8 M5 8h7l2 2-2 2H5z M12 14h7l2 2-2 2h-7z",
+  gear: "M8 7V5a4 4 0 0 1 8 0v2 M5 7h14l1 13H4z M9 11v2 M15 11v2",
+  gems: "M6 3h12l4 6-10 12L2 9z M2 9h20 M9 3l3 6 3-6 M12 9l-2 12 M12 9l2 12",
+  emergency: "M12 3l9 4v5c0 5-4 8-9 9-5-1-9-4-9-9V7z M12 8v6 M9 11h6",
+  swags: "M8 4h8l4 4-3 2-1-1v11H8V9L7 10 4 8z",
+  creator: "M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8z M4 21a8 8 0 0 1 16 0",
+  terms: "M6 3h9l4 4v14H6z M15 3v4h4 M9 12h6 M9 16h6",
+  credits: "M12 3l2.6 5.5 6 .8-4.4 4.2 1.1 6-5.3-2.9L6.7 19.5l1.1-6L3.4 9.3l6-.8z",
+};
+export function NavIcon({ id, size = 18 }: { id: string; size?: number }) {
+  const d = NAV_PATHS[id];
+  if (!d) return null;
+  return (
+    <svg className="nav-icon" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d={d} />
+    </svg>
+  );
+}

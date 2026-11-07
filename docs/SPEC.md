@@ -19,8 +19,11 @@ Project Altitude is a rider's field guide to **Ladakh and Himachal Pradesh**, bu
 
 **Hubs:** Leh, Manali and Chandigarh are drawn larger than other places and always shown.
 
+### Left panel (`Sidebar.tsx`, `NavIcon` in `icons.tsx`)
+The flags on the top edge; the brand row with the theme toggle beside the logo; then the sections, each with a small uppercase label and icon-and-word rows of 36 px (one stroke glyph per tab on the 24-px grid). The open page sits on a soft pill; hovering lifts a row the same way. At the bottom, the creator's own row (his portrait as a 34 px circle, name, "Meet the creator") and T&C · Credits in small print. The phone drawer is the same panel with a close button.
+
 ### Screen layout
-- **Desktop:** three columns. The nav rail is 214 px, the reading panel takes what is left, and the map takes 50% of the width. Defined in `.app` in `src/styles/app.css`. **Full map:** the "Full map view" pill in the map's bottom-right corner makes the map take the whole window; in that mode it reads "Detailed view" (`.app.full`: the nav and the reading panel are hidden, the map column fills the grid); the pill again, Escape, or opening a full entry brings the guide back. North is always up; there is no compass. The map keeps its state, since it is the same component resized.
+- **Desktop:** three columns. The nav rail is 232 px (208 px on a laptop), the reading panel takes what is left, and the map takes 50% of the width. Defined in `.app` in `src/styles/app.css`. **Full map:** the "Full map view" pill in the map's bottom-right corner makes the map take the whole window; in that mode it reads "Detailed view" (`.app.full`: the nav and the reading panel are hidden, the map column fills the grid); the pill again, Escape, or opening a full entry brings the guide back. North is always up; there is no compass. The map keeps its state, since it is the same component resized.
 - **Below 900 px:** a top bar (logo, title, theme toggle, menu) shows one view at a time. A floating **Guide / Map** switch sits at the bottom, and the menu opens as a drawer.
 
 ### Content rules
@@ -247,6 +250,9 @@ All photographs are the creator's own, from the ride: the shared Google Photos a
 - **Manifest:** `src/content/photos.json`, generated. For each place id: file paths, the album URL, size, date and caption.
 - **Selection:** `scripts/photo-selection.json`. For each key, the album items (Google media id, URL, size, time) with captions. Keys are place ids, dish ids (`dish-momo`…), and `story` and `creator` for those pages.
 - **In the app:** `photosFor(id)` returns a place's photos. `PlacePhoto` shows the lead photo (or the one at `index`); a click opens `Lightbox` (full screen; with several photos it has arrows, swipe, thumbnails, Esc). A place without a photo shows no image: nothing is borrowed from other sites.
+- **Crops follow the subject.** `scripts/photos.py build` (or `focus`) stores a focus point per photo (`fx`, `fy`: the centre of the half-width and half-height windows with the most edge energy) and `PlacePhoto` sets it as `object-position`, so a portrait photo cropped to a 16:9 or 72×96 thumbnail keeps the ridge, the building or the person instead of the sky. The lightbox shows the whole photo.
+- **People.** Only the creator appears in the photos; group shots and other people's faces are not used (checked on the review sheets).
+- **The portrait.** `public/photos/portrait-1.jpg` (and `-s.jpg`) is the creator's own professional photo, not from the album; it is marked `local` in the selection, carried as a data URI in the manifest so the single-file page has it, and used as the Meet the Creator hero and the nav's creator row.
 - **One photo per place.** The creator's rule: a place gets one picture, two at most. First choice is a landscape of the place, or the creator in riding gear in front of it; only when neither exists, something else (a sign, a statue, a building). The card crops to 16:9 (centre), so prefer photos that survive that crop; portrait rider shots work when the helmet and flag sit in the middle third.
 - **Single-file page:** it cannot carry the images, so it loads the same pictures from the album (`=w1600-h1600-no`). That needs the album to stay shared by link.
 
@@ -322,7 +328,7 @@ The reading panel separates things by colour, not by lines: the panel is `--pane
 | About | A note (one photo, a letter, the numbers), Start here (three moves, a real card, the one rule), Map legend |
 | Guide | **Circuits** (the four circuit cards; no summary table), Villages, Passes, **On the Road** (getting there, where to stay, what to eat, as three sections; `#commute`, `#stays` and `#food` open it at the section), **Gear Up** (the packing lists, motorcycle essentials included; `#packing` opens it), **Hidden gems**, Emergency |
 | Shop | Swags |
-| Footer | Meet the Creator (who he is, and the story of the ride: `#story` opens it); then T&C · Credits on one line |
+| Footer | The creator's row (portrait, name, "Meet the creator"; `#story` opens the same page at the story); then T&C · Credits in small print |
 
 - **Place cards:**
   - Circuit dots, then the type icon, at the right of the header. No open/close indicator: the whole header is the toggle.
