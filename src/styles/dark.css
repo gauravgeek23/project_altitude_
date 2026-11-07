@@ -97,12 +97,11 @@
 /* a soft cross-fade when the theme is switched */
 :root.theme-switching *, :root.theme-switching *::before { transition: background-color .3s ease, color .3s ease, border-color .3s ease, fill .3s ease, stroke .3s ease !important; }
 /* the toggle */
-.theme-btn { display: inline-flex; align-items: center; gap: 8px; height: 30px; padding: 0 10px 0 8px; border-radius: 999px; border: 1px solid var(--rule); background: var(--card); color: var(--grey); font-size: 12.5px; cursor: pointer; transition: color .15s, border-color .15s; }
-.theme-btn:hover { color: var(--ink); border-color: var(--grey); }
+.theme-btn { display: inline-grid; place-items: center; width: 36px; height: 36px; padding: 0; border-radius: 10px; border: 0; background: var(--soft); color: var(--grey); cursor: pointer; transition: color .15s, background .15s; }
+.theme-btn:hover { color: var(--ink); }
 .theme-btn svg { transition: transform .5s cubic-bezier(.2,.8,.2,1); }
 .theme-btn:hover svg { transform: rotate(-25deg); }
-.topbar .theme-btn { padding: 0; width: 36px; justify-content: center; border: 0; background: none; }
-.topbar .theme-btn span { display: none; 
+.topbar .theme-btn { background: none; }
 /* the terrain map has a dark face in dark mode; the satellite sources (Esri, Sentinel-2, Blue Marble) look the same in both themes */
 :root:not([data-theme="light"]) .map-area:not(.sat) { --casing: #0b0d10; --halo: rgba(8,9,12,.85); --road: #5c626b; --road-strong: #8a9099; --river: #3d6489; --boundary: #e9ebef; --muted: #8a9099; }
 :root:not([data-theme="light"]) .map-area:not(.sat) .base > image { filter: invert(1) hue-rotate(180deg) brightness(.72) contrast(1.18) saturate(.55); }

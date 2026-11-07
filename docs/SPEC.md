@@ -292,7 +292,7 @@ The reading panel separates things by colour, not by lines: the panel is `--pane
 - `index.html` links the icons and sets Open Graph tags; `og:image` needs an absolute URL: `vite.config.ts` fills in `VITE_SITE_URL`, which defaults to `https://project-altitude.vercel.app`; set it in Vercel to the real domain.
 
 ### Dark mode
-- **Toggle:** in the nav footer, and in the mobile top bar.
+- **Toggle:** an icon-only button (a moon in light mode, a sun in dark) at the foot of the nav, and in the mobile top bar; the words are in its tooltip and label only.
 - **Default:** follows the system until the reader picks a theme. The pick is saved in `localStorage` (`altitude-theme`), and `index.html` applies it before the first paint.
 - **Only the terrain map is themed.** In dark mode the relief is inverted and darkened, with boundaries, roads, rivers, city, state and country names, peak names and tags adjusted (`dark.css`, scoped to `.map-area:not(.sat)`). Every satellite source (Esri, Sentinel-2, NASA Blue Marble, MapTiler, Mapbox, Google) looks the same in both themes. The floating controls, the search row and the place card follow the theme in either case.
 
