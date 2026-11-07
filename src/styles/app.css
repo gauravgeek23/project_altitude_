@@ -37,7 +37,7 @@ a { color: inherit; }
 .sidebar { display: flex; flex-direction: column; justify-content: space-between; gap: 24px; padding: 40px 16px 20px; height: 100%; overflow-y: auto; background: var(--paper); }
 .sidebar-top { display: flex; flex-direction: column; gap: 22px; }
 .sidebar-head { display: flex; align-items: center; justify-content: space-between; padding: 0 8px; }
-.head-tools { display: flex; align-items: center; gap: 4px; }
+.nav-theme { padding: 6px 10px 0; }
 .nav-group { display: flex; flex-direction: column; gap: 6px; }
 .nav-title { margin: 0; padding: 0 12px; font-size: 11px; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: var(--grey); }
 .sidebar ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px; }

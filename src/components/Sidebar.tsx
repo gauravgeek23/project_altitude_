@@ -11,7 +11,7 @@ interface Props {
   /** the mobile drawer shows a close button */
   variant?: "rail" | "drawer";
   onClose?(): void;
-  /** the theme toggle, shown in the brand row */
+  /** the theme toggle, at the foot of the panel */
   footer?: ReactNode;
 }
 
@@ -34,10 +34,7 @@ export function Sidebar({ tab, onTab, variant = "rail", onClose, footer }: Props
         <div className="flags-rail" aria-hidden="true"><PrayerFlags /></div>
         <div className="sidebar-head">
           <a href="#note" onClick={(e) => { e.preventDefault(); onTab("note"); }} aria-label="Project Altitude, home"><Logo /></a>
-          <span className="head-tools">
-            {footer}
-            {variant === "drawer" && <button type="button" className="icon-btn" onClick={onClose} aria-label="Close menu">✕</button>}
-          </span>
+          {variant === "drawer" && <button type="button" className="icon-btn" onClick={onClose} aria-label="Close menu">✕</button>}
         </div>
         {NAV.map((g) => (
           <div key={g.group} className="nav-group">
@@ -56,6 +53,7 @@ export function Sidebar({ tab, onTab, variant = "rail", onClose, footer }: Props
           <span key={i.id}>{k > 0 && <span className="nav-dot" aria-hidden="true">·</span>}
             <a href={`#${i.id}`} className={"nav-link" + (tab === i.id ? " active" : "")} onClick={(e) => { e.preventDefault(); onTab(i.id); }}>{i.label}</a></span>
         ))}</p>
+        {footer && <div className="nav-theme">{footer}</div>}
       </div>
     </nav>
   );
