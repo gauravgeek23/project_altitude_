@@ -401,7 +401,7 @@ function Gear() {
       <div className="seg" role="tablist" aria-label="Packing list">
         {LISTS.map((l) => <button key={l.id} role="tab" aria-selected={list === l.id} onClick={() => setList(l.id)}>{l.label}</button>)}
       </div>
-      <div className="progress" role="progressbar" aria-valuemin={0} aria-valuemax={total} aria-valuenow={has.size} aria-label="Packed"><span style={{ width: `${(has.size / total) * 100}%` }} /></div>
+      <div className="progress" role="progressbar" aria-valuemin={0} aria-valuemax={total} aria-valuenow={has.size} aria-label="Packed"><span style={{ transform: `scaleX(${total ? has.size / total : 0})` }} /></div>
       <p className="count-line">{has.size} of {total} packed for {LISTS.find((l) => l.id === list)?.label} {has.size > 0 && <button type="button" className="text-btn" onClick={() => setDone([])}>Reset this list</button>}</p>
       <div className="pack-groups">
         {G.PACKING.map((g) => (

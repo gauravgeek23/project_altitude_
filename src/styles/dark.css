@@ -99,8 +99,8 @@
 /* the toggle */
 .theme-btn { display: inline-grid; place-items: center; width: 36px; height: 36px; padding: 0; border-radius: 10px; border: 0; background: var(--soft); color: var(--grey); cursor: pointer; transition: color .15s, background .15s; }
 .theme-btn:hover { color: var(--ink); }
-.theme-btn svg { transition: transform .5s cubic-bezier(.2,.8,.2,1); }
-.theme-btn:hover svg { transform: rotate(-25deg); }
+.theme-btn svg { transition: transform 300ms var(--ease-out); }
+@media (hover: hover) and (pointer: fine) { .theme-btn:hover svg { transform: rotate(-25deg); } }
 .topbar .theme-btn { background: none; }
 /* the terrain map has a dark face in dark mode; the satellite sources (Esri, Sentinel-2, Blue Marble) look the same in both themes */
 @media (prefers-color-scheme: dark) {

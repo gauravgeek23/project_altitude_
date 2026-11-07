@@ -296,6 +296,14 @@ The reading panel separates things by colour, not by lines: the panel is `--pane
 - **Default:** follows the system until the reader picks a theme. The pick is saved in `localStorage` (`altitude-theme`), and `index.html` applies it before the first paint.
 - **Only the terrain map is themed.** In dark mode the relief is inverted and darkened, with boundaries, roads, rivers, city, state and country names, peak names and tags adjusted (`dark.css`, scoped to `.map-area:not(.sat)`). Every satellite source (Esri, Sentinel-2, NASA Blue Marble, MapTiler, Mapbox, Google) looks the same in both themes. The floating controls, the search row and the place card follow the theme in either case.
 
+### Motion
+Rules follow Emil Kowalski's design-engineering skills (github.com/emilkowalski/skills), applied where they fit a field guide:
+- **Tokens** in `:root`: `--ease-out` (0.23, 1, 0.32, 1) for anything entering or exiting and for press feedback; `--ease-in-out` (0.77, 0, 0.175, 1) for things that move on screen (the nav pill); `--ease-drawer` (0.32, 0.72, 0, 1) for the phone drawer. No `ease-in`, no `transition: all`, nothing over 300 ms except the one-off map reveal and the card flash.
+- **Press feedback** on every pressable: `transform: scale(0.95–0.985)` on `:active`, 160 ms. **Hover motion is gated** behind `(hover: hover) and (pointer: fine)` so a tap never leaves a stuck hover.
+- **Entrances** use `@starting-style` transitions, not keyframes: the Filters panel and the search results scale from their trigger (top right / top left, 0.96 → 1, 180 ms), the docked map card rises 8 px, a circuit card's body fades in; the phone drawer slides in on the drawer curve and slides back out the same way before it unmounts (`.closing`). The tab content is a 160 ms opacity crossfade only. The nav highlight is one pill that slides between rows (220 ms ease-in-out).
+- **Only `transform` and `opacity` animate** (the packing progress bar is a `scaleX`, not a width). Reduced motion keeps the fades and drops the movement.
+- **Phone basics**: no tap highlight, `touch-action: manipulation` on pressables, 16 px inputs on coarse pointers (no zoom), `overscroll-behavior-y: none`, `theme-color` per colour scheme.
+
 ### Icon language (`src/components/icons.tsx`)
 - **Glyphs:** village (house), town (gabled hall), pass (saddle with flag), peak (summit with snow line), lake (waves), landmark (pin with star), food (fork and knife).
 - **Grid:** 24 px, 2 px round strokes.

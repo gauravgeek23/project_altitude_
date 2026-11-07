@@ -20,6 +20,9 @@ export default function App() {
   const [circuit, setCircuit] = useState<CircuitId | null>(null);
   const [view, setView] = useState<"guide" | "map">("guide");
   const [drawer, setDrawer] = useState(false);
+  // the drawer slides out before it unmounts: the same path it came in on
+  const [closing, setClosing] = useState(false);
+  const closeDrawer = () => { if (!drawer || closing) return; setClosing(true); setTimeout(() => { setDrawer(false); setClosing(false); }, 250); };
   // the full map: the map column takes the whole window; Escape or the same button brings the guide back
   const [full, setFull] = useState(false);
   const content = useRef<HTMLElement>(null);
@@ -34,14 +37,14 @@ export default function App() {
   useEffect(() => { content.current?.scrollTo({ top: 0 }); if (mobile()) scrollTo({ top: 0 }); }, [tab]);
   useEffect(() => {
     if (!drawer) return;
-    const k = (e: KeyboardEvent) => e.key === "Escape" && setDrawer(false);
+    const k = (e: KeyboardEvent) => e.key === "Escape" && closeDrawer();
     addEventListener("keydown", k);
     return () => removeEventListener("keydown", k);
   }, [drawer]);
 
   const go = (id: TabId) => {
     if (location.hash.slice(1) !== id) history.pushState(null, "", `#${id}`);
-    setTab(id); setDrawer(false); setView("guide");
+    setTab(id); closeDrawer(); setView("guide");
   };
   useEffect(() => {
     if (!full) return;
@@ -67,9 +70,9 @@ export default function App() {
 
       <Sidebar tab={tab} onTab={go} footer={<ThemeToggle theme={theme} onToggle={toggleTheme} />} />
       {drawer && (
-        <div className="drawer-wrap" onClick={() => setDrawer(false)}>
+        <div className={"drawer-wrap" + (closing ? " closing" : "")} onClick={() => closeDrawer()}>
           <div className="drawer" role="dialog" aria-modal="true" aria-label="Menu" onClick={(e) => e.stopPropagation()}>
-            <Sidebar tab={tab} onTab={go} variant="drawer" onClose={() => setDrawer(false)} />
+            <Sidebar tab={tab} onTab={go} variant="drawer" onClose={() => closeDrawer()} />
           </div>
         </div>
       )}

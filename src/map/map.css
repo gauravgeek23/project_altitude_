@@ -28,7 +28,7 @@
 /* places */
 .loc { cursor: pointer; outline: none; }
 .loc .target { fill: transparent; }
-.loc .dot, .loc .ring, .loc .label { transform-box: fill-box; transform-origin: center; transition: transform .18s cubic-bezier(.2,.8,.2,1), opacity .18s ease, fill .18s ease, stroke .18s ease; }
+.loc .dot, .loc .ring, .loc .label { transform-box: fill-box; transform-origin: center; transition: transform .18s var(--ease-out), opacity .18s ease, fill .18s ease, stroke .18s ease; }
 .loc .dot { fill: #ffffff; stroke: var(--tag-ink); stroke-width: 1.6; }
 .loc .ring { fill: none; stroke: var(--tag-ink); stroke-width: 1.5; opacity: 0; transform: scale(.5); }
 .loc .label rect { fill: var(--town); stroke: rgba(0,0,0,.14); stroke-width: .75; filter: url(#tag-shadow); transition: fill .18s ease, filter .18s ease; }
@@ -74,7 +74,7 @@
 .loc.selected.peak .label text { fill: #fff; }
 .loc.selected.peak .label .map-icon { stroke: #fff; }
 /* places revealed by zooming fade in */
-.loc { animation: loc-in .55s cubic-bezier(.2,.7,.2,1) both; }
+.loc { animation: loc-in .55s var(--ease-out) both; }
 @keyframes loc-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 @media (prefers-reduced-motion: reduce) { .loc { animation: none; } }
 
@@ -101,11 +101,11 @@
 
 /* controls */
 .map-controls { position: absolute; top: max(14px, env(safe-area-inset-top, 0px)); right: 14px; display: flex; flex-direction: column; gap: 6px; }
-.map-controls button { width: 36px; height: 36px; border: 1px solid var(--rule); background: var(--card); border-radius: 8px; font-size: 18px; line-height: 1; cursor: pointer; color: var(--ink);
+.map-controls button { width: 36px; height: 36px; border: 0; box-shadow: 0 1px 3px rgba(0,0,0,.12), 0 0 0 1px rgba(0,0,0,.06); background: var(--card); border-radius: 8px; font-size: 18px; line-height: 1; cursor: pointer; color: var(--ink);
   box-shadow: 0 1px 2px rgba(0,0,0,.06); }
 .map-controls button.reset, .map-controls button.sat { display: grid; place-items: center; padding: 0; }
-.map-controls button.reset svg { transition: transform .45s cubic-bezier(.2,.8,.2,1); }
-.map-controls button.reset:hover svg { transform: rotate(-180deg); }
+.map-controls button.reset svg { transition: transform 300ms var(--ease-out); }
+@media (hover: hover) and (pointer: fine) { .map-controls button.reset:hover svg { transform: rotate(-180deg); } }
 .map-controls button.sat.on { background: var(--ink); color: var(--on-ink); border-color: var(--ink); }
 /* on satellite imagery, lines and boundaries need more contrast */
 .on-satellite .road { opacity: .35; }
@@ -143,7 +143,7 @@
 .map-col .map-area.sat .states text, .map-col .map-area.sat .countries text { fill: #ffffff; stroke: rgba(0,0,0,.6); opacity: .9; }
 
 /* monasteries: an icon on its own; the name on hover, the card on a click */
-.loc.monastery .badge { fill: #ffffff; stroke: #8a1f3f; stroke-width: 1.4; filter: url(#tag-shadow); transform-box: fill-box; transform-origin: center; transition: transform .18s cubic-bezier(.2,.8,.2,1), fill .18s ease; }
+.loc.monastery .badge { fill: #ffffff; stroke: #8a1f3f; stroke-width: 1.4; filter: url(#tag-shadow); transform-box: fill-box; transform-origin: center; transition: transform .18s var(--ease-out), fill .18s ease; }
 .loc.monastery > .map-icon { fill: none; stroke: #8a1f3f; stroke-width: 2.1; stroke-linecap: round; stroke-linejoin: round; pointer-events: none; transition: stroke .18s ease; }
 .loc.monastery:hover .badge, .loc.monastery:focus-visible .badge { transform: scale(1.22); }
 .loc.monastery.selected .badge { fill: #8a1f3f; }

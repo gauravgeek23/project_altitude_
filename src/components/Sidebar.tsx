@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, type ReactNode } from "react";
 import { FOOTER_PAIR, NAV, type TabId } from "../nav";
 import { Logo } from "./Logo";
 import { NavIcon } from "./icons";
@@ -22,6 +22,23 @@ interface Props {
  */
 export function Sidebar({ tab, onTab, variant = "rail", onClose, footer }: Props) {
   const portrait = photosFor("portrait")[0];
+  // the highlight is one pill that slides to the open page's row (on screen → ease-in-out); placed instantly on the first paint
+  const groups = useRef<HTMLDivElement>(null);
+  const [pill, setPill] = useState<{ y: number; h: number } | null>(null);
+  const [ready, setReady] = useState(false);
+  useLayoutEffect(() => {
+    const place = () => {
+      const wrap = groups.current, a = wrap?.querySelector<HTMLElement>(".nav-item.active");
+      if (!wrap || !a) return setPill(null);
+      const w = wrap.getBoundingClientRect(), r = a.getBoundingClientRect();
+      setPill({ y: r.top - w.top, h: r.height });
+    };
+    place();
+    const ro = new ResizeObserver(place);
+    if (groups.current) ro.observe(groups.current);
+    return () => ro.disconnect();
+  }, [tab]);
+  useEffect(() => { const id = requestAnimationFrame(() => setReady(true)); return () => cancelAnimationFrame(id); }, []);
   const Row = ({ id, label }: { id: TabId; label: string }) => (
     <li>
       <a href={`#${id}`} className={"nav-item" + (tab === id ? " active" : "")} aria-current={tab === id ? "page" : undefined}
@@ -36,12 +53,15 @@ export function Sidebar({ tab, onTab, variant = "rail", onClose, footer }: Props
           <a href="#note" onClick={(e) => { e.preventDefault(); onTab("note"); }} aria-label="Project Altitude, home"><Logo /></a>
           {variant === "drawer" && <button type="button" className="icon-btn" onClick={onClose} aria-label="Close menu">✕</button>}
         </div>
-        {NAV.map((g) => (
-          <div key={g.group} className="nav-group">
-            <p className="nav-title">{g.group}</p>
-            <ul>{g.items.map((i) => <Row key={i.id} {...i} />)}</ul>
-          </div>
-        ))}
+        <div className="nav-groups" ref={groups}>
+          {pill && <span className={"nav-pill" + (ready ? "" : " instant")} style={{ transform: `translateY(${pill.y}px)`, height: pill.h }} aria-hidden="true" />}
+          {NAV.map((g) => (
+            <div key={g.group} className="nav-group">
+              <p className="nav-title">{g.group}</p>
+              <ul>{g.items.map((i) => <Row key={i.id} {...i} />)}</ul>
+            </div>
+          ))}
+        </div>
       </div>
       <div className="nav-bottom">
         <a href="#creator" className={"nav-creator" + (tab === "creator" ? " active" : "")} aria-current={tab === "creator" ? "page" : undefined}
