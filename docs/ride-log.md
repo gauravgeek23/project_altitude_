@@ -137,3 +137,20 @@ Leh–Zangla–Leh ride on the new highway as its last leg.
 10. Spellings to confirm: Duktuk Hotel, Razabe Turtuk Bridge, Warshi (on the Siachen road).
 11. The bridge / junction between Jalori Pass and Kalpa where the Shimla highway meets the road.
 12. "Ka village" between Nako and Gue: which village.
+
+## What is needed from Gaurav, and where it goes
+| # | Needed | Where it lands |
+|---|---|---|
+| A | Padum hotel name | Hidden gems → a "Stay" card under Zanskar (`GEMS.list` in `src/content/guide.ts`); the Padum card's fuel/stay line |
+| B | Kalpa B&B name | the existing "The B&B in Kalpa" gem (title) |
+| C | Karzok hosts' names (optional) | the "A cabin in Karzok" gem |
+| D | Leh: restaurants and places nearby | gems under Zanskar/Changthang with place `leh`, categories Restaurant / Café / Heritage; On the Road → Eat section "Handpicked places" |
+| E | Where he slept on 20 Aug (Karzok → Manali) | Changthang day 5–6 in `CIRCUITS`; a Stay gem if worth it |
+| F | Spellings: Duktuk Hotel, Razabe Turtuk Bridge, Warshi; "Ka village"; the Jalori–Kalpa junction | the Turtuk gems; the Nubra day 7 text; the Spiti sequence |
+| G | Diskit statue: old king or Maitreya | the "Diskit Monastery and the great statue" gem |
+| H | Prices he remembers (rooms, the ₹50 spring, fuel) | the place cards' practical facts (`FACTS` in `src/content/facts.ts`), status `sourced`/`editorial` |
+| I | Restaurants/cafés anywhere else (Kargil, Leh, Kaza…) | gems, category Restaurant; On the Road → Eat |
+| J | Bike: model, mods, luggage, what broke, service points | Gear Up → "The bike" section (`PACKING`/`COMMUTE.bike` in `guide.ts`) |
+| K | Permits he actually needed, and where he got them | On the Road → Getting there; Emergency |
+| L | A portfolio link and contact | Meet the Creator (`CREATOR` in `guide.ts`) |
+| M | Swag ideas / products | Swags page (`SWAGS` in `guide.ts`) |
