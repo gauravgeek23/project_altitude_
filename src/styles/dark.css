@@ -103,6 +103,7 @@
 .theme-btn:hover svg { transform: rotate(-25deg); }
 .topbar .theme-btn { background: none; }
 /* the terrain map has a dark face in dark mode; the satellite sources (Esri, Sentinel-2, Blue Marble) look the same in both themes */
+@media (prefers-color-scheme: dark) {
 :root:not([data-theme="light"]) .map-area:not(.sat) { --casing: #0b0d10; --halo: rgba(8,9,12,.85); --road: #5c626b; --road-strong: #8a9099; --river: #3d6489; --boundary: #e9ebef; --muted: #8a9099; }
 :root:not([data-theme="light"]) .map-area:not(.sat) .base > image { filter: invert(1) hue-rotate(180deg) brightness(.72) contrast(1.18) saturate(.55); }
 :root:not([data-theme="light"]) .map-area:not(.sat) .boundary.state { stroke: #8a929c; }
