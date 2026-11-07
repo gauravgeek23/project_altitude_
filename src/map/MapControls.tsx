@@ -24,12 +24,14 @@ export function MapControls({ onZoomIn, onZoomOut, onReset, kmPerPx, satellite, 
         <button type="button" onClick={onReset} aria-label="Reset view" title="Reset view" className="reset"><RefreshIcon size={17} /></button>
         <button type="button" onClick={onSatellite} aria-pressed={satellite} title={satellite ? "Show terrain" : "Show satellite view"}
           aria-label={satellite ? "Show terrain" : "Show satellite view"} className={"sat" + (satellite ? " on" : "")}><SatelliteIcon size={17} /></button>
-        <button type="button" onClick={onFull} aria-pressed={full} title={full ? "Back to the guide (Esc)" : "Full map"} aria-label={full ? "Back to the guide" : "Full map"} className={"full" + (full ? " on" : "")}><ExpandIcon size={17} on={full} /></button>
       </div>
       <div className="scale-bar" aria-label={`Scale: bar is ${km} km`}>
         <span style={{ width: `${km / kmPerPx}px` }} />
         <b>{km} km</b>
       </div>
+      <button type="button" className={"full-pill" + (full ? " on" : "")} onClick={onFull} aria-pressed={full} title={full ? "Back to the guide (Esc)" : "The map on the whole screen"}>
+        <ExpandIcon size={16} on={full} />{full ? "Detailed view" : "Full map view"}
+      </button>
     </>
   );
 }

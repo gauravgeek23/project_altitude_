@@ -175,7 +175,11 @@ fieldset.card legend .meta { margin: 0; }
   .app.full { grid-template-columns: minmax(0, 1fr); }
   .app.full .sidebar, .app.full .content { display: none; }
 }
-@media (max-width: 899px) { .map-controls button.full { display: none; } }
+/* the full-map pill, bottom right: words and an icon; hidden on phones */
+.full-pill { position: absolute; right: 14px; bottom: 14px; z-index: 4; display: inline-flex; align-items: center; gap: 8px; height: 36px; padding: 0 14px 0 12px; border: 0; border-radius: 999px; background: var(--ink); color: var(--on-ink); font-size: 13px; font-weight: 500; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,.22); transition: transform .15s, box-shadow .15s; }
+.full-pill:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,.26); }
+.full-pill.on { background: var(--card); color: var(--ink); box-shadow: 0 1px 3px rgba(0,0,0,.14), 0 0 0 1px rgba(0,0,0,.06); }
+@media (max-width: 899px) { .full-pill { display: none; } }
 .map-panel { position: absolute; inset: 0; overflow: hidden; background: var(--map-bg); touch-action: none; cursor: grab; user-select: none; -webkit-user-select: none; }
 .map-panel:active { cursor: grabbing; }
 .map-stage { position: absolute; left: 50%; top: 50%; transform-origin: center; }
@@ -438,8 +442,6 @@ fieldset.card legend .meta { margin: 0; }
 .legend-fade { opacity: .45; }
 .legend-chip { display: inline-block; padding: 2px 10px; border-radius: 999px; background: var(--soft); color: var(--grey); font-size: 12.5px; line-height: 22px; }
 .legend-key { display: inline-grid; place-items: center; min-width: 36px; height: 32px; padding: 0 8px; border-radius: 8px; border: 0; background: var(--card); color: var(--ink); font-size: 13px; font-weight: 500; }
-.legend-key.compass-key { border-radius: 50%; width: 34px; padding: 0; background: none; }
-.legend-key.compass-key svg { display: block; }
 .legend-area { display: block; width: 64px; height: 28px; border-radius: 6px; border: 1.2px dashed #7d838d; }
 .legend-area.ladakh { background: rgba(196, 128, 32, .16); }
 .legend-area.himachal { background: rgba(34, 128, 74, .16); }

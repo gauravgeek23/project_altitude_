@@ -81,7 +81,7 @@ export function LocationMarkers({ region, project, transform, size, selected, ac
   }
 
   // keep labels clear of the scale bar (bottom left), the zoom buttons (top right), the search box and the circuit bar
-  const reserved: Box[] = [[0, size.h - 62, 190, size.h], [size.w - 72, 0, size.w, 300], [0, 0, Math.min(425, size.w - 64), 104]];
+  const reserved: Box[] = [[0, size.h - 62, 190, size.h], [size.w - 64, 0, size.w, 190], [size.w - 180, size.h - 62, size.w, size.h], [0, 0, Math.min(425, size.w - 64), 104]];
   const placed: Box[] = [...reserved];
   for (const i of [...items].sort((a, b) => b.priority - a.priority)) {
     if (isIcon(i) && i.l.id !== selected) continue;   // icon only: the name shows on hover
