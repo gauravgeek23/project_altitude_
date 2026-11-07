@@ -5,6 +5,7 @@ import "../map/map.css";
 import { Compass } from "../map/MapCanvas";
 import { PlacePhoto } from "./PlacePhoto";
 import { hasPhotos } from "../content/images";
+import { allKinds, onlyKind } from "../map/kinds";
 import type { CircuitId, PlaceRecord, Practical } from "../content/types";
 import * as G from "../content/guide";
 import { REGIONS, DEFAULT_REGION } from "../map/data/regions";
@@ -15,6 +16,9 @@ export interface TabProps {
   onPlace(id: string): void;
   onCircuit(id: CircuitId | null): void;
   onTab(id: TabId): void;
+  /** the kinds of place the map shows, and a way to set them */
+  mapKinds: Set<string>;
+  onMapKinds(k: Set<string>): void;
 }
 
 /* ------------------------------------------------------------------ shared helpers */
@@ -258,12 +262,22 @@ function Ladder({ onPlace }: { onPlace(id: string): void }) {
     </Section>
   );
 }
-function Passes({ selected, onPlace }: TabProps) {
+function Passes({ selected, onPlace, mapKinds, onMapKinds }: TabProps) {
+  // "Passes only on the map": the map's filter narrowed to passes while this page is open; restored on leaving
+  const only = onlyKind(mapKinds, "pass");
+  const onlyRef = useRef(only); onlyRef.current = only;
+  useEffect(() => () => { if (onlyRef.current) onMapKinds(allKinds()); }, []);
   return (
     <>
       <Head title="The passes that define the ride">
         <p className="lead">High passes are the backbone of Project Altitude. Official elevations are shown only once verified; until then, the card gives the terrain model's reading, in metres and feet, clearly marked.</p>
       </Head>
+      <div className="map-switch">
+        <button type="button" className={"chip" + (only ? " on" : "")} aria-pressed={only} onClick={() => onMapKinds(only ? allKinds() : new Set(["pass"]))}>
+          <PlaceIcon kind="pass" size={14} />{only ? "Showing passes only on the map" : "Passes only on the map"}
+        </button>
+        {only && <button type="button" className="text-btn" onClick={() => onMapKinds(allKinds())}>Show everything</button>}
+      </div>
       <Ladder onPlace={onPlace} />
       <p className="callout"><b>Road status: unknown here.</b> Nothing on this page is live. Check official advisories for the current status of every pass before you ride it.</p>
       <Directory records={PASSES} selected={selected} onPlace={onPlace} label="passes" />

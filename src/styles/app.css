@@ -5,7 +5,7 @@
   --ink: #2d2d2d;          /* --black in the Figma file */
   --grey: #6f7883;         /* --grey/1 */
   --paper: #ffffff;
-  --panel: #f8f9fb;        /* the reading panel: a whisper of grey behind the white cards */
+  --panel: #fbfbfc;        /* the reading panel: a whisper of grey behind the white cards */
   --rule: #e4e7eb;
   --card: #ffffff;
   --soft: #e9ebef;
@@ -535,6 +535,8 @@ fieldset.card legend .meta { margin: 0; }
 .group-sub { margin: -4px 0 12px; color: var(--grey); }
 
 /* ---------- passes: the ladder */
+.map-switch { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; margin: 18px 0 -6px; }
+.map-switch .chip { gap: 8px; }
 .ladder { list-style: none; margin: 10px 0 0; padding: 0; display: grid; gap: 5px; }
 .ladder li { display: grid; grid-template-columns: minmax(0, 128px) minmax(0, 1fr) 84px; align-items: center; gap: 10px; }
 .ladder button { text-align: left; background: none; border: 0; padding: 0; font: inherit; color: var(--ink); cursor: pointer; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }

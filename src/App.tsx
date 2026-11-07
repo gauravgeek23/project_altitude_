@@ -6,6 +6,7 @@ import { BY_ID } from "./content/places";
 import { TABS } from "./components/Tabs";
 import { Logo } from "./components/Logo";
 import { ALIASES, isTab, labelOf, type TabId } from "./nav";
+import { allKinds } from "./map/kinds";
 import type { CircuitId } from "./content/places";
 
 const fromHash = (): TabId => { const h = location.hash.slice(1); return isTab(h) ? h : ALIASES[h] ?? "note"; };
@@ -15,6 +16,7 @@ const scrollToAlias = () => { const h = location.hash.slice(1); if (ALIASES[h]) 
 export default function App() {
   const [tab, setTab] = useState<TabId>(fromHash);
   const [selected, setSelected] = useState<string | null>(null);
+  const [kinds, setKinds] = useState<Set<string>>(allKinds);
   const [circuit, setCircuit] = useState<CircuitId | null>(null);
   const [view, setView] = useState<"guide" | "map">("guide");
   const [drawer, setDrawer] = useState(false);
@@ -66,12 +68,12 @@ export default function App() {
 
       <main className="content" ref={content} id="content">
         <div className="content-inner" key={tab}>
-          <Tab selected={selected} onPlace={showOnMap} onCircuit={setCircuit} onTab={go} />
+          <Tab selected={selected} onPlace={showOnMap} onCircuit={setCircuit} onTab={go} mapKinds={kinds} onMapKinds={setKinds} />
         </div>
       </main>
 
       <aside className="map-col" aria-label="Circuit map">
-        <MapPanel selected={selected} circuit={circuit} onCircuit={setCircuit} onSelect={setSelected} onOpenPlace={(id) => { openPlace(id); setView("guide"); }} onEmergency={() => go("emergency")} />
+        <MapPanel kinds={kinds} onKinds={setKinds} selected={selected} circuit={circuit} onCircuit={setCircuit} onSelect={setSelected} onOpenPlace={(id) => { openPlace(id); setView("guide"); }} onEmergency={() => go("emergency")} />
       </aside>
 
       <div className="switcher" role="tablist" aria-label="View">
