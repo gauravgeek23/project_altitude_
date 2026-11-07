@@ -12,7 +12,10 @@ pages and the Gems. Dates in brackets come from the photo album; the rest is as 
 - Hamta Pass: a 6-day trek with the crew; heavy rain, reached the summit; "a great experience to be
   with such great people" (many photos). Then Chandratal. After that, alone [album starts 17 Jul].
 
-## Circuit 1 — Zanskar (as ridden: Manali → Leh, 29 Jul – 4 Aug)
+## Circuit 1 — Zanskar (as ridden: Manali → Darcha → Padum → Kargil → Lamayuru → Leh, then Leh → Zangla → Leh; 29 Jul – 4 Aug)
+
+The circuit is defined in this direction on the site: it starts in Manali and ends in Leh, with the
+Leh–Zangla–Leh ride on the new highway as its last leg.
 - Manali → Shinku La [29 Jul] → Gonbo Rangjon [29 Jul]: stayed; "magnificent mountain, great local
   people, just a couple of houses".
 - → Phuktal Monastery [30 Jul] (before Padum) → Padum [30 Jul]: a day or two in a specific hotel
