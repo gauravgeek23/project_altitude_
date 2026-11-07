@@ -98,7 +98,31 @@ Leh–Zangla–Leh ride on the new highway as its last leg.
   Gata Loops ("phenomenal"), Suraj Tal ("incredible"), Jispa, Sissu, the Ladakh–Himachal border, the Atal
   Tunnel → Manali [21 Aug]. End of circuit 3.
 
-## Circuit 4: to come (Spiti, 22–31 Aug per the album)
+## Circuit 4 — Spiti (as ridden: Manali → Jibhi → Jalori Pass → Kalpa → Nako → Gue → Tabo → Kaza → Chitkul → Narkanda → Shimla → Chandigarh → Delhi; 21/22–31 Aug)
+- Manali → back onto the Delhi–Manali highway, then off it onto the inner road to Jibhi [22 Aug]. Wet in the
+  last ten minutes of the ride in, so an extra day: 2 days in Jibhi, everything washed and dried, good food,
+  local drinks (passion fruit and other fruit juices).
+- Jibhi → Jalori Pass → down to the lower ground → a bridge where the highway from Shimla meets the road
+  (name to confirm) → Kalpa [23/24 Aug]: 4 days. Third-best stay of the ride: a small B&B, owner away, a key
+  locker for the entry; a village you can walk in half an hour, four days of it under Kinnaur Kailash. One
+  night at Zostel Kalpa: one of the best views in Kalpa, "stay there a week".
+- Kalpa → Nako Lake → "Ka village" (which: confirm) → Gue Monastery [27 Aug]: about 10 km off the main road,
+  20–25 minutes on a rough on-and-off road; the old mummy; phones pick up China's time there. → Tabo
+  Monastery: unlike any other, a different architecture and different deities, the buildings all covered in
+  mud, brownish. → Kaza [27–28 Aug]: 2 days. A day trip: Hikkim, the highest post office in the world (posted
+  a letter to his parents; it never arrived; 20–30% don't, and he was ready for that), Langza (the iconic
+  Buddha), Komic (India's highest village), Key Monastery; a fun ride in bad weather, dusty, windy, sunny
+  and cold at once.
+- The Chandratal/Kunzum road from Kaza to the Atal Tunnel (80–90 km) skipped: the only bad patch left in
+  Spiti, under construction, maybe ready by 2028; and Chandratal had been seen after Hamta. So back down the
+  same road, skipping the villages already stayed in → Chitkul [29 Aug]: the last village of India on the
+  Himachal side; a day or so; really peaceful, really beautiful.
+- Chitkul → Narkanda [30 Aug]: not well after getting wet over the previous days; a day there; "not top
+  three, but for sure top five"; regretted not staying one more day.
+- Narkanda → Shimla: Mashobra, a village close to his heart; Shimla → the four-lane highway to Chandigarh,
+  "so sexy to cruise on a bike" → Chandigarh [31 Aug]: met his sisters → left about 4 pm → Delhi by about
+  10 at night. Project Altitude complete: about 5,200 km, the four valleys of Zanskar, Nubra, Changthang
+  and Spiti.
 
 ## Things Gaurav asked me to remember / ask later
 1. The name of the hotel in Padum.
@@ -107,7 +131,9 @@ Leh–Zangla–Leh ride on the new highway as its last leg.
 4. Leh: the restaurants and places to explore nearby, to list at the end.
 5. ~~The art event at Lamayuru~~ → the Sa Biennale.
 6. Diskit's big statue: he was told it is an old king, not the Buddha; published accounts call it the Maitreya Buddha. Confirm before it goes on a card.
-7. The name of the stay in Kalpa (third-best stay of the ride; "I'll tell you later").
+7. The name of the B&B in Kalpa (third-best stay; the key locker one).
 8. The Karzok cabin: the hosts' names, if he wants them on the card.
 9. Where he slept on 20 Aug, between Karzok and Manali (Jispa? Darcha? Keylong?).
 10. Spellings to confirm: Duktuk Hotel, Razabe Turtuk Bridge, Warshi (on the Siachen road).
+11. The bridge / junction between Jalori Pass and Kalpa where the Shimla highway meets the road.
+12. "Ka village" between Nako and Gue: which village.
