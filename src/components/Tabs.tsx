@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { Fragment, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { ALL_PLACES, BY_ID, CIRCUIT_META, CIRCUIT_ORDER, PASSES, PLACES, PRACTICAL_LABEL, TYPE_LABEL } from "../content/places";
 import { FilterIcon, MapIcon, PlaceIcon, RefreshIcon, SatelliteIcon, type IconKind } from "./icons";
 import "../map/map.css";
@@ -75,18 +75,27 @@ function CircuitChips({ value, onChange, all = true }: { value: CircuitId | "all
 }
 
 /* ------------------------------------------------------------------ About */
+/** a paragraph with **emphasised** runs */
+const Rich = ({ text, className = "para" }: { text: string; className?: string }) => (
+  <p className={className}>{text.split("**").map((part, i) => (i % 2 ? <b key={i}>{part}</b> : <Fragment key={i}>{part}</Fragment>))}</p>
+);
 function Note({ onTab }: TabProps) {
   return (
     <>
       <PlacePhoto id="creator" index={1} alt="At the top of Umling La" caption={false} className="place-photo note-hero" />
-      <Head title={G.NOTE.title}><p className="kicker">{G.NOTE.kicker}</p></Head>
+      <header className="manifesto-head">
+        <p className="what">{G.NOTE.what}</p>
+        <h1 className="manifesto-title">{G.NOTE.name}</h1>
+      </header>
+      <div className="manifesto">{G.NOTE.manifesto.map((t) => <Rich key={t} text={t} className="para manifesto-p" />)}</div>
+      <Stats />
       <div className="letter">
+        <h2 className="letter-title">{G.NOTE.title}</h2>
         <p className="para salute">{G.NOTE.salute}</p>
         <Paras items={G.NOTE.body} />
         <p className="para">{G.NOTE.signoff}</p>
         <p className="sign">— {G.NOTE.signature}</p>
       </div>
-      <Stats />
       <div className="next-links">
         <button type="button" className="text-btn" onClick={() => onTab("circuits")}>Pick a circuit →</button>
         <button type="button" className="text-btn" onClick={() => onTab("how")}>Start here →</button>

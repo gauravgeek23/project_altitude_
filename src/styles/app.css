@@ -463,10 +463,10 @@ fieldset.card legend .meta { margin: 0; }
    colours text ink or grey sets the matching size (generated from the colour rules above).
    Kept as they are: small uppercase labels, badges, chips, photo captions and legend samples. */
 .content { font-size: 16px; line-height: 26px; }
-.content *:not(.eyebrow-sm, .group-title, .badge, .badge *, .stats dt, .facts-grid dt, .type-icon, .type-icon *, figcaption, figcaption *, .legend-svg, .legend-svg *, .legend-key, .legend-key *, .chip, .chip *, .cf, .cf *, .seg button, .legend-chip, .circuit-no, .move-n, .ladder .h, .group-count, .kicker) { font-size: inherit !important; line-height: inherit; }
+.content *:not(.eyebrow-sm, .group-title, .badge, .badge *, .stats dt, .facts-grid dt, .type-icon, .type-icon *, figcaption, figcaption *, .legend-svg, .legend-svg *, .legend-key, .legend-key *, .chip, .chip *, .cf, .cf *, .seg button, .legend-chip, .circuit-no, .move-n, .ladder .h, .group-count, .kicker, .manifesto-title, .what) { font-size: inherit !important; line-height: inherit; }
 .content .chip, .content .seg button, .content .legend-chip { font-size: 13px !important; }
 .content .cf { font-size: 12.5px !important; }
-.content :is(.block p, .bullets, .callout, .card p, .check, .chip, .count-line, .empty, .empty-state, .fine, .form-grid label, .itinerary small, .legend-chip, .legend-row p, .link-list, .meta, .muted, .number small, .numbered .num, .numbered p, .para, .seg button, .steps, .links, .links a, .circuit-stats, .circuit-idea, .chain, .group-sub, .sign, .move-body, .move-go, .salute, .stops li, .table dd, .table small, .tldr p, details.card .summary-text) { font-size: 14px !important; line-height: 22px; }
+.content :is(.block p, .bullets, .callout, .card p, .check, .chip, .count-line, .empty, .empty-state, .fine, .form-grid label, .itinerary small, .legend-chip, .legend-row p, .link-list, .meta, .muted, .number small, .numbered .num, .numbered p, .para, .seg button, .steps, .links, .links a, .manifesto-p, .manifesto-p b, .circuit-stats, .circuit-idea, .chain, .group-sub, .sign, .move-body, .move-go, .salute, .stops li, .table dd, .table small, .tldr p, details.card .summary-text) { font-size: 14px !important; line-height: 22px; }
 .content :is(.block h2, .block h3, .card-title, .coords output, .facts-grid dd, .lead, .lead-sm, .legend-row b, .number .num.text, .number .who b, .numbered h3, .page-title, .place-link, .place-plain, .rule-line, .stats dd, .table dt, .text-btn, .tldr h1, b) { font-size: 16px !important; line-height: 26px; }
 .content .page-title, .content .tldr h1.page-title { font-size: 16px !important; line-height: 26px !important; margin-bottom: 6px; }
 
@@ -506,7 +506,6 @@ fieldset.card legend .meta { margin: 0; }
 
 /* ---------- the note: one photo, a letter, the numbers */
 .note-hero { margin: 0 0 20px; aspect-ratio: 16 / 10; }
-.kicker { margin: 4px 0 0; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: var(--grey); }
 .letter { margin-top: 18px; }
 .letter .salute { color: var(--ink); }
 .sign { margin: 6px 0 0; color: var(--ink); font-weight: 500; }
@@ -561,3 +560,13 @@ fieldset.card legend .meta { margin: 0; }
 .story { margin-top: 8px; }
 .story-title { margin: 26px 0 8px; font-size: 16px; font-weight: 500; color: var(--ink); }
 .chapter-photo { margin: 14px 0 4px; aspect-ratio: 16 / 10; }
+
+/* ---------- the note: "what is" / the name, then the manifesto with its emphasised runs */
+.manifesto-head { margin: 4px 0 18px; }
+.what { margin: 0; font-family: var(--display); font-weight: 700; font-size: 20px; line-height: 1; letter-spacing: -.01em; color: var(--grey); }
+.manifesto-title { margin: 10px 0 0; font-family: var(--display); font-weight: 800; font-size: clamp(34px, 8.5vw, 46px); line-height: 1; letter-spacing: -.02em; text-transform: uppercase; color: var(--ink); }
+.manifesto { display: flex; flex-direction: column; gap: 10px; }
+.manifesto-p { color: var(--grey); line-height: 26px; }
+.manifesto-p b { font-weight: 500; color: var(--ink); font-size: inherit !important; }
+.letter { margin-top: 26px; }
+.letter-title { margin: 0 0 10px; font-size: 16px; font-weight: 500; color: var(--ink); }

@@ -325,7 +325,7 @@ The reading panel separates things by colour, not by lines: the panel is `--pane
 
 | Group | Pages |
 |---|---|
-| About | A note (one photo, a letter, the numbers), Start here (three moves, a real card, the one rule), Map legend |
+| About | A note (the Umling La photo; "what is" over the project's name in large type; the manifesto, four paragraphs with emphasised runs in `**double stars**`; the numbers; a short signed letter), Start here (three moves, a real card, the one rule), Map legend |
 | Guide | **Circuits** (the four circuit cards; no summary table), Villages, Passes, **On the Road** (getting there, where to stay, what to eat, as three sections; `#commute`, `#stays` and `#food` open it at the section), **Gear Up** (the packing lists, motorcycle essentials included; `#packing` opens it), **Hidden gems**, Emergency |
 | Shop | Swags |
 | Footer | The creator's row (portrait, name, "Meet the creator"; `#story` opens the same page at the story); then T&C · Credits in small print |

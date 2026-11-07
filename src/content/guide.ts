@@ -6,10 +6,17 @@ export const EXPEDITION = { km: "5,200 km", passes: "20+", circuits: "4", summit
 /* ------------------------------------------------------------------ A note */
 export const NOTE = {
   title: "A note from the road",
-  kicker: "20+ passes · 4 circuits · 5,200 km",
+  /** the opening: "what is" over the project's name, then the manifesto; **double stars** mark the emphasised runs */
+  what: "what is",
+  name: "Project Altitude",
+  manifesto: [
+    "**5,200 kilometres** through the soaring heartlands of **Ladakh and Himachal.**",
+    "A journey shaped entirely by one **obsession: altitude.** Over **20 high-altitude mountain passes**, each one higher than the last, culminating at the summit of **Umling La at 5,800 metres**.",
+    "Four sweeping circuits through the ancient valleys of **Zanskar**, the windswept dunes of **Nubra**, the vast stillness of **Changthang**, and the sacred corridors of **Spiti**.",
+    "**45 days in the saddle**, rising with every pass, reaching further with every road, growing stronger with every kilometre. This was not simply a ride. **It was the ultimate reckoning with the mountains, the machine, and the self.**",
+  ],
   salute: "Dear rider,",
   body: [
-    "In the summer of 2026 I rode about 5,200 km through Zanskar, Nubra, Changthang and Spiti: seven weeks from India Gate in Delhi to the top of Umling La and back down to Delhi by night. A week in Manali and the Hamta Pass trek first, then the bike. Rain in Lahaul, snow on Khardung La, dust in Spiti, and twenty-odd passes in between.",
     "This guide is everything I wished I had before I left: the four circuits as I actually rode them, the villages, passes and lakes along them, where I slept and ate, what the roads were like, and the small places that made the trip. A kitchen three hundred metres past a footbridge. A hot spring in the middle of a cold desert. A cabin by Tso Moriri with a family of three.",
     "Nothing here is a live report. Roads close, bridges shut, seasons turn, and a village that had a room in August may not in October. Treat these pages as a friend's notes: check the current state of every pass before you set out, carry your permits, and ask the people who live along these roads. They know more than any map.",
   ],
