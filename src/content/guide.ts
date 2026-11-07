@@ -1,7 +1,7 @@
 import type { CircuitId, ContactRecord } from "./types";
 
 /* ------------------------------------------------------------------ expedition facts (creator-supplied) */
-export const EXPEDITION = { km: "5,200 km", passes: "20+ passes", circuits: "4 circuits", summit: "Umling La" };
+export const EXPEDITION = { km: "5,200 km", passes: "20+", circuits: "4", summit: "Umling La" };
 
 /* ------------------------------------------------------------------ A note */
 export const NOTE = {
