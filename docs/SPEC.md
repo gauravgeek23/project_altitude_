@@ -319,10 +319,10 @@ The reading panel separates things by colour, not by lines: the panel is `--pane
 
 | Group | Pages |
 |---|---|
-| About | A note (the note, then the story: `#story` opens the same page), How to use, Map legend |
-| Guide | **Circuits** (the four circuit cards; no summary table), Villages, Passes, **Essentials** (getting there, where to stay, what to eat, as three sections; `#commute`, `#stays` and `#food` open it at the section), **Gear** (the packing lists, motorcycle essentials included; `#packing` opens it), **Hidden gems**, Emergency |
+| About | A note (one photo, a letter, the numbers), Start here (three moves, a real card, the one rule), Map legend |
+| Guide | **Circuits** (the four circuit cards; no summary table), Villages, Passes, **On the Road** (getting there, where to stay, what to eat, as three sections; `#commute`, `#stays` and `#food` open it at the section), **Gear Up** (the packing lists, motorcycle essentials included; `#packing` opens it), **Hidden gems**, Emergency |
 | Shop | Swags |
-| Footer | Meet the Creator; then T&C · Credits on one line |
+| Footer | Meet the Creator (who he is, and the story of the ride: `#story` opens it); then T&C · Credits on one line |
 
 - **Place cards:**
   - Circuit dots, then the type icon, at the right of the header. No open/close indicator: the whole header is the toggle.

@@ -29,10 +29,9 @@ const store = {
   set(k: string, v: unknown) { try { localStorage.setItem(k, JSON.stringify(v)); } catch { /* storage unavailable */ } },
 };
 
-function Head({ eyebrow = "TL;DR", title, children }: { eyebrow?: string; title: string; children?: ReactNode }) {
+function Head({ title, children }: { eyebrow?: string; title: string; children?: ReactNode }) {
   return (
     <header className="tldr">
-      <p className="eyebrow-sm">{eyebrow}</p>
       <h1 className="page-title">{title}</h1>
       {children}
     </header>
@@ -76,21 +75,20 @@ function CircuitChips({ value, onChange, all = true }: { value: CircuitId | "all
 function Note({ onTab }: TabProps) {
   return (
     <>
-      <Head eyebrow="A note" title={G.NOTE.title} />
-      <Paras items={G.NOTE.body} />
-      <Rule>{G.NOTE.signoff}</Rule>
+      <PlacePhoto id="creator" index={1} alt="At the top of Umling La" caption={false} className="place-photo note-hero" />
+      <Head title={G.NOTE.title}><p className="kicker">{G.NOTE.kicker}</p></Head>
+      <div className="letter">
+        <p className="para salute">{G.NOTE.salute}</p>
+        <Paras items={G.NOTE.body} />
+        <p className="para">{G.NOTE.signoff}</p>
+        <p className="sign">— {G.NOTE.signature}</p>
+      </div>
+      <Stats />
       <div className="next-links">
         <button type="button" className="text-btn" onClick={() => onTab("circuits")}>Pick a circuit →</button>
-        <button type="button" className="text-btn" onClick={() => onTab("how")}>How to use this guide →</button>
-        <button type="button" className="text-btn" onClick={() => onTab("emergency")}>Read Emergency first →</button>
+        <button type="button" className="text-btn" onClick={() => onTab("how")}>Start here →</button>
+        <button type="button" className="text-btn" onClick={() => onTab("creator")}>The story of the ride →</button>
       </div>
-      <Section title={G.STORY.title} id="story">
-        <p className="lead">{G.STORY.lead}</p>
-        <Stats />
-        <div className="photo-row three">{[0, 1, 2].map((i) => <PlacePhoto key={i} id="story" alt="From the ride" index={i} />)}</div>
-        <Paras items={G.STORY.body} />
-        <Rule>{G.STORY.signoff}</Rule>
-      </Section>
     </>
   );
 }
@@ -104,17 +102,27 @@ function Stats() {
     </dl>
   );
 }
-function HowTo() {
+function HowTo({ onPlace, onTab }: TabProps) {
   return (
     <>
-      <Head eyebrow="How to use" title={G.HOW_TO.title}><p className="lead">{G.HOW_TO.lead}</p></Head>
-      <ol className="numbered">
-        {G.HOW_TO.steps.map((s) => <li key={s.n}><span className="num">{s.n}</span><div><h3>{s.title}</h3><p>{s.body}</p></div></li>)}
-      </ol>
-      <p className="callout"><b>A quick tip.</b> {G.HOW_TO.tip}</p>
-      <Section title="What the map shows">
-        <p className="para">The coloured lines show the circuits as drawn for exploration. Where a road exists in the map data, the line follows it; elsewhere it follows the circuit map by hand. A line on the map is not a statement that a road is open, safe or permitted today.</p>
+      <Head title={G.HOW_TO.title}><p className="lead">{G.HOW_TO.lead}</p></Head>
+      <div className="moves">
+        {G.HOW_TO.moves.map((m) => (
+          <button key={m.n} type="button" className="move" onClick={() => onTab(m.tab as TabId)}>
+            <PlacePhoto id={m.photo} index={0} alt={m.title} caption={false} interactive={false} className="place-photo move-photo" />
+            <span className="move-text"><span className="move-n">{m.n}</span><span className="move-title">{m.title}</span><span className="move-body">{m.body}</span><span className="move-go">Go →</span></span>
+          </button>
+        ))}
+      </div>
+      <Section title="What a card looks like">
+        <p className="para muted">{G.HOW_TO.card}</p>
+        <div className="cards"><PlaceCard p={BY_ID["turtuk"]} open={false} onPlace={onPlace} /></div>
       </Section>
+      <p className="callout"><b>The one rule.</b> {G.HOW_TO.tip}</p>
+      <div className="next-links">
+        <button type="button" className="text-btn" onClick={() => onTab("legend")}>What the map shows →</button>
+        <button type="button" className="text-btn" onClick={() => onTab("emergency")}>Read Emergency first →</button>
+      </div>
     </>
   );
 }
@@ -193,7 +201,10 @@ function Directory({ records, selected, onPlace, label }: { records: PlaceRecord
   }, [selected]);
   const list = records.filter((p) => (c === "all" || p.circuits.includes(c)) &&
     (!q || (p.name + " " + (p.aka ?? "") + " " + p.region + " " + p.summary).toLowerCase().includes(q.toLowerCase())));
-  const groups = c === "all" ? CIRCUIT_ORDER.map((id) => ({ id, items: list.filter((p) => p.circuits[0] === id) })) : [{ id: c, items: list }];
+  // within a circuit the cards follow the order the places were ridden; places off the ridden line come after, as listed
+  const ridden = (id: CircuitId) => G.CIRCUITS.find((x) => x.id === id)?.stops ?? [];
+  const byRide = (id: CircuitId, items: PlaceRecord[]) => { const r = ridden(id); const ix = (p: PlaceRecord) => { const i = r.indexOf(p.id); return i < 0 ? 999 : i; }; return [...items].sort((x, y) => ix(x) - ix(y)); };
+  const groups = c === "all" ? CIRCUIT_ORDER.map((id) => ({ id, items: byRide(id, list.filter((p) => p.circuits[0] === id)) })) : [{ id: c, items: byRide(c, list) }];
   return (
     <>
       <div className="filters">
@@ -203,7 +214,8 @@ function Directory({ records, selected, onPlace, label }: { records: PlaceRecord
       <p className="count-line">{list.length} {label}</p>
       {groups.map((g) => g.items.length > 0 && (
         <section key={g.id} className="dir-group">
-          <h2 className="group-title" style={{ ["--c" as string]: CIRCUIT_META[g.id].color }}><span className="bar" />{CIRCUIT_META[g.id].name}</h2>
+          <h2 className="group-title" style={{ ["--c" as string]: CIRCUIT_META[g.id].color }}><span className="bar" />{CIRCUIT_META[g.id].name}<span className="group-count">{g.items.length}</span></h2>
+          <p className="group-sub">{CIRCUIT_META[g.id].character}</p>
           <div className="cards">{g.items.map((p) => <PlaceCard key={p.id} p={p} open={p.id === selected} onPlace={onPlace} innerRef={(el) => (refs.current[p.id] = el)} />)}</div>
         </section>
       ))}
@@ -227,12 +239,32 @@ function Villages({ selected, onPlace }: TabProps) {
     </>
   );
 }
+/** every pass as a bar, tallest first: the skyline of the ride in one glance; a click opens the pass */
+function Ladder({ onPlace }: { onPlace(id: string): void }) {
+  const rows = PASSES.map((p) => ({ p, h: p.elevation_m ?? (p.mapId ? terrain[p.mapId] : undefined) })).filter((r): r is { p: PlaceRecord; h: number } => !!r.h).sort((a, b) => b.h - a.h);
+  const top = rows[0]?.h ?? 1, floor = 2600;
+  return (
+    <Section title="The ladder">
+      <p className="para muted">Every pass on the four circuits, tallest first, from the terrain model. Click one to open it.</p>
+      <ol className="ladder">
+        {rows.map(({ p, h }) => (
+          <li key={p.id} style={{ ["--c" as string]: CIRCUIT_META[p.circuits[0]].color, ["--w" as string]: `${Math.round(((h - floor) / (top - floor)) * 100)}%` }}>
+            <button type="button" onClick={() => p.mapId && onPlace(p.mapId)}>{p.name}</button>
+            <span className="bar"><i /></span>
+            <span className="h">≈ {fmt(h)} m</span>
+          </li>
+        ))}
+      </ol>
+    </Section>
+  );
+}
 function Passes({ selected, onPlace }: TabProps) {
   return (
     <>
-      <Head eyebrow="Passes" title="The passes that define the ride">
+      <Head title="The passes that define the ride">
         <p className="lead">High passes are the backbone of Project Altitude. Official elevations are shown only once verified; until then, the card gives the terrain model's reading, in metres and feet, clearly marked.</p>
       </Head>
+      <Ladder onPlace={onPlace} />
       <p className="callout"><b>Road status: unknown here.</b> Nothing on this page is live. Check official advisories for the current status of every pass before you ride it.</p>
       <Directory records={PASSES} selected={selected} onPlace={onPlace} label="passes" />
     </>
@@ -407,29 +439,41 @@ function Circuits({ onPlace, onCircuit }: TabProps) {
   }, [plan]);
   return (
     <>
-      <Head eyebrow="Circuits" title="Four circuits, each its own journey">
-        <p className="lead">Each circuit can be ridden on its own. Open one to see its route, a suggested itinerary and what to watch for; selecting it lights it up on the map.</p>
+      <Head title="Four circuits, each its own journey">
+        <p className="lead">Each one ridden end to end in the summer of 2026, and each can be ridden on its own. Open a circuit for the day plan and what to watch for; hover or select it and it lights up on the map.</p>
       </Head>
       <div className="cards">
-        {G.CIRCUITS.map((c) => {
+        {G.CIRCUITS.map((c, k) => {
           const m = CIRCUIT_META[c.id], on = open === c.id, inPlan = plan.includes(c.id);
+          const passes = PASSES.filter((p) => p.circuits.includes(c.id)).length;
+          const high = c.stops.map((id) => BY_ID[id]).filter((p) => p?.mapId && terrain[p.mapId!]).sort((x, y) => terrain[y.mapId!] - terrain[x.mapId!])[0];
+          // three photos from the circuit's own stops (the shared hubs, Manali and Leh, come last)
+          const own = c.stops.filter((id) => hasPhotos(id) && BY_ID[id]?.circuits[0] === c.id), rest = c.stops.filter((id) => hasPhotos(id) && !own.includes(id));
+          const strip = [...own, ...rest].slice(0, 3);
           return (
             <article key={c.id} className={"card circuit" + (on ? " on" : "")} style={{ ["--c" as string]: m.color }}
               onMouseEnter={() => onCircuit(c.id)} onMouseLeave={() => onCircuit(open)}>
               <button type="button" className="circuit-head" aria-expanded={on} onClick={() => { const n = on ? null : c.id; setOpen(n); onCircuit(n); }}>
                 <span className="bar" />
-                <span><span className="card-title">{m.name}</span><span className="meta">{c.window} · ≈ {fmt(circuitKm[c.id])} km drawn · base {c.base}</span></span>
+                <span>
+                  <span className="circuit-no">Circuit {String(k + 1).padStart(2, "0")}</span>
+                  <span className="card-title">{m.name}</span>
+                  <span className="circuit-idea">{c.idea}</span>
+                  <span className="circuit-stats">
+                    <span><b>≈ {fmt(circuitKm[c.id])} km</b> drawn</span><span><b>{c.window}</b></span><span><b>{passes}</b> passes</span>
+                    {high && <span>highest <b>{high.name}</b>, ≈ {fmt(terrain[high.mapId!])} m</span>}
+                  </span>
+                </span>
               </button>
+              {strip.length > 0 && <div className="strip">{strip.map((id) => <PlacePhoto key={id} id={id} alt={BY_ID[id].name} caption={false} className="place-photo strip-photo" />)}</div>}
+              <p className="chain">{c.stops.map((id, i) => <span key={id}>{i > 0 && <span className="arrow">→</span>}<PlaceLink id={id} onPlace={onPlace} /></span>)}</p>
               {on && (
                 <div className="card-body">
-                  <p><b>The idea.</b> {c.idea}</p>
-                  <p className="sequence"><b>Suggested route.</b> {c.sequence}</p>
                   <div className="itinerary">
                     {c.days.map((d) => <div key={d.day}><span className="day">Day {d.day}</span><span><b>{d.plan}</b><small>{d.objective}</small></span></div>)}
                   </div>
-                  <p><b>What to watch for.</b> {c.highlights.join(" · ")}</p>
+                  <div className="chips tight">{c.highlights.map((h) => <span key={h} className="chip">{h}</span>)}</div>
                   <p className="warn-text">{c.caution}</p>
-                  <p className="near"><b>Stops.</b> {c.stops.map((s, i) => <span key={s}>{i > 0 && " → "}<PlaceLink id={s} onPlace={onPlace} /></span>)}</p>
                   <button type="button" className={inPlan ? "ghost on" : "ghost"} aria-pressed={inPlan}
                     onClick={() => setPlan((p) => (inPlan ? p.filter((x) => x !== c.id) : [...p, c.id]))}>{inPlan ? "✓ In your trip plan" : "Add to trip plan"}</button>
                 </div>
@@ -529,6 +573,12 @@ function Creator() {
       <Paras items={G.CREATOR.body} />
       <Rule>{G.CREATOR.signoff}</Rule>
       <div className="photo-row"><PlacePhoto id="creator" alt="Gaurav with the motorcycle" index={0} /><PlacePhoto id="creator" alt="Gaurav at Umling La" index={1} /></div>
+      <Section title={G.STORY.title} id="story">
+        <p className="lead">{G.STORY.lead}</p>
+        <div className="photo-row three">{[0, 1, 2].map((i) => <PlacePhoto key={i} id="story" alt="From the ride" index={i} />)}</div>
+        <Paras items={G.STORY.body} />
+        <Rule>{G.STORY.signoff}</Rule>
+      </Section>
       <p className="draft-note">To add: a portfolio link and a contact address.</p>
     </>
   );

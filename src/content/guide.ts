@@ -6,15 +6,15 @@ export const EXPEDITION = { km: "5,200 km", passes: "20+ passes", circuits: "4 c
 /* ------------------------------------------------------------------ A note */
 export const NOTE = {
   title: "A note from the road",
+  kicker: "20+ passes · 4 circuits · 5,200 km",
+  salute: "Dear rider,",
   body: [
-    "Project Altitude started with a simple idea: what if all the useful information you usually gather from dozens of blogs, Google Maps, local conversations, and fellow riders lived in one place?",
-    "The Himalayas don't always follow your plans. A pass might be closed, your fuel calculations might be wrong, a village you expected to pass through might not have a working guesthouse, and your phone might stop getting a signal just when you need it most.",
-    "This guide brings together the places, routes, people, and practical information that can make a Himalayan motorcycle journey a little less uncertain.",
-    "It's built around four circuits across Zanskar, Nubra, Changthang, and Spiti, connected by the idea that gives this project its name: altitude.",
-    "Use it to plan an entire expedition, explore one circuit at a time, find a place to eat, or discover a village you hadn't heard of before.",
-    "The map is only the beginning. The best information often comes from the people who live along these roads.",
+    "In the summer of 2026 I rode about 5,200 km through Zanskar, Nubra, Changthang and Spiti: seven weeks from India Gate in Delhi to the top of Umling La and back down to Delhi by night. A week in Manali and the Hamta Pass trek first, then the bike. Rain in Lahaul, snow on Khardung La, dust in Spiti, and twenty-odd passes in between.",
+    "This guide is everything I wished I had before I left: the four circuits as I actually rode them, the villages, passes and lakes along them, where I slept and ate, what the roads were like, and the small places that made the trip. A kitchen three hundred metres past a footbridge. A hot spring in the middle of a cold desert. A cabin by Tso Moriri with a family of three.",
+    "Nothing here is a live report. Roads close, bridges shut, seasons turn, and a village that had a room in August may not in October. Treat these pages as a friend's notes: check the current state of every pass before you set out, carry your permits, and ask the people who live along these roads. They know more than any map.",
   ],
   signoff: "Ride prepared. Stay curious. Leave the mountains better than you found them.",
+  signature: "Gaurav",
 };
 
 /* ------------------------------------------------------------------ Story */
@@ -35,17 +35,15 @@ export const STORY = {
 
 /* ------------------------------------------------------------------ How to use */
 export const HOW_TO = {
-  title: "Your guide to the mountains",
-  lead: "Project Altitude is an interactive field guide to motorcycle travel across Himachal and Ladakh.",
-  steps: [
-    { n: "01", title: "Start with the map", body: "Explore the four coloured circuits. Zoom into valleys, pan across the terrain, and select marked villages, mountain passes, lakes, and other stops to discover more about each location." },
-    { n: "02", title: "Pick your circuit", body: "You don't have to do the entire expedition. Choose Zanskar, Nubra, Changthang, or Spiti and build a journey around the time you have." },
-    { n: "03", title: "Plan your stops", body: "Use the villages and essentials sections to identify possible overnight stops, places to eat, and towns where you can restock." },
-    { n: "04", title: "Prepare for the ride", body: "Check the gear list, road conditions, altitude considerations, fuel gaps, and emergency information before leaving." },
-    { n: "05", title: "Find something unexpected", body: "Explore the Hidden gems section for quieter places, detours, unusual landscapes, and stops that deserve more than a quick photograph." },
-    { n: "06", title: "Verify before you leave", body: "This is a planning guide, not a live guarantee of road access or services. Confirm current road conditions, permits, weather, accommodation, and fuel availability before each remote section." },
+  title: "Ride it in three moves",
+  lead: "This is a field guide, not a brochure. Pick a circuit, follow its stops, gear up and go. Everything else on the site hangs off those three.",
+  moves: [
+    { n: "01", title: "Pick a circuit", photo: "shinku-la", tab: "circuits", body: "Four loops, each ridden end to end: Zanskar, Nubra, Changthang, Spiti. Open one for the route as it was ridden, the day plan and what to watch for. Hover it and it lights up on the map." },
+    { n: "02", title: "Follow the stops", photo: "turtuk", tab: "villages", body: "Every village, pass and lake on the circuit has a card: a photo, the terrain height, fuel and the practical facts we have, and a Show on map button. The hidden gems are the places that made the ride." },
+    { n: "03", title: "Gear up and go", photo: "creator", tab: "gear", body: "What to pack, how to get yourself and the bike to the mountains, where to sleep and eat, what to do when it goes wrong. Read Emergency before you need it." },
   ],
-  tip: "Save important information offline. Mobile data can disappear for long stretches, particularly around remote parts of Zanskar and Changthang.",
+  card: "Every place card looks like this one. The dots are the circuits it sits on, the icon is what kind of place it is, the thumbnail opens the photo, and the header opens the card. Try it.",
+  tip: "Nothing on this site is live. Road status, permits, fuel and rooms change by the week: confirm them before you leave, and ask locally as you go.",
 };
 
 /* ------------------------------------------------------------------ Credits */

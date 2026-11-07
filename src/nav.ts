@@ -5,15 +5,15 @@ export type TabId =
 
 export const NAV: { group: string; items: { id: TabId; label: string }[] }[] = [
   // the note carries the story too (#story still opens it)
-  { group: "About", items: [{ id: "note", label: "A note" }, { id: "how", label: "How to use" }, { id: "legend", label: "Map legend" }] },
+  { group: "About", items: [{ id: "note", label: "A note" }, { id: "how", label: "Start here" }, { id: "legend", label: "Map legend" }] },
   // Essentials = getting there, where to stay, what to eat; Gear = packing and the motorcycle
   { group: "Guide", items: [
-    { id: "circuits", label: "Circuits" }, { id: "villages", label: "Villages" }, { id: "passes", label: "Passes" }, { id: "essentials", label: "Essentials" },
-    { id: "gear", label: "Gear" }, { id: "gems", label: "Hidden gems" }, { id: "emergency", label: "Emergency" }] },
+    { id: "circuits", label: "Circuits" }, { id: "villages", label: "Villages" }, { id: "passes", label: "Passes" }, { id: "essentials", label: "On the Road" },
+    { id: "gear", label: "Gear Up" }, { id: "gems", label: "Hidden gems" }, { id: "emergency", label: "Emergency" }] },
   { group: "Shop", items: [{ id: "swags", label: "Swags" }] },
 ];
 /** old addresses that still open a page; the hash names the section to scroll to */
-export const ALIASES: Record<string, TabId> = { story: "note", commute: "essentials", stays: "essentials", food: "essentials", packing: "gear" };
+export const ALIASES: Record<string, TabId> = { story: "creator", commute: "essentials", stays: "essentials", food: "essentials", packing: "gear" };
 export const FOOTER_NAV: { id: TabId; label: string }[] = [{ id: "creator", label: "Meet the Creator" }];
 /** shown on one line at the very bottom: T&C · Credits */
 export const FOOTER_PAIR: { id: TabId; label: string }[] = [{ id: "terms", label: "T&C" }, { id: "credits", label: "Credits" }];

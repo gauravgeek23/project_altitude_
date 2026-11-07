@@ -455,10 +455,10 @@ fieldset.card legend .meta { margin: 0; }
    colours text ink or grey sets the matching size (generated from the colour rules above).
    Kept as they are: small uppercase labels, badges, chips, photo captions and legend samples. */
 .content { font-size: 16px; line-height: 26px; }
-.content *:not(.eyebrow-sm, .group-title, .badge, .badge *, .stats dt, .facts-grid dt, .type-icon, .type-icon *, figcaption, figcaption *, .legend-svg, .legend-svg *, .legend-key, .legend-key *, .chip, .chip *, .cf, .cf *, .seg button, .legend-chip) { font-size: inherit !important; line-height: inherit; }
+.content *:not(.eyebrow-sm, .group-title, .badge, .badge *, .stats dt, .facts-grid dt, .type-icon, .type-icon *, figcaption, figcaption *, .legend-svg, .legend-svg *, .legend-key, .legend-key *, .chip, .chip *, .cf, .cf *, .seg button, .legend-chip, .circuit-no, .move-n, .ladder .h, .group-count, .kicker) { font-size: inherit !important; line-height: inherit; }
 .content .chip, .content .seg button, .content .legend-chip { font-size: 13px !important; }
 .content .cf { font-size: 12.5px !important; }
-.content :is(.block p, .bullets, .callout, .card p, .check, .chip, .count-line, .empty, .empty-state, .fine, .form-grid label, .itinerary small, .legend-chip, .legend-row p, .link-list, .meta, .muted, .number small, .numbered .num, .numbered p, .para, .seg button, .steps, .stops li, .table dd, .table small, .tldr p, details.card .summary-text) { font-size: 14px !important; line-height: 22px; }
+.content :is(.block p, .bullets, .callout, .card p, .check, .chip, .count-line, .empty, .empty-state, .fine, .form-grid label, .itinerary small, .legend-chip, .legend-row p, .link-list, .meta, .muted, .number small, .numbered .num, .numbered p, .para, .seg button, .steps, .circuit-stats, .circuit-idea, .chain, .group-sub, .sign, .move-body, .move-go, .salute, .stops li, .table dd, .table small, .tldr p, details.card .summary-text) { font-size: 14px !important; line-height: 22px; }
 .content :is(.block h2, .block h3, .card-title, .coords output, .facts-grid dd, .lead, .lead-sm, .legend-row b, .number .num.text, .number .who b, .numbered h3, .page-title, .place-link, .place-plain, .rule-line, .stats dd, .table dt, .text-btn, .tldr h1, b) { font-size: 16px !important; line-height: 26px; }
 .content .page-title, .content .tldr h1.page-title { font-size: 16px !important; line-height: 26px !important; margin-bottom: 6px; }
 
@@ -495,3 +495,50 @@ fieldset.card legend .meta { margin: 0; }
 .legend-badge { display: inline-grid; place-items: center; width: 20px; height: 20px; border-radius: 50%; background: #fff; border: 1.4px solid #8a1f3f; color: #8a1f3f; }
 .legend-key.fuel-key { background: #0f8f5f; color: #fff; border: 0; }
 .photo-row .count { display: none; }
+
+/* ---------- the note: one photo, a letter, the numbers */
+.note-hero { margin: 0 0 20px; aspect-ratio: 16 / 10; }
+.kicker { margin: 4px 0 0; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: var(--grey); }
+.letter { margin-top: 18px; }
+.letter .salute { color: var(--ink); }
+.sign { margin: 6px 0 0; color: var(--ink); font-weight: 500; }
+
+/* ---------- start here: three moves */
+.moves { display: grid; gap: 10px; margin: 20px 0 8px; }
+.move { display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 0; align-items: stretch; width: 100%; padding: 0; border: 0; border-radius: 12px; background: var(--card); text-align: left; cursor: pointer; overflow: hidden; color: var(--ink); transition: transform .15s, box-shadow .15s; }
+.move:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(0,0,0,.1); }
+.move .move-photo { margin: 0; aspect-ratio: auto; height: 100%; min-height: 124px; border-radius: 0; }
+.move-text { display: flex; flex-direction: column; gap: 2px; padding: 14px 16px; }
+.move-n { font-size: 11px; letter-spacing: .14em; color: var(--grey); }
+.move-title { font-size: 16px; font-weight: 500; color: var(--ink); line-height: 24px; }
+.move-body { color: var(--grey); }
+.move-go { margin-top: 6px; color: var(--ink); font-weight: 500; }
+
+/* ---------- circuits: a hero head, a photo strip, the chain of stops */
+.circuit-no { display: block; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--c); font-weight: 600; margin-bottom: 2px; }
+.circuit-idea { display: block; color: var(--grey); margin-top: 2px; }
+.circuit-stats { display: flex; flex-wrap: wrap; gap: 4px 14px; margin-top: 8px; color: var(--grey); }
+.circuit-stats b { color: var(--ink); font-weight: 500; }
+.card.circuit .strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; padding: 0 18px; }
+.card.circuit .strip-photo { margin: 0; aspect-ratio: 4 / 3; border-radius: 8px; }
+.card.circuit .chain { display: flex; flex-wrap: wrap; gap: 2px 4px; align-items: center; margin: 0; padding: 12px 18px 16px; }
+.card.circuit .chain .arrow { color: var(--grey); margin: 0 4px; }
+.card.circuit .chain .place-link { text-decoration: none; }
+.card.circuit .chain .place-link:hover { text-decoration: underline; }
+.card.circuit .card-body { padding-top: 0; }
+.itinerary > div { grid-template-columns: 72px minmax(0, 1fr); }
+.itinerary .day { align-self: start; justify-self: start; padding: 1px 9px; border-radius: 999px; background: var(--c); color: #fff; font-size: 12px; line-height: 20px; white-space: nowrap; }
+.chips.tight { margin: 12px 0; gap: 5px; }
+
+/* ---------- villages: a line about each circuit above its group */
+.group-count { margin-left: auto; font-size: 12px; font-weight: 500; letter-spacing: 0; color: var(--grey); }
+.group-sub { margin: -4px 0 12px; color: var(--grey); }
+
+/* ---------- passes: the ladder */
+.ladder { list-style: none; margin: 10px 0 0; padding: 0; display: grid; gap: 5px; }
+.ladder li { display: grid; grid-template-columns: minmax(0, 128px) minmax(0, 1fr) 84px; align-items: center; gap: 10px; }
+.ladder button { text-align: left; background: none; border: 0; padding: 0; font: inherit; color: var(--ink); cursor: pointer; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ladder button:hover { text-decoration: underline; }
+.ladder .bar { display: block; height: 10px; border-radius: 999px; background: var(--soft); overflow: hidden; }
+.ladder .bar i { display: block; height: 100%; width: var(--w); min-width: 6px; background: var(--c); border-radius: 999px; }
+.ladder .h { text-align: right; font-size: 13px; color: var(--grey); font-variant-numeric: tabular-nums; }
