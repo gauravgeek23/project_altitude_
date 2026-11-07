@@ -19,16 +19,35 @@ export const NOTE = {
 
 /* ------------------------------------------------------------------ Story */
 export const STORY = {
-  title: "The story behind Project Altitude",
+  title: "The story of the ride",
   lead: "5,200 km across Himachal and Ladakh. More than 20 high-altitude mountain passes. Four circuits through Zanskar, Nubra, Changthang, and Spiti. And a ride to the summit of Umling La.",
-  body: [
-    "It started in Bangalore with a packed bag: home for a while, then Delhi, where the bike got a service and a wash. The ride itself began at India Gate.",
-    "A week in Manali first, and the Hamta Pass trek: six days with a crew that made it fun, heavy rain all the way to the summit. Then Chandratal, and after that I was on my own.",
-    "The first circuit went over Shinku La into Zanskar: a night under Gonbo Rangjon with a couple of houses for company, Phuktal in its cliff, Padum, then Pensi La and the Drang-Drung glacier down the Suru Valley to Kargil. Three days there, with a ride out to Hunderman where Gilgit-Baltistan is in view; then Lamayuru's moonland and the small villages along the Indus into Leh. From Leh, the new Zanskar highway up to Zangla and back.",
-    "Khardung La was under snow, my first snowfall. Four days on foot in Turtuk, where no vehicle crosses the bridge, with Thang and the peaks across the border twenty kilometres on. Diskit and its monastery, the long empty road to Siachen Base Camp, the hot spring at Panamik on the way back, and Wari La home to Leh.",
-    "The third circuit was the one I had come for. Chang La, a night in Maan village on Pangong, Hanle and its sky. Then the summit day: seventy-five kilometres without a road up the Nurbula route, Umling La, and instead of turning back, down the new road to Demchok and the border, and along the Indus to Nyoma on a hundred kilometres of straight, empty highway. That road was the highlight of the whole ride. Two days in a cabin at Karzok, by Tso Moriri, with a family of three. Then Taglang La, the Gata Loops, Suraj Tal and the Atal Tunnel to Manali.",
-    "The last circuit turned south: Jibhi to dry out, Jalori Pass, four days at Kalpa under Kinnaur Kailash, then Nako, Gue and its mummy, Tabo, and Kaza. A letter posted from Hikkim, Langza, Komic, Key. The Chandratal road was under construction, so back the way I had come to Chitkul, the last village on this side; then Narkanda, Shimla and Mashobra, the four-lane cruise to Chandigarh, and Delhi by ten at night.",
-    "Around 5,200 km and four valleys. This guide is what I brought back: a map you can explore, the routes as I rode them, the places worth stopping at, and what I wish I had known before heading out.",
+  /** chapters, each with a heading; `photo` shows one of the story photos (0 India Gate, 1 Shinku La, 2 Umling La) after it */
+  chapters: [
+    { h: "Leaving", photo: 0, body: [
+      "It started with a packed bag in Bangalore. Home for a while, then Delhi, where the bike went in for a service and came out washed and ready. I rode it to India Gate one morning and that was the start line: not because anything happens there, but because a ride like this needs a place to begin, and I wanted to be able to say it began in the middle of the city I was leaving behind.",
+      "A week in Manali came first, and then the Hamta Pass trek: six days with a crew of people I'd never met, heavy rain most of the way up, and a summit that felt earned because of the rain, not in spite of it. We came down to Chandratal together. After that they went their ways, I went to the bike, and for the first time in weeks the only voice in the morning was mine.",
+    ] },
+    { h: "Zanskar: learning the scale", photo: 1, body: [
+      "Shinku La was the first real pass, and Gonbo Rangjon on the far side was the first night I understood what I was in for. A couple of houses, a mountain that looks like it was placed there on purpose, and people who treated a stranger on a bike as the most natural thing in the world. From there to Phuktal, built into its cliff, and Padum, and then over Pensi La with the Drang-Drung glacier spilling down beside the road into the Suru Valley and Kargil.",
+      "Three days in Kargil, and a ride out to Hunderman, the last village, where you stand on a ridge and look into Gilgit-Baltistan. Then Lamayuru: dust, wind, and that moonland of rock that doesn't look like it belongs on the same planet as the valley you just left. The road from there into Leh is a string of small villages, Mulbekh, Likir, Basgo, Alchi, each one worth more time than I gave it. Leh was the first finish line, and five days of it felt like a reward.",
+    ] },
+    { h: "Nubra: a village with no road", body: [
+      "Khardung La was under snow, my first snowfall, and I grinned inside the helmet the whole way down. I didn't stop in Diskit; I went straight on to Turtuk, and I'm glad I did. Turtuk is a village you cannot ride into. You park, you cross a footbridge, and the bike stays behind for four days while you walk up the stream into the upper village, eat at a kitchen that has been feeding people for ten years, and learn how the Balti families lived through their winters half under the earth. Twenty kilometres on is Thang, the last village, with Pakistan's peaks across the line. You can't see the soldiers in those mountains. They can see you.",
+      "Diskit on the way back was off season and cheap and kind: a room with dinner and breakfast, a garden, an owner who pushed me out of the door at eleven in the morning towards Siachen Base Camp because of the stillness I'd find there. He was right. A hundred and twenty kilometres of empty road, every shop and stay shut, and then the hot spring at Panamik on the way home, impossibly hot water in a cold desert. I rode the last hour in the dark and the rain, soaked and finished, and the next morning over Wari La to Hemis felt like a homecoming.",
+    ] },
+    { h: "Changthang: the one I came for", photo: 2, body: [
+      "Chang La stopped me before the ride even got going. I'd stood on that pass two years earlier, in summer, and standing there again I could measure everything that had changed in between: the work, the people, the person doing the standing. A night in Maan village on Pangong, a little snow outside the window, and then one of the most beautiful roads I know, from the lake to Hanle, where the sky at night makes the observatory feel like an understatement.",
+      "The summit day was the reason for all of it. Seventy-five kilometres without a road, climbing out of Hanle on the Nurbula route to over five thousand metres, then on to Umling La. Every metre up, the same thought: right now, only a few thousand people on the whole planet are higher than this, and most of them are on summits, and it isn't even summit season. And then, instead of turning back to Hanle like everyone does, I rolled down the new road to Demchok and stood at the border looking at a Chinese village a hundred metres away. The road from there to Nyoma along the Indus, a hundred kilometres with hardly a turn, China's mountains on one side and India's on the other, rivers kilometres wide and no one in them, was the single most beautiful stretch of the whole ride. If you ask me where to go, I'll say there.",
+      "I reached Nyoma with the tank nearly empty and the afternoon half gone, and a man at the pump told me the road to Karzok was good. It was. Kyagar Tso lay by the road with not a soul beside it, and in Karzok an uncle, an aunt and their grandson took me into a small cabin by Tso Moriri for two days, fed me, and let me sit with the lake and the snow and Mentok Kangri above it. Of every bed on this ride, that was the best.",
+    ] },
+    { h: "Spiti: the long way home", body: [
+      "The last circuit turned south. Rain caught me in the final ten minutes into Jibhi, so I stayed two days drying out and drinking passion-fruit juice. Over Jalori Pass, down to the Sutlej and up to Kalpa, where a small B&B with the owner away and a key in a locker became four days under Kinnaur Kailash. Then the long valley: Nako and its lake, Gue and its mummy ten kilometres off the road, Tabo's monastery made of mud, and Kaza, where I posted a letter home from Hikkim that never arrived, as a fair share of them don't, and rode the loop through Langza, Komic and Key in dust, wind and cold sun all at once.",
+      "The road over Kunzum to Chandratal was torn up, so I went back the way I came, to Chitkul, the last village on this side of the mountains, and then down, unwell from the rain, to Narkanda, where I stayed a day and wished I'd stayed two. Shimla, Mashobra, and then the four-lane highway to Chandigarh that is a pure pleasure on a bike. My sisters, a late lunch, and at four in the afternoon I pointed the bike at Delhi and rode into the city at ten at night. Forty-odd days. Five thousand two hundred kilometres. Four valleys.",
+    ] },
+    { h: "What the mountains gave back", body: [
+      "I left thinking the ride was about the passes, and the passes were everything I hoped. But what I carry is the stillness of the Siachen road, the family in Karzok, the owner in Diskit who wouldn't let me waste a day, the man at the Nyoma pump, the crew on Hamta in the rain. The mountains are enormous and they do not care about you, and somehow that makes the kindness of the people who live in them land harder.",
+      "This guide is my way of paying some of that forward: the circuits as I rode them, the stops, the stays I'd go back to, the roads I'd ride again tomorrow, and the honest gaps where I don't know. Ride prepared. Stay curious. Leave the mountains better than you found them.",
+    ] },
   ],
   signoff: "20+ passes. 4 circuits. 5,200 km. One obsession with altitude.",
 };
@@ -412,15 +431,17 @@ export const SWAGS = {
 export const CREATOR = {
   title: "Meet the creator",
   body: [
-    "Hey, I'm Gaurav.",
-    "I'm a product designer, a motorcycling enthusiast, and someone who has always been drawn to the mountains.",
-    "Project Altitude grew out of a 5,200 km riding expedition across Himachal and Ladakh, with more than 20 high-altitude passes, four circuits, and a ride to the summit of Umling La.",
-    "Along the way, I realised how much planning goes into a journey like this, and how scattered the useful information can be.",
-    "So I started putting together a map and a field guide that I would have wanted before setting off. Somewhere to explore the routes, understand the stops, discover places along the way, and prepare for the practical realities of riding in the mountains.",
-    "The idea is to keep building it, learning from other riders, and making it more useful with every iteration.",
+    "Hey, I'm Gaurav: a product designer, a motorcyclist, and someone who has always been drawn to the mountains.",
+    "In the summer of 2026 I rode about 5,200 km across Himachal and Ladakh, over more than twenty high passes, through four valleys, to the top of Umling La and back. Project Altitude is what I brought home: the map and the field guide I wished I had before I left.",
     "If you've ridden these roads, found something worth adding, or spotted something that needs correcting, I'd love to hear from you.",
   ],
-  signoff: "Until then, ride safe. I'll see you somewhere up the road.",
+  /** profile links; a link with an empty url is not shown */
+  links: [
+    { label: "LinkedIn", url: "" },
+    { label: "Portfolio", url: "" },
+    { label: "Substack", url: "" },
+    { label: "X", url: "" },
+  ],
 };
 
 /* ------------------------------------------------------------------ Terms */

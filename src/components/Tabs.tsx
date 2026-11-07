@@ -580,20 +580,29 @@ function Swags() {
   );
 }
 function Creator() {
+  const links = G.CREATOR.links.filter((l) => l.url);
   return (
     <>
-      <Head eyebrow="Meet the Creator" title={G.CREATOR.title} />
+      <Head title={G.CREATOR.title} />
+      <div className="creator-head">
+        <PlacePhoto id="portrait" index={0} alt="Gaurav" caption={false} className="place-photo portrait" />
+        <div className="creator-text">
+          <Paras items={G.CREATOR.body} />
+          {links.length > 0 && <p className="links">{links.map((l) => <a key={l.label} href={l.url} target="_blank" rel="noreferrer">{l.label} ↗</a>)}</p>}
+        </div>
+      </div>
       <Stats />
-      <Paras items={G.CREATOR.body} />
-      <Rule>{G.CREATOR.signoff}</Rule>
-      <div className="photo-row"><PlacePhoto id="creator" alt="Gaurav with the motorcycle" index={0} /><PlacePhoto id="creator" alt="Gaurav at Umling La" index={1} /></div>
-      <Section title={G.STORY.title} id="story">
+      <div className="story" id="story">
+        <h2 className="story-title">{G.STORY.title}</h2>
         <p className="lead">{G.STORY.lead}</p>
-        <div className="photo-row three">{[0, 1, 2].map((i) => <PlacePhoto key={i} id="story" alt="From the ride" index={i} />)}</div>
-        <Paras items={G.STORY.body} />
+        {G.STORY.chapters.map((ch) => (
+          <Section key={ch.h} title={ch.h}>
+            <Paras items={ch.body} />
+            {ch.photo != null && <PlacePhoto id="story" index={ch.photo} alt={ch.h} className="place-photo chapter-photo" />}
+          </Section>
+        ))}
         <Rule>{G.STORY.signoff}</Rule>
-      </Section>
-      <p className="draft-note">To add: a portfolio link and a contact address.</p>
+      </div>
     </>
   );
 }
