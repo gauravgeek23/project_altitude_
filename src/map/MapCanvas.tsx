@@ -113,19 +113,6 @@ export function Compass({ x, y, scale = 1 }: { x: number; y: number; scale?: num
 /** Country names, each set well inside territory that is not in dispute. */
 /** the places come out once per page load, a couple of seconds after the routes */
 let revealedOnce = false;
-/**
- * The reveal plays once per page load, but not for someone who keeps reopening or refreshing the page:
- * the last few opening times are kept in localStorage, and a third open within a minute skips it.
- */
-function skipReveal(): boolean {
-  try {
-    const key = "altitude-opens", now = Date.now();
-    const opens = (JSON.parse(localStorage.getItem(key) ?? "[]") as number[]).filter((t) => now - t < 60_000);
-    opens.push(now);
-    localStorage.setItem(key, JSON.stringify(opens.slice(-5)));
-    return opens.length > 2;
-  } catch { return false; }
-}
 
 const COUNTRIES: { id: string; name: string; at: [number, number] }[] = [
   { id: "india", name: "INDIA", at: [76.2, 31.5] },        // Kangra and Hamirpur hills
@@ -190,8 +177,8 @@ export const MapCanvas = forwardRef<MapHandle, Props>(function MapCanvas(props, 
   const [t, setT] = useState(d3.zoomIdentity);
   const [hoverRegion, setHoverRegion] = useState<string | null>(null);
   // first the relief and the routes; the places follow after a beat, each a moment after the last
-  const [revealed, setRevealed] = useState(() => revealedOnce || (revealedOnce = skipReveal()));
-  const [settled, setSettled] = useState(revealed);
+  const [revealed, setRevealed] = useState(revealedOnce);
+  const [settled, setSettled] = useState(revealedOnce);
   useEffect(() => {
     if (revealedOnce) return;
     const a = setTimeout(() => { revealedOnce = true; setRevealed(true); }, 2200);
