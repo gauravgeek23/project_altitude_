@@ -33,7 +33,6 @@
 :root[data-theme="dark"] .type-icon.lake { background: rgba(79, 227, 239, .14); color: #6fe9f3; }
 :root[data-theme="dark"] .type-icon.landmark { background: rgba(240, 160, 100, .15); color: #f2b07f; }
 :root[data-theme="dark"] .type-icon.food { background: rgba(255, 92, 70, .15); color: #ff8a73; }
-:root[data-theme="dark"] .sos { box-shadow: 0 0 0 4px rgba(255, 75, 62, .18), 0 6px 20px rgba(0,0,0,.6); }
 :root[data-theme="dark"] .topbar { background: rgba(13, 15, 18, .9) !important; }
 :root[data-theme="dark"] .drawer { box-shadow: 8px 0 30px rgba(0,0,0,.6); }
 :root[data-theme="dark"] .switcher { background: #eceef2 !important; }
@@ -81,7 +80,6 @@
 :root:not([data-theme="light"]) .type-icon.lake { background: rgba(79, 227, 239, .14); color: #6fe9f3; }
 :root:not([data-theme="light"]) .type-icon.landmark { background: rgba(240, 160, 100, .15); color: #f2b07f; }
 :root:not([data-theme="light"]) .type-icon.food { background: rgba(255, 92, 70, .15); color: #ff8a73; }
-:root:not([data-theme="light"]) .sos { box-shadow: 0 0 0 4px rgba(255, 75, 62, .18), 0 6px 20px rgba(0,0,0,.6); }
 :root:not([data-theme="light"]) .topbar { background: rgba(13, 15, 18, .9) !important; }
 :root:not([data-theme="light"]) .drawer { box-shadow: 8px 0 30px rgba(0,0,0,.6); }
 :root:not([data-theme="light"]) .switcher { background: #eceef2 !important; }
